@@ -7,6 +7,15 @@ Each POC is **self-contained**, with its own dependencies, build configurations,
 
 ---
 
+## 📌 Template Renderer Implementations
+This repository provides **three implementations** of a **Template Renderer**, each built using a different technology:
+
+| Language  | Version | Build System | Documentation |
+|-----------|---------|--------------|--------------|
+| 🟢 **Kotlin** | Latest | Gradle | [View README](kotlin/template-renderer/README.md) |
+
+---
+
 ## 📝 Commit Message Convention
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification to maintain a consistent commit history.
