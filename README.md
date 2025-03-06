@@ -13,6 +13,7 @@ This repository provides **three implementations** of a **Template Renderer**, e
 | Language  | Version | Build System | Documentation |
 |-----------|---------|--------------|--------------|
 | 🟢 **Kotlin** | Latest | Gradle | [View README](kotlin/template-renderer/README.md) |
+| 🔵 **Scala 3.6** | 3.6.x | SBT | [View README](scala-3.6/template-renderer/README.md) |
 
 ---
 
