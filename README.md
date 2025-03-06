@@ -8,7 +8,7 @@ Each POC is **self-contained**, with its own dependencies, build configurations,
 ---
 
 ## 📌 Template Renderer Implementations
-This repository provides **three implementations** of a **Template Renderer**, each built using a different technology:
+This repository provides **two implementations** of a **Template Renderer**, each built using a different technology:
 
 | Language  | Version | Build System | Documentation |
 |-----------|---------|--------------|--------------|
