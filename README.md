@@ -23,6 +23,12 @@ This repository provides **two implementations** of a **Tax System**, each built
 | 🟢 **Kotlin** | Latest | Gradle | [View README](kotlin/tax-system/README.md)    |
 | 🔵 **Scala 3.6** | 3.6.x | SBT | [View README](scala-3.6/tax-system/README.md) |
 
+## 📌 Movie Recommender Implementations
+This repository provides **one implementation** of a **Movie Recommender**, built using python:
+
+| Language         | Version | Build System | Documentation                                     |
+|------------------|---------|--------------|---------------------------------------------------|
+| 🟢 **Python**    | Latest | ------       | [View README](python/movie-recommender/README.md) |
 ---
 
 ## 📝 Commit Message Convention
