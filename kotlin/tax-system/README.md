@@ -13,6 +13,7 @@ the state and year.
 - **State-Specific Taxes**: Each state may define its own tax rates.
 - **Yearly Tax Changes**: Taxes can change depending on the year.
 - **Scalable Architecture**: Designed for easy expansion and modification.
+- **Specification Pattern**: Clearly defines flexible and reusable tax rule criteria (e.g., product, state, and year).
 
 ## Class Diagram
 
@@ -22,48 +23,55 @@ Below is a **UML class diagram** representing the core structure of the TAX syst
 classDiagram
     class Product {
         <<sealedclass>>
-        +String name
-        +double price
+        +name: String
+        +price: Double
     }
 
-    class Electronic {
-        +String name
-        +double price
-    }
-
-    class Book {
-        +String name
-        +double price
-    }
-
-    class Food {
-        +String name
-        +double price
-    }
+    class Electronic
+    class Book
+    class Food
 
     class State {
-        +String name
-        +String code
+        +name: String
+        +code: String
     }
 
     class TaxRule {
-        +State state
-        +Product product
-        +int year
-        +double taxRate
-        +calculateTax(): double
+        +state: State
+        +product: Product
+        +year: Int
+        +taxRate: Double
+        +calculateTax(): Double
     }
 
+    class Specification~T~ {
+        <<interface>>
+        +matches(candidate: T): Boolean
+        +and(other: Specification~T~): Specification~T~
+        +or(other: Specification~T~): Specification~T~
+    }
+
+    class ProductSpecification
+    class StateSpecification
+    class YearSpecification
+
     class TaxCalculator {
-        +calculateTotalPrice(product: Product, state: State, year: int): double
+        +calculateTotalPrice(product: Product, state: State, year: Int): Double
     }
 
     Product <|-- Electronic
     Product <|-- Book
     Product <|-- Food
+
     Product --> TaxRule
     State --> TaxRule
     TaxRule --> TaxCalculator
+
+    Specification~T~ <|.. ProductSpecification
+    Specification~T~ <|-- StateSpecification
+    Specification~T~ <|-- YearSpecification
+
+    Specification~T~ ..> TaxRule : evaluates
 ```
 
 ---

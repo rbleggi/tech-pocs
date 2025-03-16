@@ -12,6 +12,7 @@ This project demonstrates a tax calculation system where different products are 
 - **State-Specific Taxes**: Each state may define its own tax rates.
 - **Yearly Tax Changes**: Taxes can change depending on the year.
 - **Scalable Architecture**: Designed for easy expansion and modification.
+- **Specification Pattern**: Clearly defines flexible and reusable tax rule criteria (e.g., product, state, and year).
 
 ## Class Diagram
 
@@ -53,9 +54,37 @@ classDiagram
       +calculateTax(): double
    }
 
+   class Specification~T~ {
+      <<trait>>
+      +isSatisfiedBy(candidate: T): boolean
+      +and(other: Specification~T~): Specification~T~
+      +or(other: Specification~T~): Specification~T~
+   }
+
+   class ProductSpecification {
+      +isSatisfiedBy(product: Product): boolean
+   }
+
+   class StateSpecification {
+      +isSatisfiedBy(state: State): boolean
+   }
+
+   class YearSpecification {
+      +isSatisfiedBy(year: int): boolean
+   }
+
+   class TaxSpecification {
+      +isSatisfiedBy(rule: TaxRule): boolean
+   }
+
    class TaxCalculator {
       +calculateTotalPrice(product: Product, state: State, year: int): double
    }
+
+   Specification~T~ <|-- ProductSpecification
+   Specification~T~ <|-- StateSpecification
+   Specification~T~ <|-- YearSpecification
+   Specification~T~ <|-- TaxSpecification
 
    Product <|-- Electronic
    Product <|-- Book
@@ -63,6 +92,8 @@ classDiagram
    Product --> TaxRule
    State --> TaxRule
    TaxRule --> TaxCalculator
+   TaxSpecification ..> TaxRule
+
 ```
 
 ---

@@ -1,14 +1,20 @@
 package com.rbleggi.taxsystem.service
 
 import com.rbleggi.taxsystem.model.{Product, State, TaxRule}
+import com.rbleggi.taxsystem.specification.{ProductSpecification, StateSpecification, YearSpecification}
 
-class TaxCalculator(taxRules: List[TaxRule]) {
-  def calculateTotalPrice(product: Product, state: State, year: Int): Double = {
-    val applicableTaxRule = taxRules.find(rule =>
-      rule.state == state && rule.product == product && rule.year == year
-    )
+class TaxCalculator(rules: List[TaxRule]):
 
-    val taxAmount = applicableTaxRule.map(_.calculateTax).getOrElse(0.0)
-    product.price + taxAmount
-  }
-}
+  def calculateTotalPrice(product: Product, state: State, year: Int): Double =
+    val productSpec = ProductSpecification(product)
+    val stateSpec = StateSpecification(state)
+    val yearSpec = YearSpecification(year)
+
+    val combinedSpec = productSpec.and(stateSpec).and(yearSpec)
+
+    rules
+      .filter(combinedSpec.matches)
+      .map(_.calculateTax())
+      .headOption
+      .map(tax => product.price + tax)
+      .getOrElse(product.price)
