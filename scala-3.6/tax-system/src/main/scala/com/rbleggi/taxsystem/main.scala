@@ -4,24 +4,18 @@ import com.rbleggi.taxsystem.model.*
 import com.rbleggi.taxsystem.service.TaxCalculator
 
 @main def run(): Unit = {
-  val laptop = Electronic("Laptop", 1500.0)
-  val book = Book("Scala Programming", 30.0)
-  val pizza = Food("Pizza", 15.0)
+  val product1 = Product("Smartphone", "electronics")
+  val product2 = Product("Rice", "food")
+  val product3 = Product("History Book", "book")
 
-  val california = State("California", "CA")
-  val texas = State("Texas", "TX")
+  val calculator = new TaxCalculator()
 
-  val taxRules = List(
-    TaxRule(california, laptop, 2025, 8.5),
-    TaxRule(texas, laptop, 2025, 6.25),
-    TaxRule(california, book, 2025, 0.0),
-    TaxRule(texas, pizza, 2025, 4.0)
-  )
+  val priceProduct1 = 2500.0
+  val priceProduct2 = 20.0
+  val priceProduct3 = 50.0
 
-  val taxCalculator = new TaxCalculator(taxRules)
-
-  println(s"Total price for Laptop in CA: $$${taxCalculator.calculateTotalPrice(laptop, california, 2025)}")
-  println(s"Total price for Laptop in TX: $$${taxCalculator.calculateTotalPrice(laptop, texas, 2025)}")
-  println(s"Total price for Book in CA: $$${taxCalculator.calculateTotalPrice(book, california, 2025)}")
-  println(s"Total price for Pizza in TX: $$${taxCalculator.calculateTotalPrice(pizza, texas, 2025)}")
+  println(f"Tax for ${product1.name} in SP (2024): RS ${calculator.calculateTax("SP", 2024, product1, priceProduct1)}%.2f")
+  println(f"Tax for ${product2.name} in MG (2024): RS ${calculator.calculateTax("MG", 2024, product2, priceProduct2)}%.2f")
+  println(f"Tax for ${product3.name} in RJ (2024): RS ${calculator.calculateTax("RJ", 2024, product3, priceProduct3)}%.2f")
+  println(f"Tax for ${product1.name} in SP (2025): RS ${calculator.calculateTax("SP", 2025, product1, priceProduct1)}%.2f")
 }

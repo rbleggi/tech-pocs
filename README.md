@@ -30,7 +30,3 @@ This repository provides **one implementation** of a **Movie Recommender**, buil
 |------------------|---------|--------------|---------------------------------------------------|
 | 🟢 **Python**    | Latest | ------       | [View README](python/movie-recommender/README.md) |
 ---
-
-## 📝 Commit Message Convention
-
-This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification to maintain a consistent commit history.
