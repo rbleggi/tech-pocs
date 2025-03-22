@@ -1,12 +1,16 @@
-# **Guitar Factory System**
+# **Guitar Builder System**
 
 ## **Overview**
 
-This project implements a **custom guitar factory system** that allows users to specify **guitar type, model, specifications, and operating system (OS)** to create personalized guitars. The system also manages **inventory**, keeping track of available guitars and their quantities.
+This project implements a **custom guitar builder system** that allows users to flexibly create personalized guitars by
+specifying attributes such as **type, model, specifications, and operating system (OS)**. It also includes an *
+*inventory management system**, tracking available guitars and their quantities.
 
-The project follows the **Factory Method Pattern** to handle guitar creation dynamically and uses a **Singleton Pattern** to manage the inventory, ensuring a centralized and consistent stock management system.
+The project utilizes the **Builder Pattern** to streamline guitar creation with flexibility and readability and uses a *
+*Singleton Pattern** for centralized, consistent inventory management.
 
 ### **Tech Stack**
+
 - **Scala 3.6** → Modern JVM-based language with functional programming support.
 - **SBT** → Scala's build tool for managing dependencies and compiling code.
 - **JDK 21** → Required for running the application.
@@ -14,100 +18,105 @@ The project follows the **Factory Method Pattern** to handle guitar creation dyn
 ---
 
 ## **Features**
-✔ **Custom Guitar Creation** → Users can specify guitar types, models, and OS.  
-✔ **Inventory Management** → Keep track of available guitars.  
-✔ **Factory Method Pattern** → Creates different guitar types dynamically.  
-✔ **Singleton Inventory** → Ensures centralized stock control.  
-✔ **Scalability** → Easy to add new guitar types and extend functionality.
+
+✔ **Flexible Guitar Creation** → Users specify guitar attributes dynamically.  
+✔ **Inventory Management** → Tracks available guitars and stock levels.  
+✔ **Builder Pattern** → Simplifies the creation of guitars through a fluent interface.  
+✔ **Singleton Inventory** → Ensures centralized and consistent stock control.  
+✔ **Scalability** → Easily extendable to accommodate additional guitar attributes.
 
 ---
 
 ## **Class Diagram**
 
-The following diagram represents the core structure of the **Guitar Factory System**:
+The following diagram illustrates the updated structure using the **Builder Pattern**:
 
 ```mermaid
 classDiagram
-   direction TB
+    direction TB
 
-   class Guitar {
-      <<abstract>>
-      + String model
-      + String specs
-      + String os
-   }
+    class Guitar {
+        - Guitar(type, model, specs, os)
+        + String guitarType
+        + String model
+        + String specs
+        + String os
+        + toString(): String
+    }
 
-   class AcousticGuitar {
-      + String model
-      + String specs
-      + String os
-   }
+    class Builder {
+        - String guitarType
+        - String model
+        - String specs
+        - String os
+        + guitarType(type: String): Builder
+        + model(model: String): Builder
+        + specs(specs: String): Builder
+        + os(os: String): Builder
+        + build(): Guitar
+    }
 
-   class ElectricGuitar {
-      + String model
-      + String specs
-      + String os
-   }
+    class GuitarInventory {
+        + addGuitar(guitar: Guitar, quantity: Int)
+        + removeGuitar(guitar: Guitar, quantity: Int)
+        + listInventory()
+    }
 
-   class BassGuitar {
-      + String model
-      + String specs
-      + String os
-   }
-
-   class GuitarFactory {
-      + createGuitar(type: String, model: String, specs: String, os: String): Guitar
-   }
-
-   class GuitarInventory {
-      + addGuitar(guitar: Guitar, quantity: Int)
-      + removeGuitar(guitar: Guitar, quantity: Int)
-      + listInventory()
-   }
-
-   Guitar <|-- AcousticGuitar
-   Guitar <|-- ElectricGuitar
-   Guitar <|-- BassGuitar
-   GuitarFactory --> Guitar : creates
-   GuitarInventory --> Guitar : manages
+    Builder --> Guitar: builds
+    GuitarInventory --> Guitar: manages
 ```
 
 ---
 
-## **Factory Method Pattern**
-The **Factory Method Pattern** is used to **simplify the creation of different guitar types** dynamically. Instead of hardcoding guitar creation logic, the system:
-1. **Uses `Guitar` as a base trait** for all guitars.
-2. **Implements specific guitar classes (`AcousticGuitar`, `ElectricGuitar`, `BassGuitar`)** to represent different types.
-3. **Delegates the creation process to `GuitarFactory`**, which returns the appropriate guitar instance based on user input.
+## **Builder Pattern**
 
-This design makes the system **scalable, flexible, and easy to extend** when adding new guitar types.
+The **Builder Pattern** simplifies creating guitars with various attributes without needing separate subclasses for each
+guitar type. It provides a fluent API that:
+
+1. **Allows chaining methods** to set guitar attributes (`type`, `model`, `specs`, `os`).
+2. **Encapsulates construction logic** within the `GuitarBuilder`, separating it from the `Guitar` class itself.
+3. **Produces immutable `Guitar` instances** after calling the `build()` method.
+
+This design is highly scalable, easy to understand, and flexible for future expansions.
+
+**Example Usage**:
+
+```scala
+val guitar = GuitarBuilder()
+  .withType("Electric")
+  .withModel("Fender Stratocaster")
+  .withSpecs("Alder Body, Maple Neck")
+  .withOs("Custom OS 2.0")
+  .build()
+```
 
 ---
 
 ## **Singleton Pattern**
-The **Singleton Pattern** is used to **ensure that there is a single instance of the inventory management system** throughout the application's lifecycle. Instead of creating multiple instances of an inventory class (which could lead to inconsistencies), the system:
-1. **Uses `GuitarInventory` as a Singleton Object**, meaning only one instance exists at runtime.
-2. **Centralizes inventory data**, ensuring that all parts of the application interact with the same inventory.
-3. **Provides global access to stock operations (`addGuitar`, `removeGuitar`, `listInventory`)**, ensuring consistency in stock management.
 
-This design choice **prevents duplicate inventories** and ensures that all operations (adding, removing, and listing guitars) are performed on a single, reliable data source.
+The **Singleton Pattern** ensures a single, consistent inventory system (`GuitarInventory`) is available throughout the
+application's lifecycle. This prevents inconsistencies and duplicate inventories, ensuring that all operations (add,
+remove, list) interact with the same shared data source.
 
 ---
 
 ## **Setup Instructions**
 
 ### **1️⃣ Clone the Repository**
+
 ```bash
-git clone https://github.com/your-repo/guitar-factory.git
-cd guitar-factory
+git clone https://github.com/your-repo/guitar-builder.git
+cd guitar-builder
 ```
 
 ### **2️⃣ Compile & Run the Application**
+
 ```sh
 ./sbtw compile run
 ```
 
 ### **3️⃣ Run Tests**
+
 ```sh
 ./sbtw test
 ```

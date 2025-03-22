@@ -2,77 +2,148 @@
 
 ## Overview
 
-This project demonstrates a tax calculation system where different products are subject to different tax rates based on
-the state and year.
+This project demonstrates a flexible tax calculation system that calculates product prices based on tax rules defined by **year**, **state**, and **product**.
 
 - **Kotlin** → A concise, modern JVM-based language.
 
+---
+
 ## Features
 
-- **Product-based Taxation**: Different products have distinct tax rates.
-- **State-Specific Taxes**: Each state may define its own tax rates.
-- **Yearly Tax Changes**: Taxes can change depending on the year.
-- **Scalable Architecture**: Designed for easy expansion and modification.
-- **Specification Pattern**: Clearly defines flexible and reusable tax rule criteria (e.g., product, state, and year).
+- **Scalable Architecture**: Easily extendable to include more rules or criteria.
+- **Specification Pattern**: Allows clear and flexible rules for filtering taxes by year, state, or product.
 
-## Class Diagram
+---
 
-Below is a **UML class diagram** representing the core structure of the TAX system:
+## Implementations
+
+### 1. **Specific Specifications**
 
 ```mermaid
 classDiagram
-    class Product {
-        <<sealedclass>>
-        +name: String
-        +price: Double
-    }
 
-    class Electronic
-    class Book
-    class Food
+   class YearSpecification {
+      <<interface>>
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
 
-    class State {
-        +name: String
-        +code: String
-    }
+   class 2023YearSpecification {
+      -stateSpecifications: List~StateSpecification~
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
 
-    class TaxRule {
-        +state: State
-        +product: Product
-        +year: Int
-        +taxRate: Double
-        +calculateTax(): Double
-    }
+   class 2024YearSpecification {
+      -stateSpecifications: List~StateSpecification~
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
 
-    class Specification~T~ {
-        <<interface>>
-        +matches(candidate: T): Boolean
-        +and(other: Specification~T~): Specification~T~
-        +or(other: Specification~T~): Specification~T~
-    }
+   class CASpecification2023 {
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
 
-    class ProductSpecification
-    class StateSpecification
-    class YearSpecification
+   class TXSpecification2023 {
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
 
-    class TaxCalculator {
-        +calculateTotalPrice(product: Product, state: State, year: Int): Double
-    }
+   class CASpecification2024 {
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
 
-    Product <|-- Electronic
-    Product <|-- Book
-    Product <|-- Food
+   class TXSpecification2024 {
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
 
-    Product --> TaxRule
-    State --> TaxRule
-    TaxRule --> TaxCalculator
+   class TaxRule {
+      +state: State
+      +product: String
+      +year: Int
+      +taxRate: Double
+      +calculateTax(price: Double): Double
+   }
 
-    Specification~T~ <|.. ProductSpecification
-    Specification~T~ <|-- StateSpecification
-    Specification~T~ <|-- YearSpecification
+   class TaxCalculator {
+      +calculateTotalPrice(product: String, price: Double, state: State, year: Int): Double
+   }
 
-    Specification~T~ ..> TaxRule : evaluates
+   YearSpecification <|-- 2023YearSpecification
+   YearSpecification <|-- 2024YearSpecification
+
+   2023YearSpecification --> CASpecification2023 : uses
+   2023YearSpecification --> TXSpecification2023 : uses
+   2024YearSpecification --> CASpecification2024 : uses
+   2024YearSpecification --> TXSpecification2024 : uses
+
+   TaxCalculator --> YearSpecification : uses
+   YearSpecification ..> TaxRule : evaluates
 ```
+
+#### **Advantages:**
+- Clear domain modeling with explicit rules.
+- Easy to debug and maintain simple use-cases.
+- Straightforward logic and readability.
+
+#### **Drawbacks:**
+- Code duplication across similar classes.
+- High coupling and low scalability.
+- Complex to extend with many states or years.
+
+---
+
+### 2. **Compound Specification**
+
+```mermaid
+classDiagram
+
+   class ProductSpecification {
+      -product: String
+      -compoundSpecification: CompoundSpecification
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
+
+   class CompoundSpecification {
+      -yearSpecifications: List~YearSpecification~
+      -stateSpecification: StateSpecification
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
+
+   class YearSpecification {
+      -year: Int
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
+
+   class StateSpecification {
+      -state: String
+      +isSatisfiedBy(candidate: TaxRule): Boolean
+   }
+
+   class TaxRule {
+      +state: String
+      +product: String
+      +year: Int
+      +taxRate: Double
+      +calculateTax(price: Double): Double
+   }
+
+   class TaxCalculator {
+      +calculateTotalPriceCompound(product: String, price: Double, state: State, year: Int): Double
+   }
+
+   ProductSpecification --> CompoundSpecification : uses
+   CompoundSpecification --> YearSpecification : uses (multiple, OR)
+   CompoundSpecification --> StateSpecification : uses
+
+   TaxCalculator --> ProductSpecification : uses
+   ProductSpecification ..> TaxRule : evaluates
+```
+
+#### **Advantages:**
+- Highly flexible composition of rules.
+- Reduces redundancy and improves scalability.
+- Easy to extend to new specifications (years/states/products).
+
+#### ️ **Drawbacks:**
+- Slightly increased complexity for newcomers.
+- Harder debugging due to dynamic rule composition.
 
 ---
 
@@ -80,6 +151,8 @@ classDiagram
 
 - **JDK 21** → Ensure Java is installed.
 - **Gradle** → Used for dependency management.
+
+---
 
 ## Setup Instructions
 
