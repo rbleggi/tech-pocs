@@ -19,11 +19,11 @@ The project utilizes the **Builder Pattern** to streamline guitar creation with 
 
 ## **Features**
 
-✔ **Flexible Guitar Creation** → Users specify guitar attributes dynamically.  
-✔ **Inventory Management** → Tracks available guitars and stock levels.  
-✔ **Builder Pattern** → Simplifies the creation of guitars through a fluent interface.  
-✔ **Singleton Inventory** → Ensures centralized and consistent stock control.  
-✔ **Scalability** → Easily extendable to accommodate additional guitar attributes.
+- **Flexible Guitar Creation** → Users specify guitar attributes dynamically.  
+- **Inventory Management** → Tracks available guitars and stock levels.  
+- **Builder Pattern** → Simplifies the creation of guitars through a fluent interface.  
+- **Singleton Inventory** → Ensures centralized and consistent stock control.  
+- **Scalability** → Easily extendable to accommodate additional guitar attributes.
 
 ---
 
@@ -102,20 +102,20 @@ remove, list) interact with the same shared data source.
 
 ## **Setup Instructions**
 
-### **1️⃣ Clone the Repository**
+### **1️ - Clone the Repository**
 
 ```bash
 git clone https://github.com/your-repo/guitar-builder.git
 cd guitar-builder
 ```
 
-### **2️⃣ Compile & Run the Application**
+### **2️ - Compile & Run the Application**
 
 ```sh
 ./sbtw compile run
 ```
 
-### **3️⃣ Run Tests**
+### **3️ - Run Tests**
 
 ```sh
 ./sbtw test
