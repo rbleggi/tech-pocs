@@ -80,25 +80,6 @@ The **Strategy Pattern** allows each logging destination to encapsulate its own 
 
 ---
 
-## **Usage Example**
-
-```scala
-import scala.concurrent.ExecutionContext.Implicits.global
-
-val strategies: List[LogStrategy] = List(
-  FileSystemStrategy("app.log"),
-  AsyncStrategy(ELKStrategy("http://localhost:9200"), global),
-  ConsoleStrategy()
-)
-
-val logger = LoggerRouter(strategies)
-
-logger.log(LogLevel.INFO, "User login successful")
-logger.log(LogLevel.ERROR, "Database connection failed")
-```
-
----
-
 ## **Setup Instructions**
 
 ### **1️ - Clone the Repository**
