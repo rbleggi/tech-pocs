@@ -158,7 +158,7 @@ classDiagram
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.tlcinternal.com/rbleggi/tech-pocs.git
+   git clone https://github.com/rbleggi/tech-pocs.git
    cd kotlin/tax-system
    ```
 

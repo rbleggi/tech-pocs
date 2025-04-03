@@ -74,18 +74,18 @@ classDiagram
 
 ## Setup Instructions
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.tlcinternal.com/rbleggi/tech-pocs.git
-   cd scala-3.6/template-renderer
-   ```
+### **1️ - Clone the Repository**
+```shell
+git clone https://github.com/rbleggi/tech-pocs.git
+cd scala-3/template-renderer
+```
 
-2. **Compiling & Running**
-   ```sh
-   ./sbtw compile run 
-   ```
+### **2️ - Compile & Run the Application**
+```shell
+./sbtw compile run
+```
 
-3. **Compiling & Tests**
-   ```sh
-   ./sbtw compile test
-   ```
+### **3️ - Run Tests**
+```shell
+./sbtw compile test
+```

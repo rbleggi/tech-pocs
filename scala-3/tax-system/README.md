@@ -76,18 +76,18 @@ This design **keeps the system modular, reusable, and easy to extend**.
 
 ## **Setup Instructions**
 
-### **1️⃣ Clone the Repository**
-```bash
-git clone https://github.tlcinternal.com/rbleggi/tech-pocs.git
-cd scala-3.6/tax-system
+### **1️ - Clone the Repository**
+```shell
+git clone https://github.com/rbleggi/tech-pocs.git
+cd scala-3/tax-system
 ```
 
-### **2️⃣ Compile & Run the Application**
-```sh
+### **2️ - Compile & Run the Application**
+```shell
 ./sbtw compile run
 ```
 
-### **3️⃣ Run Tests**
-```sh
+### **3️ - Run Tests**
+```shell
 ./sbtw compile test
 ```

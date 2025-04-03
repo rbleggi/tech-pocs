@@ -77,19 +77,6 @@ guitar type. It provides a fluent API that:
 2. **Encapsulates construction logic** within the `GuitarBuilder`, separating it from the `Guitar` class itself.
 3. **Produces immutable `Guitar` instances** after calling the `build()` method.
 
-This design is highly scalable, easy to understand, and flexible for future expansions.
-
-**Example Usage**:
-
-```scala
-val guitar = GuitarBuilder()
-  .withType("Electric")
-  .withModel("Fender Stratocaster")
-  .withSpecs("Alder Body, Maple Neck")
-  .withOs("Custom OS 2.0")
-  .build()
-```
-
 ---
 
 ## **Singleton Pattern**
@@ -103,20 +90,17 @@ remove, list) interact with the same shared data source.
 ## **Setup Instructions**
 
 ### **1️ - Clone the Repository**
-
-```bash
-git clone https://github.com/your-repo/guitar-builder.git
-cd guitar-builder
+```shell
+git clone https://github.com/rbleggi/tech-pocs.git
+cd scala-3/guitar-builder
 ```
 
 ### **2️ - Compile & Run the Application**
-
-```sh
+```shell
 ./sbtw compile run
 ```
 
 ### **3️ - Run Tests**
-
-```sh
-./sbtw test
+```shell
+./sbtw compile test
 ```

@@ -83,17 +83,17 @@ The **Strategy Pattern** allows each logging destination to encapsulate its own 
 ## **Setup Instructions**
 
 ### **1️ - Clone the Repository**
-```bash
-git clone https://github.tlcinternal.com/rbleggi/tech-pocs.git
-cd scala-3.6/logger-builder-router-system
+```shell
+git clone https://github.com/rbleggi/tech-pocs.git
+cd scala-3/logger-builder-router-system
 ```
 
 ### **2️ - Compile & Run the Application**
-```bash
-./sbt compile run
+```shell
+./sbtw compile run
 ```
 
 ### **3️ - Run Tests**
-```bash
-./sbt test
+```shell
+./sbtw compile test
 ```
