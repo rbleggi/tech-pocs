@@ -1,4 +1,4 @@
-# **TAX System Project**
+# **TAX System**
 
 ## **Overview**
 
@@ -6,23 +6,21 @@ This project demonstrates a **dynamic tax calculation system** where different p
 
 ### **Tech Stack**
 - **Scala 3.6** → A powerful JVM-based language with strong functional programming capabilities.
-- **SBT** → Build tool for Scala and Java projects.
-- **JDK 21** → Required for running the application.
+- **SBT** → Scala's official build tool.
+- **JDK 21** → Required to run the application.
 
 ---
 
 ## **Features**
-✔ **Product-based Taxation** → Different products have distinct tax rates.  
-✔ **State-Specific Taxes** → Each state defines its own tax rules.  
-✔ **Yearly Tax Updates** → Tax rates change depending on the year.  
-✔ **Specification Pattern** → Decouples tax rules from business logic.  
-✔ **Encapsulation** → Each tax rule is **self-contained**, making the system easy to extend.
+- **Product-based Taxation** → Different products have distinct tax rates.  
+- **State-Specific Taxes** → Each state defines its own tax rules.  
+- **Yearly Tax Updates** → Tax rates change depending on the year.  
+- **Specification Pattern** → Decouples tax rules from business logic.  
+- **Encapsulation** → Each tax rule is **self-contained**, making the system easy to extend.
 
 ---
 
-## **Class Diagram**
-
-The diagram below represents the core structure of the **TAX system**:
+## **Architecture Diagram**
 
 ```mermaid
 classDiagram
@@ -66,11 +64,9 @@ classDiagram
 
 ## **Specification Pattern**
 The **Specification Pattern** is used to **encapsulate business rules** for tax calculations. Instead of hardcoding tax logic in a central place, the system:
-1. **Uses `TaxSpecification` as an interface** defining the tax contract.
-2. **Implements `DefaultTaxSpecification`** for dynamically applying the correct tax rule.
-3. **Delegates tax calculation responsibility to each specification**, ensuring that **business rules remain encapsulated**.
-
-This design **keeps the system modular, reusable, and easy to extend**.
+-  **Uses `TaxSpecification` as an interface** defining the tax contract.
+-  **Implements `DefaultTaxSpecification`** for dynamically applying the correct tax rule.
+-  **Delegates tax calculation responsibility to each specification**, ensuring that **business rules remain encapsulated**.
 
 ---
 

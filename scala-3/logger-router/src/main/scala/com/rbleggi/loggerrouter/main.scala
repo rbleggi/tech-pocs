@@ -1,4 +1,4 @@
-package com.rbleggi.loggerbuilderroutersystem
+package com.rbleggi.loggerrouter
 
 import com.rbleggi.loggerbuilderroutersystem.LogLevel.{ERROR, INFO}
 

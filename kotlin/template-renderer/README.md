@@ -67,11 +67,6 @@ classDiagram
 
 ---
 
-## Prerequisites
-
-- **JDK 21** → Ensure Java is installed.
-- **Gradle** → Used for dependency management.
-
 ## Setup Instructions
 
 1. **Clone the Repository**:

@@ -1,4 +1,4 @@
-# **Guitar Builder System**
+# **Guitar Builder**
 
 ## **Overview**
 
@@ -12,24 +12,22 @@ The project utilizes the **Builder Pattern** to streamline guitar creation with 
 ### **Tech Stack**
 
 - **Scala 3.6** → Modern JVM-based language with functional programming support.
-- **SBT** → Scala's build tool for managing dependencies and compiling code.
-- **JDK 21** → Required for running the application.
+- **SBT** → Scala's official build tool.
+- **JDK 21** → Required to run the application.
 
 ---
 
 ## **Features**
 
-- **Flexible Guitar Creation** → Users specify guitar attributes dynamically.  
-- **Inventory Management** → Tracks available guitars and stock levels.  
-- **Builder Pattern** → Simplifies the creation of guitars through a fluent interface.  
-- **Singleton Inventory** → Ensures centralized and consistent stock control.  
+- **Flexible Guitar Creation** → Users specify guitar attributes dynamically.
+- **Inventory Management** → Tracks available guitars and stock levels.
+- **Builder Pattern** → Simplifies the creation of guitars through a fluent interface.
+- **Singleton Inventory** → Ensures centralized and consistent stock control.
 - **Scalability** → Easily extendable to accommodate additional guitar attributes.
 
 ---
 
-## **Class Diagram**
-
-The following diagram illustrates the updated structure using the **Builder Pattern**:
+## **Architecture Diagram**
 
 ```mermaid
 classDiagram
@@ -73,9 +71,9 @@ classDiagram
 The **Builder Pattern** simplifies creating guitars with various attributes without needing separate subclasses for each
 guitar type. It provides a fluent API that:
 
-1. **Allows chaining methods** to set guitar attributes (`type`, `model`, `specs`, `os`).
-2. **Encapsulates construction logic** within the `GuitarBuilder`, separating it from the `Guitar` class itself.
-3. **Produces immutable `Guitar` instances** after calling the `build()` method.
+- **Allows chaining methods** to set guitar attributes (`type`, `model`, `specs`, `os`).
+- **Encapsulates construction logic** within the `GuitarBuilder`, separating it from the `Guitar` class itself.
+- **Produces immutable `Guitar` instances** after calling the `build()` method.
 
 ---
 
@@ -90,17 +88,20 @@ remove, list) interact with the same shared data source.
 ## **Setup Instructions**
 
 ### **1️ - Clone the Repository**
+
 ```shell
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/guitar-builder
 ```
 
 ### **2️ - Compile & Run the Application**
+
 ```shell
 ./sbtw compile run
 ```
 
 ### **3️ - Run Tests**
+
 ```shell
 ./sbtw compile test
 ```

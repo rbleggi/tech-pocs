@@ -1,4 +1,4 @@
-# Template Renderer Project
+# **Template Renderer**
 
 ## Overview
 
@@ -6,6 +6,12 @@ This project follows an **Object-Oriented Design (OOP)** approach to generate te
 
 - **Scala 3.6** → A powerful JVM-based language with strong functional programming capabilities.
 - **iText** → A library for PDF generation.
+
+### **Tech Stack**
+
+- **Scala 3.6** → Modern JVM-based language with functional programming support.
+- **SBT** → Scala's official build tool.
+- **JDK 21** → Required to run the application.
 
 ## Features
 
@@ -18,8 +24,6 @@ This project follows an **Object-Oriented Design (OOP)** approach to generate te
 ---
 
 ## Architecture Diagram
-
-The following **Mermaid UML Diagram** illustrates the **Object-Oriented structure** of this project:
 
 ```mermaid
 classDiagram
@@ -66,11 +70,6 @@ classDiagram
 - **RendererFactory** → Implements the **Factory Pattern** to return the correct renderer.
 
 ---
-
-## Prerequisites
-
-- **JDK 21** → Ensure Java is installed.
-- **SBT** → Used for dependency management.
 
 ## Setup Instructions
 
