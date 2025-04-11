@@ -9,7 +9,7 @@ Each POC is **self-contained**, with its own dependencies, build configurations,
 
 ## 📌 Implementations
 
-| 🧩 System                 | 📄 Description                                                                        | 📐 Pattern    | 🛠️ Implementations                                                                                                            |
+| 🧩 System                 | 📄 Description                                                                        | 📐 [Pattern](https://refactoring.guru/)    | 🛠️ Implementations                                                                                                            |
 |---------------------------|---------------------------------------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------------------------------------|
 | 🎯 **Tax System**         | System where different products have different tax rates per state and year.          | Specification | 🟢 **Kotlin**📘 [README](kotlin/tax-system/README.md)<br>🔵 **Scala 3**📘 [README](scala-3/tax-system/README.md)               |
 | 🧭 **Logger Router**      | Logs to FS, ELK or custom sinks with sync/async modes – all through the same API.     | Strategy      | 🔵 **Scala 3**📘 [README](scala-3/logger-router/README.md)                                                                     |
