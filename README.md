@@ -9,15 +9,16 @@ Each POC is **self-contained**, with its own dependencies, build configurations,
 
 ## 📌 Implementations
 
-| 🧩 System                 | 📄 Description                                                                        | 📐 Pattern    | 🛠️ Implementations                                                                                                                 |
-|---------------------------|---------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| 🎯 **Tax System**         | System where different products have different tax rates per state and year.          | Specification | 🟢 **Kotlin**📘 [README](kotlin/tax-system/README.md)<br>🔵 **Scala 3**📘 [README](scala-3/tax-system/README.md)                    |
-| 🧭 **Logger Router**      | Logs to FS, ELK or custom sinks with sync/async modes – all through the same API.     | Strategy      | 🔵 **Scala 3**📘 [README](scala-3/logger-router/README.md) |
-| 🚚 **Logistic Pricing**   | Calculates dynamic freight costs based on size, volume, and transport type.           | Strategy      | 🔵 **Scala 3**📘 [README](scala-3/logistic-pricing/README.md)                                                                 |
-| 🍽 **Restaurant Queue**   | Queue system that calculates how long each dish will take to prepare.                 | Command       | 🔵 **Scala 3**📘 [README](scala-3/restaurant-queue/README.md)                                                                 |
-| 🖨️ **Template Renderer** | Renders templates as HTML, PDF or CSV using the same source template.                 | Factory       | 🟢 **Kotlin**📘 [README](kotlin/template-renderer/README.md)<br>🔵 **Scala 3**📘 [README](scala-3/template-renderer/README.md)      |
-| 🎸 **Guitar Factory**     | Custom guitar builder with specs, models, operating systems and inventory management. | Builder       | 🔵 **Scala 3**📘 [README](scala-3/guitar-factory/README.md)              |
-| 🎬 **Movie Recommender**  | Movie recommender engine using The Movies Dataset from Kaggle.                        |               | 🟢 **Python**📘 [README](python/movie-recommender/README.md)                                                                        |
+| 🧩 System                 | 📄 Description                                                                        | 📐 Pattern    | 🛠️ Implementations                                                                                                            |
+|---------------------------|---------------------------------------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------------------------------------|
+| 🎯 **Tax System**         | System where different products have different tax rates per state and year.          | Specification | 🟢 **Kotlin**📘 [README](kotlin/tax-system/README.md)<br>🔵 **Scala 3**📘 [README](scala-3/tax-system/README.md)               |
+| 🧭 **Logger Router**      | Logs to FS, ELK or custom sinks with sync/async modes – all through the same API.     | Strategy      | 🔵 **Scala 3**📘 [README](scala-3/logger-router/README.md)                                                                     |
+| 🚚 **Logistic Pricing**   | Calculates dynamic freight costs based on size, volume, and transport type.           | Strategy      | 🔵 **Scala 3**📘 [README](scala-3/logistic-pricing/README.md)                                                                  |
+| 🍽 **Restaurant Queue**   | Queue system that calculates how long each dish will take to prepare.                 | Command       | 🔵 **Scala 3**📘 [README](scala-3/restaurant-queue/README.md)                                                                  |
+| 🎟 **Ticket Booking**     | Allows selecting show, date, seat, and zone while enforcing capacity.                 | Builder       | 🔵 **Scala 3**📘 [README](scala-3/ticket-booking/README.md)                                                                    |
+| 🖨️ **Template Renderer** | Renders templates as HTML, PDF or CSV using the same source template.                 | Factory       | 🟢 **Kotlin**📘 [README](kotlin/template-renderer/README.md)<br>🔵 **Scala 3**📘 [README](scala-3/template-renderer/README.md) |
+| 🎸 **Guitar Factory**     | Custom guitar builder with specs, models, operating systems and inventory management. | Builder       | 🔵 **Scala 3**📘 [README](scala-3/guitar-factory/README.md)                                                                    |
+| 🎬 **Movie Recommender**  | Movie recommender engine using The Movies Dataset from Kaggle.                        |               | 🟢 **Python**📘 [README](python/movie-recommender/README.md)                                                                   |
 
 ---
 
