@@ -19,6 +19,7 @@ Each POC is **self-contained**, with its own dependencies, build configurations,
 | 🖨️ **Template Renderer** | Renders templates as HTML, PDF or CSV using the same source template.                 | Factory       | 🟢 **Kotlin**📘 [README](kotlin/template-renderer/README.md)<br>🔵 **Scala 3**📘 [README](scala-3/template-renderer/README.md) |
 | 🎸 **Guitar Factory**     | Custom guitar builder with specs, models, operating systems and inventory management. | Builder       | 🔵 **Scala 3**📘 [README](scala-3/guitar-factory/README.md)                                                                    |
 | 🎬 **Movie Recommender**  | Movie recommender engine using The Movies Dataset from Kaggle.                        |               | 🟢 **Python**📘 [README](python/movie-recommender/README.md)                                                                   |
+| 🛒 **Grocery TODO List**  | Flexible grocery list with undo/redo functionality.                                   | Command       | 🔵 **Scala 3**📘 [README](scala-3/grocery-todo-list/README.md)                                                                 |
 
 ---
 
