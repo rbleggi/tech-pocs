@@ -14,11 +14,11 @@ This project implements a **flexible and maintainable grocery TODO list system**
 
 ## **Features**
 
-- **Comprehensive Grocery Management** → Add, remove, and mark items as done
-- **Action History** → Undo and redo functionality
-- **Command Pattern** → Actions are encapsulated as commands for easy extension
-- **No Boilerplate** → Clean, straightforward implementation
-- **Immutable Data** → Leverages Scala's immutability for safer code
+- **Comprehensive Grocery Management** → Add, remove, and mark items as done.
+- **Action History** → Undo and redo functionality for better control.
+- **Command Pattern** → Actions are encapsulated as commands for easy extension and maintainability.
+- **No Boilerplate** → Clean, straightforward implementation.
+- **Immutable Data** → Leverages Scala's immutability for safer and more predictable code.
 
 ---
 
@@ -29,56 +29,68 @@ classDiagram
     direction TB
 
     class Command {
-        <<interface>>
-        +execute(): Unit
-        +undo(): Unit
+        <<trait>>
+        +execute(): Boolean
+        +undo(): Boolean
     }
 
     class AddItemCommand {
         -item: GroceryItem
-        +execute(): Unit
-        +undo(): Unit
+        -manager: GroceryList
+        +execute(): Boolean
+        +undo(): Boolean
     }
 
     class RemoveItemCommand {
         -item: GroceryItem
-        +execute(): Unit
-        +undo(): Unit
+        -manager: GroceryList
+        -removedItem: Option[GroceryItem]
+        +execute(): Boolean
+        +undo(): Boolean
     }
 
     class MarkAsDoneCommand {
         -item: GroceryItem
-        +execute(): Unit
-        +undo(): Unit
+        -manager: GroceryList
+        -previousState: Option[GroceryItem]
+        +execute(): Boolean
+        +undo(): Boolean
     }
 
     class GroceryItem {
         +name: String
         +isDone: Boolean
+        +markAsDone: GroceryItem
+        +markAsUndone: GroceryItem
+        +toString(): String
     }
 
     class GroceryList {
         -items: List[GroceryItem]
-        +addItem(item: GroceryItem): Unit
-        +removeItem(item: GroceryItem): Unit
-        +markAsDone(item: GroceryItem): Unit
+        +getItems(): List[GroceryItem]
+        +setItems(newItems: List[GroceryItem]): Unit
         +listAll(): Unit
+        +getItemByName(name: String): Option[GroceryItem]
     }
 
     class CommandInvoker {
-        -history: Stack[Command]
-        -redoStack: Stack[Command]
-        +executeCommand(command: Command): Unit
-        +undo(): Unit
-        +redo(): Unit
+        <<object>>
+        -history: List[Command]
+        -redoStack: List[Command]
+        +executeCommand(command: Command): Boolean
+        +undo(): Boolean
+        +redo(): Boolean
     }
 
-    Command <|-- AddItemCommand
-    Command <|-- RemoveItemCommand
-    Command <|-- MarkAsDoneCommand
-    AddItemCommand --> GroceryList: modifies
-    RemoveItemCommand --> GroceryList: modifies
-    MarkAsDoneCommand --> GroceryList: modifies
+    Command <|.. AddItemCommand
+    Command <|.. RemoveItemCommand
+    Command <|.. MarkAsDoneCommand
+    AddItemCommand --> GroceryList: uses
+    AddItemCommand --> GroceryItem: uses
+    RemoveItemCommand --> GroceryList: uses
+    RemoveItemCommand --> GroceryItem: uses
+    MarkAsDoneCommand --> GroceryList: uses
+    MarkAsDoneCommand --> GroceryItem: uses
     CommandInvoker --> Command: invokes
     GroceryList o-- GroceryItem: contains
 ```
@@ -89,11 +101,11 @@ classDiagram
 
 The **Command Pattern** encapsulates requests as objects, allowing:
 
-- Each grocery list action is implemented as a separate `Command`
-- `CommandInvoker` maintains history for undo/redo functionality
-- Commands know how to execute and undo themselves
-- Easy extension with new commands without modifying existing code
-- Clean separation between the invoker and the receiver
+- Each grocery list action to be implemented as a separate `Command`.
+- `CommandInvoker` to maintain history for undo/redo functionality.
+- Commands to know how to execute and undo themselves, ensuring encapsulation.
+- Easy extension with new commands without modifying existing code, adhering to the Open/Closed Principle.
+- Clean separation between the invoker (`CommandInvoker`) and the receiver (`GroceryList`), improving modularity and testability.
 
 ---
 
