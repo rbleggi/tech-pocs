@@ -20,6 +20,7 @@ Each POC is **self-contained**, with its own dependencies, build configurations,
 | 🎸 **Guitar Factory**     | Custom guitar builder with specs, models, operating systems and inventory management. | Builder       | 🔵 **Scala 3**📘 [README](scala-3/guitar-factory/README.md)                                                                    |
 | 🎬 **Movie Recommender**  | Movie recommender engine using The Movies Dataset from Kaggle.                        |               | 🟢 **Python**📘 [README](python/movie-recommender/README.md)                                                                   |
 | 🛒 **Grocery TODO List**  | Flexible grocery list with undo/redo functionality.                                   | Command       | 🔵 **Scala 3**📘 [README](scala-3/grocery-todo-list/README.md)                                                                 |
+| 📂 **FileShare System**   | File management system with encryption and undo/redo functionality.                   | Command       | 🔵 **Scala 3**📘 [README](scala-3/file-share-system/README.md)                                                                 |
 
 ---
 
@@ -36,3 +37,4 @@ integration.
 | 🟠 **Advanced**  | Advanced techniques, patterns, and concepts       | [README-Advanced.md](scala-study/README-Advanced.md) |
 | 🔵 **Libraries** | Useful libraries and tools in the Scala ecosystem | [README-Libs.md](scala-study/README-Libs.md)         |
 | 🟢 **Spring**    | Using Scala with the Spring Framework             | [README-Spring.md](scala-study/README-Spring.md)     |
+
