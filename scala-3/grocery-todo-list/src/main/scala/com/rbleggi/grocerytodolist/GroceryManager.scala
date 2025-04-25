@@ -1,11 +1,11 @@
 package com.rbleggi.grocerytodolist
 
-class GroceryList {
+class GroceryManager {
   private var items: List[GroceryItem] = List.empty
 
   def getItems: List[GroceryItem] = items
 
-  def setItems(newItems: List[GroceryItem]): Unit = {
+  def applyChanges(newItems: List[GroceryItem]): Unit = {
     items = newItems
   }
 
@@ -17,7 +17,4 @@ class GroceryList {
       items.foreach(item => println(item))
     }
   }
-
-  def getItemByName(name: String): Option[GroceryItem] =
-    items.find(_.name == name)
 }

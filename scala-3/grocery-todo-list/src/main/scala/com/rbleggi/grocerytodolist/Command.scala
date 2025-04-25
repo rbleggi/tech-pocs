@@ -1,102 +1,90 @@
 package com.rbleggi.grocerytodolist
 
 trait Command {
-  def execute(): Boolean
-
-  def undo(): Boolean
+  def execute(items: List[GroceryItem]): List[GroceryItem]
+  def undo(items: List[GroceryItem]): List[GroceryItem]
 }
 
-class AddItemCommand(item: GroceryItem, manager: GroceryList) extends Command {
-  override def execute(): Boolean = {
-    val items = manager.getItems
+class AddItemCommand(item: GroceryItem) extends Command {
+  override def execute(items: List[GroceryItem]): List[GroceryItem] = {
     if (!items.exists(_.name == item.name)) {
-      manager.setItems(items :+ item)
       println(s"Added: ${item.name}")
-      true
+      items :+ item
     } else {
       println(s"Item already exists: ${item.name}")
-      false
+      items
     }
   }
 
-  override def undo(): Boolean = {
-    val items = manager.getItems
+  override def undo(items: List[GroceryItem]): List[GroceryItem] = {
     val index = items.indexWhere(_.name == item.name)
     if (index >= 0) {
-      manager.setItems(items.patch(index, Nil, 1))
       println(s"Undone addition: ${item.name}")
-      true
+      items.patch(index, Nil, 1)
     } else {
       println(s"Item not found for undo: ${item.name}")
-      false
+      items
     }
   }
 }
 
-class RemoveItemCommand(item: GroceryItem, manager: GroceryList) extends Command {
+class RemoveItemCommand(item: GroceryItem) extends Command {
   private var removedItem: Option[GroceryItem] = None
 
-  override def execute(): Boolean = {
-    val items = manager.getItems
+  override def execute(items: List[GroceryItem]): List[GroceryItem] = {
     val index = items.indexWhere(_.name == item.name)
     if (index >= 0) {
       removedItem = Some(items(index))
-      manager.setItems(items.patch(index, Nil, 1))
       println(s"Removed: ${item.name}")
-      true
+      items.patch(index, Nil, 1)
     } else {
       println(s"Item not found: ${item.name}")
-      false
+      items
     }
   }
 
-  override def undo(): Boolean =
+  override def undo(items: List[GroceryItem]): List[GroceryItem] = {
     removedItem match {
       case Some(item) =>
-        val items = manager.getItems
-        manager.setItems(items :+ item)
         println(s"Undone removal: ${item.name}")
-        true
+        items :+ item
       case None =>
         println(s"Cannot undo removal: ${item.name}")
-        false
+        items
     }
+  }
 }
 
-class MarkAsDoneCommand(item: GroceryItem, manager: GroceryList) extends Command {
+class MarkAsDoneCommand(item: GroceryItem) extends Command {
   private var previousState: Option[GroceryItem] = None
 
-  override def execute(): Boolean = {
-    val items = manager.getItems
+  override def execute(items: List[GroceryItem]): List[GroceryItem] = {
     val index = items.indexWhere(_.name == item.name)
     if (index >= 0) {
       previousState = Some(items(index))
       val updatedItem = items(index).markAsDone
-      manager.setItems(items.updated(index, updatedItem))
       println(s"Marked as done: ${item.name}")
-      true
+      items.updated(index, updatedItem)
     } else {
       println(s"Item not found: ${item.name}")
-      false
+      items
     }
   }
 
-  override def undo(): Boolean = {
+  override def undo(items: List[GroceryItem]): List[GroceryItem] = {
     previousState match {
       case Some(prevItem) =>
-        val items = manager.getItems
         val index = items.indexWhere(_.name == item.name)
         if (index >= 0) {
-          manager.setItems(items.updated(index, prevItem))
           println(s"Undone mark as done: ${item.name}")
-          true
+          items.updated(index, prevItem)
         } else {
           println(s"Item not found for undo: ${item.name}")
-          false
+          items
         }
       case None =>
         println(s"Cannot undo: ${item.name}")
-        false
+        items
     }
   }
 }

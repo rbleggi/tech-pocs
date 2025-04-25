@@ -1,30 +1,30 @@
 package com.rbleggi.grocerytodolist
 
-import com.rbleggi.grocerytodolist.CommandInvoker.executeCommand
+import com.rbleggi.grocerytodolist.CommandInvoker._
 
 @main def run(): Unit = {
   println("\nWelcome to Grocery TODO List!")
   println("--------------------------------")
 
-  val manager = new GroceryList()
+  val manager = new GroceryManager()
 
   val milkItem = GroceryItem("Milk")
   val breadItem = GroceryItem("Bread")
   val eggsItem = GroceryItem("Eggs")
 
-  executeCommand(new AddItemCommand(milkItem, manager))
-  executeCommand(new AddItemCommand(breadItem, manager))
-  executeCommand(new AddItemCommand(eggsItem, manager))
+  manager.applyChanges(executeCommand(new AddItemCommand(milkItem), manager.getItems))
+  manager.applyChanges(executeCommand(new AddItemCommand(breadItem), manager.getItems))
+  manager.applyChanges(executeCommand(new AddItemCommand(eggsItem), manager.getItems))
 
   manager.listAll()
-  executeCommand(new MarkAsDoneCommand(milkItem, manager))
+  manager.applyChanges(executeCommand(new MarkAsDoneCommand(milkItem), manager.getItems))
   manager.listAll()
-  executeCommand(new RemoveItemCommand(breadItem, manager))
+  manager.applyChanges(executeCommand(new RemoveItemCommand(breadItem), manager.getItems))
   manager.listAll()
-  CommandInvoker.undo()
+  manager.applyChanges(undo(manager.getItems))
   manager.listAll()
-  CommandInvoker.undo()
+  manager.applyChanges(undo(manager.getItems))
   manager.listAll()
-  CommandInvoker.redo()
+  manager.applyChanges(redo(manager.getItems))
   manager.listAll()
 }

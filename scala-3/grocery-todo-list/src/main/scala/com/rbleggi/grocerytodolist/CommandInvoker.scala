@@ -1,49 +1,41 @@
 package com.rbleggi.grocerytodolist
 
-object CommandInvoker {
-  private var history: List[Command] = List.empty
-  private var redoStack: List[Command] = List.empty
+import scala.collection.mutable
 
-  def executeCommand(command: Command): Boolean = {
-    val result = command.execute()
-    if (result) {
-      history = command :: history
-      redoStack = List.empty
-    }
+object CommandInvoker {
+  private val history = mutable.Stack[Command]()
+  private val redoStack = mutable.Stack[Command]()
+
+  def executeCommand(command: Command, items: List[GroceryItem]): List[GroceryItem] = {
+    val result = command.execute(items)
+    history.push(command)
+    redoStack.clear()
     result
   }
 
-  def undo(): Boolean =
-    history match {
-      case cmd :: rest =>
-        val result = cmd.undo()
-        if (result) {
-          history = rest
-          redoStack = cmd :: redoStack
-          println("Undo successful")
-        } else {
-          println("Undo failed")
-        }
-        result
-      case Nil =>
-        println("Nothing to undo")
-        false
+  def undo(items: List[GroceryItem]): List[GroceryItem] = {
+    if (history.nonEmpty) {
+      val command = history.pop()
+      val result = command.undo(items)
+      redoStack.push(command)
+      println("Undo successful")
+      result
+    } else {
+      println("Nothing to undo")
+      items
     }
+  }
 
-  def redo(): Boolean =
-    redoStack match {
-      case cmd :: rest =>
-        val result = cmd.execute()
-        if (result) {
-          redoStack = rest
-          history = cmd :: history
-          println("Redo successful")
-        } else {
-          println("Redo failed")
-        }
-        result
-      case Nil =>
-        println("Nothing to redo")
-        false
+  def redo(items: List[GroceryItem]): List[GroceryItem] = {
+    if (redoStack.nonEmpty) {
+      val command = redoStack.pop()
+      val result = command.execute(items)
+      history.push(command)
+      println("Redo successful")
+      result
+    } else {
+      println("Nothing to redo")
+      items
     }
+  }
 }

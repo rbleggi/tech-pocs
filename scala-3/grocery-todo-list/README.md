@@ -30,31 +30,28 @@ classDiagram
 
     class Command {
         <<trait>>
-        +execute(): Boolean
-        +undo(): Boolean
+        +execute(items: List[GroceryItem]): List[GroceryItem]
+        +undo(items: List[GroceryItem]): List[GroceryItem]
     }
 
     class AddItemCommand {
         -item: GroceryItem
-        -manager: GroceryList
-        +execute(): Boolean
-        +undo(): Boolean
+        +execute(items: List[GroceryItem]): List[GroceryItem]
+        +undo(items: List[GroceryItem]): List[GroceryItem]
     }
 
     class RemoveItemCommand {
         -item: GroceryItem
-        -manager: GroceryList
         -removedItem: Option[GroceryItem]
-        +execute(): Boolean
-        +undo(): Boolean
+        +execute(items: List[GroceryItem]): List[GroceryItem]
+        +undo(items: List[GroceryItem]): List[GroceryItem]
     }
 
     class MarkAsDoneCommand {
         -item: GroceryItem
-        -manager: GroceryList
         -previousState: Option[GroceryItem]
-        +execute(): Boolean
-        +undo(): Boolean
+        +execute(items: List[GroceryItem]): List[GroceryItem]
+        +undo(items: List[GroceryItem]): List[GroceryItem]
     }
 
     class GroceryItem {
@@ -65,34 +62,28 @@ classDiagram
         +toString(): String
     }
 
-    class GroceryList {
+    class GroceryManager {
         -items: List[GroceryItem]
-        +getItems(): List[GroceryItem]
-        +setItems(newItems: List[GroceryItem]): Unit
+        +getItems: List[GroceryItem]
+        +applyChanges(newItems: List[GroceryItem]): Unit
         +listAll(): Unit
-        +getItemByName(name: String): Option[GroceryItem]
     }
 
     class CommandInvoker {
         <<object>>
-        -history: List[Command]
-        -redoStack: List[Command]
-        +executeCommand(command: Command): Boolean
-        +undo(): Boolean
-        +redo(): Boolean
+        -history: Stack[Command]
+        -redoStack: Stack[Command]
+        +executeCommand(command: Command, items: List[GroceryItem]): List[GroceryItem]
+        +undo(items: List[GroceryItem]): List[GroceryItem]
+        +redo(items: List[GroceryItem]): List[GroceryItem]
     }
 
     Command <|.. AddItemCommand
     Command <|.. RemoveItemCommand
     Command <|.. MarkAsDoneCommand
-    AddItemCommand --> GroceryList: uses
-    AddItemCommand --> GroceryItem: uses
-    RemoveItemCommand --> GroceryList: uses
-    RemoveItemCommand --> GroceryItem: uses
-    MarkAsDoneCommand --> GroceryList: uses
-    MarkAsDoneCommand --> GroceryItem: uses
     CommandInvoker --> Command: invokes
-    GroceryList o-- GroceryItem: contains
+    GroceryManager o-- GroceryItem: manages
+    CommandInvoker --> GroceryManager: modifies
 ```
 
 ---
@@ -105,7 +96,7 @@ The **Command Pattern** encapsulates requests as objects, allowing:
 - `CommandInvoker` to maintain history for undo/redo functionality.
 - Commands to know how to execute and undo themselves, ensuring encapsulation.
 - Easy extension with new commands without modifying existing code, adhering to the Open/Closed Principle.
-- Clean separation between the invoker (`CommandInvoker`) and the receiver (`GroceryList`), improving modularity and testability.
+- Clean separation between the invoker (`CommandInvoker`) and the receiver (`GroceryManager`), improving modularity and testability.
 
 ---
 
