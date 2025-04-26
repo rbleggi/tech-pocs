@@ -126,23 +126,11 @@ class OptimalPathHealthStrategy extends HealthCalculationStrategy {
     path.toList
   }
 
-  /**
-   * Print the dungeon layout for visualization
-   *
-   * @param dungeon The dungeon grid
-   */
   private def printDungeonInput(dungeon: Array[Array[Int]]): Unit = {
     println("Dungeon:")
     dungeon.foreach(row => println(row.mkString("[", ", ", "]")))
   }
 
-  /**
-   * Print the explanation of the result including the minimum health required
-   * and the optimal path to follow
-   *
-   * @param minHealth Minimum initial health required
-   * @param path List of directions forming the optimal path
-   */
   private def printExplanation(minHealth: Int, path: List[String]): Unit = {
     println(s"Explanation: The initial health of the knight must be at least $minHealth " +
       s"if he follows the optimal path: ${path.mkString(" -> ")}.")
