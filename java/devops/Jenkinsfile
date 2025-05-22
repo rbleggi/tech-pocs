@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        label 'docker-agent'
+        docker {
+            image 'docker:latest'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker'
+        }
     }
     
     options {
@@ -106,7 +109,7 @@ pipeline {
         always {
             echo "Build completed on agent: ${env.NODE_NAME}"
             sh """
-                # Limpeza de recursos não utilizados
+                # Cleanup of resources not needed
                 docker system prune -f
             """
         }
