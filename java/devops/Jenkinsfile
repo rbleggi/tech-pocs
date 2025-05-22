@@ -49,7 +49,8 @@ pipeline {
 
                 # Install OpenTofu
                 curl -L -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v1.6.0/tofu_1.6.0_linux_amd64.zip
-                unzip opentofu.zip
+                # Use -o flag to overwrite files without prompting
+                unzip -o opentofu.zip
                 chmod +x tofu
                 mv tofu /usr/local/bin/
                 rm -f opentofu.zip
