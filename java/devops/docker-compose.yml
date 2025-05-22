@@ -131,6 +131,8 @@ services:
     networks:
       - app-network
     entrypoint: ["/bin/true"]
+    volumes:
+      - ./k3s:/config
 
   prometheus:
     image: prom/prometheus:v2.45.0

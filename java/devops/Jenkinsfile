@@ -62,6 +62,7 @@ pipeline {
                 mkdir -p ${WORKSPACE}/k3s-modified
                 sed 's|https://k3s:6443|https://host-gateway:6443|g' ${KUBECONFIG_ORIGINAL} > ${KUBECONFIG_MODIFIED}
                 cp ${KUBECONFIG_MODIFIED} ${WORKSPACE}/k3s/kubeconfig.yaml
+                cp ${KUBECONFIG_MODIFIED} /config/kubeconfig.yaml
                 '''
             }
         }
