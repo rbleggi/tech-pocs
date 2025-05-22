@@ -30,7 +30,7 @@ pipeline {
                 sh '''
                 # Install required tools
                 apk update
-                apk add --no-cache docker maven curl tar bash
+                apk add --no-cache docker maven curl tar bash git
 
                 # Install kubectl
                 curl -LO "https://dl.k8s.io/release/stable.txt"
@@ -48,6 +48,7 @@ pipeline {
                 java -version
                 mvn --version
                 docker --version
+                git --version
                 kubectl version --client
                 helm version
                 '''
