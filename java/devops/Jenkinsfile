@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'docker:dind'
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --network=java_devops_app-network'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged'
         }
     }
     
@@ -138,7 +138,7 @@ pipeline {
                     mkdir -p \${WORKSPACE}/k3s-modified
 
                     # If we cannot resolve k3s, use the host IP instead
-                    if ! getent hosts k3s > /dev/null; then
+                    if (! getent hosts k3s > /dev/null); then
                         echo "Modifying kubeconfig to use host IP instead of service name"
                         cat ${KUBECONFIG} | sed "s|https://k3s:6443|https://\${HOST_IP}:6443|g" > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
                         export KUBECONFIG=\${WORKSPACE}/k3s-modified/kubeconfig.yaml
