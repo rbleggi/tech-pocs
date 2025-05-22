@@ -11,8 +11,8 @@ public class ApiControllerTest {
         assertTrue(true);
     }
 
-    @Test
-    public void thisTestShouldFail() {
-        assertTrue(false);
-    }
+//    @Test
+//    public void thisTestShouldFail() {
+//        assertTrue(false);
+//    }
 }

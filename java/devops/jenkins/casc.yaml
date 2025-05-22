@@ -31,10 +31,11 @@ jenkins:
         templates:
           - labelString: "docker-agent java maven"
             dockerTemplateBase:
-              image: "openjdk:17-alpine"
+              image: "jenkins-agent:java-docker-git"
+              user: root
               mounts:
                 - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
               privileged: true
-            remoteFs: "/tmp"
+            remoteFs: "/home/jenkins/agent"
             connector:
               attach: {}

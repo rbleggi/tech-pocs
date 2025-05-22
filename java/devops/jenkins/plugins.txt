@@ -26,3 +26,6 @@ pipeline-build-step
 # Basic security plugins (essential for operation)
 instance-identity
 
+# Agent connection plugins
+ssh-agent
+ssh-slaves
