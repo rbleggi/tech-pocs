@@ -11,6 +11,10 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.0"
     }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.0"
+    }
   }
 }
 
@@ -19,13 +23,6 @@ provider "kubernetes" {
   config_path    = var.kubeconfig_path
   config_context = "default"
   insecure       = true  # Skip TLS verification to handle cert issues
-
-  # Use exec plugin to get credentials - this will use the credentials from kubeconfig
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "kubectl"
-    args        = ["config", "view", "--raw", "--minify", "--flatten"]
-  }
 }
 
 # Configure the Helm provider
@@ -34,13 +31,6 @@ provider "helm" {
     config_path    = var.kubeconfig_path
     config_context = "default"
     insecure       = true  # Skip TLS verification to handle cert issues
-
-    # Use exec plugin to get credentials - this will use the credentials from kubeconfig
-    exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      command     = "kubectl"
-      args        = ["config", "view", "--raw", "--minify", "--flatten"]
-    }
   }
 }
 
@@ -50,55 +40,62 @@ variable "kubeconfig_path" {
   default     = "../../k3s/kubeconfig.yaml"
 }
 
-# Create infrastructure namespace if it doesn't exist
-resource "kubernetes_namespace" "infrastructure" {
-  metadata {
-    name = "infrastructure"
+# Create infrastructure namespace using kubectl directly (avoids auth issues)
+resource "null_resource" "create_infrastructure_namespace" {
+  provisioner "local-exec" {
+    command = "kubectl --kubeconfig ${var.kubeconfig_path} create namespace infrastructure --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} apply -f -"
   }
 }
 
-# Create applications namespace if it doesn't exist
-resource "kubernetes_namespace" "applications" {
-  metadata {
-    name = "applications"
+# Create applications namespace using kubectl directly (avoids auth issues)
+resource "null_resource" "create_applications_namespace" {
+  provisioner "local-exec" {
+    command = "kubectl --kubeconfig ${var.kubeconfig_path} create namespace applications --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} apply -f -"
   }
 }
 
 # Include infrastructure monitoring components
 module "prometheus" {
-  source = "./modules/prometheus"
-  namespace = kubernetes_namespace.infrastructure.metadata[0].name
+  source    = "./modules/prometheus"
+  namespace = "infrastructure"
+  depends_on = [null_resource.create_infrastructure_namespace]
 }
 
 module "grafana" {
-  source = "./modules/grafana"
-  namespace = kubernetes_namespace.infrastructure.metadata[0].name
-  depends_on = [module.prometheus]
+  source    = "./modules/grafana"
+  namespace = "infrastructure"
+  depends_on = [module.prometheus, null_resource.create_infrastructure_namespace]
 }
 
 # Deploy application with Prometheus and Grafana integration
 module "app" {
-  source = "./modules/app"
-  namespace = kubernetes_namespace.applications.metadata[0].name
-  app_name = "java-app"
-  app_image = "tech-pocs/java-devops-app"
-  app_tag = "latest"
+  source     = "./modules/app"
+  namespace  = "applications"
+  app_name   = "java-app"
+  app_image  = "tech-pocs/java-devops-app"
+  app_tag    = "latest"
   prometheus_enabled = true
   depends_on = [
     module.prometheus,
-    module.grafana
+    module.grafana,
+    null_resource.create_applications_namespace
   ]
 }
 
-# Output para validação automática (teste)
+# Output for automatic validation (test)
 output "test_namespaces_created" {
-  value = "${kubernetes_namespace.infrastructure.metadata[0].name} and ${kubernetes_namespace.applications.metadata[0].name} successfully created"
+  value = "infrastructure and applications namespaces created via kubectl"
+  depends_on = [
+    null_resource.create_infrastructure_namespace,
+    null_resource.create_applications_namespace
+  ]
 }
 
 output "test_monitoring_deployed" {
-  value = "Monitoring stack deployed: Prometheus, Grafana in ${kubernetes_namespace.infrastructure.metadata[0].name} namespace"
+  value = "Monitoring stack deployed: Prometheus, Grafana in infrastructure namespace"
   depends_on = [
     module.prometheus,
     module.grafana
   ]
 }
+
