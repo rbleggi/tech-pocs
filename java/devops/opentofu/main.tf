@@ -19,6 +19,13 @@ provider "kubernetes" {
   config_path    = var.kubeconfig_path
   config_context = "default"
   insecure       = true  # Skip TLS verification to handle cert issues
+
+  # Use exec plugin to get credentials - this will use the credentials from kubeconfig
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command     = "kubectl"
+    args        = ["config", "view", "--raw", "--minify", "--flatten"]
+  }
 }
 
 # Configure the Helm provider
@@ -27,6 +34,13 @@ provider "helm" {
     config_path    = var.kubeconfig_path
     config_context = "default"
     insecure       = true  # Skip TLS verification to handle cert issues
+
+    # Use exec plugin to get credentials - this will use the credentials from kubeconfig
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "kubectl"
+      args        = ["config", "view", "--raw", "--minify", "--flatten"]
+    }
   }
 }
 
