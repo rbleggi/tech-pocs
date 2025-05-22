@@ -76,7 +76,8 @@ pipeline {
             steps {
                 echo "Running Maven tests"
                 sh '''
-                # Execute Maven tests
+                # Execute Maven tests only in the java/devops directory
+                cd java/devops
                 mvn clean test
                 '''
             }
