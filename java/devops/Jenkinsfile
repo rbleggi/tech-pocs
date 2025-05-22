@@ -65,7 +65,7 @@ pipeline {
                 if grep -q 'insecure-skip-tls-verify' ${KUBECONFIG_MODIFIED}; then
                   echo 'insecure-skip-tls-verify already set';
                 else
-                  sed -i '/    user:/a \\ \ \ \ insecure-skip-tls-verify: true' ${KUBECONFIG_MODIFIED}
+                  sed -i '/    user:/a\      insecure-skip-tls-verify: true' ${KUBECONFIG_MODIFIED}
                 fi
                 cp ${KUBECONFIG_MODIFIED} ${WORKSPACE}/k3s/kubeconfig.yaml
                 mkdir -p /config
