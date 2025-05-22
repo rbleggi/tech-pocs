@@ -27,7 +27,7 @@ pipeline {
                 sh '''
                 set -e
                 apt-get update
-                apt-get install -y openjdk-21-jdk maven git docker.io wget unzip
+                apt-get install -y maven git docker.io wget unzip
                 if ! command -v tofu >/dev/null; then
                   wget -O /tmp/opentofu.zip https://github.com/opentofu/opentofu/releases/download/v1.6.2/tofu_1.6.2_linux_amd64.zip
                   unzip /tmp/opentofu.zip -d /tmp
