@@ -40,6 +40,7 @@ resource "kubernetes_namespace" "infrastructure" {
     name = "infrastructure"
   }
   lifecycle {
+    prevent_destroy = true
     ignore_changes = all
   }
 }
@@ -50,6 +51,7 @@ resource "kubernetes_namespace" "applications" {
     name = "applications"
   }
   lifecycle {
+    prevent_destroy = true
     ignore_changes = all
   }
 }
