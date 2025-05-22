@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'docker:dind'
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --add-host=k3s:host-gateway'
         }
     }
     
@@ -117,43 +117,51 @@ pipeline {
                 echo "Setting up access to Kubernetes cluster"
                 sh """
                     # Install tools needed for network diagnostics
-                    apk add --no-cache curl iputils bind-tools netcat-openbsd
+                    apk add --no-cache curl iputils bind-tools netcat-openbsd jq
 
-                    # List available networks
-                    echo "Available Docker networks:"
-                    docker network ls
+                    # List network info and DNS resolution
+                    echo "Network information:"
+                    ip addr
 
-                    # Check k3s hostname resolution and connectivity
-                    echo "Checking network connectivity to K3s..."
+                    # Check /etc/hosts
+                    echo "Current /etc/hosts file:"
+                    cat /etc/hosts
+
+                    # Check if k3s name resolves
+                    echo "Testing k3s hostname resolution:"
                     getent hosts k3s || echo "Cannot resolve k3s hostname"
 
-                    # Try connecting to port 6443 on k3s
-                    nc -zv k3s 6443 || echo "Cannot connect to k3s:6443"
+                    # Check if localhost:6443 is accessible
+                    echo "Testing localhost:6443 connection:"
+                    nc -zv localhost 6443 || echo "Cannot connect to localhost:6443"
 
-                    # Get the Docker host IP as fallback
-                    HOST_IP=\$(ip route | grep default | awk '{print \$3}')
-                    echo "Docker host gateway IP: \${HOST_IP}"
+                    # Check if host.docker.internal:6443 is accessible
+                    echo "Testing host.docker.internal:6443 connection:"
+                    nc -zv host.docker.internal 6443 || echo "Cannot connect to host.docker.internal:6443"
+
+                    # Using host-gateway (Docker's internal IP for the host)
+                    echo "Testing host-gateway:6443 connection:"
+                    nc -zv host-gateway 6443 || echo "Cannot connect to host-gateway:6443"
 
                     # Create a directory for the modified kubeconfig
                     mkdir -p \${WORKSPACE}/k3s-modified
 
-                    # If we cannot resolve k3s, use the host IP instead
-                    if (! getent hosts k3s > /dev/null); then
-                        echo "Modifying kubeconfig to use host IP instead of service name"
-                        cat ${KUBECONFIG} | sed "s|https://k3s:6443|https://\${HOST_IP}:6443|g" > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
-                        export KUBECONFIG=\${WORKSPACE}/k3s-modified/kubeconfig.yaml
-                    fi
+                    # Modify kubeconfig to use host.docker.internal instead of k3s
+                    echo "Creating modified kubeconfig with host.docker.internal"
+                    cat ${KUBECONFIG} | sed 's|https://k3s:6443|https://host-gateway:6443|g' > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
 
-                    # Verify the kubeconfig server setting
-                    echo "Current kubeconfig server setting:"
-                    grep "server:" ${KUBECONFIG}
+                    # Debug the modified config
+                    echo "Modified kubeconfig server setting:"
+                    grep "server:" \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+
+                    # Test the new kubeconfig
+                    echo "Testing connection to K3s with modified kubeconfig:"
+                    kubectl --kubeconfig=\${WORKSPACE}/k3s-modified/kubeconfig.yaml cluster-info || echo "Failed to connect to K3s"
                 """
 
                 script {
-                    // Set KUBECONFIG if we created a modified one
-                    if (fileExists("${WORKSPACE}/k3s-modified/kubeconfig.yaml")) {
-                        env.KUBECONFIG = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
-                    }
+                    env.KUBECONFIG = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+                    echo "Set KUBECONFIG to ${env.KUBECONFIG}"
                 }
             }
         }
