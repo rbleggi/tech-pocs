@@ -103,15 +103,21 @@ pipeline {
                 """
             }
         }
+
+        stage('Cleanup') {
+            steps {
+                echo "Cleaning up resources"
+                sh """
+                    docker system prune -f
+                """
+            }
+        }
     }
     
     post {
         always {
             echo "Build completed on agent: ${env.NODE_NAME}"
-            sh """
-                # Cleanup of resources not needed
-                docker system prune -f
-            """
+            // Moving cleanup to a final stage to ensure it runs in container context
         }
         success {
             echo "Build and deployment succeeded!"
