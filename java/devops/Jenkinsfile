@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'jenkins/agent:latest-jdk17'
+            image 'docker:dind'
             args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged'
         }
     }
@@ -26,9 +26,13 @@ pipeline {
             steps {
                 echo "Installing required tools"
                 sh '''
-                # Install required tools
-                apt-get update
-                apt-get install -y docker.io maven curl tar bash git
+                # Install required tools in Alpine Linux
+                apk update
+                apk add --no-cache bash curl maven openjdk17 git
+                
+                # Set Java home
+                export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+                export PATH=$JAVA_HOME/bin:$PATH
 
                 # Install kubectl
                 curl -LO "https://dl.k8s.io/release/stable.txt"
