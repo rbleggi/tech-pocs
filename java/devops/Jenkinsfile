@@ -51,9 +51,9 @@ pipeline {
                 echo "Running tests"
                 sh 'ls -la src/test'
                 sh '''
-                # Aqui você pode executar testes unitários ou de integração
+                # Here you can run unit or integration tests
                 echo "Running tests for Java application"
-                # Caso precise de Maven ou Gradle, ajuste conforme necessário
+                # If you need Maven or Gradle, adjust as necessary
                 '''
             }
         }
@@ -75,16 +75,16 @@ pipeline {
             steps {
                 echo "Deploying application with Helm"
                 sh """
-                # Verificar se o Kubernetes está acessível
+                # Check if Kubernetes is accessible
                 kubectl --kubeconfig=${KUBECONFIG} get nodes
 
-                # Atualizar ou instalar o chart com a nova imagem
+                # Update or install chart with the new image
                 helm --kubeconfig=${KUBECONFIG} upgrade --install java-app ${HELM_CHART_PATH} \
                     --set image.repository=${DOCKER_IMAGE} \
                     --set image.tag=${DOCKER_TAG} \
                     --namespace applications --create-namespace
 
-                # Verificar se o deployment foi bem-sucedido
+                # Verify if deployment was successful
                 kubectl --kubeconfig=${KUBECONFIG} rollout status deployment/java-app -n applications
                 """
             }
@@ -96,7 +96,7 @@ pipeline {
                 sh """
                 kubectl --kubeconfig=${KUBECONFIG} get all -n applications
 
-                # Verificar se o serviço está respondendo
+                # Check if service is responding
                 echo "Waiting for service to be available..."
                 sleep 10
                 kubectl --kubeconfig=${KUBECONFIG} get svc -n applications

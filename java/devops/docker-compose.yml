@@ -87,7 +87,7 @@ services:
       - AUTO_RUN_PIPELINE=true
       - PIPELINE_NAME=java-devops-pipeline
       - GIT_REPO=https://github.com/rbleggi/tech-pocs.git
-      - GIT_BRANCH=main
+      - GIT_BRANCH=master
       - JENKINSFILE_PATH=java/devops/Jenkinsfile
       - JENKINS_OPTS="--debug=5"
       - TRY_UPGRADE_IF_NO_MARKER=true
