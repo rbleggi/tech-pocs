@@ -106,7 +106,10 @@ pipeline {
             steps {
                 echo "Running OpenTofu validation tests"
                 sh """
-                cd ${OPENTOFU_DIR}
+                # Ensure we're in the correct directory where OpenTofu files are located
+                cd ${WORKSPACE}/opentofu
+                ls -la  # Debug: list files to confirm OpenTofu files presence
+
                 # Validate OpenTofu configuration
                 tofu init
                 tofu validate
