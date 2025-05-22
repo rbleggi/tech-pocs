@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'docker:dind'
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --network=app-network'
         }
     }
     
@@ -116,36 +116,44 @@ pipeline {
             steps {
                 echo "Setting up access to Kubernetes cluster"
                 sh """
-                    # Install tools needed for network checks and kubeconfig modification
-                    apk add --no-cache gettext jq iputils bind-tools
+                    # Install tools needed for network diagnostics
+                    apk add --no-cache curl iputils bind-tools netcat-openbsd
+
+                    # List available networks
+                    echo "Available Docker networks:"
+                    docker network ls
+
+                    # Check k3s hostname resolution and connectivity
+                    echo "Checking network connectivity to K3s..."
+                    getent hosts k3s || echo "Cannot resolve k3s hostname"
+
+                    # Try connecting to port 6443 on k3s
+                    nc -zv k3s 6443 || echo "Cannot connect to k3s:6443"
+
+                    # Get the Docker host IP as fallback
+                    HOST_IP=\$(ip route | grep default | awk '{print \$3}')
+                    echo "Docker host gateway IP: \${HOST_IP}"
 
                     # Create a directory for the modified kubeconfig
                     mkdir -p \${WORKSPACE}/k3s-modified
 
-                    # Try to determine the Docker host gateway address
-                    echo "Trying to determine Docker host IP..."
-                    HOST_IP=\$(ip route | grep default | awk '{print \$3}')
-                    echo "Docker host gateway: \${HOST_IP}"
+                    # If we cannot resolve k3s, use the host IP instead
+                    if ! getent hosts k3s > /dev/null; then
+                        echo "Modifying kubeconfig to use host IP instead of service name"
+                        cat ${KUBECONFIG} | sed "s|https://k3s:6443|https://\${HOST_IP}:6443|g" > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+                        export KUBECONFIG=\${WORKSPACE}/k3s-modified/kubeconfig.yaml
+                    fi
 
-                    # Check if we can reach the Docker host
-                    ping -c 2 \${HOST_IP} || echo "Can't ping host"
-
-                    # Try to connect to the Kubernetes API server on the Docker host
-                    nc -zv \${HOST_IP} 6443 || echo "Can't connect to K8s API on \${HOST_IP}:6443"
-
-                    # Modify the kubeconfig to use the host gateway IP
-                    cat ${KUBECONFIG} | sed "s|https://127.0.0.1:6443|https://\${HOST_IP}:6443|g" > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
-
-                    # Update the KUBECONFIG environment variable to use the modified file
-                    echo "Modified kubeconfig created at \${WORKSPACE}/k3s-modified/kubeconfig.yaml"
-
-                    # Verify the change
-                    grep "server:" \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+                    # Verify the kubeconfig server setting
+                    echo "Current kubeconfig server setting:"
+                    grep "server:" ${KUBECONFIG}
                 """
 
                 script {
-                    // Update the KUBECONFIG environment variable
-                    env.KUBECONFIG = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+                    // Set KUBECONFIG if we created a modified one
+                    if (fileExists("${WORKSPACE}/k3s-modified/kubeconfig.yaml")) {
+                        env.KUBECONFIG = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+                    }
                 }
             }
         }
