@@ -51,4 +51,3 @@ build/
 /opentofu/.terraform
 /opentofu/.terraform.lock.hcl
 /opentofu/.terraform/tfstate
-/k3s

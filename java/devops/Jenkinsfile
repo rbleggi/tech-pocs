@@ -44,11 +44,6 @@ pipeline {
                 chmod +x kubectl
                 mv kubectl /usr/local/bin/
 
-                # Install Helm
-                curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-                chmod 700 get_helm.sh
-                ./get_helm.sh
-
                 # Install OpenTofu
                 curl -L -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v1.6.0/tofu_1.6.0_linux_amd64.zip
                 # Use -o flag to overwrite files without prompting
@@ -63,7 +58,6 @@ pipeline {
                 docker --version
                 git --version
                 kubectl version --client
-                helm version
                 tofu version
                 '''
             }
@@ -189,71 +183,6 @@ pipeline {
             }
         }
 
-        stage('Deploy Infrastructure Components') {
-            steps {
-                echo "Deploying infrastructure components to infrastructure namespace"
-                sh """
-                # Deploy Prometheus to infrastructure namespace
-                helm --kubeconfig=${KUBECONFIG} upgrade --install prometheus ./helm/prometheus \
-                    --namespace ${INFRA_NAMESPACE}
-
-                # Deploy Grafana to infrastructure namespace
-                helm --kubeconfig=${KUBECONFIG} upgrade --install grafana ./helm/grafana \
-                    --namespace ${INFRA_NAMESPACE}
-
-                # Wait for infrastructure components to be ready
-                kubectl --kubeconfig=${KUBECONFIG} wait --for=condition=available deployment/prometheus-server --timeout=120s -n ${INFRA_NAMESPACE} || true
-                kubectl --kubeconfig=${KUBECONFIG} wait --for=condition=available deployment/grafana --timeout=120s -n ${INFRA_NAMESPACE} || true
-                """
-            }
-        }
-
-        stage('Deploy Application') {
-            steps {
-                echo "Deploying application with Prometheus integration"
-                sh """
-                # Check if Kubernetes is accessible
-                kubectl --kubeconfig=${KUBECONFIG} get nodes
-
-                # Update or install chart with the new image
-                helm --kubeconfig=${KUBECONFIG} upgrade --install java-app ${HELM_CHART_PATH} \
-                    --set image.repository=${DOCKER_IMAGE} \
-                    --set image.tag=${DOCKER_TAG} \
-                    --set prometheus.enabled=true \
-                    --namespace ${APP_NAMESPACE} --create-namespace
-
-                # Verify if deployment was successful
-                kubectl --kubeconfig=${KUBECONFIG} rollout status deployment/java-app -n ${APP_NAMESPACE}
-                """
-            }
-        }
-
-        stage('Verify Deployment') {
-            steps {
-                echo "Verifying deployment"
-                sh """
-                kubectl --kubeconfig=${KUBECONFIG} get all -n ${APP_NAMESPACE}
-
-                # Check if service is responding
-                echo "Waiting for service to be available..."
-                sleep 10
-                kubectl --kubeconfig=${KUBECONFIG} get svc -n ${APP_NAMESPACE}
-
-                # Verify Prometheus scraping configuration for application
-                echo "Checking for Prometheus service monitor..."
-                kubectl --kubeconfig=${KUBECONFIG} get servicemonitor -n ${APP_NAMESPACE} || echo "ServiceMonitor not found - verify Prometheus integration"
-                """
-            }
-        }
-
-        stage('Cleanup') {
-            steps {
-                echo "Cleaning up resources"
-                sh """
-                    docker system prune -f
-                """
-            }
-        }
     }
 
     post {
