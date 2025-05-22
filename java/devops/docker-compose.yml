@@ -96,12 +96,14 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - ./k3s:/config:rw
+      - ./k3s:/var/jenkins_home/k3s:rw
       - ./jenkins/casc.yaml:/var/jenkins_home/casc.yaml:ro
       - ./:/var/jenkins_home/workspace/tech-pocs:ro
       - ./jenkins/init.groovy.d:/var/jenkins_home/init.groovy.d:ro
       - ./jenkins/plugins.txt:/usr/share/jenkins/ref/plugins.txt:ro
       - ./jenkins/plugins_cache:/usr/share/jenkins/ref/plugins
       - ./jenkins/plugins_cache:/var/jenkins_home/plugins
+      - ./maven_cache:/var/jenkins_home/.m2/repository
     command: >
       bash -c "
       echo 'Installing plugins...' &&
