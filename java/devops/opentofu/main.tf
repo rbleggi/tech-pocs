@@ -16,16 +16,22 @@ terraform {
 
 # Configure the Kubernetes provider
 provider "kubernetes" {
-  config_path    = pathexpand(get_env("KUBECONFIG", "${path.module}/../../k3s/kubeconfig.yaml"))
+  config_path    = var.kubeconfig_path
   config_context = "default"
 }
 
 # Configure the Helm provider
 provider "helm" {
   kubernetes {
-    config_path    = pathexpand(get_env("KUBECONFIG", "${path.module}/../../k3s/kubeconfig.yaml"))
+    config_path    = var.kubeconfig_path
     config_context = "default"
   }
+}
+
+variable "kubeconfig_path" {
+  description = "Path to the kubeconfig file"
+  type        = string
+  default     = "../../k3s/kubeconfig.yaml"
 }
 
 # Create infrastructure namespace if it doesn't exist
