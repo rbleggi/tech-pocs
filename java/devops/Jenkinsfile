@@ -94,7 +94,7 @@ pipeline {
                 echo "Building Docker image on agent ${env.NODE_NAME}"
                 sh """
                     # Ensure we're in the correct directory where Dockerfile is located
-                    cd \${WORKSPACE}
+                    cd ${WORKSPACE}/java/devops
                     ls -la  # Debug: list files to confirm Dockerfile presence
                     docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} -f Dockerfile .
                     docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
