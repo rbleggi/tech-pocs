@@ -14,7 +14,7 @@ Thread.start {
         def env = System.getenv()
         def pipelineName = env['PIPELINE_NAME'] ?: 'java-devops-pipeline'
         def gitRepo = env['GIT_REPO'] ?: 'https://github.com/rbleggi/tech-pocs.git'
-        def gitBranch = env['GIT_BRANCH'] ?: 'main'
+        def gitBranch = env['GIT_BRANCH'] ?: 'master'
         def jenkinsfilePath = env['JENKINSFILE_PATH'] ?: 'java/devops/Jenkinsfile'
 
         // Simple approach using Jenkins API
