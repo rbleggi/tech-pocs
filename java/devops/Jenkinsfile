@@ -19,8 +19,8 @@ pipeline {
         DOCKER_IMAGE = 'tech-pocs/java-devops-app'
         DOCKER_TAG = "${BUILD_NUMBER}"
         WORKSPACE = "${env.WORKSPACE}/java/devops"
-        KUBECONFIG_ORIGINAL = "${WORKSPACE}/k3s/kubeconfig.yaml"
-        KUBECONFIG_MODIFIED = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+        KUBECONFIG_ORIGINAL = "/config/kubeconfig.yaml"
+        KUBECONFIG_MODIFIED = "/config/kubeconfig-modified.yaml"
         KUBECONFIG = "${KUBECONFIG_MODIFIED}"
         HELM_CHART_PATH = "${WORKSPACE}/helm/sample-app"
         OPENTOFU_DIR = "${WORKSPACE}/opentofu"
@@ -59,13 +59,8 @@ pipeline {
         stage('Kubeconfig Setup') {
             steps {
                 sh '''
-                mkdir -p ${WORKSPACE}/k3s-modified
                 sed 's|https://k3s:6443|https://host-gateway:6443|g' ${KUBECONFIG_ORIGINAL} > ${KUBECONFIG_MODIFIED}
-                # For development: skip TLS verify in kubeconfig (patch clusters[].cluster)
                 yq -i '(.clusters[].cluster) |= (. + {"insecure-skip-tls-verify": true} | del(."certificate-authority-data") | del(."certificate-authority"))' ${KUBECONFIG_MODIFIED}
-                cp ${KUBECONFIG_MODIFIED} ${WORKSPACE}/k3s/kubeconfig.yaml
-                mkdir -p /config
-                cp ${KUBECONFIG_MODIFIED} /config/kubeconfig.yaml
                 '''
             }
         }
@@ -78,7 +73,7 @@ pipeline {
                 tofu import kubernetes_namespace.infrastructure infrastructure || true
                 tofu import kubernetes_namespace.applications applications || true
                 tofu validate
-                tofu plan -var="kubeconfig_path=/config/kubeconfig.yaml" -out=tfplan
+                tofu plan -var="kubeconfig_path=${KUBECONFIG_MODIFIED}" -out=tfplan
                 tofu apply -auto-approve tfplan
                 '''
             }
