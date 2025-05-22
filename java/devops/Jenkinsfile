@@ -152,7 +152,7 @@ pipeline {
 
                     # Install Prometheus Operator CRDs for ServiceMonitor support
                     echo "Installing Prometheus Operator CRDs (ServiceMonitor)"
-                    kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.74.0/stripped-crds.yaml
+                    kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.74.0/customresourcedefinitions.yaml
 
                     # Test the new kubeconfig
                     echo "Testing connection to K3s with modified kubeconfig:"
