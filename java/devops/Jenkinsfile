@@ -14,8 +14,8 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'tech-pocs/java-devops-app'
         DOCKER_TAG = "${BUILD_NUMBER}"
-        KUBECONFIG = "${env.WORKSPACE}/k3s/kubeconfig.yaml"
         WORKSPACE = "${env.WORKSPACE}/java/devops"
+        KUBECONFIG = "${WORKSPACE}/k3s/kubeconfig.yaml"
         HELM_CHART_PATH = "${WORKSPACE}/helm/sample-app"
         OPENTOFU_DIR = "${WORKSPACE}/opentofu"
         INFRA_NAMESPACE = "infrastructure"
