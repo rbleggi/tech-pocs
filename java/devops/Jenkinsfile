@@ -176,12 +176,14 @@ pipeline {
                 cd ${OPENTOFU_DIR}
                 ls -la  # Debug: list files to confirm OpenTofu files presence
 
+                # Initialize OpenTofu modules and providers first
+                tofu init
+
                 # Import namespaces if they already exist (ignore error if already imported)
                 tofu import kubernetes_namespace.infrastructure infrastructure || true
                 tofu import kubernetes_namespace.applications applications || true
 
                 # Validate OpenTofu configuration
-                tofu init
                 tofu validate
 
                 # Create plan and ensure it's valid
