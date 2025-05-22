@@ -116,14 +116,25 @@ pipeline {
             steps {
                 echo "Setting up access to Kubernetes cluster"
                 sh """
-                    # Install tools needed for modifying the kubeconfig
-                    apk add --no-cache gettext jq
+                    # Install tools needed for network checks and kubeconfig modification
+                    apk add --no-cache gettext jq iputils bind-tools
 
                     # Create a directory for the modified kubeconfig
                     mkdir -p \${WORKSPACE}/k3s-modified
 
-                    # Modify the kubeconfig to use the k3s service name instead of localhost
-                    cat ${KUBECONFIG} | sed 's|https://127.0.0.1:6443|https://k3s:6443|g' > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+                    # Try to determine the Docker host gateway address
+                    echo "Trying to determine Docker host IP..."
+                    HOST_IP=\$(ip route | grep default | awk '{print \$3}')
+                    echo "Docker host gateway: \${HOST_IP}"
+
+                    # Check if we can reach the Docker host
+                    ping -c 2 \${HOST_IP} || echo "Can't ping host"
+
+                    # Try to connect to the Kubernetes API server on the Docker host
+                    nc -zv \${HOST_IP} 6443 || echo "Can't connect to K8s API on \${HOST_IP}:6443"
+
+                    # Modify the kubeconfig to use the host gateway IP
+                    cat ${KUBECONFIG} | sed "s|https://127.0.0.1:6443|https://\${HOST_IP}:6443|g" > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
 
                     # Update the KUBECONFIG environment variable to use the modified file
                     echo "Modified kubeconfig created at \${WORKSPACE}/k3s-modified/kubeconfig.yaml"
