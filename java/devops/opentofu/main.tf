@@ -31,7 +31,7 @@ provider "helm" {
 variable "kubeconfig_path" {
   description = "Path to the kubeconfig file"
   type        = string
-  default     = "../../k3s/kubeconfig.yaml"
+  default     = "../../k3s-modified/kubeconfig.yaml"
 }
 
 # Create infrastructure namespace if it doesn't exist

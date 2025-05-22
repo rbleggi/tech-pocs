@@ -183,12 +183,6 @@ pipeline {
 
                 # Apply infrastructure changes
                 tofu apply -auto-approve tfplan
-
-                # Create infrastructure namespace if it doesn't exist
-                kubectl --kubeconfig=${KUBECONFIG} create namespace ${INFRA_NAMESPACE} --dry-run=client -o yaml | kubectl --kubeconfig=${KUBECONFIG} apply -f -
-
-                # Create application namespace if it doesn't exist
-                kubectl --kubeconfig=${KUBECONFIG} create namespace ${APP_NAMESPACE} --dry-run=client -o yaml | kubectl --kubeconfig=${KUBECONFIG} apply -f -
                 """
             }
         }
