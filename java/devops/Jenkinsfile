@@ -142,9 +142,9 @@ pipeline {
                     # Create a directory for the modified kubeconfig
                     mkdir -p ${WORKSPACE}/k3s-modified
 
-                    # Modify kubeconfig to use host-gateway instead of k3s
+                    # Modify kubeconfig to use host-gateway instead of k3s or 127.0.0.1
                     echo "Creating modified kubeconfig with host-gateway"
-                    cat ${KUBECONFIG_ORIGINAL} | sed 's|https://k3s:6443|https://host-gateway:6443|g' > ${KUBECONFIG_MODIFIED}
+                    sed -e 's|https://k3s:6443|https://host-gateway:6443|g' -e 's|https://127.0.0.1:6443|https://host-gateway:6443|g' ${KUBECONFIG_ORIGINAL} > ${KUBECONFIG_MODIFIED}
 
                     # Debug the modified config
                     echo "Modified kubeconfig server setting:"
