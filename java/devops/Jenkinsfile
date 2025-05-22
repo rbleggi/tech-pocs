@@ -4,9 +4,13 @@ pipeline {
         pollSCM('H/1 * * * *')
     }
     stages {
-        stage('Prepare k3s directory') {
+        stage('Prepare directories') {
             steps {
-                sh 'mkdir -p ./k3s'
+                sh '''
+                mkdir -p ./k3s
+                mkdir -p ./jenkins/maven_cache
+                chmod -R 777 ./jenkins/maven_cache || true
+                '''
             }
         }
         stage('Run Pipeline') {

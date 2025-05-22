@@ -133,7 +133,7 @@ services:
     entrypoint: ["/bin/true"]
     volumes:
       - ./k3s:/config
-      - ./maven_cache:/home/jenkins/.m2
+      - ./jenkins/maven_cache:/home/jenkins/.m2
 
   prometheus:
     image: prom/prometheus:v2.45.0
