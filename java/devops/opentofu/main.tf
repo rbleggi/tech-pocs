@@ -48,12 +48,7 @@ resource "kubernetes_namespace" "applications" {
   }
 }
 
-# Include other infrastructure components
-module "jenkins" {
-  source = "./modules/jenkins"
-  namespace = kubernetes_namespace.infrastructure.metadata[0].name
-}
-
+# Include infrastructure monitoring components
 module "prometheus" {
   source = "./modules/prometheus"
   namespace = kubernetes_namespace.infrastructure.metadata[0].name
@@ -63,4 +58,31 @@ module "grafana" {
   source = "./modules/grafana"
   namespace = kubernetes_namespace.infrastructure.metadata[0].name
   depends_on = [module.prometheus]
+}
+
+# Deploy application with Prometheus and Grafana integration
+module "app" {
+  source = "./modules/app"
+  namespace = kubernetes_namespace.applications.metadata[0].name
+  app_name = "java-app"
+  app_image = "tech-pocs/java-devops-app"
+  app_tag = "latest"
+  prometheus_enabled = true
+  depends_on = [
+    module.prometheus,
+    module.grafana
+  ]
+}
+
+# Output para validação automática (teste)
+output "test_namespaces_created" {
+  value = "${kubernetes_namespace.infrastructure.metadata[0].name} and ${kubernetes_namespace.applications.metadata[0].name} successfully created"
+}
+
+output "test_monitoring_deployed" {
+  value = "Monitoring stack deployed: Prometheus, Grafana in ${kubernetes_namespace.infrastructure.metadata[0].name} namespace"
+  depends_on = [
+    module.prometheus,
+    module.grafana
+  ]
 }
