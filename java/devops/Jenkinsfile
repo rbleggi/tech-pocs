@@ -150,6 +150,10 @@ pipeline {
                     echo "Modified kubeconfig server setting:"
                     grep "server:" ${KUBECONFIG_MODIFIED}
 
+                    # Install Prometheus Operator CRDs for ServiceMonitor support
+                    echo "Installing Prometheus Operator CRDs (ServiceMonitor)"
+                    kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/releases/latest/download/stripped-crds.yaml
+
                     # Test the new kubeconfig
                     echo "Testing connection to K3s with modified kubeconfig:"
                     kubectl --kubeconfig=${KUBECONFIG_MODIFIED} cluster-info || echo "Failed to connect to K3s"
