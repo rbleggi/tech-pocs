@@ -43,14 +43,14 @@ variable "kubeconfig_path" {
 # Create infrastructure namespace using kubectl directly (avoids auth issues)
 resource "null_resource" "create_infrastructure_namespace" {
   provisioner "local-exec" {
-    command = "kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify create namespace infrastructure --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify apply -f -"
+    command = "kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false create namespace infrastructure --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false apply -f -"
   }
 }
 
 # Create applications namespace using kubectl directly (avoids auth issues)
 resource "null_resource" "create_applications_namespace" {
   provisioner "local-exec" {
-    command = "kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify create namespace applications --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify apply -f -"
+    command = "kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false create namespace applications --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false apply -f -"
   }
 }
 
