@@ -5,12 +5,12 @@ pipeline {
             args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --add-host=k3s:host-gateway --add-host=host-gateway:host-gateway'
         }
     }
-    
+
     options {
         timeout(time: 15, unit: 'MINUTES')
         disableConcurrentBuilds()
     }
-    
+
     triggers {
         pollSCM('H/1 * * * *')
     }
@@ -36,7 +36,7 @@ pipeline {
                 # Install required tools in Alpine Linux
                 apk update
                 apk add --no-cache bash curl maven openjdk21 git
-                
+
                 # Set Java home
                 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
                 export PATH=$JAVA_HOME/bin:$PATH
@@ -80,195 +80,51 @@ pipeline {
                 sh 'hostname'
             }
         }
-        
+
         stage('Checkout') {
             steps {
                 checkout scm
-                sh 'ls -la'
             }
         }
-        
-        stage('Run Tests') {
+
+        stage('Test & Build') {
             steps {
                 echo "Running Maven tests"
                 sh '''
-                # Execute Maven tests only in the java/devops directory
                 cd java/devops
                 mvn clean test
+                cd ${WORKSPACE}
+                docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} -f Dockerfile .
+                docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
                 '''
             }
-            post {
-                failure {
-                    echo "Tests failed! Pipeline will stop."
-                    error "Test execution failed"
-                }
+        }
+
+        stage('Kubeconfig Setup') {
+            steps {
+                sh '''
+                mkdir -p ${WORKSPACE}/k3s-modified
+                sed 's|https://k3s:6443|https://host-gateway:6443|g' ${KUBECONFIG_ORIGINAL} > ${KUBECONFIG_MODIFIED}
+                cp ${KUBECONFIG_MODIFIED} ${WORKSPACE}/k3s/kubeconfig.yaml
+                '''
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Provision Infra (OpenTofu)') {
             steps {
-                echo "Building Docker image on agent ${env.NODE_NAME}"
-                sh """
-                    # Ensure we're in the correct directory where Dockerfile is located
-                    cd ${WORKSPACE}
-                    ls -la  # Debug: list files to confirm Dockerfile presence
-                    docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} -f Dockerfile .
-                    docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
-                """
-            }
-        }
-        
-        stage('Setup Kubernetes Access') {
-            steps {
-                echo "Setting up access to Kubernetes cluster"
-                sh """
-                    # Install tools needed for network diagnostics
-                    apk add --no-cache curl iputils bind-tools netcat-openbsd jq
-
-                    # List network info and DNS resolution
-                    echo "Network information:"
-                    ip addr
-
-                    # Check /etc/hosts
-                    echo "Current /etc/hosts file:"
-                    cat /etc/hosts
-
-                    # Check if k3s name resolves
-                    echo "Testing k3s hostname resolution:"
-                    getent hosts k3s || echo "Cannot resolve k3s hostname"
-
-                    # Check if localhost:6443 is accessible
-                    echo "Testing localhost:6443 connection:"
-                    nc -zv localhost 6443 || echo "Cannot connect to localhost:6443"
-
-                    # Check if host.docker.internal:6443 is accessible
-                    echo "Testing host.docker.internal:6443 connection:"
-                    nc -zv host.docker.internal 6443 || echo "Cannot connect to host.docker.internal:6443"
-
-                    # Using host-gateway (Docker's internal IP for the host)
-                    echo "Testing host-gateway:6443 connection:"
-                    nc -zv host-gateway 6443 || echo "Cannot connect to host-gateway:6443"
-
-                    # Create a directory for the modified kubeconfig
-                    mkdir -p ${WORKSPACE}/k3s-modified
-
-                    # Modify kubeconfig to use host-gateway instead of k3s
-                    echo "Creating modified kubeconfig with host-gateway"
-                    cat ${KUBECONFIG_ORIGINAL} | sed 's|https://k3s:6443|https://host-gateway:6443|g' > ${KUBECONFIG_MODIFIED}
-
-                    # Debug the modified config
-                    echo "Modified kubeconfig server setting:"
-                    grep "server:" ${KUBECONFIG_MODIFIED}
-
-                    # Test the new kubeconfig
-                    echo "Testing connection to K3s with modified kubeconfig:"
-                    kubectl --kubeconfig=${KUBECONFIG_MODIFIED} cluster-info || echo "Failed to connect to K3s"
-                """
-
-                script {
-                    env.KUBECONFIG = "${KUBECONFIG_MODIFIED}"
-                    echo "Set KUBECONFIG to ${env.KUBECONFIG}"
-                }
-            }
-        }
-
-        stage('OpenTofu Tests & Provision') {
-            steps {
-                echo "Running OpenTofu validation tests"
-                sh """
-                # Ensure we're in the correct directory where OpenTofu files are located
+                sh '''
                 cd ${OPENTOFU_DIR}
-                ls -la  # Debug: list files to confirm OpenTofu files presence
-
-                # Copy kubeconfig to the location expected by the opentofu container
-                cp ${KUBECONFIG} ../k3s/kubeconfig.yaml
-
-                # Initialize OpenTofu modules and providers first
                 tofu init
-
-                # Import namespaces if they already exist (ignore error if already imported)
                 tofu import kubernetes_namespace.infrastructure infrastructure || true
                 tofu import kubernetes_namespace.applications applications || true
-
-                # Validate OpenTofu configuration
                 tofu validate
-
-                # Create plan and ensure it's valid
-                tofu plan -var="kubeconfig_path=${KUBECONFIG}" -out=tfplan
-
-                # Apply infrastructure changes
+                tofu plan -var="kubeconfig_path=/config/kubeconfig.yaml" -out=tfplan
                 tofu apply -auto-approve tfplan
-                """
-            }
-        }
-
-        stage('Deploy Infrastructure Components') {
-            steps {
-                echo "Deploying infrastructure components to infrastructure namespace"
-                sh """
-                # Deploy Prometheus to infrastructure namespace
-                helm --kubeconfig=${KUBECONFIG} upgrade --install prometheus ./helm/prometheus \
-                    --namespace ${INFRA_NAMESPACE}
-
-                # Deploy Grafana to infrastructure namespace
-                helm --kubeconfig=${KUBECONFIG} upgrade --install grafana ./helm/grafana \
-                    --namespace ${INFRA_NAMESPACE}
-
-                # Wait for infrastructure components to be ready
-                kubectl --kubeconfig=${KUBECONFIG} wait --for=condition=available deployment/prometheus-server --timeout=120s -n ${INFRA_NAMESPACE} || true
-                kubectl --kubeconfig=${KUBECONFIG} wait --for=condition=available deployment/grafana --timeout=120s -n ${INFRA_NAMESPACE} || true
-                """
-            }
-        }
-
-        stage('Deploy Application') {
-            steps {
-                echo "Deploying application with Prometheus integration"
-                sh """
-                # Check if Kubernetes is accessible
-                kubectl --kubeconfig=${KUBECONFIG} get nodes
-
-                # Update or install chart with the new image
-                helm --kubeconfig=${KUBECONFIG} upgrade --install java-app ${HELM_CHART_PATH} \
-                    --set image.repository=${DOCKER_IMAGE} \
-                    --set image.tag=${DOCKER_TAG} \
-                    --set prometheus.enabled=true \
-                    --namespace ${APP_NAMESPACE} --create-namespace
-
-                # Verify if deployment was successful
-                kubectl --kubeconfig=${KUBECONFIG} rollout status deployment/java-app -n ${APP_NAMESPACE}
-                """
-            }
-        }
-
-        stage('Verify Deployment') {
-            steps {
-                echo "Verifying deployment"
-                sh """
-                kubectl --kubeconfig=${KUBECONFIG} get all -n ${APP_NAMESPACE}
-
-                # Check if service is responding
-                echo "Waiting for service to be available..."
-                sleep 10
-                kubectl --kubeconfig=${KUBECONFIG} get svc -n ${APP_NAMESPACE}
-
-                # Verify Prometheus scraping configuration for application
-                echo "Checking for Prometheus service monitor..."
-                kubectl --kubeconfig=${KUBECONFIG} get servicemonitor -n ${APP_NAMESPACE} || echo "ServiceMonitor not found - verify Prometheus integration"
-                """
-            }
-        }
-
-        stage('Cleanup') {
-            steps {
-                echo "Cleaning up resources"
-                sh """
-                    docker system prune -f
-                """
+                '''
             }
         }
     }
-    
+
     post {
         always {
             echo "Build completed on agent: ${env.NODE_NAME}"
