@@ -2,7 +2,6 @@ FROM jenkins/agent:latest
 
 USER root
 
-# Install Docker CLI, OpenJDK 17, and Git
 RUN apt-get update \
     && apt-get install -y docker.io openjdk-17-jdk git \
     && apt-get clean \

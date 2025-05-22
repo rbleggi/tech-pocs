@@ -57,7 +57,7 @@ resource "helm_release" "app" {
     value = var.prometheus_enabled
   }
 
-  # Adicionar anotações para o Prometheus descobrir diretamente
+  # Add annotations for Prometheus auto-discovery
   set {
     name  = "podAnnotations.prometheus\\.io/scrape"
     value = var.prometheus_enabled ? "true" : "false"
