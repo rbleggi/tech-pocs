@@ -1,0 +1,120 @@
+pipeline {
+    agent {
+        label 'docker-agent'
+    }
+    
+    options {
+        timeout(time: 15, unit: 'MINUTES')
+        disableConcurrentBuilds()
+    }
+    
+    environment {
+        DOCKER_IMAGE = 'tech-pocs/java-devops-app'
+        DOCKER_TAG = "${BUILD_NUMBER}"
+        KUBECONFIG = "/config/kubeconfig.yaml"
+        HELM_CHART_PATH = "./helm/sample-app"
+        OPENTOFU_DIR = "./opentofu"
+    }
+
+    stages {
+        stage('Verify Agent') {
+            steps {
+                echo "Running on agent: ${env.NODE_NAME}"
+                echo "This build is NOT running on the built-in node"
+                sh 'hostname'
+                sh 'java -version'
+            }
+        }
+        
+        stage('Checkout') {
+            steps {
+                checkout scm
+                sh 'ls -la'
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                echo "Building Docker image on agent ${env.NODE_NAME}"
+                sh """
+                    docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} -f Dockerfile .
+                    docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
+                """
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                echo "Running tests"
+                sh 'ls -la src/test'
+                sh '''
+                # Aqui você pode executar testes unitários ou de integração
+                echo "Running tests for Java application"
+                # Caso precise de Maven ou Gradle, ajuste conforme necessário
+                '''
+            }
+        }
+        
+        stage('OpenTofu Provision') {
+            steps {
+                echo "Provisioning infrastructure with OpenTofu"
+                sh """
+                cd ${OPENTOFU_DIR}
+                tofu init
+                tofu validate
+                tofu plan -out=tfplan
+                tofu apply -auto-approve tfplan
+                """
+            }
+        }
+
+        stage('Helm Deploy') {
+            steps {
+                echo "Deploying application with Helm"
+                sh """
+                # Verificar se o Kubernetes está acessível
+                kubectl --kubeconfig=${KUBECONFIG} get nodes
+
+                # Atualizar ou instalar o chart com a nova imagem
+                helm --kubeconfig=${KUBECONFIG} upgrade --install java-app ${HELM_CHART_PATH} \
+                    --set image.repository=${DOCKER_IMAGE} \
+                    --set image.tag=${DOCKER_TAG} \
+                    --namespace applications --create-namespace
+
+                # Verificar se o deployment foi bem-sucedido
+                kubectl --kubeconfig=${KUBECONFIG} rollout status deployment/java-app -n applications
+                """
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                echo "Verifying deployment"
+                sh """
+                kubectl --kubeconfig=${KUBECONFIG} get all -n applications
+
+                # Verificar se o serviço está respondendo
+                echo "Waiting for service to be available..."
+                sleep 10
+                kubectl --kubeconfig=${KUBECONFIG} get svc -n applications
+                """
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo "Build completed on agent: ${env.NODE_NAME}"
+            sh """
+                # Limpeza de recursos não utilizados
+                docker system prune -f
+            """
+        }
+        success {
+            echo "Build and deployment succeeded!"
+        }
+        failure {
+            echo "Build or deployment failed!"
+        }
+    }
+}

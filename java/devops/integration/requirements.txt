@@ -1,5 +1,0 @@
-pytest
-requests
-docker
-pytest-docker
-selenium

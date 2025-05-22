@@ -1,0 +1,27 @@
+# Plugins essenciais para pipeline
+workflow-aggregator
+workflow-job
+workflow-cps
+workflow-scm-step
+
+# Plugins do Git
+git
+git-client
+
+# Plugins para Docker
+docker-workflow
+docker-plugin
+
+# Plugins para Kubernetes
+kubernetes
+
+# Plugins de configuração
+configuration-as-code
+
+# Visualização de pipeline
+pipeline-stage-view
+pipeline-model-definition
+pipeline-build-step
+
+# Plugins de segurança básicos (essenciais para o funcionamento)
+instance-identity

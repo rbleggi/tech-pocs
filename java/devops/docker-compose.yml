@@ -1,12 +1,11 @@
 services:
-  # Kubernetes - k3s (lightweight Kubernetes)
   k3s:
     image: rancher/k3s:v1.25.8-k3s1
     container_name: k3s
     command: server --disable traefik
     privileged: true
     ports:
-      - "6443:6443"  # Kubernetes API
+      - "6443:6443"
     environment:
       - K3S_TOKEN=k3s-token
       - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
@@ -18,14 +17,13 @@ services:
       - app-network
     restart: unless-stopped
 
-  # Helm - Kubernetes package manager
   helm:
     image: alpine/helm:3.11.1
     container_name: helm
     depends_on:
       - k3s
     ports:
-      - "6444:6443"  # Expose Kubernetes API port for Helm
+      - "6444:6443"
     volumes:
       - ./k3s:/config
       - ./helm:/apps
@@ -36,14 +34,13 @@ services:
       - app-network
     restart: unless-stopped
 
-  # OpenTofu - Infrastructure as Code
   opentofu:
     image: ghcr.io/opentofu/opentofu:1.6.0
     container_name: opentofu
     depends_on:
       - k3s
     ports:
-      - "6445:6443"  # Expose Kubernetes API port for OpenTofu
+      - "6445:6443"
     volumes:
       - ./k3s:/config
       - ./opentofu:/workspace
@@ -55,7 +52,6 @@ services:
       - app-network
     restart: unless-stopped
 
-  # Spring Boot API
   api:
     build:
       context: .
@@ -76,23 +72,54 @@ services:
       start_period: 40s
     restart: unless-stopped
 
-  # Jenkins
   jenkins:
-    image: jenkins/jenkins:lts-jdk17
+    image: jenkins/jenkins:lts-jdk21
     container_name: jenkins
     ports:
       - "8081:8080"
       - "50000:50000"
     environment:
-      - JAVA_OPTS=-Xmx1g -Xms512m -Djenkins.install.runSetupWizard=false
+      - JAVA_OPTS=-Xmx2g -Xms512m -Djenkins.install.runSetupWizard=false -Dhudson.model.DirectoryBrowserSupport.CSP=
+      - KUBECONFIG=/config/kubeconfig.yaml
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/casc.yaml
+      - JENKINS_URL=http://localhost:8081/
+      - AUTO_CREATE_PIPELINE=true
+      - AUTO_RUN_PIPELINE=true
+      - PIPELINE_NAME=java-devops-pipeline
+      - GIT_REPO=https://github.com/rbleggi/tech-pocs.git
+      - GIT_BRANCH=main
+      - JENKINSFILE_PATH=java/devops/Jenkinsfile
+      - JENKINS_OPTS="--debug=5"
+      - TRY_UPGRADE_IF_NO_MARKER=true
+      - INSTALL_PLUGINS_SKIP_FAILED=true
     volumes:
       - jenkins_home:/var/jenkins_home
-      - //./pipe/docker_engine:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./k3s:/config
+      - ./jenkins/casc.yaml:/var/jenkins_home/casc.yaml:ro
+      - ./:/var/jenkins_home/workspace/tech-pocs:ro
+      - ./jenkins/init.groovy.d:/var/jenkins_home/init.groovy.d:ro
+      - ./jenkins/plugins.txt:/usr/share/jenkins/ref/plugins.txt:ro
+    command: >
+      bash -c "
+      echo 'Instalando plugins do Jenkins...' &&
+      jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt --verbose &&
+      echo 'Plugins instalados, iniciando Jenkins...' &&
+      /usr/local/bin/jenkins.sh
+      "
+    user: root
+    depends_on:
+      - k3s
     networks:
       - app-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:8080/login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
-  # Prometheus
   prometheus:
     image: prom/prometheus:v2.45.0
     container_name: prometheus
@@ -112,9 +139,7 @@ services:
     restart: unless-stopped
     depends_on:
       - api
-      - jenkins
 
-  # Grafana
   grafana:
     image: grafana/grafana:9.3.6
     container_name: grafana
@@ -127,15 +152,17 @@ services:
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_PATHS_DASHBOARDS=/var/lib/grafana/dashboards
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     networks:
       - app-network
     restart: unless-stopped
     depends_on:
       - prometheus
-
 
 networks:
   app-network:
