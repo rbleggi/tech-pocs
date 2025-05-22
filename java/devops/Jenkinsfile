@@ -15,7 +15,9 @@ pipeline {
         DOCKER_IMAGE = 'tech-pocs/java-devops-app'
         DOCKER_TAG = "${BUILD_NUMBER}"
         WORKSPACE = "${env.WORKSPACE}/java/devops"
-        KUBECONFIG = "${WORKSPACE}/k3s/kubeconfig.yaml"
+        KUBECONFIG_ORIGINAL = "${WORKSPACE}/k3s/kubeconfig.yaml"
+        KUBECONFIG_MODIFIED = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+        KUBECONFIG = "${KUBECONFIG_MODIFIED}"
         HELM_CHART_PATH = "${WORKSPACE}/helm/sample-app"
         OPENTOFU_DIR = "${WORKSPACE}/opentofu"
         INFRA_NAMESPACE = "infrastructure"
@@ -144,23 +146,23 @@ pipeline {
                     nc -zv host-gateway 6443 || echo "Cannot connect to host-gateway:6443"
 
                     # Create a directory for the modified kubeconfig
-                    mkdir -p \${WORKSPACE}/k3s-modified
+                    mkdir -p ${WORKSPACE}/k3s-modified
 
                     # Modify kubeconfig to use host-gateway instead of k3s
                     echo "Creating modified kubeconfig with host-gateway"
-                    cat ${KUBECONFIG} | sed 's|https://k3s:6443|https://host-gateway:6443|g' > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+                    cat ${KUBECONFIG_ORIGINAL} | sed 's|https://k3s:6443|https://host-gateway:6443|g' > ${KUBECONFIG_MODIFIED}
 
                     # Debug the modified config
                     echo "Modified kubeconfig server setting:"
-                    grep "server:" \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+                    grep "server:" ${KUBECONFIG_MODIFIED}
 
                     # Test the new kubeconfig
                     echo "Testing connection to K3s with modified kubeconfig:"
-                    kubectl --kubeconfig=\${WORKSPACE}/k3s-modified/kubeconfig.yaml cluster-info || echo "Failed to connect to K3s"
+                    kubectl --kubeconfig=${KUBECONFIG_MODIFIED} cluster-info || echo "Failed to connect to K3s"
                 """
 
                 script {
-                    env.KUBECONFIG = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+                    env.KUBECONFIG = "${KUBECONFIG_MODIFIED}"
                     echo "Set KUBECONFIG to ${env.KUBECONFIG}"
                 }
             }
