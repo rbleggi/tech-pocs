@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        label 'docker-agent'
+        docker {
+            image 'docker:20.10-dind'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin:/usr/bin --privileged'
+        }
     }
     
     options {

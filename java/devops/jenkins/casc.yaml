@@ -31,21 +31,8 @@ jenkins:
         templates:
           - labelString: "docker-agent java maven"
             dockerTemplateBase:
-              image: "jenkins/agent:latest"
+              image: "docker:dind"
             remoteFs: "/home/jenkins/agent"
             connector:
               attach:
-                user: "jenkins"
-            instanceCapStr: "10"
-
-security: {}
-
-unclassified:
-  location:
-    url: "http://localhost:8081/"
-
-tool:
-  git:
-    installations:
-      - name: "Default"
-        home: "/usr/bin/git"
+                user
