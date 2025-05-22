@@ -2,7 +2,7 @@ services:
   k3s:
     image: rancher/k3s:v1.25.8-k3s1
     container_name: k3s
-    command: server --disable traefik
+    command: server --disable traefik --tls-san host-gateway
     privileged: true
     ports:
       - "6443:6443"
