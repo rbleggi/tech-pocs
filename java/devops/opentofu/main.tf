@@ -16,14 +16,14 @@ terraform {
 
 # Configure the Kubernetes provider
 provider "kubernetes" {
-  config_path    = "/config/kubeconfig.yaml"
+  config_path    = pathexpand(get_env("KUBECONFIG", "${path.module}/../../k3s/kubeconfig.yaml"))
   config_context = "default"
 }
 
 # Configure the Helm provider
 provider "helm" {
   kubernetes {
-    config_path    = "/config/kubeconfig.yaml"
+    config_path    = pathexpand(get_env("KUBECONFIG", "${path.module}/../../k3s/kubeconfig.yaml"))
     config_context = "default"
   }
 }
