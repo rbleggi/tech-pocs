@@ -37,18 +37,4 @@ jenkins:
               privileged: true
             remoteFs: "/tmp"
             connector:
-              attach:
-                user: "root"
-            instanceCapStr: "10"
-
-security: {}
-
-unclassified:
-  location:
-    url: "http://localhost:8081/"
-
-tool:
-  git:
-    installations:
-      - name: "Default"
-        home: "/usr/bin/git"
+              attach: {}

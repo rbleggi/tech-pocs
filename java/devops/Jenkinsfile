@@ -22,11 +22,9 @@ pipeline {
     }
 
     stages {
-        stage('Verify Agent') {
+        stage('Install Tools') {
             steps {
-                echo "Running on agent: ${env.NODE_NAME}"
-                echo "This build is NOT running on the built-in node"
-                sh 'hostname'
+                echo "Installing required tools"
                 sh '''
                 # Install required tools
                 apk update
@@ -52,6 +50,14 @@ pipeline {
                 kubectl version --client
                 helm version
                 '''
+            }
+        }
+
+        stage('Verify Agent') {
+            steps {
+                echo "Running on agent: ${env.NODE_NAME}"
+                echo "This build is NOT running on the built-in node"
+                sh 'hostname'
             }
         }
         

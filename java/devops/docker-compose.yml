@@ -100,6 +100,8 @@ services:
       - ./:/var/jenkins_home/workspace/tech-pocs:ro
       - ./jenkins/init.groovy.d:/var/jenkins_home/init.groovy.d:ro
       - ./jenkins/plugins.txt:/usr/share/jenkins/ref/plugins.txt:ro
+      - ./jenkins/plugins_cache:/usr/share/jenkins/ref/plugins
+      - ./jenkins/plugins_cache:/var/jenkins_home/plugins
     command: >
       bash -c "
       echo 'Installing plugins...' &&
@@ -173,3 +175,4 @@ volumes:
   prometheus_data:
   grafana_data:
   k3s-data:
+  jenkins_plugins_cache:
