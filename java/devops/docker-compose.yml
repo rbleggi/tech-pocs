@@ -102,9 +102,9 @@ services:
       - ./jenkins/plugins.txt:/usr/share/jenkins/ref/plugins.txt:ro
     command: >
       bash -c "
-      echo 'Instalando plugins do Jenkins...' &&
+      echo 'Installing plugins...' &&
       jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt --verbose &&
-      echo 'Plugins instalados, iniciando Jenkins...' &&
+      echo 'Plugins installed, starting Jenkins...' &&
       /usr/local/bin/jenkins.sh
       "
     user: root

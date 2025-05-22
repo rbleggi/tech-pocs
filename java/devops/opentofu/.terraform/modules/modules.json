@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"grafana","Source":"./modules/grafana","Dir":"modules/grafana"},{"Key":"jenkins","Source":"./modules/jenkins","Dir":"modules/jenkins"},{"Key":"prometheus","Source":"./modules/prometheus","Dir":"modules/prometheus"}]}

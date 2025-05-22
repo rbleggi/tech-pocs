@@ -32,7 +32,23 @@ jenkins:
           - labelString: "docker-agent java maven"
             dockerTemplateBase:
               image: "docker:dind"
-            remoteFs: "/home/jenkins/agent"
+              mounts:
+                - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+              privileged: true
+            remoteFs: "/tmp"
             connector:
               attach:
-                user
+                user: "root"
+            instanceCapStr: "10"
+
+security: {}
+
+unclassified:
+  location:
+    url: "http://localhost:8081/"
+
+tool:
+  git:
+    installations:
+      - name: "Default"
+        home: "/usr/bin/git"
