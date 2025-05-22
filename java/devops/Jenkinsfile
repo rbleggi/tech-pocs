@@ -26,18 +26,18 @@ pipeline {
             steps {
                 sh '''
                 set -e
-                sudo apt-get update
-                sudo apt-get install -y openjdk-21-jdk maven git docker.io wget unzip
+                apt-get update
+                apt-get install -y openjdk-21-jdk maven git docker.io wget unzip
                 if ! command -v tofu >/dev/null; then
                   wget -O /tmp/opentofu.zip https://github.com/opentofu/opentofu/releases/download/v1.6.2/tofu_1.6.2_linux_amd64.zip
                   unzip /tmp/opentofu.zip -d /tmp
-                  sudo mv /tmp/tofu /usr/local/bin/tofu
-                  sudo chmod +x /usr/local/bin/tofu
+                  mv /tmp/tofu /usr/local/bin/tofu
+                  chmod +x /usr/local/bin/tofu
                   rm /tmp/opentofu.zip
                 fi
                 if ! command -v yq >/dev/null; then
                   wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/v4.44.1/yq_linux_amd64
-                  sudo chmod +x /usr/bin/yq
+                  chmod +x /usr/bin/yq
                 fi
                 '''
             }
