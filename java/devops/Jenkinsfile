@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'jenkins-agent:java-docker-git'
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --add-host=k3s:host-gateway --add-host=host-gateway:host-gateway'
-        }
-    }
+    agent any
 
     options {
         timeout(time: 15, unit: 'MINUTES')
@@ -19,9 +14,7 @@ pipeline {
         DOCKER_IMAGE = 'tech-pocs/java-devops-app'
         DOCKER_TAG = "${BUILD_NUMBER}"
         WORKSPACE = "${env.WORKSPACE}/java/devops"
-        KUBECONFIG_ORIGINAL = "/tmp/kubeconfig.yaml"
-        KUBECONFIG_MODIFIED = "/tmp/kubeconfig-modified.yaml"
-        KUBECONFIG = "${KUBECONFIG_MODIFIED}"
+        KUBECONFIG_HOST = "${WORKSPACE}/../../k3s/kubeconfig.yaml"
         HELM_CHART_PATH = "${WORKSPACE}/helm/sample-app"
         OPENTOFU_DIR = "${WORKSPACE}/opentofu"
         INFRA_NAMESPACE = "infrastructure"
@@ -29,11 +22,36 @@ pipeline {
     }
 
     stages {
-        stage('Verify Agent') {
+        stage('Install Tools') {
             steps {
-                echo "Running on agent: ${env.NODE_NAME}"
-                echo "This build is NOT running on the built-in node"
+                sh '''
+                set -e
+                sudo apt-get update
+                sudo apt-get install -y openjdk-21-jdk maven git docker.io wget unzip
+                if ! command -v tofu >/dev/null; then
+                  wget -O /tmp/opentofu.zip https://github.com/opentofu/opentofu/releases/download/v1.6.2/tofu_1.6.2_linux_amd64.zip
+                  unzip /tmp/opentofu.zip -d /tmp
+                  sudo mv /tmp/tofu /usr/local/bin/tofu
+                  sudo chmod +x /usr/local/bin/tofu
+                  rm /tmp/opentofu.zip
+                fi
+                if ! command -v yq >/dev/null; then
+                  wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/v4.44.1/yq_linux_amd64
+                  sudo chmod +x /usr/bin/yq
+                fi
+                '''
+            }
+        }
+
+        stage('Verify Jenkins Environment') {
+            steps {
+                echo "Running on Jenkins node: ${env.NODE_NAME}"
                 sh 'hostname'
+                sh 'java -version'
+                sh 'mvn -version'
+                sh 'git --version'
+                sh 'docker --version'
+                sh 'tofu version || true'
             }
         }
 
@@ -56,70 +74,20 @@ pipeline {
             }
         }
 
-        stage('Fetch Kubeconfig') {
-            steps {
-                sh '''
-                # Create directory for kubeconfig
-                mkdir -p /tmp
-                
-                # Try to copy kubeconfig from k3s container
-                echo "Attempting to fetch kubeconfig from k3s container..."
-                docker cp k3s:/config/kubeconfig.yaml ${KUBECONFIG_ORIGINAL} || echo "Failed to copy from container"
-                
-                # If that didn't work, try to get it from the host path where the k3s volume is mounted
-                if [ ! -s ${KUBECONFIG_ORIGINAL} ]; then
-                  echo "Attempting to find kubeconfig in mounted volumes..."
-                  find / -name kubeconfig.yaml -type f 2>/dev/null || echo "No kubeconfig found in system"
-                  
-                  # As a last resort, create a minimal test kubeconfig for diagnostics
-                  if [ ! -s ${KUBECONFIG_ORIGINAL} ]; then
-                    echo "Creating temporary test kubeconfig for diagnostics..."
-                    cat > ${KUBECONFIG_ORIGINAL} << EOF
-apiVersion: v1
-kind: Config
-clusters:
-- name: k3s
-  cluster:
-    server: https://k3s:6443
-contexts:
-- name: default
-  context:
-    cluster: k3s
-    user: default
-current-context: default
-users:
-- name: default
-  user:
-    client-certificate-data: dummy
-EOF
-                  fi
-                fi
-                
-                # Check kubeconfig was obtained and modify
-                if [ -s ${KUBECONFIG_ORIGINAL} ]; then
-                  echo "Kubeconfig found! Modifying..."
-                  cat ${KUBECONFIG_ORIGINAL}
-                  sed 's|https://k3s:6443|https://host-gateway:6443|g' ${KUBECONFIG_ORIGINAL} > ${KUBECONFIG_MODIFIED}
-                  yq -i '(.clusters[].cluster) |= (. + {"insecure-skip-tls-verify": true} | del(."certificate-authority-data") | del(."certificate-authority"))' ${KUBECONFIG_MODIFIED}
-                  echo "Final kubeconfig:"
-                  cat ${KUBECONFIG_MODIFIED}
-                else
-                  echo "Failed to get kubeconfig file!"
-                  exit 1
-                fi
-                '''
-            }
-        }
-
         stage('Provision Infra (OpenTofu)') {
             steps {
                 sh '''
+                if [ ! -f "${KUBECONFIG_HOST}" ]; then
+                  echo "Kubeconfig not found at ${KUBECONFIG_HOST}!"
+                  exit 1
+                fi
+                export KUBECONFIG="${KUBECONFIG_HOST}"
                 cd ${OPENTOFU_DIR}
                 tofu init
                 tofu import kubernetes_namespace.infrastructure infrastructure || true
                 tofu import kubernetes_namespace.applications applications || true
                 tofu validate
-                tofu plan -var="kubeconfig_path=${KUBECONFIG_MODIFIED}" -out=tfplan
+                tofu plan -var="kubeconfig_path=${KUBECONFIG_HOST}" -out=tfplan
                 tofu apply -auto-approve tfplan
                 '''
             }
@@ -128,7 +96,7 @@ EOF
 
     post {
         always {
-            echo "Build completed on agent: ${env.NODE_NAME}"
+            echo "Build completed on Jenkins node: ${env.NODE_NAME}"
         }
         success {
             echo "Build and deployment succeeded!"

@@ -122,21 +122,6 @@ services:
       retries: 3
       start_period: 60s
 
-  jenkins-agent:
-    build:
-      context: ./jenkins
-      dockerfile: Dockerfile.agent
-    image: jenkins-agent:java-docker-git
-    container_name: jenkins-agent
-    networks:
-      - app-network
-    entrypoint: ["/bin/true"]
-    depends_on:
-      - k3s
-    volumes:
-      - ./k3s:/config:rw
-      - ./jenkins/maven_cache:/home/jenkins/.m2
-
   prometheus:
     image: prom/prometheus:v2.45.0
     container_name: prometheus
