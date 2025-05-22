@@ -18,6 +18,7 @@ terraform {
 provider "kubernetes" {
   config_path    = var.kubeconfig_path
   config_context = "default"
+  insecure       = true  # Skip TLS verification to handle cert issues
 }
 
 # Configure the Helm provider
@@ -25,6 +26,7 @@ provider "helm" {
   kubernetes {
     config_path    = var.kubeconfig_path
     config_context = "default"
+    insecure       = true  # Skip TLS verification to handle cert issues
   }
 }
 
