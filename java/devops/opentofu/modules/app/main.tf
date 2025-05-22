@@ -56,40 +56,22 @@ resource "helm_release" "app" {
     name  = "prometheus.enabled"
     value = var.prometheus_enabled
   }
-}
 
-# Create ServiceMonitor for Prometheus integration
-resource "kubernetes_manifest" "service_monitor" {
-  count = var.prometheus_enabled ? 1 : 0
-
-  manifest = {
-    apiVersion = "monitoring.coreos.com/v1"
-    kind = "ServiceMonitor"
-    metadata = {
-      name = "${var.app_name}-monitor"
-      namespace = var.namespace
-      labels = {
-        "app" = var.app_name
-        "release" = "prometheus"
-      }
-    }
-    spec = {
-      selector = {
-        matchLabels = {
-          "app.kubernetes.io/name" = var.app_name
-        }
-      }
-      endpoints = [
-        {
-          port = "http"
-          path = "/actuator/prometheus"
-          interval = "15s"
-        }
-      ]
-    }
+  # Adicionar anotações para o Prometheus descobrir diretamente
+  set {
+    name  = "podAnnotations.prometheus\\.io/scrape"
+    value = var.prometheus_enabled ? "true" : "false"
   }
 
-  depends_on = [helm_release.app]
+  set {
+    name  = "podAnnotations.prometheus\\.io/path"
+    value = "/actuator/prometheus"
+  }
+
+  set {
+    name  = "podAnnotations.prometheus\\.io/port"
+    value = "8080"
+  }
 }
 
 output "app_status" {
@@ -97,5 +79,5 @@ output "app_status" {
 }
 
 output "prometheus_integration" {
-  value = var.prometheus_enabled ? "Enabled with ServiceMonitor" : "Disabled"
+  value = var.prometheus_enabled ? "Enabled with Pod Annotations" : "Disabled"
 }
