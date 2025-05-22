@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'jenkins-agent:java-docker-git'
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --add-host=k3s:host-gateway --add-host=host-gateway:host-gateway -v ${WORKSPACE}/../../../../k3s:/config:rw'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --add-host=k3s:host-gateway --add-host=host-gateway:host-gateway -v $PWD/../../k3s:/config:rw'
         }
     }
 
