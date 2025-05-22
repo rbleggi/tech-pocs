@@ -112,6 +112,33 @@ pipeline {
             }
         }
         
+        stage('Setup Kubernetes Access') {
+            steps {
+                echo "Setting up access to Kubernetes cluster"
+                sh """
+                    # Install tools needed for modifying the kubeconfig
+                    apk add --no-cache gettext jq
+
+                    # Create a directory for the modified kubeconfig
+                    mkdir -p \${WORKSPACE}/k3s-modified
+
+                    # Modify the kubeconfig to use the k3s service name instead of localhost
+                    cat ${KUBECONFIG} | sed 's|https://127.0.0.1:6443|https://k3s:6443|g' > \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+
+                    # Update the KUBECONFIG environment variable to use the modified file
+                    echo "Modified kubeconfig created at \${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+
+                    # Verify the change
+                    grep "server:" \${WORKSPACE}/k3s-modified/kubeconfig.yaml
+                """
+
+                script {
+                    // Update the KUBECONFIG environment variable
+                    env.KUBECONFIG = "${WORKSPACE}/k3s-modified/kubeconfig.yaml"
+                }
+            }
+        }
+
         stage('OpenTofu Tests & Provision') {
             steps {
                 echo "Running OpenTofu validation tests"
