@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'docker:20.10-dind'
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin:/usr/bin --privileged'
+            image 'openjdk:17-alpine'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged'
         }
     }
     
@@ -27,8 +27,30 @@ pipeline {
                 echo "Running on agent: ${env.NODE_NAME}"
                 echo "This build is NOT running on the built-in node"
                 sh 'hostname'
-                sh 'apk add --no-cache openjdk17-jre maven kubectl helm'
-                sh 'java -version'
+                sh '''
+                # Install required tools
+                apk update
+                apk add --no-cache docker maven curl tar bash
+
+                # Install kubectl
+                curl -LO "https://dl.k8s.io/release/stable.txt"
+                KUBECTL_VERSION=$(cat stable.txt)
+                curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
+                chmod +x kubectl
+                mv kubectl /usr/local/bin/
+
+                # Install Helm
+                curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+                chmod 700 get_helm.sh
+                ./get_helm.sh
+
+                # Verify installations
+                java -version
+                mvn --version
+                docker --version
+                kubectl version --client
+                helm version
+                '''
             }
         }
         
