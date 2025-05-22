@@ -33,7 +33,7 @@ variable "prometheus_enabled" {
 # Deploy the application using Helm
 resource "helm_release" "app" {
   name       = var.app_name
-  chart      = "../../helm/sample-app"
+  chart      = "${path.root}/../helm/sample-app"
   namespace  = var.namespace
   create_namespace = true
 
