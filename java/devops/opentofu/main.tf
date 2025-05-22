@@ -39,12 +39,18 @@ resource "kubernetes_namespace" "infrastructure" {
   metadata {
     name = "infrastructure"
   }
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 # Create applications namespace if it doesn't exist
 resource "kubernetes_namespace" "applications" {
   metadata {
     name = "applications"
+  }
+  lifecycle {
+    ignore_changes = all
   }
 }
 
