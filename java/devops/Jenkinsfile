@@ -61,8 +61,8 @@ pipeline {
                 sh '''
                 mkdir -p ${WORKSPACE}/k3s-modified
                 sed 's|https://k3s:6443|https://host-gateway:6443|g' ${KUBECONFIG_ORIGINAL} > ${KUBECONFIG_MODIFIED}
-                # For development: skip TLS verify in kubeconfig using yq (robust YAML)
-                yq -i '(.users[].user) |= . + {"insecure-skip-tls-verify": true} | del(.users[].user."client-certificate-data") | del(.users[].user."client-key-data")' ${KUBECONFIG_MODIFIED}
+                # For development: skip TLS verify in kubeconfig (patch clusters[].cluster)
+                yq -i '(.clusters[].cluster) |= (. + {"insecure-skip-tls-verify": true} | del(."certificate-authority-data") | del(."certificate-authority"))' ${KUBECONFIG_MODIFIED}
                 cp ${KUBECONFIG_MODIFIED} ${WORKSPACE}/k3s/kubeconfig.yaml
                 mkdir -p /config
                 cp ${KUBECONFIG_MODIFIED} /config/kubeconfig.yaml
