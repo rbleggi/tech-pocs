@@ -156,7 +156,7 @@ pipeline {
 
                     # Test the new kubeconfig
                     echo "Testing connection to K3s with modified kubeconfig:"
-                    kubectl --kubeconfig=\${WORKSPACE}/k3s-modified/kubeconfig.yaml cluster-info || echo "Failed to connect to K3s"
+                    kubectl --kubeconfig=\${WORKSPACE}/k3s-modified/kubeconfig.yaml --insecure-skip-tls-verify cluster-info || echo "Failed to connect to K3s"
                 """
 
                 script {
@@ -185,10 +185,10 @@ pipeline {
                 tofu apply -auto-approve tfplan
 
                 # Create infrastructure namespace if it doesn't exist
-                kubectl --kubeconfig=${KUBECONFIG} create namespace ${INFRA_NAMESPACE} --dry-run=client -o yaml | kubectl --kubeconfig=${KUBECONFIG} apply -f -
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify create namespace ${INFRA_NAMESPACE} --dry-run=client -o yaml | kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify apply -f -
 
                 # Create application namespace if it doesn't exist
-                kubectl --kubeconfig=${KUBECONFIG} create namespace ${APP_NAMESPACE} --dry-run=client -o yaml | kubectl --kubeconfig=${KUBECONFIG} apply -f -
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify create namespace ${APP_NAMESPACE} --dry-run=client -o yaml | kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify apply -f -
                 """
             }
         }
@@ -198,16 +198,16 @@ pipeline {
                 echo "Deploying infrastructure components to infrastructure namespace"
                 sh """
                 # Deploy Prometheus to infrastructure namespace
-                helm --kubeconfig=${KUBECONFIG} upgrade --install prometheus ./helm/prometheus \
+                helm --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify upgrade --install prometheus ./helm/prometheus \
                     --namespace ${INFRA_NAMESPACE}
 
                 # Deploy Grafana to infrastructure namespace
-                helm --kubeconfig=${KUBECONFIG} upgrade --install grafana ./helm/grafana \
+                helm --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify upgrade --install grafana ./helm/grafana \
                     --namespace ${INFRA_NAMESPACE}
 
                 # Wait for infrastructure components to be ready
-                kubectl --kubeconfig=${KUBECONFIG} wait --for=condition=available deployment/prometheus-server --timeout=120s -n ${INFRA_NAMESPACE} || true
-                kubectl --kubeconfig=${KUBECONFIG} wait --for=condition=available deployment/grafana --timeout=120s -n ${INFRA_NAMESPACE} || true
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify wait --for=condition=available deployment/prometheus-server --timeout=120s -n ${INFRA_NAMESPACE} || true
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify wait --for=condition=available deployment/grafana --timeout=120s -n ${INFRA_NAMESPACE} || true
                 """
             }
         }
@@ -217,17 +217,17 @@ pipeline {
                 echo "Deploying application with Prometheus integration"
                 sh """
                 # Check if Kubernetes is accessible
-                kubectl --kubeconfig=${KUBECONFIG} get nodes
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify get nodes
 
                 # Update or install chart with the new image
-                helm --kubeconfig=${KUBECONFIG} upgrade --install java-app ${HELM_CHART_PATH} \
+                helm --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify upgrade --install java-app ${HELM_CHART_PATH} \
                     --set image.repository=${DOCKER_IMAGE} \
                     --set image.tag=${DOCKER_TAG} \
                     --set prometheus.enabled=true \
                     --namespace ${APP_NAMESPACE} --create-namespace
 
                 # Verify if deployment was successful
-                kubectl --kubeconfig=${KUBECONFIG} rollout status deployment/java-app -n ${APP_NAMESPACE}
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify rollout status deployment/java-app -n ${APP_NAMESPACE}
                 """
             }
         }
@@ -236,16 +236,16 @@ pipeline {
             steps {
                 echo "Verifying deployment"
                 sh """
-                kubectl --kubeconfig=${KUBECONFIG} get all -n ${APP_NAMESPACE}
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify get all -n ${APP_NAMESPACE}
 
                 # Check if service is responding
                 echo "Waiting for service to be available..."
                 sleep 10
-                kubectl --kubeconfig=${KUBECONFIG} get svc -n ${APP_NAMESPACE}
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify get svc -n ${APP_NAMESPACE}
 
                 # Verify Prometheus scraping configuration for application
                 echo "Checking for Prometheus service monitor..."
-                kubectl --kubeconfig=${KUBECONFIG} get servicemonitor -n ${APP_NAMESPACE} || echo "ServiceMonitor not found - verify Prometheus integration"
+                kubectl --kubeconfig=${KUBECONFIG} --insecure-skip-tls-verify get servicemonitor -n ${APP_NAMESPACE} || echo "ServiceMonitor not found - verify Prometheus integration"
                 """
             }
         }
