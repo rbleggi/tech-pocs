@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    triggers {
+        pollSCM('H/1 * * * *')
+    }
     stages {
         stage('Prepare k3s directory') {
             steps {
@@ -17,10 +20,6 @@ pipeline {
             options {
                 timeout(time: 15, unit: 'MINUTES')
                 disableConcurrentBuilds()
-            }
-
-            triggers {
-                pollSCM('H/1 * * * *')
             }
 
             environment {
