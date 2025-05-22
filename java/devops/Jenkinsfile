@@ -47,6 +47,13 @@ pipeline {
                 chmod 700 get_helm.sh
                 ./get_helm.sh
 
+                # Install OpenTofu
+                curl -L -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v1.6.0/tofu_1.6.0_linux_amd64.zip
+                unzip opentofu.zip
+                chmod +x tofu
+                mv tofu /usr/local/bin/
+                rm -f opentofu.zip
+
                 # Verify installations
                 java -version
                 mvn --version
@@ -54,6 +61,7 @@ pipeline {
                 git --version
                 kubectl version --client
                 helm version
+                tofu version
                 '''
             }
         }
