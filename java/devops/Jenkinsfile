@@ -57,8 +57,27 @@ pipeline {
                     steps {
                         echo "Running Maven tests"
                         sh '''
+                        echo "=== Maven Debug Information ==="
+                        echo "Maven home directory:"
+                        mvn -version
+                        echo "Checking Maven repository location:"
+                        mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
+                        echo "Maven environment variables:"
+                        env | grep -i maven
+                        echo "Current .m2 directory structure:"
+                        find /home/jenkins/.m2 -type d || echo "No .m2 directory found"
+                        echo "Maven .m2 directory permissions:"
+                        ls -la /home/jenkins/.m2 || echo "Cannot access .m2 directory"
+                        echo "Creating a settings.xml file to explicitly set the repository location:"
+                        mkdir -p /home/jenkins/.m2
+                        echo "<settings><localRepository>/home/jenkins/.m2/repository</localRepository></settings>" > /home/jenkins/.m2/settings.xml
+                        echo "Created settings.xml:"
+                        cat /home/jenkins/.m2/settings.xml
+                        echo "=== Running Maven Build ==="
                         cd java/devops
-                        mvn clean test
+                        mvn clean test -Dmaven.repo.local=/home/jenkins/.m2/repository
+                        echo "After build - .m2 directory structure:"
+                        find /home/jenkins/.m2 -type d || echo "No .m2 directory found"
                         cd ${WORKSPACE}
                         docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} -f Dockerfile .
                         docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
