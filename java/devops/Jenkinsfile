@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'docker:dind'
+            image 'jenkins-agent:java-docker-git'
             args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged --add-host=k3s:host-gateway --add-host=host-gateway:host-gateway'
         }
     }
@@ -29,50 +29,6 @@ pipeline {
     }
 
     stages {
-        stage('Install Tools') {
-            steps {
-                echo "Installing required tools"
-                sh '''
-                # Install required tools in Alpine Linux
-                apk update
-                apk add --no-cache bash curl maven openjdk21 git
-
-                # Set Java home
-                export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-                export PATH=$JAVA_HOME/bin:$PATH
-
-                # Install kubectl
-                curl -LO "https://dl.k8s.io/release/stable.txt"
-                KUBECTL_VERSION=$(cat stable.txt)
-                curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
-                chmod +x kubectl
-                mv kubectl /usr/local/bin/
-
-                # Install Helm
-                curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-                chmod 700 get_helm.sh
-                ./get_helm.sh
-
-                # Install OpenTofu
-                curl -L -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v1.6.0/tofu_1.6.0_linux_amd64.zip
-                # Use -o flag to overwrite files without prompting
-                unzip -o opentofu.zip
-                chmod +x tofu
-                mv tofu /usr/local/bin/
-                rm -f opentofu.zip
-
-                # Verify installations
-                java -version
-                mvn --version
-                docker --version
-                git --version
-                kubectl version --client
-                helm version
-                tofu version
-                '''
-            }
-        }
-
         stage('Verify Agent') {
             steps {
                 echo "Running on agent: ${env.NODE_NAME}"
