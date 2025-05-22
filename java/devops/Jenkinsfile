@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'openjdk:17-alpine'
+            image 'alpine/git:latest'
             args '-u root -v /var/run/docker.sock:/var/run/docker.sock --privileged'
         }
     }
@@ -28,7 +28,7 @@ pipeline {
                 sh '''
                 # Install required tools
                 apk update
-                apk add --no-cache docker maven curl tar bash git
+                apk add --no-cache docker maven curl tar bash openjdk17
 
                 # Install kubectl
                 curl -LO "https://dl.k8s.io/release/stable.txt"
