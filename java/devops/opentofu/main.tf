@@ -11,10 +11,6 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.0"
     }
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.0"
-    }
   }
 }
 
@@ -22,7 +18,6 @@ terraform {
 provider "kubernetes" {
   config_path    = var.kubeconfig_path
   config_context = "default"
-  insecure       = true  # Skip TLS verification to handle cert issues
 }
 
 # Configure the Helm provider
@@ -30,7 +25,6 @@ provider "helm" {
   kubernetes {
     config_path    = var.kubeconfig_path
     config_context = "default"
-    insecure       = true  # Skip TLS verification to handle cert issues
   }
 }
 
@@ -40,59 +34,53 @@ variable "kubeconfig_path" {
   default     = "../../k3s/kubeconfig.yaml"
 }
 
-# Create infrastructure namespace using kubectl directly (avoids auth issues)
-resource "null_resource" "create_infrastructure_namespace" {
-  provisioner "local-exec" {
-    command = "kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false create namespace infrastructure --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false apply -f -"
+# Create infrastructure namespace if it doesn't exist
+resource "kubernetes_namespace" "infrastructure" {
+  metadata {
+    name = "infrastructure"
   }
 }
 
-# Create applications namespace using kubectl directly (avoids auth issues)
-resource "null_resource" "create_applications_namespace" {
-  provisioner "local-exec" {
-    command = "kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false create namespace applications --dry-run=client -o yaml | kubectl --kubeconfig ${var.kubeconfig_path} --insecure-skip-tls-verify --validate=false apply -f -"
+# Create applications namespace if it doesn't exist
+resource "kubernetes_namespace" "applications" {
+  metadata {
+    name = "applications"
   }
 }
 
 # Include infrastructure monitoring components
 module "prometheus" {
-  source    = "./modules/prometheus"
-  namespace = "infrastructure"
-  depends_on = [null_resource.create_infrastructure_namespace]
+  source = "./modules/prometheus"
+  namespace = kubernetes_namespace.infrastructure.metadata[0].name
 }
 
 module "grafana" {
-  source    = "./modules/grafana"
-  namespace = "infrastructure"
-  depends_on = [module.prometheus, null_resource.create_infrastructure_namespace]
+  source = "./modules/grafana"
+  namespace = kubernetes_namespace.infrastructure.metadata[0].name
+  depends_on = [module.prometheus]
 }
 
 # Deploy application with Prometheus and Grafana integration
 module "app" {
-  source     = "./modules/app"
-  namespace  = "applications"
-  app_name   = "java-app"
-  app_image  = "tech-pocs/java-devops-app"
-  app_tag    = "latest"
+  source = "./modules/app"
+  namespace = kubernetes_namespace.applications.metadata[0].name
+  app_name = "java-app"
+  app_image = "tech-pocs/java-devops-app"
+  app_tag = "latest"
   prometheus_enabled = true
   depends_on = [
     module.prometheus,
-    module.grafana,
-    null_resource.create_applications_namespace
+    module.grafana
   ]
 }
 
-# Output for automatic validation (test)
+# Output para validação automática (teste)
 output "test_namespaces_created" {
-  value = "infrastructure and applications namespaces created via kubectl"
-  depends_on = [
-    null_resource.create_infrastructure_namespace,
-    null_resource.create_applications_namespace
-  ]
+  value = "${kubernetes_namespace.infrastructure.metadata[0].name} and ${kubernetes_namespace.applications.metadata[0].name} successfully created"
 }
 
 output "test_monitoring_deployed" {
-  value = "Monitoring stack deployed: Prometheus, Grafana in infrastructure namespace"
+  value = "Monitoring stack deployed: Prometheus, Grafana in ${kubernetes_namespace.infrastructure.metadata[0].name} namespace"
   depends_on = [
     module.prometheus,
     module.grafana
