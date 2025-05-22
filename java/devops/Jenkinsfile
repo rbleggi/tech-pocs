@@ -125,7 +125,7 @@ pipeline {
                 tofu validate
 
                 # Create plan and ensure it's valid
-                tofu plan -out=tfplan
+                tofu plan -var="kubeconfig_path=${KUBECONFIG}" -out=tfplan
 
                 # Apply infrastructure changes
                 tofu apply -auto-approve tfplan
