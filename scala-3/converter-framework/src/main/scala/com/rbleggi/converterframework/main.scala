@@ -1,4 +1,4 @@
-package converter.framework
+package com.rbleggi.converterframework
 
 trait Converter[A, B] {
   def convert(a: A): B
@@ -13,12 +13,10 @@ object Converter {
 @main def runRestaurantQueue(): Unit =
   val queue = KitchenQueue()
 
-// Example complex types
 case class Address(street: String, city: String, zip: String)
 case class Person(name: String, age: Int, address: Address)
 case class PersonDTO(fullName: String, age: Int, city: String)
 
-// Example converters
 val addressToString: Converter[Address, String] = Converter(addr => s"${addr.street}, ${addr.city}, ${addr.zip}")
 val personToDTO: Converter[Person, PersonDTO] = Converter(p => PersonDTO(p.name, p.age, p.address.city))
 val personToString: Converter[Person, String] = Converter(p => s"${p.name} (${p.age}), ${addressToString.convert(p.address)}")
