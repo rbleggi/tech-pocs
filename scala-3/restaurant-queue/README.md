@@ -6,9 +6,11 @@ This project implements a **modular restaurant queue system** using the **Comman
 is encapsulated in a separate command that knows how long it takes to prepare. The system queues these commands and
 reports the total and per-dish prep time.
 
-### **Tech Stack**
+---
 
-- **Scala 3.6** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

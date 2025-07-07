@@ -4,11 +4,13 @@
 
 This project calculates the minimum initial health required for a knight to rescue a princess in a dungeon.  
 
-### **Tech Stack**
+---
 
-- **Scala 3** → Functional and object-oriented programming.  
-- **SBT** → Build tool for Scala.  
-- **JDK 21** → Required to run the application.  
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
+- **SBT** → Scala's official build tool.
+- **JDK 21** → Required to run the application.
 
 ---
 

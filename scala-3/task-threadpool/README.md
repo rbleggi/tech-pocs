@@ -4,9 +4,11 @@
 
 A modular Scala 3 PoC for concurrent task execution using a custom thread pool, inspired by the class-organizer and social-media-photo-app project standards. Demonstrates core features (task submission, thread pool management, graceful shutdown) and extensibility for real-world concurrent workloads.
 
-### **Tech Stack**
+---
 
-- **Scala 3** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

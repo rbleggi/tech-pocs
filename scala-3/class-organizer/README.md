@@ -4,9 +4,11 @@
 
 This project implements a **flexible and efficient classroom organization system** using the **Observer Pattern**. Teachers can manage class schedules, optimize resource allocation, track student assignments, and receive notifications about changes affecting their classes.
 
-### **Tech Stack**
+---
 
-- **Scala 3.3.1** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

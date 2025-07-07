@@ -4,9 +4,11 @@
 
 This project implements a **simple in-memory Redis-like key-value store** using the **Command Pattern**. It supports basic string and map operations, similar to a minimal Redis server.
 
-### **Tech Stack**
+---
 
-- **Scala 3.6** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

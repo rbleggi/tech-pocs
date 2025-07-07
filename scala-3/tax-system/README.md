@@ -4,8 +4,11 @@
 
 This project demonstrates a **dynamic tax calculation system** where different products are subject to **varying tax rates** based on **state and year**. The system follows the **Specification Pattern**, ensuring that tax rules are **modular, extensible, and easily adaptable** to changes.
 
-### **Tech Stack**
-- **Scala 3.6** → A powerful JVM-based language with strong functional programming capabilities.
+---
+
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

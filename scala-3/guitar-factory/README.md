@@ -9,9 +9,11 @@ specifying attributes such as **type, model, specifications, and operating syste
 The project utilizes the **Builder Pattern** to streamline guitar creation with flexibility and readability and uses a *
 *Singleton Pattern** for centralized, consistent inventory management.
 
-### **Tech Stack**
+---
 
-- **Scala 3.6** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

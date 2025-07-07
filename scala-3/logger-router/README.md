@@ -6,9 +6,11 @@ This project implements a **lightweight and flexible log routing system** using 
 sent to multiple destinations like **FileSystem**, **ELK**, or **Console**, with support for **synchronous or
 asynchronous delivery** — all through a simple, unified interface.
 
-### **Tech Stack**
+---
 
-- **Scala 3.6** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

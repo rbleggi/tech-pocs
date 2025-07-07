@@ -4,9 +4,11 @@
 
 This project implements a simple and extensible validation framework using the Strategy Pattern in Scala. It allows developers to define reusable validators and compose them to validate case class fields.
 
-### **Tech Stack**
+---
 
-- **Scala 3.3.1** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 

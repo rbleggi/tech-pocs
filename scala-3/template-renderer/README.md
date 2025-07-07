@@ -4,14 +4,16 @@
 
 This project follows an **Object-Oriented Design (OOP)** approach to generate templates in **HTML, CSV, and PDF** formats. It uses:
 
-- **Scala 3.6** → A powerful JVM-based language with strong functional programming capabilities.
-- **iText** → A library for PDF generation.
+---
 
-### **Tech Stack**
+## **Tech Stack**
 
-- **Scala 3.6** → Modern JVM-based language with functional programming support.
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
+- **iText** → A library for PDF generation.
+
+---
 
 ## Features
 

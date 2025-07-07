@@ -6,9 +6,11 @@ This project implements a **modular and extensible freight pricing system** usin
 costs are dynamically calculated based on factors like **volume, size, and transport type** — such as **Truck**, **Rail
 **, or **Boat** — with prices subject to **real-time variability**.
 
-### **Tech Stack**
+---
 
-- **Scala 3.6** → Modern JVM-based language with functional programming support.
+## **Tech Stack**
+
+- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
 - **SBT** → Scala's official build tool.
 - **JDK 21** → Required to run the application.
 
