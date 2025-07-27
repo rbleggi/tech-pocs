@@ -24,7 +24,7 @@ pipeline {
         stage('Build java') {
             steps {
                 dir("app"){
-                    sh './gradlew clean build -x test'
+                    bat 'mvn clean install -DskipTests'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir("app"){
-                    sh './gradlew test'
+                    bat 'mvn test'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
         stage('Docker build') {
             steps {
                 dir("app"){
-                    sh "docker build -t $DOCKER_REGISTRY/java-app:$BUILD_NUMBER ."
+                    bat "docker build -t %DOCKER_REGISTRY%/java-app:%BUILD_NUMBER% ."
                 }
             }
         }
@@ -49,24 +49,24 @@ pipeline {
         stage('Docker push') {
             steps {
                 dir("app"){
-                    sh "docker push $DOCKER_REGISTRY/java-app:$BUILD_NUMBER "
+                    bat "docker push %DOCKER_REGISTRY%/java-app:%BUILD_NUMBER% "
                 }
             }
         }
 
         stage('Build Helm Chart') {
             steps {
-                dir("devops/challenges/opentofu-k8s-deploy/helm/app") {
-                    sh 'helm lint .'
-                    sh 'helm package .'
+                dir("helm/app") {
+                    bat 'helm lint .'
+                    bat 'helm package .'
                 }
             }
         }
 
         stage('Deploy Helm Chart') {
             steps {
-                dir("devops/challenges/opentofu-k8s-deploy/helm/app") {
-                    sh "helm upgrade --install java-app --set image.tag=$BUILD_NUMBER ."
+                dir("helm/app") {
+                    bat "helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% ."
                 }
             }
         }
