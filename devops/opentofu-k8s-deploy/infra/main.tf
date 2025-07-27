@@ -6,6 +6,7 @@ variable "prefix" {
 
 resource "kind_cluster" "default" {
     name = "${var.prefix}poc-kind-cluster"
+    kubeconfig_path = "${path.module}/../kind/kubeconfig.yaml"
 }
 
 resource "kubernetes_namespace" "apps" {
