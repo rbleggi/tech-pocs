@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Provision Infra') {
             steps {
-                dir('infra') {
+                dir('devops/opentofu-k8s-deploy/infra') {
                     bat 'tofu init'
                     bat 'tofu apply -auto-approve'
                 }
