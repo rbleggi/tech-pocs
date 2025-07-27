@@ -49,14 +49,18 @@ pipeline {
 
         stage('Build Helm Chart') {
             steps {
-                bat 'helm lint devops/opentofu-k8s-deploy/helm/app'
-                bat 'helm package devops/opentofu-k8s-deploy/helm/app'
+                dir("devops/opentofu-k8s-deploy/app"){
+                    bat 'helm lint helm/app'
+                    bat 'helm package helm/app'
+                }
             }
         }
 
         stage('Deploy Helm Chart') {
             steps {
-                bat "helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% devops/opentofu-k8s-deploy/helm/app"
+                dir("devops/opentofu-k8s-deploy/app"){
+                    bat "helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% helm/app"
+                }
             }
         }
     }
