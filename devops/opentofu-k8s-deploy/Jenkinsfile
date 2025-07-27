@@ -61,18 +61,14 @@ pipeline {
 
         stage('Build Helm Chart') {
             steps {
-                dir("helm/app") {
-                    bat 'helm lint .'
-                    bat 'helm package .'
-                }
+                bat 'docker exec helm helm lint /apps'
+                bat 'docker exec helm helm package /apps'
             }
         }
 
         stage('Deploy Helm Chart') {
             steps {
-                dir("helm/app") {
-                    bat "helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% ."
-                }
+                bat "docker exec helm helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% /apps"
             }
         }
     }
