@@ -9,6 +9,11 @@ resource "kind_cluster" "default" {
   name = "${var.prefix}poc-kind-cluster"
 }
 
+output "kubeconfig" {
+  value = kind_cluster.default.kubeconfig
+  sensitive = true
+}
+
 resource "kubernetes_namespace" "apps" {
   metadata {
     name = "apps"
