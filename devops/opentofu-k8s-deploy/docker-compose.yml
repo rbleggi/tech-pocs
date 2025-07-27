@@ -34,8 +34,19 @@ services:
       - k3d-net
     restart: unless-stopped
 
+  registry:
+    image: registry:2
+    ports:
+      - "5000:5000"
+    restart: always
+    environment:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+    volumes:
+      - registry-data:/var/lib/registry
+
 volumes:
   k3d-data:
+  registry-data:
 
 networks:
   k3d-net:
