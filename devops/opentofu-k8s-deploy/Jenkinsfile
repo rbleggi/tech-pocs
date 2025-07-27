@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_REGISTRY = 'ghcr.io/rbleggi'
+        DOCKER_REGISTRY = 'localhost:5000'
     }
 
     stages {
