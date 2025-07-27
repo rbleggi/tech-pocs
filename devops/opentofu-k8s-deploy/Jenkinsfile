@@ -9,7 +9,11 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
-    
+
+    environment {
+        DOCKER_REGISTRY = 'localhost:5000'
+    }
+
     stages {
          stage('Checkout Code') {
             steps {
@@ -42,7 +46,7 @@ pipeline {
         stage('Docker build') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    bat "docker build -t java-app:%BUILD_NUMBER% ."
+                    bat "docker build -t %DOCKER_REGISTRY%/java-app:%BUILD_NUMBER% ."
                 }
             }
         }
@@ -50,7 +54,7 @@ pipeline {
         stage('Docker push') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    bat "docker push java-app:%BUILD_NUMBER%"
+                    bat "docker push %DOCKER_REGISTRY%/java-app:%BUILD_NUMBER%"
                 }
             }
         }
