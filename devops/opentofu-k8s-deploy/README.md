@@ -60,7 +60,7 @@ sequenceDiagram
 
 3. **Application Deployment**
    - Use Helm to install applications in the `apps` namespace.
-
+---
 ## Accessing the KIND Cluster
 
 After provisioning the cluster with OpenTofu, the kubeconfig will be available at `c:\kubeconfig\kubeconfig.yaml`.
@@ -77,6 +77,8 @@ To export your application's service port for local access, use:
 kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n apps svc/<your-app-service-name> <local-port>:<service-port>
 ```
 Replace `<your-app-service-name>`, `<local-port>`, and `<service-port>` with your app's service name and desired ports.
+
+---
 
 ## Accessing Grafana, Prometheus and App
 
@@ -96,7 +98,7 @@ Access: http://localhost:4000
 
 **App:**
 ```sh
-kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n apps svc/java-app 8080:8080
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n apps svc/java-app 8080:80
 ```
 Access: http://localhost:8080
 
@@ -109,3 +111,82 @@ To list apps services and ports:
 ```sh
 kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
 ```
+
+---
+
+## Tools Used
+
+- **Jenkins**: Automation server for CI/CD pipelines. Integrates with source control, builds, tests, and deploys applications.
+  - **Pros:**
+    - Highly extensible
+    - Large plugin ecosystem
+    - Supports complex workflows
+    - Integrates with many tools
+  - **Cons:**
+    - Can be complex to configure
+    - UI can be slow
+    - Requires maintenance and updates
+
+- **Helm**: Kubernetes package manager for deploying applications as charts.
+  - **Pros:**
+    - Simplifies Kubernetes deployments
+    - Supports templating
+    - Easy upgrades/rollbacks
+  - **Cons:**
+    - Learning curve for templating
+    - Debugging chart issues can be tricky
+
+- **OpenTofu (Terraform fork)**: Infrastructure as code tool for provisioning cloud and local resources, including KIND clusters.
+  - **Pros:**
+    - Declarative, reproducible infrastructure
+    - Supports many providers
+    - Easy to version control
+  - **Cons:**
+    - State management can be complex
+    - Error messages sometimes unclear
+
+- **KIND (Kubernetes IN Docker)**: Tool for running local Kubernetes clusters using Docker containers.
+  - **Pros:**
+    - Fast local clusters
+    - Easy to use for development/testing
+    - Integrates with CI/CD
+  - **Cons:**
+    - Not suitable for production
+    - Networking differs from real clusters
+    - NodePort access may require extra config
+
+- **Prometheus**: Monitoring and alerting toolkit, collects metrics from applications and infrastructure.
+  - **Pros:**
+    - Powerful querying
+    - Integrates with Grafana
+    - Auto-discovers targets via annotations
+  - **Cons:**
+    - Requires configuration for custom metrics
+    - Storage can grow quickly
+
+- **Grafana**: Visualization platform for metrics, logs, and dashboards.
+  - **Pros:**
+    - Rich dashboard ecosystem
+    - Supports many data sources
+    - Easy to use
+  - **Cons:**
+    - Some advanced features require paid version
+    - Dashboard provisioning can be complex
+
+- **Spring Boot**: Java framework for building REST APIs and microservices.
+  - **Pros:**
+    - Rapid development
+    - Large ecosystem
+    - Easy integration with monitoring (Actuator)
+  - **Cons:**
+    - JVM overhead
+    - May require tuning for performance
+
+- **Docker**: Containerization platform for building, shipping, and running applications.
+  - **Pros:**
+    - Consistent environments
+    - Easy to share images
+    - Integrates with CI/CD
+  - **Cons:**
+    - Requires Docker daemon
+    - Image size can grow if not optimized
