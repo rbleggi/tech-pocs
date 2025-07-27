@@ -109,24 +109,3 @@ To list apps services and ports:
 ```sh
 kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
 ```
-
-## Running a Local Docker Registry
-
-To use images with your KIND cluster, you need to run a local Docker registry and push your app image to it:
-
-1. Start the registry:
-```sh
-docker run -d -p 5000:5000 --name registry registry:2
-```
-
-2. Build and tag your app image:
-```sh
-docker build -t localhost:5000/java-app:latest .
-```
-
-3. Push the image to the local registry:
-```sh
-docker push localhost:5000/java-app:latest
-```
-
-Your KIND cluster is configured to pull images from this registry automatically.

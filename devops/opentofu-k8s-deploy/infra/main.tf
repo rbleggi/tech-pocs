@@ -6,6 +6,12 @@ variable "prefix" {
 
 resource "kind_cluster" "default" {
   name = "${var.prefix}poc-kind-cluster"
+  containerd_config_patches = [
+    <<-EOT
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5000"]
+        endpoint = ["http://localhost:5000"]
+    EOT
+  ]
 }
 
 resource "kubernetes_namespace" "apps" {
