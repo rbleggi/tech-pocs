@@ -1,4 +1,3 @@
-
 variable "prefix" {
   type    = string
   default = ""
@@ -7,6 +6,10 @@ variable "prefix" {
 
 resource "kind_cluster" "default" {
   name = "${var.prefix}poc-kind-cluster"
+
+  provisioner "local-exec" {
+    command = "powershell -Command \"$env:TF_VAR_KUBECONFIG = '${self.kubeconfig}'; Set-Content -Path 'C:/kubeconfig/kubeconfig.yaml' -Value $env:TF_VAR_KUBECONFIG\""
+  }
 }
 
 output "kubeconfig" {

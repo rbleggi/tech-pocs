@@ -8,7 +8,7 @@ pipeline {
                     bat 'tofu apply -auto-approve'
                 }
                 bat 'if not exist C:\\kubeconfig mkdir C:\\kubeconfig'
-                bat 'copy kind\\kubeconfig.yaml C:\\kubeconfig\\kubeconfig.yaml'
+                bat 'copy ..\\..\\kind\\kubeconfig.yaml C:\\kubeconfig\\kubeconfig.yaml'
             }
         }
         stage('Test Infra') {
