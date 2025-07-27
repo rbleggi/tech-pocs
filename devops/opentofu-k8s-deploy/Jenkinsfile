@@ -59,7 +59,9 @@ pipeline {
         stage('Deploy Helm Chart') {
             steps {
                 dir("devops/opentofu-k8s-deploy/helm/app") {
-                    bat "helm upgrade --install java-app --set image.tag=$BUILD_NUMBER ."
+                    withEnv(["KUBECONFIG=%USERPROFILE%/kubeconfig.yaml"]) {
+                        bat "helm upgrade --install java-app --set image.tag=$BUILD_NUMBER ."
+                    }
                 }
             }
         }
