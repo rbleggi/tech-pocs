@@ -6,12 +6,14 @@ This directory implements a deployment system with:
 - OpenTofu (infrastructure as code)
 - Minikube/kind/k3s (local Kubernetes cluster)
 - Prometheus & Grafana (monitoring)
+- Java application in the app/ directory
 
 ## Structure
 - **Jenkinsfile**: CI/CD pipeline for building, testing, and deploying applications.
 - **helm/app**: Helm chart for deploying applications with built-in monitoring integration.
 - **infra/**: OpenTofu scripts to provision the cluster, namespaces, and install Prometheus/Grafana.
-- **docker-compose.yml**: Runs k3s and Helm via Docker Compose for local development.
+- **docker-compose.yml**: Runs k3s, Helm, and your Java app via Docker Compose for local development.
+- **app/**: Java application source code and Dockerfile.
 
 ## How it works
 1. **Provisioning**
@@ -19,7 +21,7 @@ This directory implements a deployment system with:
    - Prometheus and Grafana are installed automatically in the `infra` namespace.
 
 2. **Jenkins Pipeline**
-   - The Jenkinsfile checks out code, builds, runs automated tests (pipeline fails if tests fail), builds/pushes the Docker image.
+   - The Jenkinsfile checks out code, builds, runs automated tests (pipeline fails if tests fail), builds/pushes the Docker image for the Java app in app/.
    - Deployment can be done via Helm using the chart in `helm/app`.
 
 3. **Application Deployment**
@@ -37,12 +39,12 @@ This directory implements a deployment system with:
 - Install Jenkins on your host (outside Kubernetes). You can use the official Jenkins Docker image or install it natively. [Jenkins installation guide](https://www.jenkins.io/doc/book/installing/)
 - Make sure you have kubectl installed for cluster management.
 
-### 1. Start the Kubernetes Cluster and Helm
+### 1. Start the Kubernetes Cluster, Helm, and Java App
 In the root of this directory, run:
 ``` shell
 docker compose up -d
 ```
-This will start a local k3s Kubernetes cluster and a Helm container.
+This will start a local k3s Kubernetes cluster, a Helm container, and build/run your Java app from the app/ directory.
 
 ### 2. Provision the Cluster, Namespaces, and Monitoring (Automated)
 You can automate the creation of namespaces and the installation of Prometheus and Grafana using the provided OpenTofu scripts in the `infra/` directory and Helm charts in `helm/`.
@@ -71,8 +73,8 @@ Then open http://localhost:3000 in your browser.
 - Configure Jenkins to use Docker and kubectl if needed (for building images and deploying to the cluster).
 - The pipeline will:
   - Checkout your code
-  - Build and test your application
-  - Build and push Docker images
+  - Build and test your Java application in app/
+  - Build and push Docker images to your local registry (localhost:5000)
   - Deploy your application using Helm to the `apps` namespace
   - Fail if tests do not pass
 

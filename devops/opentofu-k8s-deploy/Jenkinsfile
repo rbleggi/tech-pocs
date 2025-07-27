@@ -70,13 +70,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Provision Infra with OpenTofu') {
-            steps {
-                dir('infra') {
-                    sh 'tofu apply -auto-approve'
-                }
-            }
-        }
     }
 }

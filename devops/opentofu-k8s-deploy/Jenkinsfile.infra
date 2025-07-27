@@ -1,0 +1,14 @@
+pipeline {
+    agent any
+    stages {
+        stage('Provision Infra') {
+            steps {
+                dir('infra') {
+                    sh 'tofu init'
+                    sh 'tofu apply -auto-approve'
+                }
+            }
+        }
+    }
+}
+
