@@ -5,15 +5,7 @@ pipeline {
             steps {
                 dir('devops/opentofu-k8s-deploy/infra') {
                     bat 'tofu init'
-                    script {
-                        def output = bat(returnStdout: true, script: 'tofu apply -auto-approve')
-                        echo "tofu apply output:\n${output}"
-                        def status = bat(returnStatus: true, script: 'tofu apply -auto-approve')
-                        echo "tofu apply exit code: ${status}"
-                        if (status != 0) {
-                            error("tofu apply failed with exit code ${status}")
-                        }
-                    }
+                    bat 'tofu apply -auto-approve'
                 }
             }
         }
