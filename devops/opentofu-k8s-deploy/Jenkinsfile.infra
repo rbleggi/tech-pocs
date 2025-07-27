@@ -9,5 +9,12 @@ pipeline {
                 }
             }
         }
+        stage('Test Infra') {
+            steps {
+                dir('devops/opentofu-k8s-deploy/infra') {
+                    bat 'tofu test'
+                }
+            }
+        }
     }
 }
