@@ -34,19 +34,6 @@ services:
       - k3d-net
     restart: unless-stopped
 
-  app:
-    build:
-      context: ./app
-    image: localhost:5000/java-app:latest
-    container_name: java-app
-    depends_on:
-      - k3d
-    ports:
-      - "8080:8080"
-    networks:
-      - k3d-net
-    restart: unless-stopped
-
 volumes:
   k3d-data:
 
