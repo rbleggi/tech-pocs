@@ -56,7 +56,7 @@ pipeline {
 
         stage('Deploy Helm Chart') {
             steps {
-                bat "helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% /devops/opentofu-k8s-deploy/helm/app"
+                bat "helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% devops/opentofu-k8s-deploy/helm/app"
             }
         }
     }
