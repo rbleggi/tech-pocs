@@ -28,6 +28,15 @@ resource "helm_release" "prometheus" {
   version    = "27.14.0"
 
   create_namespace = false
+
+  set {
+    name  = "service.type"
+    value = "NodePort"
+  }
+  set {
+    name  = "service.nodePort"
+    value = "32090"
+  }
 }
 
 resource "helm_release" "grafana" {
@@ -45,6 +54,10 @@ resource "helm_release" "grafana" {
 
   set {
     name  = "service.type"
-    value = "ClusterIP"
+    value = "NodePort"
+  }
+  set {
+    name  = "service.nodePort"
+    value = "32000"
   }
 }
