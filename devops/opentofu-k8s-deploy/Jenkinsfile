@@ -47,14 +47,6 @@ pipeline {
             }
         }
 
-        stage('Docker push') {
-            steps {
-                dir("devops/opentofu-k8s-deploy/app"){
-                    bat "docker push java-app:%BUILD_NUMBER% "
-                }
-            }
-        }
-
         stage('Build Helm Chart') {
             steps {
                 bat 'helm lint helm/app'
