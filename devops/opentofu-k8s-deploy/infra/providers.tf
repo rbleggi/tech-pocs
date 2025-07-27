@@ -1,13 +1,15 @@
 terraform {
   required_providers {
-    k3s = {
-      source  = "xunleii/k3s"
-      version = "~> 0.7.4"
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.0.0"
     }
   }
 }
-
-provider "k3s" {}
 
 provider "kubernetes" {
     config_path = "${path.module}/../k3s/kubeconfig.yaml"
