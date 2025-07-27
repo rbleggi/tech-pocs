@@ -1,4 +1,3 @@
-
 variable "prefix" {
   type    = string
   default = ""
@@ -44,8 +43,10 @@ resource "helm_release" "grafana" {
     file("${path.module}/grafana-values.yaml")
   ]
 
-  set {
-    name  = "service.type"
-    value = "ClusterIP"
-  }
+  set = [
+    {
+      name  = "service.type"
+      value = "ClusterIP"
+    }
+  ]
 }
