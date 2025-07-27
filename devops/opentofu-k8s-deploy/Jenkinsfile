@@ -61,8 +61,8 @@ pipeline {
 
         stage('Build Helm Chart') {
             steps {
-                bat 'docker exec helm helm lint /apps'
-                bat 'docker exec helm helm package /apps'
+                bat 'docker exec helm helm lint /apps/app'
+                bat 'docker exec helm helm package /apps/app'
             }
         }
 
