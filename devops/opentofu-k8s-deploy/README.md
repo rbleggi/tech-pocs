@@ -10,27 +10,26 @@ This directory implements a deployment system with:
 
 ## Structure
 - **Jenkinsfile**: CI/CD pipeline for building, testing, and deploying applications.
+- **Jenkinsfile.infra**: Jenkins pipeline for provisioning infrastructure (cluster, namespaces, Prometheus, Grafana) via OpenTofu.
 - **helm/app**: Helm chart for deploying applications with built-in monitoring integration.
 - **infra/**: OpenTofu scripts to provision the cluster, namespaces, and install Prometheus/Grafana.
-- **docker-compose.yml**: Runs k3s, Helm, and your Java app via Docker Compose for local development.
+- **docker-compose.yml**: Runs k3s, Helm, Docker Registry, and your Java app via Docker Compose for local development.
 - **app/**: Java application source code and Dockerfile.
 
 ## How it works
 1. **Provisioning**
-   - Use OpenTofu (or docker-compose.yml for local setup) to create the Kubernetes cluster and namespaces `infra` and `apps`.
-   - Prometheus and Grafana are installed automatically in the `infra` namespace.
+   - Use the Jenkins job defined in `Jenkinsfile.infra` to provision the Kubernetes cluster, namespaces (`infra` and `apps`), and install Prometheus/Grafana using OpenTofu.
+   - For local development, you can use `docker-compose.yml` to spin up k3s, Helm, and the Docker Registry.
 
 2. **Jenkins Pipeline**
-   - The Jenkinsfile checks out code, builds, runs automated tests (pipeline fails if tests fail), builds/pushes the Docker image for the Java app in app/.
-   - Deployment can be done via Helm using the chart in `helm/app`.
+   - The main Jenkinsfile checks out code, builds, runs automated tests (pipeline fails if tests fail), builds/pushes the Docker image for the Java app in `app/`.
+   - Deployment is done via Helm using the chart in `helm/app`.
 
 3. **Application Deployment**
    - Use Helm to install applications in the `apps` namespace.
-   - All applications are integrated with Prometheus/Grafana by default (see Helm chart templates).
 
-4. **Monitoring**
-   - Prometheus collects metrics from applications.
-   - Grafana provides visualization of metrics.
+4. **Monitoring Integration**
+   - All deployed applications are integrated with Prometheus and Grafana by default.
 
 ## Step-by-step Setup
 
@@ -49,16 +48,16 @@ This will start a local k3s Kubernetes cluster, a Helm container, and build/run 
 ### 2. Provision the Cluster, Namespaces, and Monitoring (Automated)
 You can automate the creation of namespaces and the installation of Prometheus and Grafana using the provided OpenTofu scripts in the `infra/` directory and Helm charts in `helm/`.
 
-#### Using OpenTofu (Recommended for reproducibility)
-1. Go to the `infra` directory:
-   ``` shell
-   cd infra
-   ```
-2. Run OpenTofu to provision the cluster, namespaces, and monitoring:
-   ``` shell
-   tofu apply -auto-approve
-   ```
-   This will automatically create the Kubernetes cluster (if configured), namespaces (`infra`, `apps`), and install Prometheus and Grafana in the `infra` namespace.
+#### Using Jenkins (Recommended)
+1. Install and set up Jenkins on your host machine.
+2. Create a new pipeline job in Jenkins.
+3. Point the job to the `Jenkinsfile.infra` in this directory.
+4. Run the Jenkins job to provision the infrastructure.
+
+This Jenkins job will:
+   - Create the Kubernetes cluster (if not already created)
+   - Set up the `infra` and `apps` namespaces
+   - Install Prometheus and Grafana in the `infra` namespace
 
 ### 3. Access Grafana
 On your host, run:

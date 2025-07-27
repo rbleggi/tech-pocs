@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/alex-carvalho/sandbox/spring-web-3-j21
+  repository: localhost:5000/java-app
   tag: latest
   pullPolicy: Always
 
