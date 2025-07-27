@@ -50,7 +50,7 @@ pipeline {
         stage('Docker push') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    sh "docker push java-app:%BUILD_NUMBER%"
+                    bat "docker push java-app:%BUILD_NUMBER%"
                 }
             }
         }
