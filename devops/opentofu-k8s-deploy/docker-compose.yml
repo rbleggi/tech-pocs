@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  k3d:
+  k3s:
     image: rancher/k3s:v1.25.8-k3s1
-    container_name: k3d
+    container_name: k3s
     privileged: true
     ports:
       - "6443:6443" # Kubernetes API
@@ -12,10 +12,10 @@ services:
       - K3S_KUBECONFIG_OUTPUT=/config/kubeconfig.yaml
       - K3S_KUBECONFIG_MODE=666
     volumes:
-      - k3d-data:/var/lib/rancher/k3s
+      - k3s-data:/var/lib/rancher/k3s
       - ./k3s:/config:rw
     networks:
-      - k3d-net
+      - k3s-net
     restart: unless-stopped
     command: server --disable traefik --tls-san host-gateway
 
@@ -23,7 +23,7 @@ services:
     image: alpine/helm:3.11.1
     container_name: helm
     depends_on:
-      - k3d
+      - k3s
     volumes:
       - ./k3s:/config:rw
       - ./helm:/apps
@@ -31,7 +31,7 @@ services:
       - KUBECONFIG=/config/kubeconfig.yaml
     entrypoint: ["/bin/sh", "-c", "sleep infinity"]
     networks:
-      - k3d-net
+      - k3s-net
     restart: unless-stopped
 
   registry:
@@ -45,9 +45,9 @@ services:
       - registry-data:/var/lib/registry
 
 volumes:
-  k3d-data:
+  k3s-data:
   registry-data:
 
 networks:
-  k3d-net:
+  k3s-net:
     driver: bridge

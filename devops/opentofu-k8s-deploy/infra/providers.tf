@@ -1,20 +1,20 @@
 terraform {
   required_providers {
-    kind = {
-      source  = "tehcyx/kind"
-      version = "~> 0.2.1"
+    k3s = {
+      source  = "xunleii/k3s"
+      version = "~> 0.7.4"
     }
   }
 }
 
-provider "kind" {}
+provider "k3s" {}
 
 provider "kubernetes" {
-    config_path = kind_cluster.default.kubeconfig_path
+    config_path = "${path.module}/../k3s/kubeconfig.yaml"
 }
 
 provider "helm" {
   kubernetes = {
-    config_path = kind_cluster.default.kubeconfig_path
+    config_path = "${path.module}/../k3s/kubeconfig.yaml"
   }
 }
