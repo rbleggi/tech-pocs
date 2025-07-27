@@ -4,6 +4,10 @@ variable "prefix" {
   description = "Used on tests to change the name of the resources"
 }
 
+resource "kind_cluster" "default" {
+    name = "${var.prefix}poc-kind-cluster"
+}
+
 resource "kubernetes_namespace" "apps" {
     metadata {
         name = "apps"
@@ -39,10 +43,8 @@ resource "helm_release" "grafana" {
     file("${path.module}/grafana-values.yaml")
   ]
 
-  set = [
-    {
-      name  = "service.type"
-      value = "ClusterIP"
-    }
-  ]
+  set {
+    name  = "service.type"
+    value = "ClusterIP"
+  }
 }

@@ -1,22 +1,20 @@
 terraform {
   required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.0.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = ">= 2.0.0"
+    kind = {
+      source  = "tehcyx/kind"
+      version = "~> 0.2.1"
     }
   }
 }
 
+provider "kind" {}
+
 provider "kubernetes" {
-    config_path = "${path.module}/../k3s/kubeconfig.yaml"
+    config_path = kind_cluster.default.kubeconfig_path
 }
 
 provider "helm" {
-  kubernetes = {
-    config_path = "${path.module}/../k3s/kubeconfig.yaml"
+  kubernetes {
+    config_path = kind_cluster.default.kubeconfig_path
   }
 }
