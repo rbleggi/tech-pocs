@@ -1,33 +1,13 @@
-version: '3.8'
 services:
-  kind:
-    image: kindest/node:v1.25.8
-    container_name: kind
-    privileged: true
-    ports:
-      - "6443:6443" # Kubernetes API
-      - "30000-30010:30000-30010" # NodePorts for services
-    volumes:
-      - kind-data:/var/lib/kind
-      - ./kind:/config:rw
-    networks:
-      - kind-net
-    restart: unless-stopped
-    command: /usr/local/bin/entrypoint
-
   helm:
     image: alpine/helm:3.11.1
     container_name: helm
-    depends_on:
-      - kind
     volumes:
       - ./kind:/config:rw
       - ./helm:/apps
     environment:
       - KUBECONFIG=/config/kubeconfig.yaml
     entrypoint: ["/bin/sh", "-c", "sleep infinity"]
-    networks:
-      - kind-net
     restart: unless-stopped
 
   registry:
@@ -41,7 +21,6 @@ services:
       - registry-data:/var/lib/registry
 
 volumes:
-  kind-data:
   registry-data:
 
 networks:

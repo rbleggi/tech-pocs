@@ -26,7 +26,6 @@ resource "helm_release" "prometheus" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
   version    = "27.14.0"
-
   create_namespace = false
 }
 
@@ -36,13 +35,10 @@ resource "helm_release" "grafana" {
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
   version    = "9.0.0"
-
   create_namespace = false
-
   values = [
     file("${path.module}/grafana-values.yaml")
   ]
-
   set {
     name  = "service.type"
     value = "ClusterIP"
