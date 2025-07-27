@@ -49,8 +49,8 @@ pipeline {
 
         stage('Build Helm Chart') {
             steps {
-                bat 'helm lint /devops/opentofu-k8s-deploy/helm/app'
-                bat 'helm package /devops/opentofu-k8s-deploy/helm/app'
+                bat 'helm lint devops/opentofu-k8s-deploy/helm/app'
+                bat 'helm package devops/opentofu-k8s-deploy/helm/app'
             }
         }
 
