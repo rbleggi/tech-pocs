@@ -4,11 +4,10 @@ pipeline {
         stage('Provision Infra') {
             steps {
                 dir('infra') {
-                    sh 'tofu init'
-                    sh 'tofu apply -auto-approve'
+                    bat 'tofu init'
+                    bat 'tofu apply -auto-approve'
                 }
             }
         }
     }
 }
-
