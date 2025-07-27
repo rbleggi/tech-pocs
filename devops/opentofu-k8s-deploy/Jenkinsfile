@@ -6,7 +6,7 @@ pipeline {
     }
     
     environment {
-        DOCKER_REGISTRY = 'ghcr.io/alex-carvalho/sandbox'
+        DOCKER_REGISTRY = 'localhost:5000'
     }
     
     stages {
@@ -15,7 +15,7 @@ pipeline {
                 script {
                     checkout([$class: 'GitSCM',
                         branches: [[name: '*/master']],
-                        userRemoteConfigs: [[url: 'https://github.com/alex-carvalho/sandbox']]]
+                        userRemoteConfigs: [[url: 'https://github.com/rbleggi/tech-pocs.git']]]
                     )
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build java') {
             steps {
-                dir("samples/java/spring-web-3-j21"){
+                dir("app"){
                     sh './gradlew clean build -x test'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
         
         stage('Test') {
             steps {
-                dir("samples/java/spring-web-3-j21"){
+                dir("app"){
                     sh './gradlew test'
                 }
             }
@@ -40,16 +40,16 @@ pipeline {
 
         stage('Docker build') {
             steps {
-                dir("samples/java/spring-web-3-j21"){
-                    sh "docker build -t $DOCKER_REGISTRY/spring-web-3-j21:$BUILD_NUMBER ."
+                dir("app"){
+                    sh "docker build -t $DOCKER_REGISTRY/java-app:$BUILD_NUMBER ."
                 }
             }
         }
 
         stage('Docker push') {
             steps {
-                dir("samples/java/spring-web-3-j21"){
-                    sh "docker push $DOCKER_REGISTRY/spring-web-3-j21:$BUILD_NUMBER "
+                dir("app"){
+                    sh "docker push $DOCKER_REGISTRY/java-app:$BUILD_NUMBER "
                 }
             }
         }
