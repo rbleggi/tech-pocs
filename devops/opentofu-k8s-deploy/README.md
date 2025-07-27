@@ -1,12 +1,45 @@
 # Automated Deployment System
 
-This directory implements a deployment system with:
+This project implements a deployment system using:
 - Jenkins (CI/CD)
 - Helm (application deployment)
 - OpenTofu (infrastructure as code)
 - KIND (local Kubernetes cluster)
 - Prometheus & Grafana (monitoring)
 - Java application in the app/ directory
+
+## Architecture Sequence Diagram
+
+Below is a sequence diagram illustrating the main connections and flow between components. **Infrastructure provisioning is a one-time setup, while application deployment is repeatable and independent.**
+
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Jenkins as Jenkins
+    participant Tofu as OpenTofu
+    participant KIND as KIND Cluster
+    participant Helm as Helm
+    participant App as Java App
+    participant Prom as Prometheus
+    participant Graf as Grafana
+
+    %% Infra Provisioning (One-time)
+    Dev->>Jenkins: Trigger infra pipeline (Jenkinsfile.infra)
+    Jenkins->>Tofu: Provision infra (KIND, namespaces, monitoring)
+    Tofu->>KIND: Create cluster & namespaces
+    Tofu->>KIND: Install Prometheus & Grafana
+
+    %% App Deployment (Repeatable)
+    Dev->>Jenkins: Push code / Trigger app pipeline (Jenkinsfile)
+    Jenkins->>Helm: Deploy Java App
+    Helm->>KIND: Apply manifests
+    KIND->>App: Run application pod
+    App->>Prom: Expose metrics
+    Prom->>Graf: Provide metrics for dashboards
+    Dev->>Graf: Access dashboards (port-forward)
+    Dev->>Prom: Access Prometheus UI (port-forward)
+    Dev->>App: Access app (port-forward)
+```
 
 ## Structure
 - **Jenkinsfile**: CI/CD pipeline for building, testing, and deploying applications.
@@ -28,66 +61,59 @@ This directory implements a deployment system with:
 3. **Application Deployment**
    - Use Helm to install applications in the `apps` namespace.
 
-4. **Monitoring Integration**
-   - All deployed applications are integrated with Prometheus and Grafana by default.
+## Accessing the KIND Cluster
 
-## Step-by-step Setup
+After provisioning the cluster with OpenTofu, the kubeconfig will be available at `c:\kubeconfig\kubeconfig.yaml`.
 
-### Prerequisites
-- Install Docker on your machine.
-- Install Jenkins on your host (outside Kubernetes). You can use the official Jenkins Docker image or install it natively. [Jenkins installation guide](https://www.jenkins.io/doc/book/installing/)
-- Make sure you have kubectl and kind installed for cluster management.
+To connect to the KIND cluster and view resources, use the following commands:
 
-### 1. Start Helm and Docker Registry
-In the root of this directory, run:
-``` shell
-docker compose up -d
+```sh
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get nodes
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get all --all-namespaces
 ```
-This will start Helm and a local Docker Registry. The KIND cluster is provisioned via OpenTofu.
 
-### 2. Provision the Cluster, Namespaces, and Monitoring (Automated)
-**Importante:** Certifique-se de que o Docker está rodando antes de executar o job de infraestrutura no Jenkins. O cluster KIND será criado automaticamente pelo OpenTofu.
-
-#### Using Jenkins (Recommended)
-1. Instale e configure o Jenkins na sua máquina.
-2. Crie um novo pipeline job no Jenkins.
-3. Aponte o job para o `Jenkinsfile.infra` deste diretório.
-4. Execute o job para provisionar a infraestrutura.
-
-Esse job irá:
-   - Criar o cluster KIND
-   - Criar os namespaces `infra` e `apps`
-   - Instalar Prometheus e Grafana no namespace `infra`
-
-### 3. Acesse o Grafana
-No host, rode:
-``` shell
-kubectl --kubeconfig ./kind/kubeconfig.yaml port-forward -n infra svc/grafana 3000:80
+To export your application's service port for local access, use:
+```sh
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n apps svc/<your-app-service-name> <local-port>:<service-port>
 ```
-Depois acesse http://localhost:3000 no navegador.
+Replace `<your-app-service-name>`, `<local-port>`, and `<service-port>` with your app's service name and desired ports.
 
-### 4. Jenkins Setup
-- Instale o Jenkins no host (fora do Kubernetes).
-- No Jenkins, crie um novo pipeline job e aponte para o Jenkinsfile deste diretório.
-- Configure o Jenkins para usar Docker e kubectl se necessário (para build de imagens e deploy no cluster).
-- O pipeline irá:
-  - Fazer checkout do código
-  - Buildar e testar a aplicação Java em app/
-  - Buildar e enviar imagens Docker para o registry local (localhost:5000)
-  - Deploy da aplicação via Helm para o namespace `apps`
-  - Falhar se os testes não passarem
+## Accessing Grafana, Prometheus and App
 
-### 5. Deploy de Aplicações
-- Use Helm para deploy das aplicações no namespace `apps`.
-- Todas as aplicações são integradas automaticamente com Prometheus e Grafana para monitoramento.
+Grafana and Prometheus services are exposed as ClusterIP by default. To access them in your browser, use port-forward:
 
-## Notas
-- O Jenkinsfile pode ser adaptado para outros projetos.
-- O chart Helm pode ser customizado para diferentes aplicações.
-- OpenTofu pode ser usado para provisionar clusters em nuvem.
-- Todas as aplicações são monitoradas por padrão.
+**Grafana:**
+```sh
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n infra svc/grafana 3000:80
+```
+Access: http://localhost:3000
 
-## Recomendações
-- Use Jenkins para orquestrar todo o fluxo de build, teste e deploy.
-- Use OpenTofu para infraestrutura reprodutível.
-- Use Helm para deploy e integração de monitoramento.
+**Prometheus:**
+```sh
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n infra svc/prometheus-server 9090:80
+```
+Access: http://localhost:9090
+
+**App:**
+```sh
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n infra java-app 80:80
+```
+Access: http://localhost:9090
+
+To list infra services and ports:
+```sh
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n infra
+```
+
+To list apps services and ports:
+```sh
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
+```
+
+## Recommendations
+- Always use the latest kubeconfig generated by KIND/OpenTofu.
+- Use Jenkins to orchestrate build, test, and deployment flows.
+- Use OpenTofu for reproducible infrastructure.
+- Use Helm for application deployment and monitoring integration.
+
+For any issues, check the kubeconfig path and ensure the cluster is running before deploying or accessing services.
