@@ -90,15 +90,15 @@ Access: http://localhost:3000
 
 **Prometheus:**
 ```sh
-kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n infra svc/prometheus-server 9090:80
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n infra svc/prometheus-server 4000:80
 ```
-Access: http://localhost:9090
+Access: http://localhost:4000
 
 **App:**
 ```sh
-kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n infra java-app 80:80
+kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml port-forward -n apps svc/java-app 8080:8080
 ```
-Access: http://localhost:9090
+Access: http://localhost:8080
 
 To list infra services and ports:
 ```sh
