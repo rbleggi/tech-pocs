@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_REGISTRY = 'localhost:5000'
+        DOCKER_REGISTRY = 'ghcr.io/rbleggi/sandbox'
     }
 
     stages {
@@ -74,6 +74,14 @@ pipeline {
                     withEnv(["KUBECONFIG=C:\\kubeconfig\\kubeconfig.yaml"]) {
                         bat "helm upgrade --install java-app --set image.tag=$BUILD_NUMBER ."
                     }
+                }
+            }
+        }
+
+        stage('Docker login Local Registry') {
+            steps {
+                withCredentials([string(credentialsId: 'GHCR_TOKEN', variable: 'GHCR_TOKEN')]) {
+                    bat 'echo %GHCR_TOKEN% | docker login ghcr.io -u rbleggi --password-stdin'
                 }
             }
         }

@@ -6,17 +6,6 @@ variable "prefix" {
 
 resource "kind_cluster" "default" {
   name = "${var.prefix}poc-kind-cluster"
-  config = <<-YAML
-    kind: Cluster
-    apiVersion: kind.x-k8s.io/v1alpha4
-    nodes:
-      - role: control-plane
-        extraPortMappings: []
-    containerdConfigPatches:
-      - |
-        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5000"]
-          endpoint = ["http://localhost:5000"]
-  YAML
 }
 
 resource "kubernetes_namespace" "apps" {
