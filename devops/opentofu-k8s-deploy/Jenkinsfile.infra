@@ -7,7 +7,6 @@ pipeline {
                     bat 'tofu init'
                     bat 'tofu apply -auto-approve'
                 }
-                bat "copy ..\\..\\kind\\kubeconfig.yaml C:\\kubeconfigs\\kubeconfig.yaml"
             }
         }
         stage('Test Infra') {
