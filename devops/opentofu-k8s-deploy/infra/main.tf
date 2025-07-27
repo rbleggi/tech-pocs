@@ -1,3 +1,4 @@
+
 variable "prefix" {
   type    = string
   default = ""
@@ -5,19 +6,19 @@ variable "prefix" {
 }
 
 resource "kind_cluster" "default" {
-    name = "${var.prefix}poc-kind-cluster"
+  name = "${var.prefix}poc-kind-cluster"
 }
 
 resource "kubernetes_namespace" "apps" {
-    metadata {
-        name = "apps"
-    }
+  metadata {
+    name = "apps"
+  }
 }
 
 resource "kubernetes_namespace" "infra" {
-    metadata {
-        name = "infra"
-    }
+  metadata {
+    name = "infra"
+  }
 }
 
 resource "helm_release" "prometheus" {
@@ -26,6 +27,7 @@ resource "helm_release" "prometheus" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
   version    = "27.14.0"
+
   create_namespace = false
 }
 
@@ -35,10 +37,13 @@ resource "helm_release" "grafana" {
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
   version    = "9.0.0"
+
   create_namespace = false
+
   values = [
     file("${path.module}/grafana-values.yaml")
   ]
+
   set {
     name  = "service.type"
     value = "ClusterIP"

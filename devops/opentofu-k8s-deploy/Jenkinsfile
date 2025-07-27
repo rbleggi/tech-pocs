@@ -10,10 +10,6 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
     
-    environment {
-        DOCKER_REGISTRY = 'localhost:5000'
-    }
-    
     stages {
          stage('Checkout Code') {
             steps {
@@ -46,7 +42,7 @@ pipeline {
         stage('Docker build') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    bat "docker build -t %DOCKER_REGISTRY%/java-app:%BUILD_NUMBER% ."
+                    bat "docker build -t localhost:5000/java-app:%BUILD_NUMBER% ."
                 }
             }
         }
@@ -54,21 +50,21 @@ pipeline {
         stage('Docker push') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    bat "docker push %DOCKER_REGISTRY%/java-app:%BUILD_NUMBER% "
+                    bat "docker push localhost:5000/java-app:%BUILD_NUMBER% "
                 }
             }
         }
 
         stage('Build Helm Chart') {
             steps {
-                bat 'docker exec helm helm lint /apps/app'
-                bat 'docker exec helm helm package /apps/app'
+                bat 'helm lint helm/app'
+                bat 'helm package helm/app'
             }
         }
 
         stage('Deploy Helm Chart') {
             steps {
-                bat "docker exec helm helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% /apps/app"
+                bat "helm upgrade --install java-app --set image.tag=%BUILD_NUMBER% helm/app"
             }
         }
     }
