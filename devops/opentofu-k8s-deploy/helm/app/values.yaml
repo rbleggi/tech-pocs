@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: java-app
+  repository: localhost:5000/java-app
   tag: latest
   pullPolicy: Always
 
