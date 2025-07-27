@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'
+        jdk 'JDK21'
+    }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
