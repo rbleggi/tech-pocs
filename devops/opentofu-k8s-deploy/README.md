@@ -127,6 +127,7 @@ kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
     - UI can be slow
     - Requires maintenance and updates
 
+
 - **Helm**: Kubernetes package manager for deploying applications as charts.
   - **Pros:**
     - Simplifies Kubernetes deployments
@@ -136,6 +137,7 @@ kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
     - Learning curve for templating
     - Debugging chart issues can be tricky
 
+
 - **OpenTofu (Terraform fork)**: Infrastructure as code tool for provisioning cloud and local resources, including KIND clusters.
   - **Pros:**
     - Declarative, reproducible infrastructure
@@ -144,6 +146,7 @@ kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
   - **Cons:**
     - State management can be complex
     - Error messages sometimes unclear
+
 
 - **KIND (Kubernetes IN Docker)**: Tool for running local Kubernetes clusters using Docker containers.
   - **Pros:**
@@ -155,6 +158,7 @@ kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
     - Networking differs from real clusters
     - NodePort access may require extra config
 
+
 - **Prometheus**: Monitoring and alerting toolkit, collects metrics from applications and infrastructure.
   - **Pros:**
     - Powerful querying
@@ -163,6 +167,7 @@ kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
   - **Cons:**
     - Requires configuration for custom metrics
     - Storage can grow quickly
+
 
 - **Grafana**: Visualization platform for metrics, logs, and dashboards.
   - **Pros:**
@@ -173,14 +178,6 @@ kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
     - Some advanced features require paid version
     - Dashboard provisioning can be complex
 
-- **Spring Boot**: Java framework for building REST APIs and microservices.
-  - **Pros:**
-    - Rapid development
-    - Large ecosystem
-    - Easy integration with monitoring (Actuator)
-  - **Cons:**
-    - JVM overhead
-    - May require tuning for performance
 
 - **Docker**: Containerization platform for building, shipping, and running applications.
   - **Pros:**
@@ -190,3 +187,7 @@ kubectl --kubeconfig=c:\kubeconfig\kubeconfig.yaml get svc -n apps
   - **Cons:**
     - Requires Docker daemon
     - Image size can grow if not optimized
+
+## Pipeline and Provisioning Logs
+
+For detailed example logs and outputs from Jenkins, OpenTofu, Docker, Helm, and Kubernetes, see the [LOGS.md](LOGS.md) file.
