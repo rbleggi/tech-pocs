@@ -37,8 +37,11 @@ pipeline {
         stage('Build java') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    withMaven(maven: 'Maven') {
-                        bat 'mvn clean install -DskipTests'
+                    script {
+                        def status = bat(script: 'mvn clean install -DskipTests', returnStatus: true)
+                        if (status != 0) {
+                            error("Maven build failed with exit code ${status}")
+                        }
                     }
                 }
             }
@@ -47,8 +50,11 @@ pipeline {
         stage('Test') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    withMaven(maven: 'Maven') {
-                        bat 'mvn test'
+                    script {
+                        def status = bat(script: 'mvn test', returnStatus: true)
+                        if (status != 0) {
+                            error("Maven test failed with exit code ${status}")
+                        }
                     }
                 }
             }
