@@ -37,7 +37,9 @@ pipeline {
         stage('Build java') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    bat 'mvn clean install -DskipTests'
+                    withMaven(maven: 'Maven') {
+                        bat 'mvn clean install -DskipTests'
+                    }
                 }
             }
         }
@@ -45,12 +47,13 @@ pipeline {
         stage('Test') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
-                    bat 'mvn test'
+                    withMaven(maven: 'Maven') {
+                        bat 'mvn test'
+                    }
                 }
             }
         }
         
-
         stage('Docker build') {
             steps {
                 dir("devops/opentofu-k8s-deploy/app"){
