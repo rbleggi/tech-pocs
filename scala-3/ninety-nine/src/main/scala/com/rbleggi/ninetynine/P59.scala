@@ -1,13 +1,11 @@
 package com.rbleggi.ninetynine
 
 // P59 (**) Construct height-balanced binary trees.
-// Tree.hbalTrees(h, x): all height-balanced trees of height h with value x in all nodes.
+// TreeHbalOpsP59.hbalTrees(h, x): all height-balanced trees of height h with value x in all nodes.
 
-sealed trait TreeHBal[+A]
-case object EndHBal extends TreeHBal[Nothing]
-case class NodeHBal[+A](value: A, left: TreeHBal[A] = EndHBal, right: TreeHBal[A] = EndHBal) extends TreeHBal[A]
+import com.rbleggi.ninetynine.{TreeHBal, EndHBal, NodeHBal}
 
-object TreeHBal {
+object TreeHbalOpsP59 {
   // Height-balanced binary trees of height h
   def hbalTrees[A](h: Int, x: A): List[TreeHBal[A]] = {
     if (h == 0) List(EndHBal)
@@ -31,7 +29,7 @@ object TreeHBal {
 }
 
 @main def mainP59(): Unit = {
-  val trees = TreeHBal.hbalTrees(3, "x")
+  val trees = TreeHbalOpsP59.hbalTrees(3, "x")
   trees.foreach(println)
   println(s"Total trees: ${trees.size}")
 }
