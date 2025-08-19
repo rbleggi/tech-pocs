@@ -37,10 +37,43 @@ object Tree {
   // Generate all symmetric, completely balanced binary trees with n nodes
   def symmetricBalancedTrees[A](n: Int, x: A): List[Tree[A]] =
     cBalanced(n, x).filter(isSymmetric)
+
+  // P63: Construct a complete binary tree
+  def completeBinaryTree[A](n: Int, x: A): Tree[A] = {
+    def build(addr: Int): Tree[A] = {
+      if (addr > n) End
+      else Node(x, build(2 * addr), build(2 * addr + 1))
+    }
+    build(1)
+  }
+}
+
+// Extension methods for Tree/Node
+object TreeExtensions {
+  implicit class RichTree[T](tree: Tree[T]) {
+    // P62: Collect internal nodes
+    def internalList: List[T] = tree match {
+      case Node(value, left, right) =>
+        (left, right) match {
+          case (End, End) => Nil
+          case _ =>
+            value :: left.internalList ++ right.internalList
+        }
+      case End => Nil
+    }
+
+    // P62B: Collect nodes at a given level
+    def atLevel(level: Int): List[T] = tree match {
+      case Node(value, left, right) =>
+        if (level < 1) Nil
+        else if (level == 1) List(value)
+        else left.atLevel(level - 1) ++ right.atLevel(level - 1)
+      case End => Nil
+    }
+  }
 }
 
 @main def mainP58(): Unit = {
   val trees = Tree.symmetricBalancedTrees(5, "x")
   trees.foreach(println)
 }
-
