@@ -6,6 +6,16 @@ package com.rbleggi.ninetynine
 sealed trait Tree[+A]
 case object End extends Tree[Nothing]
 case class Node[+A](value: A, left: Tree[A] = End, right: Tree[A] = End) extends Tree[A]
+case class PositionedNode[+A](
+  value: A,
+  left: Tree[A],
+  right: Tree[A],
+  x: Int,
+  y: Int
+) extends Tree[A] {
+  override def toString: String =
+    s"T[$x,$y]($value ${left.toString} ${right.toString})"
+}
 
 object Tree {
   // Generate all completely balanced binary trees with n nodes
