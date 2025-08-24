@@ -59,8 +59,8 @@ This enables data-driven evaluation of algorithm performance and supports future
 1. **Clone the repository**
 
 ```bash
-git clone <repository_url>
-cd dungeon-app
+git clone https://github.com/rbleggi/tech-pocs.git
+cd java/dungeon-game
 ```
 
 2. **Build and start containers**
