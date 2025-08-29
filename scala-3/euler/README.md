@@ -30,6 +30,7 @@ This repository is dedicated to solving problems from [Project Euler](https://pr
 
 Example problems solved:
 - Problem 1: Multiples of 3 and 5
+- Problem 2: Even Fibonacci numbers
 - More problems will be added over time.
 
 ---
