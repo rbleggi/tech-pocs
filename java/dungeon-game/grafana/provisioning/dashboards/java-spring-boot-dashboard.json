@@ -89,7 +89,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "dp1d_solver_execution_seconds_max{class=\"org.example.dungeon.solver.Dp1dSolver\"} * 1000",
+          "expr": "dp1d_solver_execution_seconds_max * 1000",
           "interval": "",
           "legendFormat": "Dp1dSolver - Max Time",
           "refId": "A"
@@ -99,7 +99,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "(dp1d_solver_execution_seconds_sum{class=\"org.example.dungeon.solver.Dp1dSolver\"} / dp1d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp1dSolver\"}) * 1000",
+          "expr": "(dp1d_solver_execution_seconds_sum / dp1d_solver_execution_seconds_count) * 1000",
           "interval": "",
           "legendFormat": "Dp1dSolver - Average Time",
           "refId": "B"
@@ -188,7 +188,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "dp2d_solver_execution_seconds_max{class=\"org.example.dungeon.solver.Dp2dSolver\"} * 1000",
+          "expr": "dp2d_solver_execution_seconds_max * 1000",
           "interval": "",
           "legendFormat": "Dp2dSolver - Max Time",
           "refId": "A"
@@ -198,7 +198,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "(dp2d_solver_execution_seconds_sum{class=\"org.example.dungeon.solver.Dp2dSolver\"} / dp2d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp2dSolver\"}) * 1000",
+          "expr": "(dp2d_solver_execution_seconds_sum / dp2d_solver_execution_seconds_count) * 1000",
           "interval": "",
           "legendFormat": "Dp2dSolver - Average Time",
           "refId": "B"
@@ -287,7 +287,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "rate(dp1d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp1dSolver\"}[5m])",
+          "expr": "rate(dp1d_solver_execution_seconds_count[5m])",
           "interval": "",
           "legendFormat": "Dp1dSolver Calls/sec",
           "refId": "A"
@@ -376,7 +376,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "rate(dp2d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp2dSolver\"}[5m])",
+          "expr": "rate(dp2d_solver_execution_seconds_count[5m])",
           "interval": "",
           "legendFormat": "Dp2dSolver Calls/sec",
           "refId": "A"
@@ -483,7 +483,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "dp1d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp1dSolver\"}",
+          "expr": "label_replace(dp1d_solver_execution_seconds_count, \"solver\", \"dp1d\", \"\", \"\") or label_replace(dp2d_solver_execution_seconds_count, \"solver\", \"dp2d\", \"\", \"\")",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -495,7 +495,7 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "(dp1d_solver_execution_seconds_sum{class=\"org.example.dungeon.solver.Dp1dSolver\"} / dp1d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp1dSolver\"}) * 1000",
+          "expr": "label_replace((dp1d_solver_execution_seconds_sum / dp1d_solver_execution_seconds_count) * 1000, \"solver\", \"dp1d\", \"\", \"\") or label_replace((dp2d_solver_execution_seconds_sum / dp2d_solver_execution_seconds_count) * 1000, \"solver\", \"dp2d\", \"\", \"\")",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -507,51 +507,14 @@
             "type": "prometheus",
             "uid": "Prometheus"
           },
-          "expr": "dp1d_solver_execution_seconds_max{class=\"org.example.dungeon.solver.Dp1dSolver\"} * 1000",
+          "expr": "label_replace(dp1d_solver_execution_seconds_max * 1000, \"solver\", \"dp1d\", \"\", \"\") or label_replace(dp2d_solver_execution_seconds_max * 1000, \"solver\", \"dp2d\", \"\", \"\")",
           "format": "table",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "Prometheus"
-          },
-          "expr": "dp2d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp2dSolver\"}",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "Prometheus"
-          },
-          "expr": "(dp2d_solver_execution_seconds_sum{class=\"org.example.dungeon.solver.Dp2dSolver\"} / dp2d_solver_execution_seconds_count{class=\"org.example.dungeon.solver.Dp2dSolver\"}) * 1000",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "E"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "Prometheus"
-          },
-          "expr": "dp2d_solver_execution_seconds_max{class=\"org.example.dungeon.solver.Dp2dSolver\"} * 1000",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "F"
         }
       ],
-      "title": "Solver Performance Summary",
       "transformations": [
         {
           "id": "merge",
@@ -570,14 +533,12 @@
             },
             "indexByName": {},
             "renameByName": {
-              "Value #A": "Dp1d Calls",
-              "Value #B": "Dp1d Avg Time (ms)",
-              "Value #C": "Dp1d Max Time (ms)",
-              "Value #D": "Dp2d Calls",
-              "Value #E": "Dp2d Avg Time (ms)",
-              "Value #F": "Dp2d Max Time (ms)",
-              "class": "Solver"
-            }
+              "solver": "solver",
+              "Value #A": "Calls",
+              "Value #B": "Avg Time (ms)",
+              "Value #C": "Max Time (ms)"
+            },
+            "order": ["solver", "Calls", "Avg Time (ms)", "Max Time (ms)"]
           }
         }
       ],

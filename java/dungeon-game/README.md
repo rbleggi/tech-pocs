@@ -17,6 +17,9 @@ Key aspects:
 
 This enables data-driven evaluation of algorithm performance and supports future experimentation.
 
+![img_2.png](img_2.png)
+![img.png](img.png)
+![img_1.png](img_1.png)
 ---
 
 ## Features

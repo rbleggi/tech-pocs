@@ -1,12 +1,10 @@
 package org.example.dungeon.solver;
 
-import io.micrometer.core.annotation.Timed;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Dp2dSolver {
 
-    @Timed(value = "dp2d.solver.execution", description = "Time taken to execute Dp2dSolver")
     public int solve(int[][] dungeon) {
         int m = dungeon.length, n = dungeon[0].length;
         int[][] dp = new int[m + 1][n + 1];

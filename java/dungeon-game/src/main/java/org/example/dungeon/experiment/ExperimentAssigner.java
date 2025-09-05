@@ -9,7 +9,7 @@ public final class ExperimentAssigner {
     private final LinkedHashMap<String, Double> cumulative = new LinkedHashMap<>();
 
     public ExperimentAssigner(Map<String, Double> split) {
-        double acc = 0.0;
+        var acc = 0.0;
         for (Map.Entry<String, Double> e : split.entrySet()) {
             acc += e.getValue();
             cumulative.put(e.getKey(), acc);
@@ -20,7 +20,7 @@ public final class ExperimentAssigner {
     }
 
     public String choose(String experimentKey, String unitId) {
-        double u = uniform01(experimentKey + "|" + unitId);
+        var u = uniform01(experimentKey + "|" + unitId);
         return cumulative.entrySet().stream()
                 .filter(e -> u <= e.getValue())
                 .findFirst()
@@ -31,9 +31,9 @@ public final class ExperimentAssigner {
     private static double uniform01(String s) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] digest = md.digest(s.getBytes()); // 32 bytes (256 bits)
+            var digest = md.digest(s.getBytes()); // 32 bytes (256 bits)
             // Use first 8 bytes as unsigned long
-            byte[] hiBytes = new byte[8];
+            var hiBytes = new byte[8];
             System.arraycopy(digest, 0, hiBytes, 0, 8);
             BigInteger hi = new BigInteger(1, hiBytes); // Unsigned
             // Divide by 2^64 to get [0,1)

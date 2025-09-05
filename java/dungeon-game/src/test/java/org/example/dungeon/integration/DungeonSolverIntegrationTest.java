@@ -48,7 +48,7 @@ class DungeonSolverIntegrationTest {
         }
         // Generate random player IDs
         playerIds = IntStream.range(0, NUM_PLAYERS)
-                .mapToObj(i -> "player_" + rand.nextInt(1_000_000))
+                .mapToObj(i -> "player_" + rand.nextInt(100))
                 .toArray(String[]::new);
     }
 
