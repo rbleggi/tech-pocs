@@ -1,5 +1,6 @@
 package com.rbleggi.json4s
 
+import org.json4s.*
 import org.json4s.jackson.JsonMethods.*
 import org.json4s.jackson.Serialization
 import org.json4s.jackson.Serialization.{write, read}
