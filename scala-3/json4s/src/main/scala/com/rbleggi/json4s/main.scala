@@ -3,10 +3,24 @@ package com.rbleggi.json4s
 import org.json4s.*
 import org.json4s.jackson.JsonMethods.*
 import org.json4s.jackson.Serialization
-import org.json4s.jackson.Serialization.{write, read}
-import org.json4s.JsonDSL._
+import org.json4s.jackson.Serialization.{read, write}
+import org.json4s.JsonDSL.*
+
+import scala.math.BigDecimal.RoundingMode.HALF_UP
 
 object Json4sQuickDemo extends App {
+
+  // Normalize price to BigDecimal(2 dp) and add netPrice (if internal) ---
+
+  def toMoney(j: JValue): Option[JDecimal] = j match {
+    case JInt(n)      => Some(JDecimal(BigDecimal(n).setScale(2)))
+    case JDouble(d)   => Some(JDecimal(BigDecimal(d).setScale(2, HALF_UP)))
+    case JDecimal(bd) => Some(JDecimal(bd.setScale(2, HALF_UP)))
+    case JString(s)   => Try(BigDecimal(s)).toOption.map(_.setScale(2, HALF_UP)).map(JDecimal(_))
+    case _            => None
+  }
+
+
   implicit val formats: Formats = DefaultFormats + AnimalSerializer
 
   val json = parse("""{
