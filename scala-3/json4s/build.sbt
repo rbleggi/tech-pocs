@@ -1,6 +1,6 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "3.6.3"
+ThisBuild / scalaVersion := "3.7.3"
 
 lazy val root = (project in file("."))
   .settings(
@@ -8,6 +8,7 @@ lazy val root = (project in file("."))
     version := "1.0",
     libraryDependencies ++= Seq(
       "org.json4s" %% "json4s-jackson" % "4.0.6",
-      "org.json4s" %% "json4s-ext" % "4.0.6"
+      "org.json4s" %% "json4s-ext" % "4.0.6",
+      "org.json4s" %% "json4s-native" % "4.0.6"
     )
   )
