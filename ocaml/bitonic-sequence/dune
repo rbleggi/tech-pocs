@@ -1,7 +1,3 @@
-What is this file?
-This file is a Dune build configuration file used to define how to build OCaml projects.
-It specifies libraries, executables, and tests along with their dependencies.
-
 (library
  (name bitonic)
  (modules bitonic)
