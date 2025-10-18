@@ -1,19 +1,30 @@
-# Note Taking System
+# **Note Taking System (Kotlin)**
 
-> **Type**: Kotlin Implementation  
-> **Pattern**: Command Pattern  
-> **Status**: ✅ Complete  
-> **Location**: `kotlin/note-taking/`
+## **Overview**
 
----
-
-## 🎯 Overview
-
-This project implements a **flexible and maintainable note-taking system** using the **Command Pattern**. Users can add, edit, delete, save, and load notes. The system is designed to be extensible and supports action history for potential undo/redo functionality.
+A **flexible and maintainable note-taking system** using the **Command Pattern**. Users can add, edit, delete, save, and load notes. The system is designed to be extensible and supports action history for potential undo/redo functionality.
 
 ---
 
-## 🏗️ Architecture
+## **Tech Stack**
+
+- **Kotlin** → Modern JVM-based language with advanced type safety and functional programming features.
+- **Gradle** → Build tool with Kotlin DSL support.
+- **JDK 24** → Required to run the application.
+
+---
+
+## **Features**
+
+- **Note Management** → Add, edit, delete, save, and load notes
+- **Command Pattern** → Actions are encapsulated as commands for easy extension
+- **Action History** → Commands are stored in a list for potential undo/redo functionality
+- **File Persistence** → Notes can be saved to and loaded from a file
+- **Type Safety** → Kotlin's null safety prevents common errors
+
+---
+
+## **Architecture Diagram**
 
 ```mermaid
 classDiagram
@@ -95,7 +106,73 @@ classDiagram
 
 ---
 
-## 💻 Implementation
+## **Command Pattern**
+
+The **Command Pattern** encapsulates requests as objects, allowing:
+- Each note management action is implemented as a separate `Command`
+- `CommandManager` maintains a history of executed commands for potential undo/redo functionality
+- Commands know how to execute themselves
+- Easy extension with new commands without modifying existing code
+- Clean separation between the invoker (`CommandManager`) and the receiver (`NoteManager`)
+
+---
+
+## **Usage Examples**
+
+### Basic Note Operations
+```kotlin
+val manager = NoteManager()
+val commandManager = CommandManager()
+
+// Add notes
+commandManager.executeCommand(AddNoteCommand(manager, "First Note", "This is the content."))
+commandManager.executeCommand(AddNoteCommand(manager, "Second Note", "More content."))
+
+// Edit note
+commandManager.executeCommand(EditNoteCommand(manager, 1, "Updated Title", null))
+
+// Delete note
+commandManager.executeCommand(DeleteNoteCommand(manager, 2))
+
+// Save to file
+commandManager.executeCommand(SaveNotesCommand(manager, "notes.txt"))
+
+// Load from file
+commandManager.executeCommand(LoadNotesCommand(manager, "notes.txt"))
+```
+
+---
+
+## **Setup Instructions**
+
+### **1️ - Clone the Repository**
+
+```bash
+git clone https://github.com/rbleggi/tech-pocs.git
+cd kotlin/note-taking
+```
+
+### **2️ - Compile & Run the Application**
+
+```shell
+./gradlew run
+```
+
+### **3️ - Build JAR**
+
+```shell
+./gradlew jar
+```
+
+### **4️ - Run Tests**
+
+```shell
+./gradlew test
+```
+
+---
+
+## **Implementation Details**
 
 ### Domain Model
 ```kotlin
@@ -120,82 +197,17 @@ interface Command {
 
 ---
 
-## 🧪 Tests
+## **Project Structure**
 
-**Total Tests**: 15  
-**Coverage**: >90%
-
-### NoteManagerTest (10 tests)
-- Add single and multiple notes
-- Edit notes (title, content, both)
-- Delete notes (existing and non-existent)
-- List notes
-- Save and load notes with file persistence
-
-### CommandTest (5 tests)
-- Execute AddNoteCommand
-- Execute EditNoteCommand
-- Execute DeleteNoteCommand
-- Execute SaveNotesCommand
-- Execute LoadNotesCommand
-
----
-
-## 🚀 Usage
-
-### Build
-```bash
-./gradlew clean build
+```
+note-taking/
+├── src/
+│   ├── main/kotlin/com/rbleggi/notetaking/
+│   │   └── Main.kt              # Core implementation
+│   └── test/kotlin/com/rbleggi/notetaking/
+│       ├── NoteManagerTest.kt   # NoteManager tests
+│       └── CommandTest.kt       # Command pattern tests
+├── build.gradle.kts             # Build configuration
+└── README.md                    # This file
 ```
 
-### Run
-```bash
-./gradlew run
-```
-
-### Test
-```bash
-./gradlew test
-```
-
-### Example Output
-```
-Notes saved to file.
-Notes loaded from file:
-Note(id=1, title=First Note, content=This is the content of the first note.)
-Note(id=2, title=Second Note, content=This is the content of the second note.)
-```
-
----
-
-## 📊 Tech Stack
-
-- **Language**: Kotlin 2.2.20
-- **Build Tool**: Gradle 8.10
-- **Testing**: JUnit 5
-- **JDK**: 24
-
----
-
-## ✨ Features
-
-- **Note Management** - Add, edit, delete, save, and load notes
-- **Command Pattern** - Actions are encapsulated as commands for easy extension
-- **Action History** - Commands are stored in a list for potential undo/redo functionality
-- **File Persistence** - Notes can be saved to and loaded from a file
-- **Type Safety** - Kotlin's null safety prevents common errors
-
----
-
-## 🎓 Command Pattern
-
-The **Command Pattern** encapsulates requests as objects, allowing:
-- Each note management action is implemented as a separate `Command`
-- `CommandManager` maintains a history of executed commands for potential undo/redo functionality
-- Commands know how to execute themselves
-- Easy extension with new commands without modifying existing code
-- Clean separation between the invoker (`CommandManager`) and the receiver (`NoteManager`)
-
----
-
-#poc #kotlin #command-pattern #notes #crud
