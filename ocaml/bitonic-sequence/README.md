@@ -27,52 +27,72 @@ opam exec -- dune runtest
 docker-compose up -d
 
 # Run server
-opam exec -- dune exec ./rest_server.exe
+opam exec -- dune exec ./bin/main.exe
+
+# Run k6 tests
+k6 run k6/load_test.js
 ```
+
+The server will start and listen on `http://0.0.0.0:8080` (accessible via `http://localhost:8080`)
 
 API available at `http://localhost:8080`
 
 ## API Usage
 
-```powershell
-# Generate bitonic sequence
-curl.exe "http://localhost:8080/bitonic?n=5&l=1&r=10"
-# Response: [1,2,3,4,5]
+### Generate bitonic sequence (POST)
 
-# Small sequence
-curl.exe "http://localhost:8080/bitonic?n=3&l=5&r=7"
-# [5,6,7]
+Example (Windows cmd or PowerShell):
 
-# Invalid parameters
-curl.exe "http://localhost:8080/bitonic?n=20&l=1&r=10"
-# {"error": "Invalid parameters or impossible sequence"}
+```cmd
+curl.exe -X POST http://localhost:8080/bitonic -H "Content-Type: application/json" -d '{"n":5,"min":3,"max":10}'
 ```
+
+Response example:
+
+```json
+{"sequence":[9,10,9,8,7],"length":5,"is_bitonic":true}
+```
+
+### Health check (GET)
+
+```cmd
+curl.exe http://localhost:8080/health
+```
+
+Response example:
+
+```json
+{"status":"ok"}
+```
+
 
 **Parameters:**
 - `n` - Length of sequence
-- `l` - Lower bound (inclusive)
-- `r` - Upper bound (inclusive)
+- `min` - Lower bound (inclusive)
+- `max` - Upper bound (inclusive)
 
-## Benchmark
+## Load Test (k6)
+
+A load test script is available in `k6/load_test.js` using [k6](https://k6.io/).
+
+### How to run the load test
+
+1. Make sure the server is running (`opam exec -- dune exec ./bin/main.exe`).
+2. Install k6: https://k6.io/docs/getting-started/installation/
+3. Run the test:
 
 ```powershell
-opam exec -- dune exec ./simple_bench.exe
+k6 run k6/load_test.js
 ```
 
-**Results (10,000 elements):**
-- Average time: ~56 μs per sequence
-- Throughput: ~17,000 sequences/second
+At the end, an HTML report will be generated as `summary.html`.
 
-## Project Structure
+The test sends POST requests to `http://localhost:8080/bitonic` with the following payload:
 
-```
-bitonic-sequence/
-├── bitonic.ml              # Core implementation
-├── bitonic.mli             # Module interface
-├── bitonic_test.ml         # Unit tests
-├── simple_bench.ml         # Benchmarks
-├── rest_server.ml          # REST API server
-├── dune                    # Build configuration
-├── docker-compose.yml      # Redis container
-└── README.md               # This file
+```json
+{
+  "n": 100,
+  "min": 1,
+  "max": 1000
+}
 ```
