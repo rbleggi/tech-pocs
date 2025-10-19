@@ -3,6 +3,11 @@ synopsis: "Bitonic sequence generator"
 depends: [
   "ocaml" {>= "4.14.0"}
   "dune" {>= "3.0"}
+  "dream"
+  "yojson"
+  "lwt"
+  "lwt_ppx"
+  "redis-lwt"
   "ounit2" {with-test}
 ]
 build: [
