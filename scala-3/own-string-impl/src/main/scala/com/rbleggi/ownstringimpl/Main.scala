@@ -57,7 +57,7 @@ class MyString(val value: String) {
     }
     c
   }
-  def equals(other: Any): Boolean = other match {
+  override def equals(other: Any): Boolean = other match {
     case s: MyString => {
       if (length != s.length) false
       else {

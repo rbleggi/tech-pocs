@@ -10,9 +10,6 @@ object Converter {
   }
 }
 
-@main def runRestaurantQueue(): Unit =
-  val queue = KitchenQueue()
-
 case class Address(street: String, city: String, zip: String)
 case class Person(name: String, age: Int, address: Address)
 case class PersonDTO(fullName: String, age: Int, city: String)

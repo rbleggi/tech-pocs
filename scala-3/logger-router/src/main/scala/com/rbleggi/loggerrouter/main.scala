@@ -1,7 +1,5 @@
 package com.rbleggi.loggerrouter
 
-import com.rbleggi.loggerbuilderroutersystem.LogLevel.{ERROR, INFO}
-
 import scala.concurrent.{ExecutionContext, Future}
 import java.io.{BufferedWriter, FileWriter}
 
@@ -46,5 +44,5 @@ class LoggerRouter(strategies: List[LogStrategy]):
 
   val logger = LoggerRouter(strategies)
 
-  logger.log(INFO, "User login successful")
-  logger.log(ERROR, "Database connection failed")
+  logger.log(LogLevel.INFO, "User login successful")
+  logger.log(LogLevel.ERROR, "Database connection failed")
