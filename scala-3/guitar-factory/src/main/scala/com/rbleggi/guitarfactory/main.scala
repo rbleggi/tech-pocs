@@ -58,6 +58,14 @@ object GuitarInventory {
     }
   }
 
+  def getQuantity(guitar: Guitar): Int = {
+    inventory.getOrElse(guitar, 0)
+  }
+
+  def clearInventory(): Unit = {
+    inventory = Map()
+  }
+
   def listInventory(): Unit = {
     println("\nCurrent Guitar Inventory:")
     if (inventory.isEmpty) {
