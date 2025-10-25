@@ -1,8 +1,6 @@
 package com.rbleggi.redisclone
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class RedisCloneSpec extends AnyFunSuite {
+class RedisCloneSpec {
   test("SetCommand should store value and return OK") {
     val store = new RedisStore()
     val cmd = SetCommand("key1", "value1")

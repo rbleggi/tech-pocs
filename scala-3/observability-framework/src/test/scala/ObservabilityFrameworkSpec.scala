@@ -1,8 +1,6 @@
 package com.rbleggi.observabilityframework
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class ObservabilityFrameworkSpec extends AnyFunSuite {
+class ObservabilityFrameworkSpec {
   test("MillisecondsLatencyStrategy should calculate latency in milliseconds") {
     val strategy = new MillisecondsLatencyStrategy()
     val startTime = 0L

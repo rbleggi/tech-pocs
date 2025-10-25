@@ -1,9 +1,8 @@
 package com.rbleggi.dontpad
 
-import org.scalatest.funsuite.AnyFunSuite
 import java.nio.file.{Files, Paths}
 
-class DontPadSpec extends AnyFunSuite {
+class DontPadSpec {
   test("NotePad should create new pad with empty content") {
     val pad = new NotePad("test-empty")
     assert(pad.getAllText.isEmpty || pad.getAllText == "")

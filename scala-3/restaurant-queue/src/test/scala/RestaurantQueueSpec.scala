@@ -1,8 +1,6 @@
 package com.rbleggi.restaurantqueue
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class RestaurantQueueSpec extends AnyFunSuite {
+class RestaurantQueueSpec {
   test("BurgerCommand should have correct name and prep time") {
     val burger = new BurgerCommand()
     assert(burger.name == "Burger")

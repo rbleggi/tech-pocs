@@ -1,8 +1,6 @@
 package com.rbleggi.grocerytodolist
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class GroceryTodoListSpec extends AnyFunSuite {
+class GroceryTodoListSpec {
   test("AddItemCommand adds a new item") {
     val item = GroceryItem("Milk")
     val cmd = new AddItemCommand(item)

@@ -1,8 +1,6 @@
 package com.rbleggi.ninetynine
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class NinetyNineSpec extends AnyFunSuite {
+class NinetyNineSpec {
   test("P01.last returns the last element of a non-empty list") {
     assert(P01.last(List(1, 2, 3, 4)) == 4)
     assert(P01.last(List("a", "b", "c")) == "c")

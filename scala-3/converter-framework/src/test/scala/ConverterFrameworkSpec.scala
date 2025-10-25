@@ -1,8 +1,6 @@
 package com.rbleggi.converterframework
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class ConverterFrameworkSpec extends AnyFunSuite {
+class ConverterFrameworkSpec {
   test("Converter should convert using provided function") {
     val intToString = Converter[Int, String](_.toString)
     assert(intToString.convert(42) == "42")

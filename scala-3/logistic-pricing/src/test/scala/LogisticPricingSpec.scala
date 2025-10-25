@@ -1,8 +1,6 @@
 package com.rbleggi.logisticpricing
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class LogisticPricingSpec extends AnyFunSuite {
+class LogisticPricingSpec {
   test("TruckPricingStrategy calculates price in expected range") {
     val info = FreightInfo(10, 5, 100, TransportType.Truck)
     val price = new TruckPricingStrategy().calculate(info)

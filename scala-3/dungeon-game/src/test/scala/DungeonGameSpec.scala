@@ -1,8 +1,6 @@
 package com.rbleggi.dungeongame
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class DungeonGameSpec extends AnyFunSuite {
+class DungeonGameSpec {
   test("calculateMinimumHP should work for 3x3 dungeon") {
     val dungeon = Array(
       Array(-2, -3, 3),

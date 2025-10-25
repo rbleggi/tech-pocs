@@ -1,8 +1,6 @@
 package com.rbleggi.corebankledger
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class CoreBankLedgerSpec extends AnyFunSuite {
+class CoreBankLedgerSpec {
   test("Ledger should create account with initial balance") {
     val ledger = new Ledger()
     val account = ledger.createAccount("Alice", 100)

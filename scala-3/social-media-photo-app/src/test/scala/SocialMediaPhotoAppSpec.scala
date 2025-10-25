@@ -1,8 +1,6 @@
 package com.rbleggi.socialmedia
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class SocialMediaPhotoAppSpec extends AnyFunSuite {
+class SocialMediaPhotoAppSpec {
   test("User should publish photo and notify observers") {
     var notified = false
     val testObserver = new Observer {
