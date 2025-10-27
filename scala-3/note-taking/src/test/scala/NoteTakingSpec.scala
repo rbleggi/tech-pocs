@@ -1,6 +1,8 @@
 package com.rbleggi.notetaking
 
-class NoteTakingSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class NoteTakingSpec extends AnyFunSuite {
   test("NoteManager add, edit, delete, and list notes") {
     val manager = new NoteManager
     val note1 = manager.addNote("Title1", "Content1")
@@ -18,7 +20,7 @@ class NoteTakingSpec {
     val note = manager.addNote("Test Title", "Test Content")
     assert(note.title == "Test Title")
     assert(note.content == "Test Content")
-    assert(note.id.nonEmpty)
+    assert(note.id > 0)
   }
 
   test("NoteManager should edit only title") {
@@ -47,13 +49,13 @@ class NoteTakingSpec {
 
   test("NoteManager should return None when editing non-existent note") {
     val manager = new NoteManager
-    val edited = manager.editNote("nonexistent-id", Some("Title"), Some("Content"))
+    val edited = manager.editNote(9999, Some("Title"), Some("Content"))
     assert(edited.isEmpty)
   }
 
   test("NoteManager should not delete non-existent note") {
     val manager = new NoteManager
-    assert(!manager.deleteNote("nonexistent-id"))
+    assert(!manager.deleteNote(9999))
   }
 
   test("NoteManager should list all notes") {

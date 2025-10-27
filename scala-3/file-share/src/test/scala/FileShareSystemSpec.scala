@@ -1,6 +1,8 @@
 package com.rbleggi.filesharesystem
 
-class FileShareSystemSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class FileShareSystemSpec extends AnyFunSuite {
   test("FileManager should save file successfully") {
     val manager = new FileManager
     val file = File("test.txt", "content")

@@ -3,9 +3,10 @@ package com.rbleggi.classorganizer
 import java.time.LocalDateTime
 import com.rbleggi.classorganizer.core.ClassManager
 import com.rbleggi.classorganizer.model.{ClassSession, Student}
-import com.rbleggi.classorganizer.observer.Observer
+import com.rbleggi.classorganizer.observer.{Observer, Subject}
+import org.scalatest.funsuite.AnyFunSuite
 
-class ClassOrganizerSpec {
+class ClassOrganizerSpec extends AnyFunSuite {
   val students = List(
     Student("S001", "Alice Smith", "10A"),
     Student("S002", "Bob Johnson", "10A")
@@ -166,7 +167,7 @@ class ClassOrganizerSpec {
     val manager = new ClassManager
     var notified = false
     val observer = new Observer {
-      override def update(subject: Any): Unit = notified = true
+      override def update(subject: Subject): Unit = notified = true
     }
     manager.registerObserver(observer)
 
@@ -184,7 +185,7 @@ class ClassOrganizerSpec {
     val manager = new ClassManager
     var notificationCount = 0
     val observer = new Observer {
-      override def update(subject: Any): Unit = notificationCount += 1
+      override def update(subject: Subject): Unit = notificationCount += 1
     }
     manager.registerObserver(observer)
 
@@ -203,7 +204,7 @@ class ClassOrganizerSpec {
     val manager = new ClassManager
     var notified = false
     val observer = new Observer {
-      override def update(subject: Any): Unit = notified = true
+      override def update(subject: Subject): Unit = notified = true
     }
     manager.registerObserver(observer)
     manager.removeObserver(observer)

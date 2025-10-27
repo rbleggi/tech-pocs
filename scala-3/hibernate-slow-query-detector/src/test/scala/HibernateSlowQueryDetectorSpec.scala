@@ -1,6 +1,9 @@
 package com.rbleggi.hibernate
 
-class HibernateSlowQueryDetectorSpec {
+import org.scalatest.funsuite.AnyFunSuite
+import com.rbleggi.hibernateslowquerydetector.{QueryObserver, SlowQueryDetector}
+
+class HibernateSlowQueryDetectorSpec extends AnyFunSuite {
   test("SlowQueryDetector notifies observer only for slow queries") {
     var notified: Option[(String, Long)] = None
     val observer = new QueryObserver {

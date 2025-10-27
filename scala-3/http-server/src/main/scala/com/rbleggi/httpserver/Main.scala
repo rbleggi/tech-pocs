@@ -17,6 +17,18 @@ class PingHandler extends GetRouteHandler {
     if (path == "/ping") Some("pong") else None
 }
 
+class HttpRouter {
+  private var handlers: List[GetRouteHandler] = Nil
+
+  def registerHandler(handler: GetRouteHandler): Unit = {
+    handlers = handler :: handlers
+  }
+
+  def route(path: String): Option[String] = {
+    handlers.view.flatMap(_.handle(path)).headOption.orElse(Some("404"))
+  }
+}
+
 @main def run(): Unit = {
   val port = 8080
   val server = new ServerSocket(port)

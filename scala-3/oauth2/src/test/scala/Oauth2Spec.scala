@@ -1,6 +1,8 @@
 package com.rbleggi.oauth2
 
-class Oauth2Spec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class Oauth2Spec extends AnyFunSuite {
   test("AuthorizationCodeHandler returns code") {
     val handler = new AuthorizationCodeHandler
     val result = handler.handle(Map("grant_type" -> "authorization_code"))

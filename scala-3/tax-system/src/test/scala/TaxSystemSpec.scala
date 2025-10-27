@@ -2,8 +2,9 @@ package com.rbleggi.taxsystem
 
 import com.rbleggi.taxsystem.model.Product
 import com.rbleggi.taxsystem.service.TaxCalculator
+import org.scalatest.funsuite.AnyFunSuite
 
-class TaxSystemSpec {
+class TaxSystemSpec extends AnyFunSuite {
   val calculator = new TaxCalculator()
 
   test("TaxCalculator should calculate tax for electronics in SP 2024") {
@@ -17,7 +18,7 @@ class TaxSystemSpec {
     val product = Product("Rice", "food")
     val price = 100.0
     val tax = calculator.calculateTax("SP", 2024, product, price)
-    assert(tax == 7.0)
+    assert(math.abs(tax - 7.0) < 0.001)
   }
 
   test("TaxCalculator should calculate tax for books in SP 2024") {

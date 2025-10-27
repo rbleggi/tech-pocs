@@ -1,6 +1,8 @@
 package com.rbleggi.stresstesthttpframework
 
-class StressTestHttpFrameworkSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class StressTestHttpFrameworkSpec extends AnyFunSuite {
   test("HttpStressTest should collect results for all requests") {
     val url = "https://httpbin.org/get"
     val requests = 5

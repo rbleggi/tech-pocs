@@ -1,8 +1,9 @@
 package com.rbleggi.guitarfactory
 
 import org.scalatest.BeforeAndAfter
+import org.scalatest.funsuite.AnyFunSuite
 
-class GuitarFactorySpec with BeforeAndAfter {
+class GuitarFactorySpec extends AnyFunSuite with BeforeAndAfter {
 
   before {
     GuitarInventory.clearInventory()

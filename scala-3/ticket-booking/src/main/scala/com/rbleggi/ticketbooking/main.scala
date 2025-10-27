@@ -11,6 +11,9 @@ object PlaceCapacity:
   def registerTicket(ticket: Ticket): Unit =
     bookedSeats += (ticket.show, ticket.zone, ticket.seat, ticket.date)
 
+  def clear(): Unit =
+    bookedSeats = Set()
+
 class TicketBookingService:
   def bookTicket(ticket: Ticket): Ticket =
     if !PlaceCapacity.isAvailable(ticket.show, ticket.zone, ticket.seat, ticket.date) then

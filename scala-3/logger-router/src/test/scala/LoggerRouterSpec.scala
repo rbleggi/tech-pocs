@@ -2,8 +2,9 @@ package com.rbleggi.loggerrouter
 
 import java.io.File
 import scala.io.Source
+import org.scalatest.funsuite.AnyFunSuite
 
-class LoggerRouterSpec {
+class LoggerRouterSpec extends AnyFunSuite {
   test("ConsoleStrategy should log to console") {
     val strategy = new ConsoleStrategy()
     assertNoException {

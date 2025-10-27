@@ -1,6 +1,8 @@
 package com.rbleggi.httpserver
 
-class HttpServerSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class HttpServerSpec extends AnyFunSuite {
   test("HelloHandler returns Hello, World! for /hello") {
     val handler = new HelloHandler
     assert(handler.handle("/hello").contains("Hello, World!"))

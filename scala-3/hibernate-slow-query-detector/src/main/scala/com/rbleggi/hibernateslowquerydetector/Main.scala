@@ -11,6 +11,10 @@ class SlowQueryDetector(thresholdMs: Long) {
     observers = observer :: observers
   }
 
+  def removeObserver(observer: QueryObserver): Unit = {
+    observers = observers.filterNot(_ == observer)
+  }
+
   def executeQuery(query: String, simulatedDurationMs: Long): Unit = {
     if (simulatedDurationMs > thresholdMs) {
       observers.foreach(_.notify(query, simulatedDurationMs))

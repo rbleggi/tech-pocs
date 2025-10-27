@@ -1,6 +1,8 @@
 package com.rbleggi.unusedclassdetector
 
-class UnusedClassDetectorSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class UnusedClassDetectorSpec extends AnyFunSuite {
 
   test("UnusedClassDetector should detect unused classes") {
     val code = """

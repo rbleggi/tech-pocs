@@ -1,6 +1,8 @@
 package com.rbleggi.euler
 
-class EulerSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class EulerSpec extends AnyFunSuite {
   test("countDivisors should count divisors correctly for small numbers") {
     assert(countDivisors(1) == 1)
     assert(countDivisors(3) == 2)

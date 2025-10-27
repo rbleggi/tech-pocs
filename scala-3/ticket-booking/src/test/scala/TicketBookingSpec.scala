@@ -1,6 +1,12 @@
 package com.rbleggi.ticketbooking
 
-class TicketBookingSpec {
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.BeforeAndAfter
+
+class TicketBookingSpec extends AnyFunSuite with BeforeAndAfter {
+  before {
+    PlaceCapacity.clear()
+  }
   test("TicketBookingService should book a ticket if available") {
     val service = new TicketBookingService
     val ticket = Ticket("Show1", "A", 1, "2025-10-20")

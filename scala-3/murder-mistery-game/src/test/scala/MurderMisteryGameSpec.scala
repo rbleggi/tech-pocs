@@ -1,8 +1,9 @@
 package com.rbleggi.murdermistery
 
 import com.rbleggi.murdermisterygame._
+import org.scalatest.funsuite.AnyFunSuite
 
-class MurderMisteryGameSpec {
+class MurderMisteryGameSpec extends AnyFunSuite {
 
   test("Game initializes with suspects and clues") {
     val suspects = List("Ms. Scarlet", "Col. Mustard", "Prof. Plum")

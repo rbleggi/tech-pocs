@@ -1,6 +1,8 @@
 package com.rbleggi.ownstringimpl
 
-class OwnStringImplSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class OwnStringImplSpec extends AnyFunSuite {
   test("MyString should convert to array correctly") {
     val str = new MyString("hello")
     val arr = str.toArray

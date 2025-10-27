@@ -1,6 +1,8 @@
 package com.rbleggi.validationframework
 
-class ValidationFrameworkSpec {
+import org.scalatest.funsuite.AnyFunSuite
+
+class ValidationFrameworkSpec extends AnyFunSuite {
   test("ValidatorChain should validate all rules and stop on first failure") {
     val chain = new ValidatorChain()
     chain.addRule((input: String) => if (input.nonEmpty) Right(()) else Left("Empty"))

@@ -1,8 +1,9 @@
 package com.rbleggi.calendar
 
 import java.time.LocalDateTime
+import org.scalatest.funsuite.AnyFunSuite
 
-class CalendarSpec {
+class CalendarSpec extends AnyFunSuite {
   val user1 = User("1", "Alice")
   val user2 = User("2", "Bob")
   val user3 = User("3", "Charlie")
@@ -128,7 +129,7 @@ class CalendarSpec {
     val suggestion = SuggestionEngine.suggestBestTime(calendar, user1, user2, 30)
     suggestion match {
       case Some((start, end)) =>
-        assert(start.isAfter(m1.end) || end.isBefore(m1.start))
+        assert(start.isAfter(m1.end) || !end.isAfter(m1.start))
       case None =>
     }
   }

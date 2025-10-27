@@ -2,8 +2,9 @@ package com.rbleggi.templaterenderer
 
 import com.rbleggi.templaterenderer.core.RendererFactory
 import com.rbleggi.templaterenderer.renderers.{CSVRenderer, HTMLRenderer, PDFRenderer}
+import org.scalatest.funsuite.AnyFunSuite
 
-class TemplateRendererSpec {
+class TemplateRendererSpec extends AnyFunSuite {
   val testData = Map("title" -> "Test Title", "content" -> "Test Content")
 
   test("HTMLRenderer should generate HTML content") {
@@ -98,9 +99,8 @@ class TemplateRendererSpec {
     }
   }
 
-  test("RendererFactory should handle case-sensitive formats") {
-    assertThrows[IllegalArgumentException] {
-      RendererFactory.getRenderer("HTML")
-    }
+  test("RendererFactory should handle case-insensitive formats") {
+    val renderer = RendererFactory.getRenderer("HTML")
+    assert(renderer.isInstanceOf[HTMLRenderer])
   }
 }

@@ -1,8 +1,9 @@
 package com.rbleggi.taskthreadpool
 
 import java.util.concurrent.atomic.AtomicInteger
+import org.scalatest.funsuite.AnyFunSuite
 
-class TaskThreadPoolSpec {
+class TaskThreadPoolSpec extends AnyFunSuite {
 
   test("TaskThreadPool should execute all submitted tasks") {
     val pool = new TaskThreadPool(2)

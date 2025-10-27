@@ -3,8 +3,12 @@ package com.rbleggi.json4s
 import org.json4s._
 import org.json4s.native.JsonParser
 import org.json4s.native.Serialization
+import org.scalatest.funsuite.AnyFunSuite
 
-class Json4sSpec {
+case class Person(name: String, age: Int)
+case class Product(id: Int, name: String, price: Double)
+
+class Json4sSpec extends AnyFunSuite {
   implicit val formats: Formats = DefaultFormats
   test("JsonParser parses valid JSON string") {
     val json = JsonParser.parse("""{"application": "MyApp", "version": 1.0}""")
@@ -35,7 +39,6 @@ class Json4sSpec {
   }
 
   test("Serialization should convert case class to JSON") {
-    case class Person(name: String, age: Int)
     val person = Person("Alice", 25)
     val jsonString = Serialization.write(person)
     assert(jsonString.contains("Alice"))
@@ -43,7 +46,6 @@ class Json4sSpec {
   }
 
   test("Serialization should parse JSON to case class") {
-    case class Product(id: Int, name: String, price: Double)
     val jsonString = """{"id":1,"name":"Widget","price":9.99}"""
     val product = Serialization.read[Product](jsonString)
     assert(product.id == 1)
