@@ -19,9 +19,11 @@ Apache Flink's architecture consists of two main components that work together t
 
 ### TaskManager (Executors)
 
-**TaskManagers** are the workers that execute the actual data processing tasks. Each TaskManager has multiple task slots that can execute different operators from the processing pipeline. TaskManagers manage network buffers for data exchange, maintain local state of operations, and execute user code.
-
-Communication between TaskManagers is optimized to minimize latency and maximize throughput. Data flows directly between TaskManagers through dedicated network connections, avoiding centralized bottlenecks.
+- TaskManagers are the workers that execute the actual data processing tasks
+- Each TaskManager has multiple task slots that can execute different operators from the processing pipeline
+- Manage network buffers for data exchange, maintain local state of operations, and execute user code
+- Communication between TaskManagers is optimized to minimize latency and maximize throughput
+- Data flows directly between TaskManagers through dedicated network connections, avoiding centralized bottlenecks
 
 ### Execution Flow
 
