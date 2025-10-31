@@ -9,22 +9,40 @@ INSERT INTO users (name, email, created_at, is_active) VALUES
 ('Charlie Brown', 'charlie.brown@example.com', NOW() - INTERVAL '120 days', false),
 ('Diana Prince', 'diana.prince@example.com', NOW() - INTERVAL '15 days', true),
 ('Ethan Hunt', 'ethan.hunt@example.com', NOW() - INTERVAL '75 days', true),
-('Fiona Green', 'fiona.green@example.com', NOW() - INTERVAL '20 days', true);
+('Fiona Green', 'fiona.green@example.com', NOW() - INTERVAL '20 days', true),
+('George Wilson', 'george.wilson@example.com', NOW() - INTERVAL '50 days', true),
+('Hannah Lee', 'hannah.lee@example.com', NOW() - INTERVAL '100 days', false);
 
 -- Insert orders
+-- Active users with orders in last 30 days (should appear in results)
 INSERT INTO orders (user_id, total, order_date) VALUES
+-- John Doe: 3 orders, total: $440.49
 (1, 150.00, NOW() - INTERVAL '25 days'),
 (1, 200.50, NOW() - INTERVAL '15 days'),
 (1, 89.99, NOW() - INTERVAL '5 days'),
+-- Jane Smith: 2 orders, total: $525.25
 (2, 350.00, NOW() - INTERVAL '20 days'),
 (2, 175.25, NOW() - INTERVAL '10 days'),
+-- Bob Johnson: 1 order, total: $500.00
 (3, 500.00, NOW() - INTERVAL '8 days'),
+-- Alice Williams: 2 orders, total: $349.99
 (4, 99.99, NOW() - INTERVAL '3 days'),
 (4, 250.00, NOW() - INTERVAL '12 days'),
-(5, 1000.00, NOW() - INTERVAL '100 days'),
+-- Diana Prince: 1 order, total: $120.00
 (6, 120.00, NOW() - INTERVAL '7 days'),
+-- Ethan Hunt: 1 order, total: $450.00
 (7, 450.00, NOW() - INTERVAL '18 days'),
-(8, 300.00, NOW() - INTERVAL '2 days');
+-- Fiona Green: 2 orders, total: $575.00
+(8, 300.00, NOW() - INTERVAL '2 days'),
+(8, 275.00, NOW() - INTERVAL '22 days'),
+-- George Wilson: 1 order, total: $199.99
+(9, 199.99, NOW() - INTERVAL '14 days'),
+-- Orders outside 30 days window (should NOT appear)
+(1, 300.00, NOW() - INTERVAL '35 days'),
+(2, 450.00, NOW() - INTERVAL '40 days'),
+-- Inactive users with orders (should NOT appear - filtered by is_active)
+(5, 1000.00, NOW() - INTERVAL '10 days'),
+(10, 800.00, NOW() - INTERVAL '5 days');
 
 -- Insert products
 INSERT INTO products (name, category, price) VALUES
