@@ -4,89 +4,103 @@ A practical guide demonstrating how to leverage AI for SQL query generation, opt
 
 ## Stack
 
-- PostgreSQL (latest)
+- Claude code
 - Docker
 
-## Setup
+## Quick Start with Claude
 
-Start PostgreSQL with Docker:
+Claude can automatically set up the database, load data, and verify the setup with a single prompt:
 
-```bash
-docker run --name postgres-sql-demo -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=testdb -p 5432:5432 -d postgres:latest
+```
+Database: PostgreSQL (latest) running in Docker (container: postgres-sql-demo)
+
+I have two SQL files that need to be executed:
+1. schema.sql - creates the database tables
+2. seed.sql - populates the tables with sample data
+
+Please:
+1. Start a fresh PostgreSQL (latest) container
+2. Load schema.sql into the database
+3. Load seed.sql into the database
+4. Show me all tables created with row counts
 ```
 
-Connect to PostgreSQL:
+Claude will automatically:
+- Create and start the PostgreSQL Docker container
+- Read both SQL files
+- Load schema and seed data
+- Display all created tables with their row counts
 
-```bash
-docker exec -it postgres-sql-demo psql -U postgres -d testdb
-```
-
-Stop container:
-
-```bash
-docker stop postgres-sql-demo
-```
-
-Remove container:
-
-```bash
-docker rm postgres-sql-demo
-```
-
-## Initialize Database
-
-Load the sample schema:
-
-**Linux/Mac:**
-```bash
-docker exec -i postgres-sql-demo psql -U postgres -d testdb < schema.sql
-```
-```bash
-docker exec -i postgres-sql-demo psql -U postgres -d testdb < seed.sql
-```
+## Demonstration Prompts
 
 ### Prompt 1: Basic Query with Aggregations
 
 **Input:**
 ```
-Database: PostgreSQL
-Schema: schema.sql
+Database: PostgreSQL (latest) running in Docker (container: postgres-sql-demo)
 
 Task: Get all active users who made a purchase in the last 30 days.
 Show their name, email, number of orders, and total spent.
 Order by total spent descending.
+
+Please:
+1. Verify the container is running
+2. Generate the SQL query
+3. Execute the query in the database
+4. Show me the results
 ```
 
-**Output:**
-```
-Based on the schema, here's the SQL query that meets your requirements:
+**Expected Output:**
+Claude will:
+1. Check if container is running
+2. Generate the optimized SQL query
+3. Execute it against the database
+4. Display results with 8 active users sorted by spending
 
+```
+Query Results
+
+  Container Status: postgres-sql-demo is Up 5 minutes
+
+  SQL Query:
   SELECT
       u.name,
       u.email,
-      COUNT(o.id) AS number_of_orders,
-      SUM(o.total) AS total_spent
+      COUNT(o.id) as number_of_orders,
+      SUM(o.total) as total_spent
   FROM users u
   INNER JOIN orders o ON u.id = o.user_id
   WHERE u.is_active = true
-      AND o.order_date >= NOW() - INTERVAL '30 days'
+  AND o.order_date >= NOW() - INTERVAL '30 days'
   GROUP BY u.id, u.name, u.email
   ORDER BY total_spent DESC;
 
-  The query:
-  - Joins users and orders tables on schema.sql:25
-  - Filters for active users (is_active = true) from schema.sql:19
-  - Filters orders from the last 30 days using order_date from schema.sql:27
-  - Aggregates the count of orders and sum of totals per user
-  - Orders results by total spent in descending order
+  Results:
+
+  | Name           | Email                      | Number of Orders | Total Spent |
+  |----------------|----------------------------|------------------|-------------|
+  | Fiona Green    | fiona.green@example.com    | 2                | $575.00     |
+  | Jane Smith     | jane.smith@example.com     | 2                | $525.25     |
+  | Bob Johnson    | bob.johnson@example.com    | 1                | $500.00     |
+  | Ethan Hunt     | ethan.hunt@example.com     | 1                | $450.00     |
+  | John Doe       | john.doe@example.com       | 3                | $440.49     |
+  | Alice Williams | alice.williams@example.com | 2                | $349.99     |
+  | George Wilson  | george.wilson@example.com  | 1                | $199.99     |
+  | Diana Prince   | diana.prince@example.com   | 1                | $120.00     |
+
+  Summary:
+  - Found 8 active users with purchases in the last 30 days
+  - Total orders: 14
+  - Combined spending: $3,161.72
+
+  The query correctly filters out inactive users (Charlie Brown and Hannah Lee) and orders older than 30 days.
 ```
 
 ### Prompt 2: Complex Analytics with Window Functions
 
 **Input:**
 ```
-Database: PostgreSQL
-Schema: schema.sql
+Database: PostgreSQL (latest) running in Docker (container: postgres-sql-demo)
 
 Task: For each product category, calculate:
 - Total revenue in the last 90 days
@@ -95,82 +109,116 @@ Task: For each product category, calculate:
 - Month-over-month revenue growth percentage
 
 Include only categories with at least $10,000 in revenue.
+
+Please:
+1. Verify the container is running
+2. Generate the SQL query with CTEs and window functions
+3. Execute the query in the database
+4. Show me the results
 ```
 
-**Output:**
-```
-I'll create a SQL query that calculates category-level metrics including revenue, percentage share, ranking, and month-over-month growth.
+**Expected Output:**
+Claude will:
+1. Check if container is running
+2. Generate a complex query using CTEs, window functions, and aggregations
+3. Execute it against the database
+4. Display revenue analysis by product category
 
-  WITH category_revenue_90days AS (
+```
+Query Results
+
+  Container Status: postgres-sql-demo is Up 7 minutes
+
+  SQL Query with CTEs and Window Functions:
+  WITH category_revenue_90d AS (
       SELECT
           p.category,
-          SUM(s.revenue) AS total_revenue
-      FROM products p
-      INNER JOIN sales s ON p.id = s.product_id
+          SUM(s.revenue) as total_revenue
+      FROM sales s
+      JOIN products p ON s.product_id = p.id
       WHERE s.sale_date >= CURRENT_DATE - INTERVAL '90 days'
       GROUP BY p.category
-      HAVING SUM(s.revenue) >= 10000
   ),
   total_revenue AS (
-      SELECT SUM(total_revenue) AS overall_total
-      FROM category_revenue_90days
+      SELECT SUM(total_revenue) as overall_total
+      FROM category_revenue_90d
   ),
-  monthly_revenue AS (
+  monthly_category_revenue AS (
       SELECT
           p.category,
-          SUM(CASE
-              WHEN s.sale_date >= CURRENT_DATE - INTERVAL '30 days'
-              THEN s.revenue
-              ELSE 0
-          END) AS current_month_revenue,
-          SUM(CASE
-              WHEN s.sale_date >= CURRENT_DATE - INTERVAL '60 days'
-                  AND s.sale_date < CURRENT_DATE - INTERVAL '30 days'
-              THEN s.revenue
-              ELSE 0
-          END) AS previous_month_revenue
-      FROM products p
-      INNER JOIN sales s ON p.id = s.product_id
+          DATE_TRUNC('month', s.sale_date) as month,
+          SUM(s.revenue) as monthly_revenue
+      FROM sales s
+      JOIN products p ON s.product_id = p.id
       WHERE s.sale_date >= CURRENT_DATE - INTERVAL '90 days'
-      GROUP BY p.category
+      GROUP BY p.category, DATE_TRUNC('month', s.sale_date)
+  ),
+  mom_growth AS (
+      SELECT
+          category,
+          month,
+          monthly_revenue,
+          LAG(monthly_revenue) OVER (PARTITION BY category ORDER BY month) as prev_month_revenue,
+          ROW_NUMBER() OVER (PARTITION BY category ORDER BY month DESC) as month_rank
+      FROM monthly_category_revenue
+  ),
+  latest_mom_growth AS (
+      SELECT
+          category,
+          CASE
+              WHEN prev_month_revenue IS NULL OR prev_month_revenue = 0 THEN NULL
+              ELSE ROUND(((monthly_revenue - prev_month_revenue) / prev_month_revenue * 100), 2)
+          END as mom_growth_pct
+      FROM mom_growth
+      WHERE month_rank = 1
   )
   SELECT
       cr.category,
-      cr.total_revenue,
-      ROUND((cr.total_revenue / tr.overall_total * 100), 2) AS revenue_percentage,
-      RANK() OVER (ORDER BY cr.total_revenue DESC) AS revenue_rank,
-      CASE
-          WHEN mr.previous_month_revenue > 0
-          THEN ROUND(((mr.current_month_revenue - mr.previous_month_revenue) / mr.previous_month_revenue * 100), 2)
-          ELSE NULL
-      END AS mom_growth_percentage
-  FROM category_revenue_90days cr
+      ROUND(cr.total_revenue, 2) as total_revenue_90d,
+      ROUND((cr.total_revenue / tr.overall_total * 100), 2) as pct_of_total,
+      RANK() OVER (ORDER BY cr.total_revenue DESC) as revenue_rank,
+      COALESCE(mg.mom_growth_pct, 0.00) as mom_growth_pct
+  FROM category_revenue_90d cr
   CROSS JOIN total_revenue tr
-  INNER JOIN monthly_revenue mr ON cr.category = mr.category
+  LEFT JOIN latest_mom_growth mg ON cr.category = mg.category
+  WHERE cr.total_revenue >= 10000
   ORDER BY cr.total_revenue DESC;
 
-  The query:
-  - Uses products (schema.sql:30-36) and sales (schema.sql:38-45) tables
-  - Filters sales from the last 90 days using sale_date (schema.sql:43)
-  - Groups by product category (schema.sql:34)
-  - Calculates total revenue per category and filters those >= $10,000
-  - Computes percentage of overall revenue for each category
-  - Ranks categories using RANK() window function
-  - Calculates month-over-month growth by comparing last 30 days vs previous 30 days (30-60 days ago)
-  - Returns NULL for growth percentage when previous month revenue is zero to avoid division by zero
+  Results (Categories with >= $10,000 revenue):
+
+  | Category    | Total Revenue (90d) | % of Total | Rank | MoM Growth % |
+  |-------------|---------------------|------------|------|--------------|
+  | Electronics | $25,229.19          | 67.63%     | 1    | 43.06%       |
+
+  All Categories (for context):
+
+  | Category    | Total Revenue (90d) | % of Total | Rank | MoM Growth % |
+  |-------------|---------------------|------------|------|--------------|
+  | Electronics | $25,229.19          | 67.63%     | 1    | 43.06%       |
+  | Furniture   | $8,924.78           | 23.92%     | 2    | 97.50%       |
+  | Appliances  | $3,149.65           | 8.44%      | 3    | 33.33%       |
+
+  Monthly Revenue Breakdown:
+
+  | Category    | Sept 2025  | Oct 2025   | Growth  |
+  |-------------|------------|------------|---------|
+  | Electronics | $10,379.62 | $14,849.57 | +43.06% |
+  | Furniture   | $2,999.90  | $5,924.88  | +97.50% |
+  | Appliances  | $1,349.85  | $1,799.80  | +33.33% |
+
+  Analysis:
+  - Only Electronics meets the $10,000 minimum revenue threshold
+  - Electronics dominates with 67.63% of total revenue
+  - Furniture shows the strongest growth at 97.50% MoM, but falls short of the $10K threshold
+  - All categories show positive month-over-month growth
+  - Total 90-day revenue across all categories: $37,303.62
 ```
 
 ### Prompt 3: Performance Optimization
 
 **Input:**
 ```
-Database: PostgreSQL
-Schema: schema.sql
-
-Current indexes:
-- employees: PRIMARY KEY on id
-- departments: PRIMARY KEY on id
-- projects: PRIMARY KEY on id
+Database: PostgreSQL (latest) running in Docker (container: postgres-sql-demo)
 
 This query runs slowly on a table with 1M+ employees:
 
@@ -188,144 +236,226 @@ GROUP BY d.id, d.name
 HAVING COUNT(DISTINCT e.id) > 10
 ORDER BY employee_count DESC;
 
-Tasks:
-1. Identify performance bottlenecks
-2. Recommend specific indexes to add
-3. Suggest query optimizations if applicable
-4. Estimate expected performance improvement
+Please:
+1. Verify the container is running
+2. Identify performance bottlenecks
+3. Recommend specific indexes to add
+4. Suggest query optimizations
+5. Execute EXPLAIN ANALYZE to show the current execution plan
+6. Estimate expected performance improvement
 ```
 
-**Output:**
+**Expected Output:**
+Claude will:
+1. Check if container is running
+2. Analyze the query for bottlenecks
+3. Recommend composite and partial indexes
+4. Provide optimized query version
+5. Run EXPLAIN ANALYZE to show execution plan
+6. Estimate 10-80x performance improvement with indexes
+
 ```
-Performance Analysis
+Performance Analysis Report
 
-  Identified Bottlenecks
+  Container Status: postgres-sql-demo is Up 10 minutes
 
-  1. Missing foreign key indexes - Joins on employees.department_id (schema.sql:58) and projects.department_id (schema.sql:66) lack
-  indexes
-  2. Unindexed filter column - WHERE clause filters on employees.hire_date (schema.sql:60) without an index
-  3. Unindexed date filter - LEFT JOIN condition on projects.end_date (schema.sql:69) without an index
-  4. Sequential scan - With 1M+ employees, full table scan on hire_date is expensive
+  1. Current Execution Plan Analysis
 
-  Recommended Indexes
+  The EXPLAIN ANALYZE output shows:
+  Planning Time: 0.264 ms
+  Execution Time: 0.099 ms
+
+  However, with 1M+ employees, this will degrade significantly due to:
+
+  Key Operations:
+  - Seq Scan on employees with filter on hire_date (line 20)
+  - Hash Join on e.department_id = d.id (line 17-18)
+  - Hash Left Join on d.id = p.department_id (line 14-15)
+  - Seq Scan on projects with filter on end_date (line 32-33)
+
+  ---
+  2. Performance Bottlenecks Identified
+
+  Critical Issues:
+
+  1. Sequential Scan on employees with hire_date filter
+    - Currently scanning all 15 rows, filtering down to 13
+    - With 1M+ rows: Will scan entire table to find matching hire dates
+    - Impact: O(n) complexity on largest table
+  2. Missing index on employees.department_id
+    - Hash Join requires reading all employee records
+    - With 1M+ rows: Expensive hash table construction
+    - Impact: Memory pressure and slow join operations
+  3. Sequential Scan on projects with end_date filter
+    - Scanning all projects to filter by date
+    - Impact: Unnecessary full table scans
+  4. Missing index on projects.department_id
+    - Join requires full table scan
+    - Impact: Slower join operations
+  5. DISTINCT operations on large result sets
+    - COUNT(DISTINCT e.id) and COUNT(DISTINCT p.id)
+    - With 1M+ rows: Expensive deduplication
+    - Impact: Additional sorting and memory usage
+
+  ---
+  3. Recommended Indexes
+
+  Priority 1 - Critical:
+
+  CREATE INDEX idx_employees_hire_date_dept ON employees(hire_date, department_id)
+  WHERE hire_date >= '2020-01-01';
+  - Type: Partial B-tree index with composite key
+  - Purpose: Optimize WHERE clause filter and JOIN simultaneously
+  - Benefit: Index-only scan for filtered employees, eliminates full table scan
+
+  Priority 2 - High:
 
   CREATE INDEX idx_employees_department_id ON employees(department_id);
+  - Type: B-tree index
+  - Purpose: Accelerate JOIN with departments
+  - Benefit: Fast lookup for department relationships
 
-  CREATE INDEX idx_employees_hire_date ON employees(hire_date);
+  Priority 3 - High:
 
-  CREATE INDEX idx_employees_dept_hire ON employees(department_id, hire_date);
+  CREATE INDEX idx_projects_dept_enddate ON projects(department_id, end_date)
+  WHERE end_date >= CURRENT_DATE;
+  - Type: Partial B-tree index with composite key
+  - Purpose: Optimize LEFT JOIN and date filter
+  - Benefit: Efficient filtering of active projects per department
 
-  CREATE INDEX idx_projects_department_id ON projects(department_id);
+  Optional - Medium:
 
-  CREATE INDEX idx_projects_end_date ON projects(end_date) WHERE end_date >= CURRENT_DATE;
+  CREATE INDEX idx_employees_id_salary ON employees(id, salary, department_id);
+  - Type: Covering index
+  - Purpose: Support aggregation calculations
+  - Benefit: Avoid table lookups for AVG(salary) computation
 
-  Index Priority:
-  1. idx_employees_dept_hire - Composite index (highest impact)
-  2. idx_employees_department_id - Foreign key index
-  3. idx_projects_department_id - Foreign key index
-  4. idx_projects_end_date - Partial index for active projects
-  5. idx_employees_hire_date - Single column index (optional if composite exists)
+  ---
+  4. Query Optimizations
 
-  Query Optimization
+  Optimized Query Version:
 
+  WITH filtered_employees AS (
+      SELECT
+          department_id,
+          id,
+          salary
+      FROM employees
+      WHERE hire_date >= '2020-01-01'
+  ),
+  employee_aggregates AS (
+      SELECT
+          department_id,
+          COUNT(*) as employee_count,
+          AVG(salary) as avg_salary
+      FROM filtered_employees
+      GROUP BY department_id
+      HAVING COUNT(*) > 10
+  ),
+  active_project_counts AS (
+      SELECT
+          department_id,
+          COUNT(DISTINCT id) as active_projects
+      FROM projects
+      WHERE end_date >= CURRENT_DATE
+      GROUP BY department_id
+  )
   SELECT
       d.name as department_name,
-      COUNT(e.id) as employee_count,
-      AVG(e.salary) as avg_salary,
-      COUNT(DISTINCT p.id) as active_projects
-  FROM employees e
-  JOIN departments d ON e.department_id = d.id
-  LEFT JOIN projects p ON d.id = p.department_id
-      AND p.end_date >= CURRENT_DATE
-  WHERE e.hire_date >= '2020-01-01'
-  GROUP BY d.id, d.name
-  HAVING COUNT(e.id) > 10
-  ORDER BY employee_count DESC;
+      ea.employee_count,
+      ea.avg_salary,
+      COALESCE(apc.active_projects, 0) as active_projects
+  FROM employee_aggregates ea
+  JOIN departments d ON ea.department_id = d.id
+  LEFT JOIN active_project_counts apc ON d.id = apc.department_id
+  ORDER BY ea.employee_count DESC;
 
-  Changes:
-  - Changed COUNT(DISTINCT e.id) to COUNT(e.id) since e.id is already unique per row after the JOIN
-  - This eliminates unnecessary DISTINCT operations
+  Key Improvements:
 
-  Expected Performance Improvements
+  1. Early Filtering: CTE filters employees before joins
+  2. Eliminated DISTINCT on e.id: Since WHERE on hire_date + GROUP BY department_id naturally produces unique employees
+  3. Pre-aggregation: Count and average computed before final join
+  4. Reduced Join Complexity: Smaller result sets in CTEs
+  5. COALESCE for NULL handling: Cleaner than COUNT with LEFT JOIN
 
-  Before indexes:
-  - Full table scan on 1M+ employees: ~5-10 seconds
-  - Nested loop joins without indexes: ~10-30 seconds
-  - Total estimated time: 15-40 seconds
+  ---
+  5. Expected Performance Improvements
 
-  After indexes:
-  - Index scan on employees(department_id, hire_date): ~100-500ms
-  - Index-based joins: ~200-800ms
-  - Total estimated time: 500ms-2 seconds
+  With Current Data (15 employees):
+  - Minimal impact due to small dataset
+  - Current execution: ~0.1ms
 
-  Expected improvement: 10-80x faster (95-98% reduction in execution time)
+  With 1M+ Employees (Projected):
 
-  Verification Commands
+  | Metric         | Without Indexes      | With Indexes           | Improvement      |
+  |----------------|----------------------|------------------------|------------------|
+  | Table Scans    | Full scan (1M rows)  | Index scan (~50K rows) | 95% reduction    |
+  | Join Cost      | Hash join on 1M rows | Index nested loop      | 90% reduction    |
+  | Memory Usage   | ~80MB hash tables    | ~8MB index buffers     | 90% reduction    |
+  | Execution Time | ~15-30 seconds       | ~200-500ms             | 98% reduction    |
+  | Planning Time  | ~1-2ms               | ~2-3ms                 | Minimal increase |
 
-  EXPLAIN ANALYZE
+  Breakdown by Optimization:
+
+  1. idx_employees_hire_date_dept:
+    - Reduces employee scan from 1M to ~500K rows (50% of data hired after 2020)
+    - Estimated improvement: 50-60% faster
+  2. idx_employees_department_id:
+    - Converts hash join to index nested loop join
+    - Estimated improvement: 30-40% faster
+  3. idx_projects_dept_enddate:
+    - Eliminates project table scan
+    - Estimated improvement: 10-15% faster
+  4. Query rewrite with CTEs:
+    - Reduces intermediate result set size
+    - Estimated improvement: 20-30% faster
+
+  Combined Effect: 95-98% reduction in execution time
+
+  Disk Space Cost:
+  - idx_employees_hire_date_dept: ~20-30MB
+  - idx_employees_department_id: ~15-20MB
+  - idx_projects_dept_enddate: ~500KB
+  - Total: ~35-50MB (0.03% of 1M row table)
+
+  ---
+  6. Implementation Steps
+
+  CREATE INDEX CONCURRENTLY idx_employees_hire_date_dept
+  ON employees(hire_date, department_id)
+  WHERE hire_date >= '2020-01-01';
+
+  CREATE INDEX CONCURRENTLY idx_employees_department_id
+  ON employees(department_id);
+
+  CREATE INDEX CONCURRENTLY idx_projects_dept_enddate
+  ON projects(department_id, end_date)
+  WHERE end_date >= CURRENT_DATE;
+
+  ANALYZE employees;
+  ANALYZE projects;
+  ANALYZE departments;
+
+  Use CONCURRENTLY to avoid locking tables during index creation on production databases.
+
+  ---
+  7. Monitoring Recommendations
+
+  After implementing indexes:
+
   SELECT
-      d.name as department_name,
-      COUNT(e.id) as employee_count,
-      AVG(e.salary) as avg_salary,
-      COUNT(DISTINCT p.id) as active_projects
-  FROM employees e
-  JOIN departments d ON e.department_id = d.id
-  LEFT JOIN projects p ON d.id = p.department_id
-      AND p.end_date >= CURRENT_DATE
-  WHERE e.hire_date >= '2020-01-01'
-  GROUP BY d.id, d.name
-  HAVING COUNT(e.id) > 10
-  ORDER BY employee_count DESC;
+      schemaname,
+      tablename,
+      indexname,
+      idx_scan,
+      idx_tup_read,
+      idx_tup_fetch
+  FROM pg_stat_user_indexes
+  WHERE tablename IN ('employees', 'projects')
+  ORDER BY idx_scan DESC;
 
-  Run this before and after adding indexes to confirm improvements in:
-  - Execution time
-  - Rows scanned
-  - Join method (should change from Seq Scan to Index Scan)
+  This will show index usage statistics to validate effectiveness.
 ```
-
-## Best Practices
-
-### Effective Prompt Structure
-
-```
-Database: [Type and Version]
-
-Schema: [schema.sql file]
-[CREATE TABLE statements with relationships]
-
-Current Indexes: [if relevant]
-[List of existing indexes]
-
-Task:
-[Clear, specific description]
-```
-Claude will read the `schema.sql` file automatically and use it as context for the queries.
-
-### Always Include
-
-1. Complete schema with data types
-2. Foreign key relationships
-3. Database type and version
-4. Existing indexes for optimization queries
-5. Sample data when helpful
-
-### Common Use Cases
-
-**Query Generation:**
-- Complex JOINs and aggregations
-- Window functions and CTEs
-- Date/time calculations
-- JSON/Array operations
-
-**Optimization:**
-- Index recommendations
-- Query rewriting
-- Execution plan analysis
-
-**Debugging:**
-- Syntax errors
-- Logic errors
-- Missing relationships
 
 ## Tips for Better Results
 
