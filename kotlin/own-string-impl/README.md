@@ -22,36 +22,6 @@ This project demonstrates a custom String implementation in Kotlin. The solution
 
 ---
 
-## **Architecture Diagram**
-
-```mermaid
-classDiagram
-    direction TB
-
-    class MyString {
-        +toArray(): CharArray
-        +forEach(f: (Char) -> Unit): Unit
-        +reverse(): MyString
-        +iterator(): Iterator[Char]
-        +length(): Int
-        +charAt(idx: Int): Char
-        +equals(other: Any?): Boolean
-        +isEmpty(): Boolean
-        +replace(oldChar: Char, newChar: Char): MyString
-        +substring(start: Int, end: Int): MyString
-        +trim(): MyString
-        +toJson(): String
-        +indexOf(c: Char): Int
-        +hashCode(): Int
-        +toString(): String
-        +create(s: String): MyString
-    }
-
-    MyString <|-- MyString
-```
-
----
-
 ## **Implementation Details**
 
 - The solution uses the Decorator Pattern: MyString wraps a standard String and adds custom methods.
