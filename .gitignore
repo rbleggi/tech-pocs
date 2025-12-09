@@ -1,4 +1,15 @@
 .gradle
+.claude
+/.claude/
+*/.claude/
+*/**/.claude/
+
+*/**/target
+*/**/node_modules
+*/node_modules
+
+*/**/build
+### Maven ###
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
