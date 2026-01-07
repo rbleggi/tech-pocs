@@ -14,6 +14,21 @@ This project implements an AI chatbot using the Command Pattern with intent reco
 
 ---
 
+
+## Traditional NLP Techniques
+
+This chatbot demonstrates traditional NLP approaches without machine learning or deep learning models:
+
+Unlike modern transformer-based models, this approach provides deterministic, rule-based NLP that's transparent, lightweight, and doesn't require training data or GPU resources.
+
+
+- **Intent Recognition**: Uses pattern matching and keyword-based techniques to identify user intent from input text
+- **Entity Extraction**: Applies regular expressions and text parsing to extract structured information (names, cities, tasks) from natural language
+- **Conversation Management**: Implements a stateful context system that tracks conversation history and user information across multiple interactions
+- **Context Tracking**: Maintains persistent state for extracted entities, user preferences, and conversation flow to enable personalized responses
+
+---
+
 ## Command Pattern
 
 The **Command Pattern** encapsulates each chatbot intent as a command object. This allows:
