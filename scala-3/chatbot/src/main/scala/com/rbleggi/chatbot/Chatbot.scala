@@ -15,3 +15,16 @@ case class ConversationContext(
 trait Command:
   def execute(input: String, context: ConversationContext): (String, ConversationContext)
   def matches(input: String): Boolean
+
+class GreetingCommand extends Command:
+  private val greetingPatterns = List("hello", "hi", "hey", "greetings", "good morning", "good afternoon")
+
+  override def matches(input: String): Boolean =
+    greetingPatterns.exists(pattern => input.toLowerCase.contains(pattern))
+
+  override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
+    val response = context.userName match
+      case Some(name) => s"Hello again, $name! What can I do for you?"
+      case None => "Hello! I'm your AI assistant. What's your name?"
+
+    (response, context.addToHistory(input))
