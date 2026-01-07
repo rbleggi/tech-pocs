@@ -70,3 +70,24 @@ class TimeCommand extends Command:
     val currentTime = java.time.LocalTime.now()
     val response = s"The current time is ${currentTime.toString.take(8)}"
     (response, context.addToHistory(input))
+
+class ReminderCommand extends Command:
+  private val reminderPatterns = List("remind", "reminder", "schedule")
+
+  override def matches(input: String): Boolean =
+    reminderPatterns.exists(pattern => input.toLowerCase.contains(pattern))
+
+  override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
+    val task = extractTask(input)
+    val response = task match
+      case Some(t) =>
+        s"I'll remind you to: $t. (Reminder set successfully)"
+      case None =>
+        "What would you like me to remind you about?"
+
+    val newContext = task.map(t => context.addEntity("reminder", t)).getOrElse(context)
+    (response, newContext.addToHistory(input))
+
+  private def extractTask(input: String): Option[String] =
+    val taskPattern = """(?i)remind me to\s+(.+)""".r
+    taskPattern.findFirstMatchIn(input).map(_.group(1).trim)
