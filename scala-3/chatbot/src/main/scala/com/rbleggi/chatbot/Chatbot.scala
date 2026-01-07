@@ -125,3 +125,10 @@ class ContextCommand extends Command:
                       |$historyInfo
                       |Entities: $entitiesInfo""".stripMargin
     (response, context.addToHistory(input))
+
+class UnknownCommand extends Command:
+  override def matches(input: String): Boolean = true
+
+  override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
+    val response = "I'm not sure how to respond to that. Type 'help' to see what I can do!"
+    (response, context.addToHistory(input))
