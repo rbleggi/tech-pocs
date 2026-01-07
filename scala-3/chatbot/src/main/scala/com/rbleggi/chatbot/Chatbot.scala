@@ -11,3 +11,7 @@ case class ConversationContext(
   def addToHistory(message: String): ConversationContext = copy(history = message :: history)
   def addEntity(key: String, value: String): ConversationContext =
     copy(entities = entities + (key -> value))
+
+trait Command:
+  def execute(input: String, context: ConversationContext): (String, ConversationContext)
+  def matches(input: String): Boolean
