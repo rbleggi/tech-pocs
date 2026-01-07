@@ -91,3 +91,19 @@ class ReminderCommand extends Command:
   private def extractTask(input: String): Option[String] =
     val taskPattern = """(?i)remind me to\s+(.+)""".r
     taskPattern.findFirstMatchIn(input).map(_.group(1).trim)
+
+class HelpCommand extends Command:
+  override def matches(input: String): Boolean =
+    input.toLowerCase.contains("help") || input.toLowerCase.contains("what can you do")
+
+  override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
+    val response =
+      """I can help you with:
+        |- Greetings (say hello!)
+        |- Weather information (ask about weather in any city)
+        |- Current time (ask what time it is)
+        |- Reminders (ask me to remind you about something)
+        |- Conversation context (I remember your name and previous messages)
+        |
+        |Try asking me something!""".stripMargin
+    (response, context.addToHistory(input))
