@@ -23,8 +23,18 @@ class GreetingCommand extends Command:
     greetingPatterns.exists(pattern => input.toLowerCase.contains(pattern))
 
   override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
-    val response = context.userName match
-      case Some(name) => s"Hello again, $name! What can I do for you?"
-      case None => "Hello! I'm your AI assistant. What's your name?"
+    val extractedName = extractName(input)
+    val (response, newContext) = extractedName match
+      case Some(name) =>
+        val ctx = context.withUserName(name)
+        (s"Hello, $name! How can I help you today?", ctx)
+      case None if context.userName.isDefined =>
+        (s"Hello again, ${context.userName.get}! What can I do for you?", context)
+      case None =>
+        ("Hello! I'm your AI assistant. What's your name?", context)
 
-    (response, context.addToHistory(input))
+    (response, newContext.addToHistory(input))
+
+  private def extractName(input: String): Option[String] =
+    val namePattern = """(?i)(?:my name is|i'm|i am|call me)\s+([a-zA-Z]+)""".r
+    namePattern.findFirstMatchIn(input).map(_.group(1))
