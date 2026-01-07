@@ -175,3 +175,16 @@ class Chatbot(commands: List[Command]):
     println(s"You: $msg")
     println(s"Bot: ${bot.processMessage(msg)}\n")
   }
+
+  println("\n=== Interactive Mode ===")
+  println("Start chatting (type 'quit' to exit):")
+
+  var continue = true
+  while continue do
+    print("You: ")
+    val input = scala.io.StdIn.readLine()
+    if input.toLowerCase == "quit" then
+      continue = false
+      println("Bot: Goodbye!")
+    else
+      println(s"Bot: ${bot.processMessage(input)}\n")
