@@ -59,3 +59,14 @@ class WeatherCommand extends Command:
   private def extractCity(input: String): Option[String] =
     val cityPattern = """(?i)(?:in|at|for)\s+([A-Z][a-zA-Z\s]+)(?:\?|$)""".r
     cityPattern.findFirstMatchIn(input).map(_.group(1).trim)
+
+class TimeCommand extends Command:
+  private val timePatterns = List("time", "clock", "what time")
+
+  override def matches(input: String): Boolean =
+    timePatterns.exists(pattern => input.toLowerCase.contains(pattern))
+
+  override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
+    val currentTime = java.time.LocalTime.now()
+    val response = s"The current time is ${currentTime.toString.take(8)}"
+    (response, context.addToHistory(input))
