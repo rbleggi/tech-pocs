@@ -107,3 +107,21 @@ class HelpCommand extends Command:
         |
         |Try asking me something!""".stripMargin
     (response, context.addToHistory(input))
+
+class ContextCommand extends Command:
+  override def matches(input: String): Boolean =
+    input.toLowerCase.contains("context") ||
+    input.toLowerCase.contains("remember") ||
+    input.toLowerCase.contains("what do you know")
+
+  override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
+    val nameInfo = context.userName.map(n => s"Your name is $n.").getOrElse("I don't know your name yet.")
+    val historyInfo = s"We've exchanged ${context.history.length} messages."
+    val entitiesInfo = if context.entities.isEmpty then "No entities stored."
+                       else context.entities.map { case (k, v) => s"$k: $v" }.mkString(", ")
+
+    val response = s"""Here's what I know:
+                      |$nameInfo
+                      |$historyInfo
+                      |Entities: $entitiesInfo""".stripMargin
+    (response, context.addToHistory(input))
