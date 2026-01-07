@@ -132,3 +132,46 @@ class UnknownCommand extends Command:
   override def execute(input: String, context: ConversationContext): (String, ConversationContext) =
     val response = "I'm not sure how to respond to that. Type 'help' to see what I can do!"
     (response, context.addToHistory(input))
+
+class Chatbot(commands: List[Command]):
+  private var context = ConversationContext()
+
+  def processMessage(input: String): String =
+    val command = commands.find(_.matches(input)).getOrElse(UnknownCommand())
+    val (response, newContext) = command.execute(input, context)
+    context = newContext
+    response
+
+  def getContext: ConversationContext = context
+  def resetContext(): Unit = context = ConversationContext()
+
+@main def runChatbot(): Unit =
+  val commands = List(
+    GreetingCommand(),
+    WeatherCommand(),
+    TimeCommand(),
+    ReminderCommand(),
+    HelpCommand(),
+    ContextCommand(),
+    UnknownCommand()
+  )
+
+  val bot = Chatbot(commands)
+
+  println("=== AI Chatbot ===")
+  println("Type 'quit' to exit\n")
+
+  val testMessages = List(
+    "Hello! My name is Alice",
+    "What's the weather in New York?",
+    "What time is it?",
+    "Remind me to buy groceries",
+    "What do you know about me?",
+    "Help"
+  )
+
+  println("=== Demo Mode ===\n")
+  testMessages.foreach { msg =>
+    println(s"You: $msg")
+    println(s"Bot: ${bot.processMessage(msg)}\n")
+  }
