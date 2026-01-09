@@ -65,29 +65,6 @@ class UserBasedCollaborativeFiltering extends RecommendationStrategy:
         else Some(Recommendation(item.id, weightedSum / similaritySum, s"Based on similar users"))
     }.sortBy(-_.score).take(topN)
 
-class ItemBasedCollaborativeFiltering extends RecommendationStrategy:
-  override def name: String = "Item-Based Collaborative Filtering"
-
-  override def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[Recommendation] =
-    val userRatings = ratings.filter(_.userId == userId)
-    if userRatings.isEmpty then return List.empty
-
-    val candidateItems = items.filterNot(item => userRatings.exists(_.itemId == item.id))
-
-    candidateItems.flatMap { candidateItem =>
-      val similarities = userRatings.map { userRating =>
-        val ratedItem = items.find(_.id == userRating.itemId).get
-        val similarity = SimilarityMetrics.cosineSimilarity(candidateItem.features, ratedItem.features)
-        (userRating.score, similarity)
-      }
-
-      val weightedSum = similarities.map { case (rating, sim) => rating * sim }.sum
-      val similaritySum = similarities.map { case (_, sim) => Math.abs(sim) }.sum
-
-      if similaritySum == 0.0 then None
-      else Some(Recommendation(candidateItem.id, weightedSum / similaritySum, s"Similar to items you liked"))
-    }.sortBy(-_.score).take(topN)
-
 class ContentBasedFiltering extends RecommendationStrategy:
   override def name: String = "Content-Based Filtering"
 
@@ -145,7 +122,6 @@ class RecommendationSystem(strategy: RecommendationStrategy):
 
   val strategies = List(
     ("User-Based CF", UserBasedCollaborativeFiltering()),
-    ("Item-Based CF", ItemBasedCollaborativeFiltering()),
     ("Content-Based", ContentBasedFiltering())
   )
 
