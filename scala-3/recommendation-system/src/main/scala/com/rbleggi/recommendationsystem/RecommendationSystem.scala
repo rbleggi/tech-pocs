@@ -87,3 +87,29 @@ class ItemBasedCollaborativeFiltering extends RecommendationStrategy:
       if similaritySum == 0.0 then None
       else Some(Recommendation(candidateItem.id, weightedSum / similaritySum, s"Similar to items you liked"))
     }.sortBy(-_.score).take(topN)
+
+class ContentBasedFiltering extends RecommendationStrategy:
+  override def name: String = "Content-Based Filtering"
+
+  override def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[Recommendation] =
+    val userRatings = ratings.filter(_.userId == userId)
+    if userRatings.isEmpty then return List.empty
+
+    val userProfile = buildUserProfile(userRatings, items)
+    val candidateItems = items.filterNot(item => userRatings.exists(_.itemId == item.id))
+
+    candidateItems.map { item =>
+      val similarity = SimilarityMetrics.cosineSimilarity(userProfile, item.features)
+      Recommendation(item.id, similarity, s"Matches your preferences")
+    }.sortBy(-_.score).take(topN)
+
+  private def buildUserProfile(userRatings: List[Rating], items: List[Item]): Map[String, Double] =
+    val weightedFeatures = userRatings.flatMap { rating =>
+      items.find(_.id == rating.itemId).map { item =>
+        item.features.map { case (feature, value) => (feature, value * rating.score) }
+      }
+    }.flatten
+
+    weightedFeatures.groupBy(_._1).map { case (feature, values) =>
+      feature -> (values.map(_._2).sum / userRatings.length)
+    }
