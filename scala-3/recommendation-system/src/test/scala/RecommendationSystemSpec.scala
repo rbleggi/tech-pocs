@@ -18,3 +18,16 @@ class RecommendationSystemSpec extends AnyFlatSpec with Matchers:
     Rating("user2", "item3", 5.0),
     Rating("user3", "item2", 5.0)
   )
+
+  "PopularityBased" should "recommend popular items" in {
+    val strategy = PopularityBased()
+    val recommendations = strategy.recommend("user1", ratings, items, 2)
+    recommendations should not be empty
+  }
+
+  it should "not recommend already rated items" in {
+    val strategy = PopularityBased()
+    val recommendations = strategy.recommend("user1", ratings, items, 5)
+    recommendations should not contain "item1"
+    recommendations should not contain "item2"
+  }
