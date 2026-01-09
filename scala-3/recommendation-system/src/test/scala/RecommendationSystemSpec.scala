@@ -31,3 +31,27 @@ class RecommendationSystemSpec extends AnyFlatSpec with Matchers:
     recommendations should not contain "item1"
     recommendations should not contain "item2"
   }
+
+  "CategoryBased" should "recommend items from favorite category" in {
+    val strategy = CategoryBased()
+    val recommendations = strategy.recommend("user1", ratings, items, 2)
+    recommendations should not be empty
+  }
+
+  it should "return empty for new users" in {
+    val strategy = CategoryBased()
+    val recommendations = strategy.recommend("newUser", ratings, items, 5)
+    recommendations shouldBe empty
+  }
+
+  "RecommendationSystem" should "use provided strategy" in {
+    val system = RecommendationSystem(PopularityBased())
+    val recommendations = system.recommend("user1", ratings, items, 3)
+    recommendations should not be empty
+  }
+
+  it should "limit results to topN" in {
+    val system = RecommendationSystem(PopularityBased())
+    val recommendations = system.recommend("user1", ratings, items, 1)
+    recommendations.length should be <= 1
+  }
