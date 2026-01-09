@@ -60,4 +60,12 @@ class RecommendationSystem(strategy: RecommendationStrategy):
     Rating("user4", "movie4", 4.0)
   )
 
-  println("=== Movie Recommendation System ===\n")
+  println("=== Recommendation System ===\n")
+
+  val popularitySystem = RecommendationSystem(PopularityBased())
+  println("Popularity-Based:")
+  println(popularitySystem.recommend("user1", ratings, items, 3).mkString(", "))
+
+  val categorySystem = RecommendationSystem(CategoryBased())
+  println("\nCategory-Based:")
+  println(categorySystem.recommend("user1", ratings, items, 3).mkString(", "))
