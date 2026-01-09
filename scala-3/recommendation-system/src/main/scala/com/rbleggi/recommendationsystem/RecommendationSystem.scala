@@ -19,3 +19,20 @@ object SimilarityMetrics:
 
     if mag1 == 0.0 || mag2 == 0.0 then 0.0
     else dotProduct / (mag1 * mag2)
+
+  def pearsonCorrelation(v1: Map[String, Double], v2: Map[String, Double]): Double =
+    val commonKeys = v1.keys.toSet.intersect(v2.keys.toSet)
+    if commonKeys.size < 2 then return 0.0
+
+    val vals1 = commonKeys.map(v1).toList
+    val vals2 = commonKeys.map(v2).toList
+
+    val mean1 = vals1.sum / vals1.length
+    val mean2 = vals2.sum / vals2.length
+
+    val numerator = vals1.zip(vals2).map { case (a, b) => (a - mean1) * (b - mean2) }.sum
+    val denom1 = Math.sqrt(vals1.map(a => Math.pow(a - mean1, 2)).sum)
+    val denom2 = Math.sqrt(vals2.map(b => Math.pow(b - mean2, 2)).sum)
+
+    if denom1 == 0.0 || denom2 == 0.0 then 0.0
+    else numerator / (denom1 * denom2)
