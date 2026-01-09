@@ -36,3 +36,31 @@ object SimilarityMetrics:
 
     if denom1 == 0.0 || denom2 == 0.0 then 0.0
     else numerator / (denom1 * denom2)
+
+class UserBasedCollaborativeFiltering extends RecommendationStrategy:
+  override def name: String = "User-Based Collaborative Filtering"
+
+  override def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[Recommendation] =
+    val userRatings = ratings.filter(_.userId == userId).map(r => r.itemId -> r.score).toMap
+    val otherUsers = ratings.filter(_.userId != userId).map(_.userId).distinct
+
+    val userSimilarities = otherUsers.map { otherUser =>
+      val otherRatings = ratings.filter(_.userId == otherUser).map(r => r.itemId -> r.score).toMap
+      val similarity = SimilarityMetrics.cosineSimilarity(userRatings, otherRatings)
+      otherUser -> similarity
+    }.toMap
+
+    val candidateItems = items.filterNot(item => userRatings.contains(item.id))
+
+    candidateItems.flatMap { item =>
+      val ratingsForItem = ratings.filter(r => r.itemId == item.id && r.userId != userId)
+      if ratingsForItem.isEmpty then None
+      else
+        val weightedSum = ratingsForItem.map { r =>
+          r.score * userSimilarities.getOrElse(r.userId, 0.0)
+        }.sum
+        val similaritySum = ratingsForItem.map(r => Math.abs(userSimilarities.getOrElse(r.userId, 0.0))).sum
+
+        if similaritySum == 0.0 then None
+        else Some(Recommendation(item.id, weightedSum / similaritySum, s"Based on similar users"))
+    }.sortBy(-_.score).take(topN)
