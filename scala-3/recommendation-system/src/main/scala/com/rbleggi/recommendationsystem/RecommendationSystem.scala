@@ -114,26 +114,6 @@ class ContentBasedFiltering extends RecommendationStrategy:
       feature -> (values.map(_._2).sum / userRatings.length)
     }
 
-class HybridRecommendation(strategies: List[RecommendationStrategy], weights: List[Double]) extends RecommendationStrategy:
-  require(strategies.length == weights.length, "Strategies and weights must have same length")
-  require(weights.sum == 1.0, "Weights must sum to 1.0")
-
-  override def name: String = "Hybrid Recommendation"
-
-  override def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[Recommendation] =
-    val allRecommendations = strategies.zip(weights).flatMap { case (strategy, weight) =>
-      strategy.recommend(userId, ratings, items, topN * 2).map(r => r.copy(score = r.score * weight))
-    }
-
-    allRecommendations
-      .groupBy(_.itemId)
-      .map { case (itemId, recs) =>
-        Recommendation(itemId, recs.map(_.score).sum, s"Hybrid: ${recs.map(_.reason).mkString(", ")}")
-      }
-      .toList
-      .sortBy(-_.score)
-      .take(topN)
-
 class RecommendationSystem(strategy: RecommendationStrategy):
   def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int = 5): List[Recommendation] =
     strategy.recommend(userId, ratings, items, topN)
@@ -181,15 +161,4 @@ class RecommendationSystem(strategy: RecommendationStrategy):
         println(f"${rec.itemId}: Score ${rec.score}%.2f - ${rec.reason}")
       }
       println()
-  }
-
-  println("=== Hybrid Strategy ===")
-  val hybridStrategy = HybridRecommendation(
-    List(UserBasedCollaborativeFiltering(), ContentBasedFiltering()),
-    List(0.6, 0.4)
-  )
-  val hybridRecommender = RecommendationSystem(hybridStrategy)
-  val hybridRecs = hybridRecommender.recommend("user1", ratings, items, 3)
-  hybridRecs.foreach { rec =>
-    println(f"${rec.itemId}: Score ${rec.score}%.2f")
   }
