@@ -113,3 +113,23 @@ class ContentBasedFiltering extends RecommendationStrategy:
     weightedFeatures.groupBy(_._1).map { case (feature, values) =>
       feature -> (values.map(_._2).sum / userRatings.length)
     }
+
+class HybridRecommendation(strategies: List[RecommendationStrategy], weights: List[Double]) extends RecommendationStrategy:
+  require(strategies.length == weights.length, "Strategies and weights must have same length")
+  require(weights.sum == 1.0, "Weights must sum to 1.0")
+
+  override def name: String = "Hybrid Recommendation"
+
+  override def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[Recommendation] =
+    val allRecommendations = strategies.zip(weights).flatMap { case (strategy, weight) =>
+      strategy.recommend(userId, ratings, items, topN * 2).map(r => r.copy(score = r.score * weight))
+    }
+
+    allRecommendations
+      .groupBy(_.itemId)
+      .map { case (itemId, recs) =>
+        Recommendation(itemId, recs.map(_.score).sum, s"Hybrid: ${recs.map(_.reason).mkString(", ")}")
+      }
+      .toList
+      .sortBy(-_.score)
+      .take(topN)
