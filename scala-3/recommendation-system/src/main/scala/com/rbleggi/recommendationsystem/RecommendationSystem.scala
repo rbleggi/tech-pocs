@@ -18,6 +18,24 @@ class PopularityBased extends RecommendationStrategy:
       .take(topN)
       .map(_._1)
 
+class CategoryBased extends RecommendationStrategy:
+  def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[String] =
+    val userRatings = ratings.filter(_.userId == userId)
+    if userRatings.isEmpty then return List.empty
+
+    val favoriteCategory = userRatings
+      .flatMap(r => items.find(_.id == r.itemId).map(i => (i.category, r.score)))
+      .groupBy(_._1)
+      .map { case (cat, scores) => (cat, scores.map(_._2).sum) }
+      .maxBy(_._2)
+      ._1
+
+    val userRated = userRatings.map(_.itemId).toSet
+    items
+      .filter(i => i.category == favoriteCategory && !userRated.contains(i.id))
+      .map(_.id)
+      .take(topN)
+
 class RecommendationSystem(strategy: RecommendationStrategy):
   def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int = 5): List[String] =
     strategy.recommend(userId, ratings, items, topN)
