@@ -133,3 +133,9 @@ class HybridRecommendation(strategies: List[RecommendationStrategy], weights: Li
       .toList
       .sortBy(-_.score)
       .take(topN)
+
+class RecommendationSystem(strategy: RecommendationStrategy):
+  def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int = 5): List[Recommendation] =
+    strategy.recommend(userId, ratings, items, topN)
+
+  def getStrategyName: String = strategy.name
