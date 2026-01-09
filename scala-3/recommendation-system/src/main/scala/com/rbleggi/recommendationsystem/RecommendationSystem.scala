@@ -6,6 +6,18 @@ case class Item(id: String, category: String)
 trait RecommendationStrategy:
   def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[String]
 
+class PopularityBased extends RecommendationStrategy:
+  def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int): List[String] =
+    val userRated = ratings.filter(_.userId == userId).map(_.itemId).toSet
+    ratings
+      .filterNot(r => userRated.contains(r.itemId))
+      .groupBy(_.itemId)
+      .map { case (itemId, rs) => (itemId, rs.map(_.score).sum / rs.size) }
+      .toList
+      .sortBy(-_._2)
+      .take(topN)
+      .map(_._1)
+
 class RecommendationSystem(strategy: RecommendationStrategy):
   def recommend(userId: String, ratings: List[Rating], items: List[Item], topN: Int = 5): List[String] =
     strategy.recommend(userId, ratings, items, topN)
