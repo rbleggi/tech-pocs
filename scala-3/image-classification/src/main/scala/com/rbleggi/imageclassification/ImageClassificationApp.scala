@@ -6,6 +6,8 @@ import com.rbleggi.imageclassification.augmentation.DataAugmentation
 import com.rbleggi.imageclassification.core.CNNClassifier
 import com.rbleggi.imageclassification.model.{AugmentationType, TrainingConfig}
 import com.rbleggi.imageclassification.transfer.{PretrainedModel, TransferLearning}
+import com.rbleggi.imageclassification.utils._
+import com.rbleggi.imageclassification.evaluation.{MetricsCalculator, MultiClassMetrics}
 
 @main def runImageClassification(): Unit =
   println("=== Image Classification System with CNNs ===\n")
@@ -15,8 +17,38 @@ import com.rbleggi.imageclassification.transfer.{PretrainedModel, TransferLearni
   demonstrateCNNClassifier(manager)
   demonstrateDataAugmentation(manager)
   demonstrateTransferLearning(manager)
+  demonstrateUtilities(manager)
 
   manager.close()
+
+def demonstrateUtilities(manager: NDManager): Unit =
+  println("4. Utilities Demo")
+  println("-" * 50)
+
+  val loader = DataLoader(manager)
+  val dataset = loader.loadSyntheticDataset(20, 3, ai.djl.ndarray.types.Shape.create(3, 32, 32))
+  println(s"✓ Created dataset: ${dataset.images.size} samples, ${dataset.classNames.size} classes")
+
+  val scheduler = LearningRateScheduler.stepDecay(0.1f, 0.5f, 10)
+  println(f"\n✓ Learning rate schedule:")
+  (0 until 30 by 5).foreach { epoch =>
+    println(f"  Epoch $epoch%2d: LR = ${scheduler.getLearningRate(epoch)}%.6f")
+  }
+
+  val earlyStopping = EarlyStopping(patience = 3, minDelta = 0.01f)
+  println("\n✓ Early stopping initialized with patience=3")
+
+  val visualizer = Visualizer()
+  val metricsCalc = MetricsCalculator()
+  val multiMetrics = metricsCalc.calculateMultiClassMetrics(
+    List(0, 1, 2, 0, 1, 2),
+    List(0, 1, 1, 0, 2, 2),
+    3
+  )
+  println(f"\n✓ Metrics accuracy: ${multiMetrics.accuracy * 100}%.2f%%")
+
+  dataset.images.foreach(_.close())
+  println()
 
 def demonstrateCNNClassifier(manager: NDManager): Unit =
   println("1. CNN Classifier Demo")
