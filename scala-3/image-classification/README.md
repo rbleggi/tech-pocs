@@ -49,6 +49,21 @@ This POC demonstrates a complete image classification pipeline including:
 - Custom classifier head
 - Flexible training configurations
 
+### 4. Utilities
+- **Data Loader**: Synthetic dataset generation, splitting, batching, shuffling
+- **Image Preprocessing**: Normalization, resize, center crop, grayscale conversion
+- **Learning Rate Schedulers**: Constant, step decay, exponential decay, cosine annealing, polynomial decay, warmup
+- **Early Stopping**: Prevent overfitting with configurable patience
+- **Evaluation Metrics**: Confusion matrix, precision, recall, F1-score, multi-class support
+- **Visualization**: Metrics display, confusion matrix, training progress
+- **Model Persistence**: Save/load model weights
+
+### 5. Simple Classifier
+- Lightweight logistic regression implementation
+- Single-file design for easy understanding
+- Manual gradient computation and backpropagation
+- Educational reference implementation
+
 ## Architecture
 
 ```mermaid
