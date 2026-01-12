@@ -191,14 +191,54 @@ class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
 
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
-  println("Basic structure created with Matrix and Image classes")
 
-  val testLogits = Array(1.0, 2.0, 3.0)
-  val probs = Activation.softmax(testLogits)
-  println(s"Softmax test: ${probs.mkString(", ")}")
-  println(s"ReLU test: relu(-1) = ${Activation.relu(-1)}, relu(2) = ${Activation.relu(2)}")
+  val rng = Random()
+  val inputSize = 28 * 28
+  val numClasses = 3
 
-  val network = SimpleNeuralNetwork(784, 128, 10)
-  val testInput = Matrix.random(1, 784)
-  val output = network.forward(testInput)
-  println(s"\nForward pass test: output shape = ${output.length}, sum = ${output.sum}")
+  val trainData = (0 until 150).map { i =>
+    val label = i % numClasses
+    val base = label * 0.3
+    val pixels = Array.fill(inputSize)(base + rng.nextDouble() * 0.2)
+    (Matrix(Array(pixels)), label)
+  }.toList
+
+  val testData = (0 until 30).map { i =>
+    val label = i % numClasses
+    val base = label * 0.3
+    val pixels = Array.fill(inputSize)(base + rng.nextDouble() * 0.2)
+    (Matrix(Array(pixels)), label)
+  }.toList
+
+  println(s"Training samples: ${trainData.size}")
+  println(s"Test samples: ${testData.size}")
+  println(s"Input size: $inputSize")
+  println(s"Number of classes: $numClasses\n")
+
+  val network = SimpleNeuralNetwork(inputSize, 64, numClasses)
+
+  println("Training neural network...")
+  network.train(trainData, epochs = 20, learningRate = 0.01)
+
+  println("\nEvaluating on test set...")
+  val metrics = network.evaluate(testData)
+  println(f"Accuracy: ${metrics("accuracy") * 100}%.2f%%")
+  println(f"Precision: ${metrics("precision") * 100}%.2f%%")
+  println(f"Recall: ${metrics("recall") * 100}%.2f%%")
+  println(f"F1-Score: ${metrics("f1") * 100}%.2f%%")
+
+  println("\nMaking predictions on individual samples...")
+  (0 until 3).foreach { i =>
+    val (input, actualLabel) = testData(i)
+    val (predicted, confidence) = network.predict(input)
+    println(f"Sample $i: Predicted=$predicted, Actual=$actualLabel, Confidence=${confidence * 100}%.2f%%")
+  }
+
+  println("\nTesting image augmentation...")
+  val testImage = Image(Array.fill(28 * 28)(0.5), 28, 28, 1)
+  val noisyImage = testImage.addNoise(0.1)
+  val brightImage = testImage.brighten(1.3)
+  val flippedImage = testImage.flip
+  println("✓ Noise augmentation applied")
+  println("✓ Brightness augmentation applied")
+  println("✓ Flip augmentation applied")
