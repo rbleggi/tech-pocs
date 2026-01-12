@@ -134,6 +134,11 @@ class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
       val avgAccuracy = totalAccuracy / trainData.size
       println(f"Epoch ${epoch + 1}%3d: Loss = $avgLoss%.4f, Accuracy = ${avgAccuracy * 100}%.2f%%")
 
+  def predict(input: Matrix): (Int, Double) =
+    val predictions = forward(input)
+    val (confidence, predictedClass) = predictions.zipWithIndex.maxBy(_._1)
+    (predictedClass, confidence)
+
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
   println("Basic structure created with Matrix and Image classes")
