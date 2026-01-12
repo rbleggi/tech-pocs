@@ -80,6 +80,12 @@ class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
 
     Activation.softmax(outputLogits)
 
+  def crossEntropyLoss(predictions: Array[Double], label: Int): Double =
+    -log(max(predictions(label), 1e-10))
+
+  def accuracy(predictions: Array[Double], label: Int): Double =
+    if predictions.zipWithIndex.maxBy(_._1)._2 == label then 1.0 else 0.0
+
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
   println("Basic structure created with Matrix and Image classes")
