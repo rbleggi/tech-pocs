@@ -46,6 +46,22 @@ case class Image(pixels: Array[Double], width: Int, height: Int, channels: Int):
   def toMatrix: Matrix =
     Matrix(Array(pixels))
 
+object Activation:
+  def relu(x: Double): Double = max(0.0, x)
+
+  def reluDerivative(x: Double): Double = if x > 0 then 1.0 else 0.0
+
+  def softmax(logits: Array[Double]): Array[Double] =
+    val maxLogit = logits.max
+    val exps = logits.map(x => exp(x - maxLogit))
+    val sumExps = exps.sum
+    exps.map(_ / sumExps)
+
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
   println("Basic structure created with Matrix and Image classes")
+
+  val testLogits = Array(1.0, 2.0, 3.0)
+  val probs = Activation.softmax(testLogits)
+  println(s"Softmax test: ${probs.mkString(", ")}")
+  println(s"ReLU test: relu(-1) = ${Activation.relu(-1)}, relu(2) = ${Activation.relu(2)}")
