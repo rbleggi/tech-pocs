@@ -86,6 +86,34 @@ class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
   def accuracy(predictions: Array[Double], label: Int): Double =
     if predictions.zipWithIndex.maxBy(_._1)._2 == label then 1.0 else 0.0
 
+  def backward(input: Matrix, predictions: Array[Double], label: Int, learningRate: Double): Unit =
+    val outputGrad = predictions.clone()
+    outputGrad(label) -= 1.0
+
+    val weightsOutputGradData = Array.tabulate(hiddenSize, outputSize) { (i, j) =>
+      hiddenActivation(0, i) * outputGrad(j)
+    }
+    val weightsOutputGrad = Matrix(weightsOutputGradData)
+
+    val biasOutputGrad = outputGrad.clone()
+
+    val hiddenGradData = Array.tabulate(1, hiddenSize) { (i, j) =>
+      (0 until outputSize).map(k => outputGrad(k) * weightsOutput(j, k)).sum
+    }
+    val hiddenGrad = Matrix(hiddenGradData)
+
+    val hiddenGradWithRelu = Matrix(Array.tabulate(1, hiddenSize) { (i, j) =>
+      hiddenGrad(i, j) * Activation.reluDerivative(hiddenPreActivation(i, j) + biasHidden(j))
+    })
+
+    val weightsHiddenGrad = input.transpose.dot(hiddenGradWithRelu)
+    val biasHiddenGrad = (0 until hiddenSize).map(j => hiddenGradWithRelu(0, j)).toArray
+
+    weightsHidden = weightsHidden - (weightsHiddenGrad * learningRate)
+    biasHidden = biasHidden.zip(biasHiddenGrad).map((b, g) => b - g * learningRate)
+    weightsOutput = weightsOutput - (weightsOutputGrad * learningRate)
+    biasOutput = biasOutput.zip(biasOutputGrad).map((b, g) => b - g * learningRate)
+
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
   println("Basic structure created with Matrix and Image classes")
