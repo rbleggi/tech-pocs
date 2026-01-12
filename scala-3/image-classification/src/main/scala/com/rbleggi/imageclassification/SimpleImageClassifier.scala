@@ -1,110 +1,51 @@
 package com.rbleggi.imageclassification
 
-import ai.djl.ndarray.{NDArray, NDManager}
-import ai.djl.ndarray.types.Shape
+import scala.util.Random
+import scala.math._
 
-case class SimpleClassificationResult(label: String, confidence: Float)
+case class Matrix(data: Array[Array[Double]]):
+  val rows: Int = data.length
+  val cols: Int = if rows > 0 then data(0).length else 0
 
-class SimpleImageClassifier(classes: List[String], manager: NDManager):
+  def apply(i: Int, j: Int): Double = data(i)(j)
+  def update(i: Int, j: Int, value: Double): Unit = data(i)(j) = value
 
-  private val weights = manager.randomUniform(-1f, 1f, new Shape(3 * 64 * 64, classes.size))
-  private val bias = manager.zeros(new Shape(classes.size))
+  def +(other: Matrix): Matrix =
+    Matrix(data.zip(other.data).map((r1, r2) => r1.zip(r2).map(_ + _)))
 
-  def train(images: List[NDArray], labels: List[Int], epochs: Int, learningRate: Float): Unit =
-    for epoch <- 0 until epochs do
-      var totalLoss = 0.0f
+  def -(other: Matrix): Matrix =
+    Matrix(data.zip(other.data).map((r1, r2) => r1.zip(r2).map(_ - _)))
 
-      images.zip(labels).foreach { case (image, label) =>
-        val flattened = image.flatten()
-        val logits = flattened.dot(weights).add(bias)
-        val probs = softmax(logits)
+  def *(scalar: Double): Matrix =
+    Matrix(data.map(_.map(_ * scalar)))
 
-        val target = manager.zeros(new Shape(classes.size))
-        target.set(Array(label.toLong), 1f)
+  def dot(other: Matrix): Matrix =
+    val result = Array.ofDim[Double](rows, other.cols)
+    for
+      i <- 0 until rows
+      j <- 0 until other.cols
+      k <- 0 until cols
+    do result(i)(j) += this(i, k) * other(k, j)
+    Matrix(result)
 
-        val loss = crossEntropyLoss(probs, target)
-        totalLoss += loss.getFloat()
+  def transpose: Matrix =
+    Matrix(Array.tabulate(cols, rows)((j, i) => this(i, j)))
 
-        val gradient = probs.sub(target)
-        val weightsGradient = flattened.expandDims(1).dot(gradient.expandDims(0))
+  def map(f: Double => Double): Matrix =
+    Matrix(data.map(_.map(f)))
 
-        weights.subi(weightsGradient.transpose().mul(learningRate))
-        bias.subi(gradient.mul(learningRate))
+object Matrix:
+  def zeros(rows: Int, cols: Int): Matrix =
+    Matrix(Array.fill(rows, cols)(0.0))
 
-        flattened.close()
-        logits.close()
-        probs.close()
-        target.close()
-        loss.close()
-        gradient.close()
-        weightsGradient.close()
-      }
+  def random(rows: Int, cols: Int, scale: Double = 0.01): Matrix =
+    val rng = Random()
+    Matrix(Array.fill(rows, cols)((rng.nextGaussian() * scale)))
 
-      val avgLoss = totalLoss / images.size
-      println(f"Epoch $epoch: Loss = $avgLoss%.4f")
+case class Image(pixels: Array[Double], width: Int, height: Int, channels: Int):
+  def toMatrix: Matrix =
+    Matrix(Array(pixels))
 
-  def predict(image: NDArray): SimpleClassificationResult =
-    val flattened = image.flatten()
-    val logits = flattened.dot(weights).add(bias)
-    val probs = softmax(logits)
-
-    val probsArray = probs.toFloatArray
-    val maxIdx = probsArray.zipWithIndex.maxBy(_._1)._2
-    val confidence = probsArray(maxIdx)
-
-    flattened.close()
-    logits.close()
-    probs.close()
-
-    SimpleClassificationResult(classes(maxIdx), confidence)
-
-  private def softmax(logits: NDArray): NDArray =
-    val maxLogit = logits.max()
-    val exps = logits.sub(maxLogit).exp()
-    val sumExps = exps.sum()
-    val result = exps.div(sumExps)
-
-    maxLogit.close()
-    exps.close()
-    sumExps.close()
-
-    result
-
-  private def crossEntropyLoss(probs: NDArray, target: NDArray): NDArray =
-    probs.add(1e-10f).log().mul(target).sum().neg()
-
-  def close(): Unit =
-    weights.close()
-    bias.close()
-
-object SimpleImageClassifier:
-  def apply(classes: List[String], manager: NDManager): SimpleImageClassifier =
-    new SimpleImageClassifier(classes, manager)
-
-@main def runSimpleClassifier(): Unit =
-  println("=== Simple Image Classifier ===\n")
-
-  val manager = NDManager.newBaseManager()
-  val classes = List("cat", "dog", "bird")
-
-  val classifier = SimpleImageClassifier(classes, manager)
-
-  val trainImages = (1 to 12).map { _ =>
-    manager.randomUniform(0f, 1f, new Shape(3, 64, 64))
-  }.toList
-
-  val trainLabels = List(0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2)
-
-  println("Training simple classifier...")
-  classifier.train(trainImages, trainLabels, epochs = 5, learningRate = 0.01f)
-
-  println("\nTesting predictions:")
-  val testImage = manager.randomUniform(0f, 1f, new Shape(3, 64, 64))
-  val result = classifier.predict(testImage)
-
-  println(f"Predicted: ${result.label} (${result.confidence * 100}%.2f%% confidence)")
-
-  trainImages.foreach(_.close())
-  testImage.close()
-  classifier.close()
-  manager.close()
+@main def runSimpleImageClassifier(): Unit =
+  println("=== Simple Image Classification ===\n")
+  println("Basic structure created with Matrix and Image classes")
