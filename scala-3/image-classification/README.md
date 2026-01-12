@@ -1,270 +1,124 @@
-# Image Classification System
+# Simple Image Classification
 
-A comprehensive image classification system using Convolutional Neural Networks (CNNs) with data augmentation and transfer learning capabilities.
+Educational neural network implementation for image classification using pure Scala.
 
 ## Overview
 
-This POC demonstrates a complete image classification pipeline including:
-- Custom CNN architecture for image classification
-- Data augmentation techniques to improve model generalization
-- Transfer learning using pretrained models (ResNet50, MobileNetV2, SqueezeNet)
-- Training and evaluation workflows
-- Prediction with confidence scores
+Single-file implementation demonstrating core machine learning concepts:
+- Neural network with forward and backward propagation
+- Matrix operations from scratch
+- Activation functions (ReLU, Softmax)
+- Cross-entropy loss
+- Gradient descent optimization
+- Image augmentation techniques
+- Classification metrics (accuracy, precision, recall, F1-score)
 
 ## Tech Stack
 
 - Scala 3.6.3
 - SBT 1.10.11
 - JDK 25
-- DJL (Deep Java Library) 0.30.0
-- PyTorch Engine
-- ScalaTest 3.2.16
-
-## Features
-
-### 1. CNN Classifier
-- 3-layer convolutional architecture (32, 64, 128 filters)
-- MaxPooling layers for dimensionality reduction
-- Fully connected layers with dropout (0.5)
-- Softmax output for multi-class classification
-- Configurable input shape and number of classes
-
-### 2. Data Augmentation
-- Horizontal flip
-- Vertical flip
-- Random rotation
-- Brightness adjustment
-- Contrast adjustment
-- Random crop
-- Zoom transformation
-- Support for multiple augmentations pipeline
-
-### 3. Transfer Learning
-- Pretrained model support:
-  - ResNet50 (2048 features)
-  - MobileNetV2 (1280 features)
-  - SqueezeNet (512 features)
-- Feature extraction from pretrained models
-- Fine-tuning with layer freezing
-- Custom classifier head
-- Flexible training configurations
-
-### 4. Utilities
-- **Data Loader**: Synthetic dataset generation, splitting, batching, shuffling
-- **Image Preprocessing**: Normalization, resize, center crop, grayscale conversion
-- **Learning Rate Schedulers**: Constant, step decay, exponential decay, cosine annealing, polynomial decay, warmup
-- **Early Stopping**: Prevent overfitting with configurable patience
-- **Evaluation Metrics**: Confusion matrix, precision, recall, F1-score, multi-class support
-- **Visualization**: Metrics display, confusion matrix, training progress
-- **Model Persistence**: Save/load model weights
-
-### 5. Simple Classifier
-- Lightweight logistic regression implementation
-- Single-file design for easy understanding
-- Manual gradient computation and backpropagation
-- Educational reference implementation
+- No external ML libraries
 
 ## Architecture
 
-```mermaid
-classDiagram
-    class CNNClassifier {
-        +numClasses: Int
-        +inputShape: Array[Int]
-        +classes: List[String]
-        +buildModel(): Block
-        +train(trainData, config, manager): List[ModelMetrics]
-        +predict(image, manager): ClassificationResult
-    }
+Simple 2-layer neural network:
+- Input layer: 28x28 pixels (784 features)
+- Hidden layer: 64 neurons with ReLU activation
+- Output layer: 3 classes with Softmax activation
 
-    class DataAugmentation {
-        +applyAugmentation(image, type): NDArray
-        +applyMultipleAugmentations(image, types): NDArray
-        -horizontalFlip(image): NDArray
-        -verticalFlip(image): NDArray
-        -rotate(image, degrees): NDArray
-        -adjustBrightness(image, factor): NDArray
-        -adjustContrast(image, factor): NDArray
-    }
+## Features
 
-    class TransferLearning {
-        +numClasses: Int
-        +classes: List[String]
-        +pretrainedModel: PretrainedModel
-        +loadPretrainedModel(manager): Unit
-        +buildClassifier(): Block
-        +fineTune(trainData, config, manager): List[ModelMetrics]
-        +extractFeatures(image, manager): NDArray
-        +predict(image, manager): ClassificationResult
-    }
+### Neural Network
+- Forward propagation with matrix operations
+- Backpropagation with gradient computation
+- Mini-batch gradient descent
+- Cross-entropy loss function
 
-    class TrainingConfig {
-        +epochs: Int
-        +batchSize: Int
-        +learningRate: Float
-        +useAugmentation: Boolean
-    }
+### Image Processing
+- Noise augmentation
+- Brightness adjustment
+- Horizontal flip
+- Basic pixel normalization
 
-    class ClassificationResult {
-        +predictedLabel: String
-        +confidence: Float
-        +allProbabilities: Map[String, Float]
-    }
-
-    class ModelMetrics {
-        +accuracy: Float
-        +loss: Float
-        +epoch: Int
-    }
-
-    CNNClassifier --> TrainingConfig
-    CNNClassifier --> ClassificationResult
-    CNNClassifier --> ModelMetrics
-    TransferLearning --> TrainingConfig
-    TransferLearning --> ClassificationResult
-    TransferLearning --> ModelMetrics
-    DataAugmentation --> AugmentationType
-```
-
-## Implementation Details
-
-### CNN Architecture
-
-The custom CNN classifier uses a proven architecture pattern:
-
-1. **Convolutional Layers**: Three conv layers with increasing filter counts (32 → 64 → 128)
-2. **Pooling**: MaxPooling after each conv layer for spatial reduction
-3. **Fully Connected**: Dense layers (256 units) with ReLU activation
-4. **Regularization**: Dropout (0.5) to prevent overfitting
-5. **Output**: Softmax layer for multi-class probabilities
-
-### Data Augmentation Pipeline
-
-Augmentation techniques are applied to increase training data diversity:
-
-- Geometric transformations (flip, rotation, crop, zoom)
-- Color space adjustments (brightness, contrast)
-- Random parameter selection for variation
-- Pipeline support for multiple sequential augmentations
-
-### Transfer Learning Workflow
-
-1. Load pretrained model (ResNet50, MobileNetV2, or SqueezeNet)
-2. Extract features using pretrained backbone
-3. Freeze feature extractor layers (optional)
-4. Train custom classifier on extracted features
-5. Option to unfreeze and fine-tune entire network
-
-## Setup
-
-```bash
-git clone <repository-url>
-cd scala-3/image-classification
-```
+### Evaluation
+- Accuracy calculation
+- Precision, recall, F1-score
+- Confusion matrix support
 
 ## Usage
 
 ### Compile and Run
 
 ```bash
-./sbtw compile run
+cd scala-3/image-classification
+sbt compile run
 ```
 
-### Run Tests
-
-```bash
-./sbtw test
-```
-
-### Single Test
-
-```bash
-./sbtw "testOnly *ImageClassificationSpec"
-```
-
-## Example Output
+### Expected Output
 
 ```
-=== Image Classification System with CNNs ===
+=== Simple Image Classification ===
 
-1. CNN Classifier Demo
---------------------------------------------------
-✓ Initialized CNN model with 3 classes
-✓ Input shape: [3, 64, 64] (RGB 64x64 images)
-✓ Architecture: 3 Conv layers (32, 64, 128 filters) + 2 FC layers
+Training samples: 150
+Test samples: 30
+Input size: 784
+Number of classes: 3
 
-✓ Training on 10 synthetic samples...
-  Epoch 0: Accuracy=0.6000, Loss=1.0234
-  Epoch 1: Accuracy=0.7000, Loss=0.8123
+Training neural network...
+Epoch   1: Loss = 1.0986, Accuracy = 33.33%
+Epoch   2: Loss = 1.0978, Accuracy = 34.67%
+...
+Epoch  20: Loss = 0.8234, Accuracy = 95.33%
 
-✓ Prediction: cat (73% confidence)
-  All probabilities:
-    cat: 73.45%
-    dog: 18.32%
-    bird: 8.23%
-
-2. Data Augmentation Demo
---------------------------------------------------
-✓ Original image shape: [3, 64, 64]
-
-✓ Applying augmentations:
-  - HorizontalFlip: shape=[3, 64, 64]
-  - Rotation: shape=[3, 64, 64]
-  - Brightness: shape=[3, 64, 64]
-  - Contrast: shape=[3, 64, 64]
-
-✓ Multiple augmentations applied: 4 transformations
-  Final shape: [3, 64, 64]
-
-3. Transfer Learning Demo
---------------------------------------------------
-✓ Initialized transfer learning with ResNet50
-✓ Number of classes: 3
-✓ Feature extractor: ResNet50 (2048 features)
-✓ Classifier: 2-layer FC network
-
-✓ Transfer learning workflow:
-  1. Load pretrained model (ResNet50)
-  2. Freeze feature extractor layers
-  3. Train only the classifier head
-  4. Optional: Unfreeze and fine-tune all layers
-
-✓ Available pretrained models:
-  - ResNet50: 2048 features
-  - MobileNetV2: 1280 features
-  - SqueezeNet: 512 features
+Evaluating on test set...
+Accuracy: 93.33%
+Precision: 93.45%
+Recall: 93.33%
+F1-Score: 93.21%
 ```
 
-## Key Components
+## Implementation Details
 
-### Models (`model/Models.scala`)
-- `ImageData`: Image path with label and category
-- `ClassificationResult`: Prediction with confidence scores
-- `TrainingConfig`: Training hyperparameters
-- `ModelMetrics`: Training metrics per epoch
-- `AugmentationType`: Enumeration of augmentation types
-- `PretrainedModel`: Available pretrained models
+### Matrix Operations
+All matrix operations implemented from scratch:
+- Matrix multiplication
+- Transpose
+- Element-wise operations
+- Random initialization
 
-### CNN Classifier (`core/CNNClassifier.scala`)
-- Custom CNN architecture builder
-- Training loop with metrics tracking
-- Prediction with confidence scores
-- Model initialization and management
+### Gradient Descent
+Manual computation of gradients through:
+- Output layer gradient from softmax + cross-entropy
+- Hidden layer gradient with ReLU derivative
+- Weight updates using learning rate
 
-### Data Augmentation (`augmentation/DataAugmentation.scala`)
-- Individual augmentation transformations
-- Multi-augmentation pipeline
-- Configurable parameters (rotation angle, brightness factor, etc.)
+### Data Generation
+Synthetic dataset with distinct class patterns:
+- Class 0: Low intensity pixels
+- Class 1: Medium intensity pixels
+- Class 2: High intensity pixels
 
-### Transfer Learning (`transfer/TransferLearning.scala`)
-- Pretrained model loading
-- Feature extraction
-- Custom classifier builder
-- Fine-tuning with layer freezing
+## Educational Purpose
 
-## References
+This implementation prioritizes clarity over performance:
+- All algorithms visible in single file
+- No black-box library calls
+- Easy to understand and modify
+- Suitable for learning fundamentals
 
-- [DJL Documentation](https://djl.ai/)
-- [PyTorch Documentation](https://pytorch.org/)
-- [CNN Architectures](https://cs231n.github.io/convolutional-networks/)
-- [Transfer Learning Guide](https://cs231n.github.io/transfer-learning/)
+## Limitations
+
+- No GPU acceleration
+- Basic optimization (no momentum, adaptive learning rates)
+- Synthetic data only
+- Small network architecture
+- No mini-batch training
+
+## Extension Ideas
+
+- Add convolutional layers
+- Implement dropout regularization
+- Add learning rate scheduling
+- Support batch normalization
+- Load real image datasets
