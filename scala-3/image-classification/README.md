@@ -1,6 +1,6 @@
-# Simple Image Classification
+# Image Classification
 
-Educational neural network implementation for image classification using pure Scala.
+Image Classification System using CNNs to classify different categories of images with data augmentation and transfer learning.
 
 ## Overview
 
@@ -27,6 +27,14 @@ Simple 2-layer neural network:
 - Hidden layer: 64 neurons with ReLU activation
 - Output layer: 3 classes with Softmax activation
 
+## Design Pattern
+
+This implementation uses the **Strategy Pattern** for image augmentation:
+- **Strategy Interface**: `AugmentationStrategy` trait defines the contract
+- **Concrete Strategies**: `NoiseAugmentation`, `BrightnessAugmentation`, `FlipAugmentation`
+- **Context**: `Image` class applies strategies dynamically
+- **Benefits**: Easy to add new augmentation strategies without modifying existing code
+
 ## Features
 
 ### Neural Network
@@ -35,90 +43,52 @@ Simple 2-layer neural network:
 - Mini-batch gradient descent
 - Cross-entropy loss function
 
-### Image Processing
-- Noise augmentation
-- Brightness adjustment
-- Horizontal flip
-- Basic pixel normalization
+### Image Processing (Strategy Pattern)
+- Noise augmentation (Gaussian noise)
+- Brightness adjustment (multiply pixels)
+- Horizontal flip (mirror image)
+- Composable strategies (apply multiple in sequence)
 
 ### Evaluation
 - Accuracy calculation
 - Precision, recall, F1-score
 - Confusion matrix support
 
-## Usage
+## **Setup Instructions**
 
-### Compile and Run
+### **1️ - Clone the Repository**
 
 ```bash
+git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/image-classification
-sbt compile run
 ```
 
-### Expected Output
+### **2️ - Compile & Run the Application**
 
-```
-=== Simple Image Classification ===
-
-Training samples: 150
-Test samples: 30
-Input size: 784
-Number of classes: 3
-
-Training neural network...
-Epoch   1: Loss = 1.0986, Accuracy = 33.33%
-Epoch   2: Loss = 1.0978, Accuracy = 34.67%
-...
-Epoch  20: Loss = 0.8234, Accuracy = 95.33%
-
-Evaluating on test set...
-Accuracy: 93.33%
-Precision: 93.45%
-Recall: 93.33%
-F1-Score: 93.21%
+```bash
+./sbtw compile run
 ```
 
-## Implementation Details
+### **3️ - Run Tests**
 
-### Matrix Operations
-All matrix operations implemented from scratch:
-- Matrix multiplication
-- Transpose
-- Element-wise operations
-- Random initialization
+```bash
+./sbtw test
+```
 
-### Gradient Descent
-Manual computation of gradients through:
-- Output layer gradient from softmax + cross-entropy
-- Hidden layer gradient with ReLU derivative
-- Weight updates using learning rate
+## Strategy Pattern Usage Example
 
-### Data Generation
-Synthetic dataset with distinct class patterns:
-- Class 0: Low intensity pixels
-- Class 1: Medium intensity pixels
-- Class 2: High intensity pixels
+```scala
+val image = Image(Array.fill(28 * 28)(0.5), 28, 28, 1)
 
-## Educational Purpose
+// Apply single strategy
+val noisyImage = image.augment(NoiseAugmentation(0.1))
+val brightImage = image.augment(BrightnessAugmentation(1.3))
+val flippedImage = image.augment(FlipAugmentation())
 
-This implementation prioritizes clarity over performance:
-- All algorithms visible in single file
-- No black-box library calls
-- Easy to understand and modify
-- Suitable for learning fundamentals
-
-## Limitations
-
-- No GPU acceleration
-- Basic optimization (no momentum, adaptive learning rates)
-- Synthetic data only
-- Small network architecture
-- No mini-batch training
-
-## Extension Ideas
-
-- Add convolutional layers
-- Implement dropout regularization
-- Add learning rate scheduling
-- Support batch normalization
-- Load real image datasets
+// Apply multiple strategies in sequence
+val multiAugmented = image.augmentWith(List(
+  NoiseAugmentation(0.1),
+  BrightnessAugmentation(1.2),
+  FlipAugmentation()
+))
+```
