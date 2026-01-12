@@ -160,6 +160,35 @@ class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
     val (confidence, predictedClass) = predictions.zipWithIndex.maxBy(_._1)
     (predictedClass, confidence)
 
+  def evaluate(testData: List[(Matrix, Int)]): Map[String, Double] =
+    var correct = 0
+    var total = 0
+    val confusionMatrix = Array.fill(outputSize, outputSize)(0)
+
+    testData.foreach { case (input, label) =>
+      val (predicted, _) = predict(input)
+      if predicted == label then correct += 1
+      confusionMatrix(label)(predicted) += 1
+      total += 1
+    }
+
+    val accuracy = correct.toDouble / total
+    val precision = (0 until outputSize).map { cls =>
+      val tp = confusionMatrix(cls)(cls)
+      val fp = (0 until outputSize).filter(_ != cls).map(confusionMatrix(_)(cls)).sum
+      if tp + fp > 0 then tp.toDouble / (tp + fp) else 0.0
+    }.sum / outputSize
+
+    val recall = (0 until outputSize).map { cls =>
+      val tp = confusionMatrix(cls)(cls)
+      val fn = (0 until outputSize).filter(_ != cls).map(confusionMatrix(cls)(_)).sum
+      if tp + fn > 0 then tp.toDouble / (tp + fn) else 0.0
+    }.sum / outputSize
+
+    val f1 = if precision + recall > 0 then 2 * precision * recall / (precision + recall) else 0.0
+
+    Map("accuracy" -> accuracy, "precision" -> precision, "recall" -> recall, "f1" -> f1)
+
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
   println("Basic structure created with Matrix and Image classes")
