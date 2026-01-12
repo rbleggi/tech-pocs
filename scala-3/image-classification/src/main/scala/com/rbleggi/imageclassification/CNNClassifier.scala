@@ -19,11 +19,9 @@ import ai.djl.repository.zoo.*
 import ai.djl.translate.*
 import scala.jdk.CollectionConverters.*
 
-// Strategy Pattern: Define model architecture strategies
 trait ModelStrategy:
   def buildModel(numClasses: Int): SequentialBlock
 
-// Concrete Strategy: Simple CNN from scratch
 class SimpleCNN extends ModelStrategy:
   def buildModel(numClasses: Int): SequentialBlock =
     val block = SequentialBlock()
@@ -58,7 +56,6 @@ class SimpleCNN extends ModelStrategy:
 
     block
 
-// Concrete Strategy: Transfer Learning with pre-trained model
 class TransferLearningCNN(modelName: String = "resnet50") extends ModelStrategy:
   def buildModel(numClasses: Int): SequentialBlock =
     // Load pre-trained model and extract features
@@ -199,8 +196,6 @@ class CNNImageClassifier(
     model.close()
 
 @main def runCNNClassifier(): Unit =
-  println("=== CNN and Transfer Learning Demo ===\n")
-
   val manager = NDManager.newBaseManager()
   val numClasses = 3
   val inputShape = Shape(1, 3, 64, 64)  // batch_size, channels, height, width
@@ -208,14 +203,13 @@ class CNNImageClassifier(
   println("1. Simple CNN from Scratch")
   println("-" * 50)
 
-  // Create simple CNN
   val simpleCNN = CNNImageClassifier(
     SimpleCNN(),
     numClasses,
     inputShape
   )
   simpleCNN.initialize()
-  println("✓ Simple CNN initialized")
+  println("Simple CNN initialized")
   println("  Architecture: Conv(32) → Pool → Conv(64) → Pool → FC(128) → FC(3)")
   println("  Parameters: Randomly initialized\n")
 
@@ -231,10 +225,9 @@ class CNNImageClassifier(
   println(s"Training with ${trainImages.size} synthetic images...")
   simpleCNN.train(trainImages, trainLabels, epochs = 5, batchSize = 5, learningRate = 0.001f)
 
-  // Test prediction
   val testImage = manager.randomUniform(0f, 0.3f, Shape(3, 64, 64))
   val (predictedClass, confidence) = simpleCNN.predict(testImage)
-  println(f"\n✓ Prediction: Class $predictedClass with ${confidence * 100}%.2f%% confidence\n")
+  println(f"\nPrediction: Class $predictedClass with ${confidence * 100}%.2f%% confidence\n")
 
   testImage.close()
   simpleCNN.close()
@@ -249,7 +242,7 @@ class CNNImageClassifier(
     inputShape
   )
   transferCNN.initialize()
-  println("✓ Transfer Learning CNN initialized")
+  println("Transfer Learning CNN initialized")
   println("  Architecture: Pre-trained feature extractor → Custom classifier")
   println("  Approach: Feature extraction (frozen backbone) + trainable head")
   println("  Benefits: Faster training, better with limited data\n")
@@ -259,7 +252,7 @@ class CNNImageClassifier(
 
   val testImage2 = manager.randomUniform(0f, 0.3f, Shape(3, 64, 64))
   val (predictedClass2, confidence2) = transferCNN.predict(testImage2)
-  println(f"\n✓ Prediction: Class $predictedClass2 with ${confidence2 * 100}%.2f%% confidence\n")
+  println(f"\nPrediction: Class $predictedClass2 with ${confidence2 * 100}%.2f%% confidence\n")
 
   testImage2.close()
   transferCNN.close()
