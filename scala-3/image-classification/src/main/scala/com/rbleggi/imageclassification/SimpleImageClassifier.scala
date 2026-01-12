@@ -57,6 +57,29 @@ object Activation:
     val sumExps = exps.sum
     exps.map(_ / sumExps)
 
+class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
+  var weightsHidden: Matrix = Matrix.random(inputSize, hiddenSize, sqrt(2.0 / inputSize))
+  var biasHidden: Array[Double] = Array.fill(hiddenSize)(0.0)
+  var weightsOutput: Matrix = Matrix.random(hiddenSize, outputSize, sqrt(2.0 / hiddenSize))
+  var biasOutput: Array[Double] = Array.fill(outputSize)(0.0)
+
+  var hiddenActivation: Matrix = Matrix.zeros(1, hiddenSize)
+  var hiddenPreActivation: Matrix = Matrix.zeros(1, hiddenSize)
+
+  def forward(input: Matrix): Array[Double] =
+    val hiddenPre = input.dot(weightsHidden)
+    hiddenPreActivation = hiddenPre
+
+    val hiddenPostData = Array.tabulate(hiddenPre.rows, hiddenPre.cols) { (i, j) =>
+      Activation.relu(hiddenPre(i, j) + biasHidden(j))
+    }
+    hiddenActivation = Matrix(hiddenPostData)
+
+    val outputPre = hiddenActivation.dot(weightsOutput)
+    val outputLogits = (0 until outputPre.cols).map(j => outputPre(0, j) + biasOutput(j)).toArray
+
+    Activation.softmax(outputLogits)
+
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
   println("Basic structure created with Matrix and Image classes")
@@ -65,3 +88,8 @@ object Activation:
   val probs = Activation.softmax(testLogits)
   println(s"Softmax test: ${probs.mkString(", ")}")
   println(s"ReLU test: relu(-1) = ${Activation.relu(-1)}, relu(2) = ${Activation.relu(2)}")
+
+  val network = SimpleNeuralNetwork(784, 128, 10)
+  val testInput = Matrix.random(1, 784)
+  val output = network.forward(testInput)
+  println(s"\nForward pass test: output shape = ${output.length}, sum = ${output.sum}")
