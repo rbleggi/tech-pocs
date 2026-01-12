@@ -52,35 +52,50 @@ object Matrix:
     val rng = Random()
     Matrix(Array.fill(rows, cols)((rng.nextGaussian() * scale)))
 
-// Image representation with pixel data and dimensions
+// Strategy Pattern: Define interface for image augmentation strategies
+trait AugmentationStrategy:
+  def apply(image: Image): Image
+
+// Concrete Strategy: Add Gaussian noise
+class NoiseAugmentation(scale: Double = 0.1) extends AugmentationStrategy:
+  def apply(image: Image): Image =
+    val rng = Random()
+    val noisyPixels = image.pixels.map(p => max(0.0, min(1.0, p + rng.nextGaussian() * scale)))
+    Image(noisyPixels, image.width, image.height, image.channels)
+
+// Concrete Strategy: Adjust brightness
+class BrightnessAugmentation(factor: Double = 1.2) extends AugmentationStrategy:
+  def apply(image: Image): Image =
+    val brightenedPixels = image.pixels.map(p => min(1.0, p * factor))
+    Image(brightenedPixels, image.width, image.height, image.channels)
+
+// Concrete Strategy: Horizontal flip
+class FlipAugmentation extends AugmentationStrategy:
+  def apply(image: Image): Image =
+    val flippedPixels = Array.ofDim[Double](image.pixels.length)
+    for
+      c <- 0 until image.channels
+      h <- 0 until image.height
+      w <- 0 until image.width
+    do
+      val srcIdx = c * image.height * image.width + h * image.width + w
+      val dstIdx = c * image.height * image.width + h * image.width + (image.width - 1 - w)
+      flippedPixels(dstIdx) = image.pixels(srcIdx)
+    Image(flippedPixels, image.width, image.height, image.channels)
+
+// Context: Image representation with augmentation support
 case class Image(pixels: Array[Double], width: Int, height: Int, channels: Int):
   // Convert image pixels to a matrix row for neural network input
   def toMatrix: Matrix =
     Matrix(Array(pixels))
 
-  // Add random Gaussian noise to pixels (data augmentation)
-  def addNoise(scale: Double = 0.1): Image =
-    val rng = Random()
-    val noisyPixels = pixels.map(p => max(0.0, min(1.0, p + rng.nextGaussian() * scale)))
-    Image(noisyPixels, width, height, channels)
+  // Apply augmentation strategy (Strategy Pattern)
+  def augment(strategy: AugmentationStrategy): Image =
+    strategy.apply(this)
 
-  // Increase brightness by multiplying pixel values (data augmentation)
-  def brighten(factor: Double = 1.2): Image =
-    val brightenedPixels = pixels.map(p => min(1.0, p * factor))
-    Image(brightenedPixels, width, height, channels)
-
-  // Flip image horizontally (data augmentation)
-  def flip: Image =
-    val flippedPixels = Array.ofDim[Double](pixels.length)
-    for
-      c <- 0 until channels
-      h <- 0 until height
-      w <- 0 until width
-    do
-      val srcIdx = c * height * width + h * width + w
-      val dstIdx = c * height * width + h * width + (width - 1 - w)
-      flippedPixels(dstIdx) = pixels(srcIdx)
-    Image(flippedPixels, width, height, channels)
+  // Apply multiple augmentation strategies in sequence
+  def augmentWith(strategies: List[AugmentationStrategy]): Image =
+    strategies.foldLeft(this)((img, strategy) => img.augment(strategy))
 
 // Activation functions for neural network layers
 object Activation:
@@ -286,12 +301,22 @@ class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
     println(f"Sample $i: Predicted=$predicted, Actual=$actualLabel, Confidence=${confidence * 100}%.2f%%")
   }
 
-  // Demonstrate image augmentation capabilities
-  println("\nTesting image augmentation...")
+  // Demonstrate Strategy Pattern for image augmentation
+  println("\nTesting image augmentation (Strategy Pattern)...")
   val testImage = Image(Array.fill(28 * 28)(0.5), 28, 28, 1)
-  val noisyImage = testImage.addNoise(0.1)
-  val brightImage = testImage.brighten(1.3)
-  val flippedImage = testImage.flip
+
+  // Apply individual strategies
+  val noisyImage = testImage.augment(NoiseAugmentation(0.1))
+  val brightImage = testImage.augment(BrightnessAugmentation(1.3))
+  val flippedImage = testImage.augment(FlipAugmentation())
   println("Noise augmentation applied")
   println("Brightness augmentation applied")
   println("Flip augmentation applied")
+
+  // Apply multiple strategies in sequence
+  val multiAugmented = testImage.augmentWith(List(
+    NoiseAugmentation(0.1),
+    BrightnessAugmentation(1.2),
+    FlipAugmentation()
+  ))
+  println("Multiple augmentations applied in sequence")
