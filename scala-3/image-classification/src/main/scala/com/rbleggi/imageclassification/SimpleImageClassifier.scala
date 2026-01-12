@@ -114,6 +114,26 @@ class SimpleNeuralNetwork(inputSize: Int, hiddenSize: Int, outputSize: Int):
     weightsOutput = weightsOutput - (weightsOutputGrad * learningRate)
     biasOutput = biasOutput.zip(biasOutputGrad).map((b, g) => b - g * learningRate)
 
+  def train(trainData: List[(Matrix, Int)], epochs: Int, learningRate: Double): Unit =
+    for epoch <- 0 until epochs do
+      var totalLoss = 0.0
+      var totalAccuracy = 0.0
+
+      trainData.foreach { case (input, label) =>
+        val predictions = forward(input)
+        val loss = crossEntropyLoss(predictions, label)
+        val acc = accuracy(predictions, label)
+
+        backward(input, predictions, label, learningRate)
+
+        totalLoss += loss
+        totalAccuracy += acc
+      }
+
+      val avgLoss = totalLoss / trainData.size
+      val avgAccuracy = totalAccuracy / trainData.size
+      println(f"Epoch ${epoch + 1}%3d: Loss = $avgLoss%.4f, Accuracy = ${avgAccuracy * 100}%.2f%%")
+
 @main def runSimpleImageClassifier(): Unit =
   println("=== Simple Image Classification ===\n")
   println("Basic structure created with Matrix and Image classes")
