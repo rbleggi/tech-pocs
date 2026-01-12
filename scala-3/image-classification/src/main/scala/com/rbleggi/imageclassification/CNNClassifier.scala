@@ -10,10 +10,13 @@ import ai.djl.training.*
 import ai.djl.training.loss.*
 import ai.djl.training.optimizer.*
 import ai.djl.training.tracker.*
+import ai.djl.training.evaluator.Accuracy
+import ai.djl.engine.Engine
 import ai.djl.Model
 import ai.djl.ModelException
 import ai.djl.Application
 import ai.djl.repository.zoo.*
+import ai.djl.translate.*
 import scala.jdk.CollectionConverters.*
 
 // Strategy Pattern: Define model architecture strategies
@@ -46,7 +49,7 @@ class SimpleCNN extends ModelStrategy:
     // Flatten and fully connected layers
     block
       .add(LambdaBlock(arr => {
-        val reshaped = arr.head.flatten(1)
+        val reshaped = arr.head.flatten()
         new NDList(reshaped)
       }))
       .add(Linear.builder().setUnits(128).build())
@@ -93,7 +96,7 @@ class TransferLearningCNN(modelName: String = "resnet50") extends ModelStrategy:
     // Custom classifier head (trainable)
     block
       .add(LambdaBlock(arr => {
-        val reshaped = arr.head.flatten(1)
+        val reshaped = arr.head.flatten()
         new NDList(reshaped)
       }))
       .add(Linear.builder().setUnits(256).build())
@@ -135,27 +138,33 @@ class CNNImageClassifier(
     println(s"Training CNN for $epochs epochs...")
 
     for epoch <- 0 until epochs do
-      var totalLoss = 0.0f
+      var totalLoss = 0.0
       var batches = 0
 
       // Simple batch processing
       trainImages.zip(trainLabels).grouped(batchSize).foreach { batch =>
         val (images, labels) = batch.unzip
 
-        val batchImages = NDList(images*)
-        val batchLabels = trainer.getManager.create(labels.map(_.toFloat).toArray)
+        val gc = Engine.getInstance().newGradientCollector()
+        try {
+          val batchImages = NDList(images*)
+          val batchLabels = trainer.getManager.create(labels.map(_.toFloat).toArray)
 
-        val result = trainer.forward(batchImages)
-        val loss = trainer.getLoss
+          val predictions = trainer.forward(batchImages)
+          val lossValue = trainer.getLoss.evaluate(NDList(batchLabels), predictions)
 
-        trainer.backward(result)
-        trainer.step()
+          gc.backward(lossValue)
+          trainer.step()
 
-        totalLoss += loss.getFloat()
-        batches += 1
+          totalLoss += lossValue.getFloat()
+          batches += 1
 
-        result.close()
-        batchLabels.close()
+          predictions.close()
+          batchLabels.close()
+          lossValue.close()
+        } finally {
+          gc.close()
+        }
       }
 
       val avgLoss = totalLoss / batches
@@ -165,7 +174,13 @@ class CNNImageClassifier(
 
   // Predict class for a single image
   def predict(image: NDArray): (Int, Float) =
-    val predictor = model.newPredictor()
+    // Create simple translator for prediction
+    val translator = new Translator[NDList, NDList] {
+      def processInput(ctx: TranslatorContext, input: NDList): NDList = input
+      def processOutput(ctx: TranslatorContext, list: NDList): NDList = list
+    }
+
+    val predictor = model.newPredictor(translator)
     val result = predictor.predict(NDList(image))
     val probabilities = result.head.softmax(0)
 
