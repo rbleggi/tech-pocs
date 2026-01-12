@@ -46,6 +46,27 @@ case class Image(pixels: Array[Double], width: Int, height: Int, channels: Int):
   def toMatrix: Matrix =
     Matrix(Array(pixels))
 
+  def addNoise(scale: Double = 0.1): Image =
+    val rng = Random()
+    val noisyPixels = pixels.map(p => max(0.0, min(1.0, p + rng.nextGaussian() * scale)))
+    Image(noisyPixels, width, height, channels)
+
+  def brighten(factor: Double = 1.2): Image =
+    val brightenedPixels = pixels.map(p => min(1.0, p * factor))
+    Image(brightenedPixels, width, height, channels)
+
+  def flip: Image =
+    val flippedPixels = Array.ofDim[Double](pixels.length)
+    for
+      c <- 0 until channels
+      h <- 0 until height
+      w <- 0 until width
+    do
+      val srcIdx = c * height * width + h * width + w
+      val dstIdx = c * height * width + h * width + (width - 1 - w)
+      flippedPixels(dstIdx) = pixels(srcIdx)
+    Image(flippedPixels, width, height, channels)
+
 object Activation:
   def relu(x: Double): Double = max(0.0, x)
 
