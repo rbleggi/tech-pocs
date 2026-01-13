@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.ticketbooking.Main")
+    mainClass.set("com.rbleggi.ticketbooking.TicketBookingSystem")
 }
 
 dependencies {
