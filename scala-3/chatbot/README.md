@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project implements an AI chatbot using the Command Pattern with intent recognition, entity extraction, and conversation context management. The chatbot supports multiple intents and maintains conversation state across interactions.
+Chatbot using traditional NLP techniques (intent recognition, entity extraction) with conversation management and context tracking
 
 ---
 
@@ -14,30 +14,16 @@ This project implements an AI chatbot using the Command Pattern with intent reco
 
 ---
 
-
 ## Traditional NLP Techniques
 
 This chatbot demonstrates traditional NLP approaches without machine learning or deep learning models:
 
 Unlike modern transformer-based models, this approach provides deterministic, rule-based NLP that's transparent, lightweight, and doesn't require training data or GPU resources.
 
-
-- **Intent Recognition**: Uses pattern matching and keyword-based techniques to identify user intent from input text
-- **Entity Extraction**: Applies regular expressions and text parsing to extract structured information (names, cities, tasks) from natural language
+- **[Intent Recognition](https://en.wikipedia.org/wiki/Intent_recognition)**: Uses pattern matching and keyword-based techniques to identify user intent from input text
+- **[Entity Extraction](https://en.wikipedia.org/wiki/Named-entity_recognition)**: Applies regular expressions and text parsing to extract structured information (names, cities, tasks) from natural language
 - **Conversation Management**: Implements a stateful context system that tracks conversation history and user information across multiple interactions
 - **Context Tracking**: Maintains persistent state for extracted entities, user preferences, and conversation flow to enable personalized responses
-
----
-
-## Command Pattern
-
-The **Command Pattern** encapsulates each chatbot intent as a command object. This allows:
-
-- Each intent (greeting, weather, time, etc.) is implemented as a separate `Command`
-- Easy extension with new intents without modifying existing code
-- Clean separation between intent matching and execution
-- Each command manages its own pattern matching and entity extraction
-- Simple to test each intent independently
 
 ---
 

@@ -9,8 +9,7 @@ case class ConversationContext(
 ):
   def withUserName(name: String): ConversationContext = copy(userName = Some(name))
   def addToHistory(message: String): ConversationContext = copy(history = message :: history)
-  def addEntity(key: String, value: String): ConversationContext =
-    copy(entities = entities + (key -> value))
+  def addEntity(key: String, value: String): ConversationContext = copy(entities = entities + (key -> value))
 
 trait Command:
   def execute(input: String, context: ConversationContext): (String, ConversationContext)
@@ -49,7 +48,7 @@ class WeatherCommand extends Command:
     val city = extractCity(input)
     val response = city match
       case Some(c) =>
-        s"The weather in $c is currently sunny with a temperature of 72°F. (This is simulated data)"
+        s"The weather in $c is currently sunny with a temperature of 25°C. (This is simulated data)"
       case None =>
         "I can check the weather for you! Which city are you interested in?"
 
