@@ -11,6 +11,13 @@ trait TaxSpecification:
   def isSatisfiedBy(state: String, year: Int): Boolean
   def calculateTax(product: Product, price: Double): Double
 
+class DefaultTaxSpecification(config: TaxConfiguration) extends TaxSpecification:
+  override def isSatisfiedBy(state: String, year: Int): Boolean =
+    config.state == state && config.year == year
+
+  override def calculateTax(product: Product, price: Double): Double =
+    price * config.rates.getOrElse(product.category, 0.0)
+
 @main def run(): Unit = {
   val product1 = Product("Smartphone", "electronics")
   val product2 = Product("Rice", "food")
