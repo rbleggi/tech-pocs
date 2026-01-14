@@ -5,6 +5,8 @@ import com.rbleggi.taxsystem.service.TaxCalculator
 
 case class Product(name: String, category: String)
 
+case class TaxConfiguration(state: String, year: Int, rates: Map[String, Double])
+
 @main def run(): Unit = {
   val product1 = Product("Smartphone", "electronics")
   val product2 = Product("Rice", "food")
