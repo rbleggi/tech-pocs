@@ -3,6 +3,8 @@ package com.rbleggi.taxsystem
 import com.rbleggi.taxsystem.model.*
 import com.rbleggi.taxsystem.service.TaxCalculator
 
+case class Product(name: String, category: String)
+
 @main def run(): Unit = {
   val product1 = Product("Smartphone", "electronics")
   val product2 = Product("Rice", "food")
