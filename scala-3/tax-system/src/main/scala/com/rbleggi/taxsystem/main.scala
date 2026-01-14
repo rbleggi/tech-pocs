@@ -1,8 +1,5 @@
 package com.rbleggi.taxsystem
 
-import com.rbleggi.taxsystem.model.*
-import com.rbleggi.taxsystem.service.TaxCalculator
-
 case class Product(name: String, category: String)
 
 case class TaxConfiguration(state: String, year: Int, rates: Map[String, Double])
@@ -31,12 +28,12 @@ class TaxCalculator:
       case Some(spec) => spec.calculateTax(product, price)
       case None => throw Exception(s"No tax rule found for $state in the year $year")
 
-@main def run(): Unit = {
+@main def run(): Unit =
   val product1 = Product("Smartphone", "electronics")
   val product2 = Product("Rice", "food")
   val product3 = Product("History Book", "book")
 
-  val calculator = new TaxCalculator()
+  val calculator = TaxCalculator()
 
   val priceProduct1 = 2500.0
   val priceProduct2 = 20.0
@@ -46,4 +43,3 @@ class TaxCalculator:
   println(f"Tax for ${product2.name} in MG (2024): RS ${calculator.calculateTax("MG", 2024, product2, priceProduct2)}%.2f")
   println(f"Tax for ${product3.name} in RJ (2024): RS ${calculator.calculateTax("RJ", 2024, product3, priceProduct3)}%.2f")
   println(f"Tax for ${product1.name} in SP (2025): RS ${calculator.calculateTax("SP", 2025, product1, priceProduct1)}%.2f")
-}
