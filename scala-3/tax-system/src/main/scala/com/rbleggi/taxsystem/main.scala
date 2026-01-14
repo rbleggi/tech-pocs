@@ -7,6 +7,10 @@ case class Product(name: String, category: String)
 
 case class TaxConfiguration(state: String, year: Int, rates: Map[String, Double])
 
+trait TaxSpecification:
+  def isSatisfiedBy(state: String, year: Int): Boolean
+  def calculateTax(product: Product, price: Double): Double
+
 @main def run(): Unit = {
   val product1 = Product("Smartphone", "electronics")
   val product2 = Product("Rice", "food")
