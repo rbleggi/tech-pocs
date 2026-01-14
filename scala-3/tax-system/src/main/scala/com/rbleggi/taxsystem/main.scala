@@ -18,6 +18,19 @@ class DefaultTaxSpecification(config: TaxConfiguration) extends TaxSpecification
   override def calculateTax(product: Product, price: Double): Double =
     price * config.rates.getOrElse(product.category, 0.0)
 
+class TaxCalculator:
+  def calculateTax(state: String, year: Int, product: Product, price: Double): Double =
+    val specifications: List[TaxSpecification] = List(
+      DefaultTaxSpecification(TaxConfiguration("SP", 2024, Map("electronics" -> 0.18, "food" -> 0.07, "book" -> 0.00))),
+      DefaultTaxSpecification(TaxConfiguration("RJ", 2024, Map("electronics" -> 0.20, "food" -> 0.08, "book" -> 0.02))),
+      DefaultTaxSpecification(TaxConfiguration("MG", 2024, Map("electronics" -> 0.15, "food" -> 0.05, "book" -> 0.01))),
+      DefaultTaxSpecification(TaxConfiguration("SP", 2025, Map("electronics" -> 0.19, "food" -> 0.06, "book" -> 0.00)))
+    )
+
+    specifications.find(_.isSatisfiedBy(state, year)) match
+      case Some(spec) => spec.calculateTax(product, price)
+      case None => throw Exception(s"No tax rule found for $state in the year $year")
+
 @main def run(): Unit = {
   val product1 = Product("Smartphone", "electronics")
   val product2 = Product("Rice", "food")
