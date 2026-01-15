@@ -15,6 +15,15 @@ class DefaultTaxSpecification(config: TaxConfiguration) extends TaxSpecification
   override def calculateTax(product: Product, price: Double): Double =
     price * config.rates.getOrElse(product.category, 0.0)
 
+class LuxuryTaxSpecification(state: String, year: Int, threshold: Double, luxuryRate: Double) extends TaxSpecification:
+  override def isSatisfiedBy(s: String, y: Int): Boolean =
+    state == s && year == y
+
+  override def calculateTax(product: Product, price: Double): Double =
+    if price > threshold && product.category == "electronics" then
+      price * luxuryRate
+    else 0.0
+
 class TaxCalculator:
   def calculateTax(state: String, year: Int, product: Product, price: Double): Double =
     val specifications: List[TaxSpecification] = List(
