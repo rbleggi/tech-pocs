@@ -60,6 +60,10 @@ class TaxCalculator:
     ExemptTaxSpecification("RS", 2024, Set("book"))
   )
 
+  private val progressiveSpecs: List[TaxSpecification] = List(
+    ProgressiveTaxSpecification("BA", 2024, List((100.0, 0.05), (500.0, 0.10), (1000.0, 0.15), (Double.MaxValue, 0.20)))
+  )
+
   def calculateTax(state: String, year: Int, product: Product, price: Double): Double =
     defaultSpecs.find(_.isSatisfiedBy(state, year)) match
       case Some(spec) => spec.calculateTax(product, price)
