@@ -49,6 +49,12 @@ class TaxCalculator:
     DefaultTaxSpecification(TaxConfiguration("SP", 2025, Map("electronics" -> 0.19, "food" -> 0.06, "book" -> 0.00)))
   )
 
+  private val luxurySpecs: List[TaxSpecification] = List(
+    LuxuryTaxSpecification("SP", 2024, 2000.0, 0.05),
+    LuxuryTaxSpecification("RJ", 2024, 1500.0, 0.08),
+    LuxuryTaxSpecification("SP", 2025, 2000.0, 0.06)
+  )
+
   def calculateTax(state: String, year: Int, product: Product, price: Double): Double =
     defaultSpecs.find(_.isSatisfiedBy(state, year)) match
       case Some(spec) => spec.calculateTax(product, price)
