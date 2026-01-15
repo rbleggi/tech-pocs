@@ -24,6 +24,14 @@ class LuxuryTaxSpecification(state: String, year: Int, threshold: Double, luxury
       price * luxuryRate
     else 0.0
 
+class ExemptTaxSpecification(state: String, year: Int, exemptCategories: Set[String]) extends TaxSpecification:
+  override def isSatisfiedBy(s: String, y: Int): Boolean =
+    state == s && year == y
+
+  override def calculateTax(product: Product, price: Double): Double =
+    if exemptCategories.contains(product.category) then 0.0
+    else -1.0
+
 class TaxCalculator:
   def calculateTax(state: String, year: Int, product: Product, price: Double): Double =
     val specifications: List[TaxSpecification] = List(
