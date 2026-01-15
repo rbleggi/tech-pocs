@@ -55,6 +55,11 @@ class TaxCalculator:
     LuxuryTaxSpecification("SP", 2025, 2000.0, 0.06)
   )
 
+  private val exemptSpecs: List[TaxSpecification] = List(
+    ExemptTaxSpecification("PR", 2024, Set("food", "book")),
+    ExemptTaxSpecification("RS", 2024, Set("book"))
+  )
+
   def calculateTax(state: String, year: Int, product: Product, price: Double): Double =
     defaultSpecs.find(_.isSatisfiedBy(state, year)) match
       case Some(spec) => spec.calculateTax(product, price)
