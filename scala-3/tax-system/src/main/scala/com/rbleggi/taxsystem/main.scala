@@ -65,9 +65,19 @@ class TaxCalculator:
   )
 
   def calculateTax(state: String, year: Int, product: Product, price: Double): Double =
-    defaultSpecs.find(_.isSatisfiedBy(state, year)) match
-      case Some(spec) => spec.calculateTax(product, price)
-      case None => throw Exception(s"No tax rule found for $state in the year $year")
+    val exemptSpec = exemptSpecs.find(_.isSatisfiedBy(state, year))
+    exemptSpec.map(_.calculateTax(product, price)) match
+      case Some(tax) if tax == 0.0 => 0.0
+      case _ =>
+        val progressiveSpec = progressiveSpecs.find(_.isSatisfiedBy(state, year))
+        progressiveSpec match
+          case Some(spec) => spec.calculateTax(product, price)
+          case None =>
+            val baseTax = defaultSpecs.find(_.isSatisfiedBy(state, year)) match
+              case Some(spec) => spec.calculateTax(product, price)
+              case None => throw Exception(s"No tax rule found for $state in the year $year")
+            val luxuryTax = luxurySpecs.find(_.isSatisfiedBy(state, year)).map(_.calculateTax(product, price)).getOrElse(0.0)
+            baseTax + luxuryTax
 
 @main def run(): Unit =
   val product1 = Product("Smartphone", "electronics")
