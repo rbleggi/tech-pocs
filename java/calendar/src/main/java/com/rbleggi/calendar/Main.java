@@ -47,6 +47,13 @@ record BookMeetingCommand(Calendar calendar, Meeting meeting) implements Calenda
     }
 }
 
+record RemoveMeetingCommand(Calendar calendar, String meetingId) implements CalendarCommand<Boolean> {
+    @Override
+    public Boolean execute() {
+        return calendar.removeMeeting(meetingId);
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         var calendar = new Calendar();
