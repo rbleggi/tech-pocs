@@ -54,6 +54,13 @@ record RemoveMeetingCommand(Calendar calendar, String meetingId) implements Cale
     }
 }
 
+record ListMeetingsCommand(Calendar calendar, User user) implements CalendarCommand<List<Meeting>> {
+    @Override
+    public List<Meeting> execute() {
+        return calendar.listMeetings(user);
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         var calendar = new Calendar();
