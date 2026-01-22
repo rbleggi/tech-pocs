@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
+record User(String id, String name) {}
+
 public class Main {
     public static void main(String[] args) {
         var calendar = new Calendar();
