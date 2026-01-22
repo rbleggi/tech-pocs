@@ -61,7 +61,7 @@ record ListMeetingsCommand(Calendar calendar, User user) implements CalendarComm
     }
 }
 
-public class Main {
+public class CalendarDemo {
     public static void main(String[] args) {
         var calendar = new Calendar();
         var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
