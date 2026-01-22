@@ -40,6 +40,13 @@ class Calendar {
     }
 }
 
+record BookMeetingCommand(Calendar calendar, Meeting meeting) implements CalendarCommand<Boolean> {
+    @Override
+    public Boolean execute() {
+        return calendar.bookMeeting(meeting);
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         var calendar = new Calendar();
