@@ -6,6 +6,8 @@ import java.util.Set;
 
 record User(String id, String name) {}
 
+record Meeting(String id, String title, LocalDateTime start, LocalDateTime end, Set<User> attendees) {}
+
 public class Main {
     public static void main(String[] args) {
         var calendar = new Calendar();
