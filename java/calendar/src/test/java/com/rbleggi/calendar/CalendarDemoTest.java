@@ -100,4 +100,22 @@ class CalendarDemoTest {
         var user = new User("1", "Alice");
         assertTrue(calendar.listMeetings(user).isEmpty());
     }
+
+    @Test
+    void executeBooksMeeting() {
+        var calendar = new Calendar();
+        var user = new User("1", "Alice");
+        var meeting = new Meeting("m1", "Sync", LocalDateTime.of(2025, 1, 1, 9, 0), LocalDateTime.of(2025, 1, 1, 10, 0), Set.of(user));
+        var command = new BookMeetingCommand(calendar, meeting);
+        assertTrue(command.execute());
+    }
+
+    @Test
+    void executeAddsMeetingToCalendar() {
+        var calendar = new Calendar();
+        var user = new User("1", "Alice");
+        var meeting = new Meeting("m1", "Sync", LocalDateTime.of(2025, 1, 1, 9, 0), LocalDateTime.of(2025, 1, 1, 10, 0), Set.of(user));
+        new BookMeetingCommand(calendar, meeting).execute();
+        assertEquals(1, calendar.getAllMeetings().size());
+    }
 }
