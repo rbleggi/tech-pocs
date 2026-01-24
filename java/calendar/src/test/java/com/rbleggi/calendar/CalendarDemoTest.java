@@ -69,4 +69,19 @@ class CalendarDemoTest {
         calendar.bookMeeting(m2);
         assertEquals(1, calendar.getAllMeetings().size());
     }
+
+    @Test
+    void removeMeetingReturnsTrue() {
+        var calendar = new Calendar();
+        var user = new User("1", "Alice");
+        var meeting = new Meeting("m1", "Sync", LocalDateTime.of(2025, 1, 1, 9, 0), LocalDateTime.of(2025, 1, 1, 10, 0), Set.of(user));
+        calendar.bookMeeting(meeting);
+        assertTrue(calendar.removeMeeting("m1"));
+    }
+
+    @Test
+    void removeMeetingReturnsFalseForMissing() {
+        var calendar = new Calendar();
+        assertFalse(calendar.removeMeeting("nonexistent"));
+    }
 }
