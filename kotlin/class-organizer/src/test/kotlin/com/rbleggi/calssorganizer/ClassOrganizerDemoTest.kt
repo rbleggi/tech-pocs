@@ -19,6 +19,20 @@ class ClassOrganizerDemoTest {
     }
 
     @Test
+    fun `schedule implements Subject`() {
+        val schedule = Schedule()
+        assertTrue(schedule is Subject)
+    }
+
+    @Test
+    fun `registerObserver adds observer`() {
+        val schedule = Schedule()
+        val teacher = Teacher("Alice")
+        schedule.registerObserver(teacher)
+        assertTrue(schedule.classSessions.isEmpty())
+    }
+
+    @Test
     fun `creates session with correct properties`() {
         val teacher = Teacher("Alice")
         val start = LocalDateTime.of(2025, 1, 1, 9, 0)
