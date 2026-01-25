@@ -15,7 +15,7 @@ dependencies {
 }
 
 application {
-    mainClass = "com.rbleggi.classorganizer.Main"
+    mainClass = "com.rbleggi.calssorganizer.ClassOrganizerDemoKt"
 }
 
 tasks.test {
