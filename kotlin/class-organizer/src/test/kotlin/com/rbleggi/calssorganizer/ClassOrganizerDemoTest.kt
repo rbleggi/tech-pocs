@@ -5,6 +5,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 
 class ClassOrganizerDemoTest {
     @Test
@@ -140,5 +142,14 @@ class ClassOrganizerDemoTest {
         schedule.addClassSession(session1)
         schedule.addClassSession(session2)
         assertEquals(2, schedule.classSessions.size)
+    }
+
+    @Test
+    fun `optimizeSchedule prints message`() {
+        val output = ByteArrayOutputStream()
+        System.setOut(PrintStream(output))
+        val schedule = Schedule()
+        schedule.optimizeSchedule()
+        assertTrue(output.toString().contains("Optimizing schedule"))
     }
 }
