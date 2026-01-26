@@ -21,4 +21,20 @@ class CoreBankLedgerTest {
         account.setBalance(new BigDecimal("200"));
         assertEquals(new BigDecimal("200"), account.getBalance());
     }
+
+    @Test
+    void testLedgerCreateAccount() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Alice", new BigDecimal("100"));
+        assertNotNull(account);
+        assertEquals("Alice", account.getId());
+        assertEquals(new BigDecimal("100"), account.getBalance());
+    }
+
+    @Test
+    void testLedgerCreateAccountZeroBalance() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Bob");
+        assertEquals(BigDecimal.ZERO, account.getBalance());
+    }
 }
