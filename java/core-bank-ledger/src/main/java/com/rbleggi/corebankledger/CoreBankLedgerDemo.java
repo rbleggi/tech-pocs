@@ -95,24 +95,8 @@ record Transfer(Account from, Account to, BigDecimal amount, Ledger ledger) impl
     }
 }
 
-public class Main {
+public class CoreBankLedgerDemo {
     public static void main(String[] args) {
-        var ledger = new Ledger();
-        var alice = ledger.createAccount("Alice", new BigDecimal(100));
-        var bob = ledger.createAccount("Bob", new BigDecimal(50));
-
-        List<LedgerCommand> ops = List.of(
-            new Deposit(alice, new BigDecimal(50), ledger),
-            new Withdraw(bob, new BigDecimal(20), ledger),
-            new Transfer(alice, bob, new BigDecimal(70), ledger),
-            new Withdraw(bob, new BigDecimal(200), ledger)
-        );
-
-        ops.forEach(LedgerCommand::execute);
-
-        System.out.println("--- Accounts ---");
-        ledger.printAccounts();
-        System.out.println("\n--- Transactions ---");
-        ledger.printTransactions();
+        System.out.println("Core Bank Ledger Demo");
     }
 }
