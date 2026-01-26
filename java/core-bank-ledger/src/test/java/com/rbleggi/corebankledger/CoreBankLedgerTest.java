@@ -103,4 +103,20 @@ class CoreBankLedgerTest {
         ledger.record("test transaction");
         ledger.record("another transaction");
     }
+
+    @Test
+    void testDepositRecordsTransaction() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Alice", new BigDecimal("100"));
+        new Deposit(account, new BigDecimal("50"), ledger).execute();
+        ledger.printTransactions();
+    }
+
+    @Test
+    void testWithdrawRecordsTransaction() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Bob", new BigDecimal("100"));
+        new Withdraw(account, new BigDecimal("30"), ledger).execute();
+        ledger.printTransactions();
+    }
 }
