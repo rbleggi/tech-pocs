@@ -52,4 +52,12 @@ class CoreBankLedgerTest {
         var ledger = new Ledger();
         assertNull(ledger.getAccount("Nobody"));
     }
+
+    @Test
+    void testDeposit() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Alice", new BigDecimal("100"));
+        new Deposit(account, new BigDecimal("50"), ledger).execute();
+        assertEquals(new BigDecimal("150"), account.getBalance());
+    }
 }
