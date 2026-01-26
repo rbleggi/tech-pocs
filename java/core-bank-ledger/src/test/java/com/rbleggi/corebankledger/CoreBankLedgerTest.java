@@ -86,4 +86,14 @@ class CoreBankLedgerTest {
         assertEquals(new BigDecimal("70"), alice.getBalance());
         assertEquals(new BigDecimal("80"), bob.getBalance());
     }
+
+    @Test
+    void testTransferInsufficientFunds() {
+        var ledger = new Ledger();
+        var alice = ledger.createAccount("Alice", new BigDecimal("10"));
+        var bob = ledger.createAccount("Bob", new BigDecimal("50"));
+        new Transfer(alice, bob, new BigDecimal("100"), ledger).execute();
+        assertEquals(new BigDecimal("10"), alice.getBalance());
+        assertEquals(new BigDecimal("50"), bob.getBalance());
+    }
 }
