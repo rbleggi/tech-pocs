@@ -150,4 +150,15 @@ class CoreBankLedgerTest {
         assertEquals(new BigDecimal("75"), bob.getBalance());
         assertEquals(new BigDecimal("175"), charlie.getBalance());
     }
+
+    @Test
+    void testCommandInterface() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Alice", new BigDecimal("100"));
+        LedgerCommand deposit = new Deposit(account, new BigDecimal("50"), ledger);
+        LedgerCommand withdraw = new Withdraw(account, new BigDecimal("20"), ledger);
+        deposit.execute();
+        withdraw.execute();
+        assertEquals(new BigDecimal("130"), account.getBalance());
+    }
 }
