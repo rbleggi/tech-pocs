@@ -96,4 +96,11 @@ class CoreBankLedgerTest {
         assertEquals(new BigDecimal("10"), alice.getBalance());
         assertEquals(new BigDecimal("50"), bob.getBalance());
     }
+
+    @Test
+    void testLedgerRecordTransaction() {
+        var ledger = new Ledger();
+        ledger.record("test transaction");
+        ledger.record("another transaction");
+    }
 }
