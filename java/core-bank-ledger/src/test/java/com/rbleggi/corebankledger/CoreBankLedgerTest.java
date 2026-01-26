@@ -60,4 +60,20 @@ class CoreBankLedgerTest {
         new Deposit(account, new BigDecimal("50"), ledger).execute();
         assertEquals(new BigDecimal("150"), account.getBalance());
     }
+
+    @Test
+    void testWithdrawSuccess() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Bob", new BigDecimal("50"));
+        new Withdraw(account, new BigDecimal("20"), ledger).execute();
+        assertEquals(new BigDecimal("30"), account.getBalance());
+    }
+
+    @Test
+    void testWithdrawInsufficientFunds() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Charlie", new BigDecimal("10"));
+        new Withdraw(account, new BigDecimal("50"), ledger).execute();
+        assertEquals(new BigDecimal("10"), account.getBalance());
+    }
 }
