@@ -137,4 +137,17 @@ class CoreBankLedgerTest {
         new Withdraw(account, new BigDecimal("100"), ledger).execute();
         assertEquals(BigDecimal.ZERO, account.getBalance());
     }
+
+    @Test
+    void testTransferBetweenMultipleAccounts() {
+        var ledger = new Ledger();
+        var alice = ledger.createAccount("Alice", new BigDecimal("100"));
+        var bob = ledger.createAccount("Bob", new BigDecimal("100"));
+        var charlie = ledger.createAccount("Charlie", new BigDecimal("100"));
+        new Transfer(alice, bob, new BigDecimal("50"), ledger).execute();
+        new Transfer(bob, charlie, new BigDecimal("75"), ledger).execute();
+        assertEquals(new BigDecimal("50"), alice.getBalance());
+        assertEquals(new BigDecimal("75"), bob.getBalance());
+        assertEquals(new BigDecimal("175"), charlie.getBalance());
+    }
 }
