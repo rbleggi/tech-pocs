@@ -119,4 +119,14 @@ class CoreBankLedgerTest {
         new Withdraw(account, new BigDecimal("30"), ledger).execute();
         ledger.printTransactions();
     }
+
+    @Test
+    void testMultipleDeposits() {
+        var ledger = new Ledger();
+        var account = ledger.createAccount("Alice", BigDecimal.ZERO);
+        new Deposit(account, new BigDecimal("10"), ledger).execute();
+        new Deposit(account, new BigDecimal("20"), ledger).execute();
+        new Deposit(account, new BigDecimal("30"), ledger).execute();
+        assertEquals(new BigDecimal("60"), account.getBalance());
+    }
 }
