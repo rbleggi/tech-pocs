@@ -37,4 +37,19 @@ class CoreBankLedgerTest {
         var account = ledger.createAccount("Bob");
         assertEquals(BigDecimal.ZERO, account.getBalance());
     }
+
+    @Test
+    void testLedgerGetAccount() {
+        var ledger = new Ledger();
+        ledger.createAccount("Alice", new BigDecimal("100"));
+        var account = ledger.getAccount("Alice");
+        assertNotNull(account);
+        assertEquals("Alice", account.getId());
+    }
+
+    @Test
+    void testLedgerGetAccountNotFound() {
+        var ledger = new Ledger();
+        assertNull(ledger.getAccount("Nobody"));
+    }
 }
