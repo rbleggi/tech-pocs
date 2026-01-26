@@ -14,4 +14,11 @@ class CoreBankLedgerTest {
         assertEquals("Alice", account.getId());
         assertEquals(new BigDecimal("100"), account.getBalance());
     }
+
+    @Test
+    void testAccountSetBalance() {
+        var account = new Account("Bob", new BigDecimal("50"));
+        account.setBalance(new BigDecimal("200"));
+        assertEquals(new BigDecimal("200"), account.getBalance());
+    }
 }
