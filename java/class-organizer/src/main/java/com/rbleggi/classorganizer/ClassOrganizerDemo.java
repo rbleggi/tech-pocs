@@ -104,7 +104,7 @@ class Schedule implements Subject {
     }
 }
 
-public class Main {
+public class ClassOrganizerDemo {
     public static void main(String[] args) {
         var teacherA = new Teacher("Alice");
         var teacherB = new Teacher("Bob");
