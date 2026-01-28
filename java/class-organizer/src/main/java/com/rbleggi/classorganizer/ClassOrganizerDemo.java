@@ -106,30 +106,6 @@ class Schedule implements Subject {
 
 public class ClassOrganizerDemo {
     public static void main(String[] args) {
-        var teacherA = new Teacher("Alice");
-        var teacherB = new Teacher("Bob");
-        var schedule = new Schedule();
-        schedule.registerObserver(teacherA);
-        schedule.registerObserver(teacherB);
-
-        var session1 = new ClassSession("1", "Math", LocalDateTime.of(2025, 10, 4, 9, 0), LocalDateTime.of(2025, 10, 4, 10, 0), teacherA);
-        var session2 = new ClassSession("2", "Physics", LocalDateTime.of(2025, 10, 4, 10, 0), LocalDateTime.of(2025, 10, 4, 11, 0), teacherA);
-        var session3 = new ClassSession("3", "Chemistry", LocalDateTime.of(2025, 10, 4, 9, 0), LocalDateTime.of(2025, 10, 4, 10, 0), teacherB);
-
-        System.out.println("Adding sessions...");
-        schedule.addClassSession(session1);
-        schedule.addClassSession(session2);
-        schedule.addClassSession(session3);
-
-        System.out.println("Trying to add overlapping session for Alice...");
-        var overlapSession = new ClassSession("4", "Biology", LocalDateTime.of(2025, 10, 4, 9, 30), LocalDateTime.of(2025, 10, 4, 10, 30), teacherA);
-        boolean added = schedule.addClassSession(overlapSession);
-        System.out.println("Overlapping session added: " + added);
-
-        System.out.println("Optimizing schedule...");
-        schedule.optimizeSchedule();
-
-        System.out.println("Removing a session...");
-        schedule.removeClassSession(session1);
+        System.out.println("Class Organizer Demo");
     }
 }
