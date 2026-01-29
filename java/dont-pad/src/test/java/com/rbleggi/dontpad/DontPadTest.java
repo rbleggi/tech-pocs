@@ -27,4 +27,19 @@ class DontPadTest {
         notePad.appendText("World");
         assertEquals("Hello\nWorld", notePad.getAllText());
     }
+
+    @Test
+    void testSetAllText() {
+        var notePad = new NotePad("/test");
+        notePad.setAllText("Line1\nLine2\nLine3");
+        assertEquals("Line1\nLine2\nLine3", notePad.getAllText());
+    }
+
+    @Test
+    void testSetAllTextOverwrites() {
+        var notePad = new NotePad("/test");
+        notePad.appendText("Old text");
+        notePad.setAllText("New text");
+        assertEquals("New text", notePad.getAllText());
+    }
 }
