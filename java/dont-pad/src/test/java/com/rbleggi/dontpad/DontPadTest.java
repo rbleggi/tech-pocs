@@ -97,4 +97,11 @@ class DontPadTest {
         var notePad = new NotePad("/my/custom/path");
         assertEquals("/my/custom/path", notePad.getKey());
     }
+
+    @Test
+    void testSetAllTextWithMultipleLines() {
+        var notePad = new NotePad("/test");
+        notePad.setAllText("A\nB\nC\nD");
+        assertEquals("A\nB\nC\nD", notePad.getAllText());
+    }
 }
