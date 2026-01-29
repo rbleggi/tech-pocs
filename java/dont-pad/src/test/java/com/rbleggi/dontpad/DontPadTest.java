@@ -58,4 +58,10 @@ class DontPadTest {
         var command = new LoadNoteCommand(notePad);
         command.execute();
     }
+
+    @Test
+    void testNoOpCommand() {
+        var command = new NoOpCommand();
+        command.execute();
+    }
 }
