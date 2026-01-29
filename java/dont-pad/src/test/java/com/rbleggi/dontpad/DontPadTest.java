@@ -50,4 +50,12 @@ class DontPadTest {
         command.execute();
         assertEquals("Hello", notePad.getAllText());
     }
+
+    @Test
+    void testLoadNoteCommand() {
+        var notePad = new NotePad("/test");
+        notePad.appendText("Some content");
+        var command = new LoadNoteCommand(notePad);
+        command.execute();
+    }
 }
