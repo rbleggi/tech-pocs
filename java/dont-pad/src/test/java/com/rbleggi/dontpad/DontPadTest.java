@@ -85,4 +85,16 @@ class DontPadTest {
         new AppendNoteCommand(notePad, "Third").execute();
         assertEquals("First\nSecond\nThird", notePad.getAllText());
     }
+
+    @Test
+    void testEmptyNotePad() {
+        var notePad = new NotePad("/empty");
+        assertEquals("", notePad.getAllText());
+    }
+
+    @Test
+    void testNotePadKey() {
+        var notePad = new NotePad("/my/custom/path");
+        assertEquals("/my/custom/path", notePad.getKey());
+    }
 }
