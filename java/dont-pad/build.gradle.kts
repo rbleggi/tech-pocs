@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.dontpad.Main")
+    mainClass.set("com.rbleggi.dontpad.DontPadDemo")
 }
 
 dependencies {
