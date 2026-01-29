@@ -61,6 +61,34 @@ class AppendNoteCommand implements Command {
     }
 }
 
+class SetAllTextCommand implements Command {
+    private final NotePad notePad;
+    private final String text;
+
+    public SetAllTextCommand(NotePad notePad, String text) {
+        this.notePad = notePad;
+        this.text = text;
+    }
+
+    @Override
+    public void execute() {
+        notePad.setAllText(text);
+    }
+}
+
+class ClearNoteCommand implements Command {
+    private final NotePad notePad;
+
+    public ClearNoteCommand(NotePad notePad) {
+        this.notePad = notePad;
+    }
+
+    @Override
+    public void execute() {
+        notePad.setAllText("");
+    }
+}
+
 class NoOpCommand implements Command {
     @Override
     public void execute() {
