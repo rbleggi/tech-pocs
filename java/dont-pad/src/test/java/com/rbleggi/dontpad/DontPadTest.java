@@ -114,6 +114,22 @@ class DontPadTest {
     }
 
     @Test
+    void testSetAllTextCommand() {
+        var notePad = new NotePad("/test");
+        notePad.appendText("Old");
+        new SetAllTextCommand(notePad, "New content").execute();
+        assertEquals("New content", notePad.getAllText());
+    }
+
+    @Test
+    void testClearNoteCommand() {
+        var notePad = new NotePad("/test");
+        notePad.appendText("Some text");
+        new ClearNoteCommand(notePad).execute();
+        assertEquals("", notePad.getAllText());
+    }
+
+    @Test
     void testFullWorkflow() {
         var notePad = new NotePad("/mypage");
 
@@ -123,12 +139,14 @@ class DontPadTest {
         new AppendNoteCommand(notePad, "Second line").execute();
         assertEquals("Hello, world!\nSecond line", notePad.getAllText());
 
-        notePad.setAllText("Replaced content");
+        new SetAllTextCommand(notePad, "Replaced content").execute();
         assertEquals("Replaced content", notePad.getAllText());
 
         new LoadNoteCommand(notePad).execute();
         new NoOpCommand().execute();
-
         assertEquals("Replaced content", notePad.getAllText());
+
+        new ClearNoteCommand(notePad).execute();
+        assertEquals("", notePad.getAllText());
     }
 }
