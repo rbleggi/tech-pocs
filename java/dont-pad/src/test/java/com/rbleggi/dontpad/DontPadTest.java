@@ -104,4 +104,12 @@ class DontPadTest {
         notePad.setAllText("A\nB\nC\nD");
         assertEquals("A\nB\nC\nD", notePad.getAllText());
     }
+
+    @Test
+    void testAppendAfterSetAll() {
+        var notePad = new NotePad("/test");
+        notePad.setAllText("First");
+        notePad.appendText("Second");
+        assertEquals("First\nSecond", notePad.getAllText());
+    }
 }
