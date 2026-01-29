@@ -112,4 +112,23 @@ class DontPadTest {
         notePad.appendText("Second");
         assertEquals("First\nSecond", notePad.getAllText());
     }
+
+    @Test
+    void testFullWorkflow() {
+        var notePad = new NotePad("/mypage");
+
+        new AppendNoteCommand(notePad, "Hello, world!").execute();
+        assertEquals("Hello, world!", notePad.getAllText());
+
+        new AppendNoteCommand(notePad, "Second line").execute();
+        assertEquals("Hello, world!\nSecond line", notePad.getAllText());
+
+        notePad.setAllText("Replaced content");
+        assertEquals("Replaced content", notePad.getAllText());
+
+        new LoadNoteCommand(notePad).execute();
+        new NoOpCommand().execute();
+
+        assertEquals("Replaced content", notePad.getAllText());
+    }
 }
