@@ -67,23 +67,8 @@ class NoOpCommand implements Command {
     }
 }
 
-public class Main {
+public class DontPadDemo {
     public static void main(String[] args) {
-        String key = "/mypage";
-        var notePad = new NotePad(key);
-
-        System.out.println("[LOG] Creating NotePad for page: " + key);
-
-        var appendCommand = new AppendNoteCommand(notePad, "Hello, world!");
-        System.out.println("[LOG] Executing AppendNoteCommand: adding 'Hello, world!'");
-        appendCommand.execute();
-
-        var loadCommand = new LoadNoteCommand(notePad);
-        System.out.println("[LOG] Executing LoadNoteCommand: displaying current content");
-        loadCommand.execute();
-
-        var noOpCommand = new NoOpCommand();
-        System.out.println("[LOG] Executing NoOpCommand: no operation will be performed");
-        noOpCommand.execute();
+        System.out.println("DontPad Demo");
     }
 }
