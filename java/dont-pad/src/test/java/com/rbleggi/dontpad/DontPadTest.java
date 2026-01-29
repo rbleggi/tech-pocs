@@ -42,4 +42,12 @@ class DontPadTest {
         notePad.setAllText("New text");
         assertEquals("New text", notePad.getAllText());
     }
+
+    @Test
+    void testAppendNoteCommand() {
+        var notePad = new NotePad("/test");
+        var command = new AppendNoteCommand(notePad, "Hello");
+        command.execute();
+        assertEquals("Hello", notePad.getAllText());
+    }
 }
