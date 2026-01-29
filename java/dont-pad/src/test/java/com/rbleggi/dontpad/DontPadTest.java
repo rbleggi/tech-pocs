@@ -12,4 +12,19 @@ class DontPadTest {
         assertEquals("/mypage", notePad.getKey());
         assertEquals("", notePad.getAllText());
     }
+
+    @Test
+    void testAppendText() {
+        var notePad = new NotePad("/test");
+        notePad.appendText("Hello");
+        assertEquals("Hello", notePad.getAllText());
+    }
+
+    @Test
+    void testAppendMultipleTexts() {
+        var notePad = new NotePad("/test");
+        notePad.appendText("Hello");
+        notePad.appendText("World");
+        assertEquals("Hello\nWorld", notePad.getAllText());
+    }
 }
