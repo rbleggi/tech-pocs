@@ -76,4 +76,13 @@ class DontPadTest {
         noop.execute();
         assertEquals("text", notePad.getAllText());
     }
+
+    @Test
+    void testMultipleAppendCommands() {
+        var notePad = new NotePad("/test");
+        new AppendNoteCommand(notePad, "First").execute();
+        new AppendNoteCommand(notePad, "Second").execute();
+        new AppendNoteCommand(notePad, "Third").execute();
+        assertEquals("First\nSecond\nThird", notePad.getAllText());
+    }
 }
