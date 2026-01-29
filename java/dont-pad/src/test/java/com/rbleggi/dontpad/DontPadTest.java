@@ -64,4 +64,16 @@ class DontPadTest {
         var command = new NoOpCommand();
         command.execute();
     }
+
+    @Test
+    void testCommandInterface() {
+        var notePad = new NotePad("/test");
+        Command append = new AppendNoteCommand(notePad, "text");
+        Command load = new LoadNoteCommand(notePad);
+        Command noop = new NoOpCommand();
+        append.execute();
+        load.execute();
+        noop.execute();
+        assertEquals("text", notePad.getAllText());
+    }
 }
