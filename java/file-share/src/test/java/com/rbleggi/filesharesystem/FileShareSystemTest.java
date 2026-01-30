@@ -170,5 +170,17 @@ class FileShareSystemTest {
         assertEquals("test.txt", file.name());
         assertEquals("content", file.content());
     }
+
+    @Test
+    void fileRecordShouldDefaultToNotEncrypted() {
+        var file = new File("test.txt", "content");
+        assertFalse(file.isEncrypted());
+    }
+
+    @Test
+    void fileRecordShouldSupportEncryptedFlag() {
+        var file = new File("secret.txt", "content", true);
+        assertTrue(file.isEncrypted());
+    }
 }
 
