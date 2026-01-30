@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.filesharesystem.Main")
+    mainClass.set("com.rbleggi.filesharesystem.FileShareDemo")
 }
 
 dependencies {
