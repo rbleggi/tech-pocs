@@ -276,5 +276,26 @@ class FileShareSystemTest {
         manager.saveFile(new File("test.txt", "new content"));
         assertDoesNotThrow(manager::listFiles);
     }
+
+    @Test
+    void fullWorkflow() {
+        var invoker = new CommandInvoker();
+        var manager = new FileManager();
+
+        var file1 = new File("report.txt", "Report content");
+        var file2 = new File("notes.txt", "Notes content");
+        var file3 = new File("image.png", "Binary data", true);
+
+        invoker.executeCommand(new SaveFileCommand(manager, file1));
+        invoker.executeCommand(new SaveFileCommand(manager, file2));
+        invoker.executeCommand(new SaveFileCommand(manager, file3));
+        invoker.executeCommand(new ListFilesCommand(manager));
+        invoker.executeCommand(new SearchFileCommand(manager, "report"));
+        invoker.executeCommand(new DeleteFileCommand(manager, file1));
+        invoker.undo();
+        invoker.redo();
+        invoker.executeCommand(new RestoreFileCommand(manager, file2));
+        invoker.executeCommand(new ListFilesCommand(manager));
+    }
 }
 
