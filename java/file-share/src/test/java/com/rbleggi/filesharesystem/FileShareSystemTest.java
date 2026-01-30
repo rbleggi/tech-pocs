@@ -206,5 +206,16 @@ class FileShareSystemTest {
         cmd.undo();
         assertDoesNotThrow(() -> manager.deleteFile(file));
     }
+
+    @Test
+    void deleteCommandUndoShouldRestoreFile() {
+        var manager = new FileManager();
+        var file = new File("test.txt", "content");
+        manager.saveFile(file);
+        var cmd = new DeleteFileCommand(manager, file);
+        cmd.execute();
+        cmd.undo();
+        assertDoesNotThrow(() -> manager.restoreFile(file));
+    }
 }
 
