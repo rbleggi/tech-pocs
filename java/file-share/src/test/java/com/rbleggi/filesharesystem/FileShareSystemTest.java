@@ -196,5 +196,15 @@ class FileShareSystemTest {
         var file2 = new File("test2.txt", "content2");
         assertNotEquals(file1, file2);
     }
+
+    @Test
+    void saveCommandUndoShouldRemoveFile() {
+        var manager = new FileManager();
+        var file = new File("test.txt", "content");
+        var cmd = new SaveFileCommand(manager, file);
+        cmd.execute();
+        cmd.undo();
+        assertDoesNotThrow(() -> manager.deleteFile(file));
+    }
 }
 
