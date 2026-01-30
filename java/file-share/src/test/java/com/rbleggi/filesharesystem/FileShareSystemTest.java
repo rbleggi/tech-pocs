@@ -259,5 +259,14 @@ class FileShareSystemTest {
         manager.saveFile(new File("test.txt", "content"));
         assertDoesNotThrow(() -> manager.searchFile("nonexistent"));
     }
+
+    @Test
+    void saveMultipleFilesShouldWork() {
+        var manager = new FileManager();
+        manager.saveFile(new File("file1.txt", "a"));
+        manager.saveFile(new File("file2.txt", "b"));
+        manager.saveFile(new File("file3.txt", "c"));
+        assertDoesNotThrow(manager::listFiles);
+    }
 }
 
