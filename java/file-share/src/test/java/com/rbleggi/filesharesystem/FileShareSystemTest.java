@@ -182,5 +182,19 @@ class FileShareSystemTest {
         var file = new File("secret.txt", "content", true);
         assertTrue(file.isEncrypted());
     }
+
+    @Test
+    void fileRecordEqualityShouldWork() {
+        var file1 = new File("test.txt", "content");
+        var file2 = new File("test.txt", "content");
+        assertEquals(file1, file2);
+    }
+
+    @Test
+    void fileRecordInequalityShouldWork() {
+        var file1 = new File("test1.txt", "content1");
+        var file2 = new File("test2.txt", "content2");
+        assertNotEquals(file1, file2);
+    }
 }
 
