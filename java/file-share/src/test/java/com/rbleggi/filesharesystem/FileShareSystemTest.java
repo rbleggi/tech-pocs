@@ -217,5 +217,17 @@ class FileShareSystemTest {
         cmd.undo();
         assertDoesNotThrow(() -> manager.restoreFile(file));
     }
+
+    @Test
+    void invokerUndoRedoShouldMaintainState() {
+        var invoker = new CommandInvoker();
+        var manager = new FileManager();
+        var file = new File("test.txt", "content");
+
+        invoker.executeCommand(new SaveFileCommand(manager, file));
+        invoker.undo();
+        invoker.redo();
+        assertDoesNotThrow(() -> manager.restoreFile(file));
+    }
 }
 
