@@ -229,5 +229,19 @@ class FileShareSystemTest {
         invoker.redo();
         assertDoesNotThrow(() -> manager.restoreFile(file));
     }
+
+    @Test
+    void invokerMultipleUndosShouldWork() {
+        var invoker = new CommandInvoker();
+        var manager = new FileManager();
+        var file1 = new File("file1.txt", "content1");
+        var file2 = new File("file2.txt", "content2");
+
+        invoker.executeCommand(new SaveFileCommand(manager, file1));
+        invoker.executeCommand(new SaveFileCommand(manager, file2));
+        invoker.undo();
+        invoker.undo();
+        assertDoesNotThrow(manager::listFiles);
+    }
 }
 
