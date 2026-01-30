@@ -163,5 +163,12 @@ class FileShareSystemTest {
         CommandInvoker invoker = new CommandInvoker();
         assertDoesNotThrow(invoker::redo);
     }
+
+    @Test
+    void fileRecordShouldHaveCorrectFields() {
+        var file = new File("test.txt", "content");
+        assertEquals("test.txt", file.name());
+        assertEquals("content", file.content());
+    }
 }
 
