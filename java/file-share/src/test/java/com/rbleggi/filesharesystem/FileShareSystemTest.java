@@ -268,5 +268,13 @@ class FileShareSystemTest {
         manager.saveFile(new File("file3.txt", "c"));
         assertDoesNotThrow(manager::listFiles);
     }
+
+    @Test
+    void overwriteFileShouldWork() {
+        var manager = new FileManager();
+        manager.saveFile(new File("test.txt", "old content"));
+        manager.saveFile(new File("test.txt", "new content"));
+        assertDoesNotThrow(manager::listFiles);
+    }
 }
 
