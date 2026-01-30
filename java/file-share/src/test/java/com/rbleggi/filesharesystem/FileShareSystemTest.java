@@ -243,5 +243,21 @@ class FileShareSystemTest {
         invoker.undo();
         assertDoesNotThrow(manager::listFiles);
     }
+
+    @Test
+    void searchShouldFindMatchingFiles() {
+        var manager = new FileManager();
+        manager.saveFile(new File("report.txt", "data"));
+        manager.saveFile(new File("report2.txt", "data"));
+        manager.saveFile(new File("image.png", "binary"));
+        assertDoesNotThrow(() -> manager.searchFile("report"));
+    }
+
+    @Test
+    void searchShouldHandleNoMatches() {
+        var manager = new FileManager();
+        manager.saveFile(new File("test.txt", "content"));
+        assertDoesNotThrow(() -> manager.searchFile("nonexistent"));
+    }
 }
 
