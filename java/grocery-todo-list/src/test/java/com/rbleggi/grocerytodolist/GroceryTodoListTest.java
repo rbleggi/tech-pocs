@@ -117,5 +117,20 @@ class GroceryTodoListTest {
         items = cmd.undo(items);
         assertFalse(items.get(0).isDone());
     }
+
+    @Test
+    void groceryItemEquality() {
+        var item1 = new GroceryItem("Milk");
+        var item2 = new GroceryItem("Milk");
+        assertEquals(item1, item2);
+        assertEquals(item1.hashCode(), item2.hashCode());
+    }
+
+    @Test
+    void groceryItemInequality() {
+        var item1 = new GroceryItem("Milk");
+        var item2 = new GroceryItem("Bread");
+        assertNotEquals(item1, item2);
+    }
 }
 
