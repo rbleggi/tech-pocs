@@ -132,5 +132,15 @@ class GroceryTodoListTest {
         var item2 = new GroceryItem("Bread");
         assertNotEquals(item1, item2);
     }
+
+    @Test
+    void groceryItemNullNameThrows() {
+        assertThrows(NullPointerException.class, () -> new GroceryItem(null));
+    }
+
+    @Test
+    void groceryItemEmptyNameThrows() {
+        assertThrows(IllegalArgumentException.class, () -> new GroceryItem(""));
+    }
 }
 
