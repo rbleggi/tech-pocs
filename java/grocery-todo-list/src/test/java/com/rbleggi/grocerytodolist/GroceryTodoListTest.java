@@ -182,5 +182,14 @@ class GroceryTodoListTest {
         assertEquals(1, result.size());
         assertEquals("Bread", result.get(0).getName());
     }
+
+    @Test
+    void managerGetItemsReturnsCopy() {
+        GroceryManager manager = new GroceryManager();
+        manager.applyChanges(List.of(new GroceryItem("Milk")));
+        List<GroceryItem> items = manager.getItems();
+        items.clear();
+        assertEquals(1, manager.getItems().size());
+    }
 }
 
