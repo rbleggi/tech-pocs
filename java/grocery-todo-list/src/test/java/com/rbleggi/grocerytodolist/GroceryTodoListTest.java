@@ -199,5 +199,13 @@ class GroceryTodoListTest {
         List<GroceryItem> result = invoker.undo(items);
         assertEquals(1, result.size());
     }
+
+    @Test
+    void redoWithEmptyStackReturnsOriginalList() {
+        CommandInvoker invoker = new CommandInvoker();
+        List<GroceryItem> items = List.of(new GroceryItem("Milk"));
+        List<GroceryItem> result = invoker.redo(items);
+        assertEquals(1, result.size());
+    }
 }
 
