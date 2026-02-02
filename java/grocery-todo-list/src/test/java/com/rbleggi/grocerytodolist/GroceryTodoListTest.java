@@ -191,5 +191,13 @@ class GroceryTodoListTest {
         items.clear();
         assertEquals(1, manager.getItems().size());
     }
+
+    @Test
+    void undoWithEmptyHistoryReturnsOriginalList() {
+        CommandInvoker invoker = new CommandInvoker();
+        List<GroceryItem> items = List.of(new GroceryItem("Milk"));
+        List<GroceryItem> result = invoker.undo(items);
+        assertEquals(1, result.size());
+    }
 }
 
