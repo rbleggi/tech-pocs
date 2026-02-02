@@ -217,5 +217,29 @@ class GroceryTodoListTest {
         assertEquals(1, result.size());
         assertFalse(result.get(0).isDone());
     }
+
+    @Test
+    void fullWorkflowIntegration() {
+        CommandInvoker invoker = new CommandInvoker();
+        GroceryManager manager = new GroceryManager();
+
+        List<GroceryItem> items = manager.getItems();
+        items = invoker.executeCommand(new AddItemCommand(new GroceryItem("Milk")), items);
+        items = invoker.executeCommand(new AddItemCommand(new GroceryItem("Bread")), items);
+        items = invoker.executeCommand(new MarkAsDoneCommand(new GroceryItem("Milk")), items);
+        manager.applyChanges(items);
+
+        assertEquals(2, manager.getItems().size());
+        assertTrue(manager.getItems().get(0).isDone());
+        assertFalse(manager.getItems().get(1).isDone());
+
+        items = invoker.undo(items);
+        manager.applyChanges(items);
+        assertFalse(manager.getItems().get(0).isDone());
+
+        items = invoker.redo(items);
+        manager.applyChanges(items);
+        assertTrue(manager.getItems().get(0).isDone());
+    }
 }
 
