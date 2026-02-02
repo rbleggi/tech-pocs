@@ -148,5 +148,12 @@ class GroceryTodoListTest {
         var item = new GroceryItem("  Milk  ");
         assertEquals("Milk", item.getName());
     }
+
+    @Test
+    void markAsDoneOnAlreadyDoneItemReturnsSame() {
+        GroceryItem item = new GroceryItem("Milk").markAsDone();
+        GroceryItem result = item.markAsDone();
+        assertSame(item, result);
+    }
 }
 
