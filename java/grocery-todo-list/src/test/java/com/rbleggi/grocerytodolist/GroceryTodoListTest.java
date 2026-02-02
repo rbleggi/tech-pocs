@@ -155,5 +155,12 @@ class GroceryTodoListTest {
         GroceryItem result = item.markAsDone();
         assertSame(item, result);
     }
+
+    @Test
+    void markAsUndoneOnAlreadyUndoneItemReturnsSame() {
+        GroceryItem item = new GroceryItem("Milk");
+        GroceryItem result = item.markAsUndone();
+        assertSame(item, result);
+    }
 }
 
