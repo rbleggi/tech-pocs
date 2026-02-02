@@ -172,5 +172,15 @@ class GroceryTodoListTest {
         items = invoker.executeCommand(new AddItemCommand(new GroceryItem("Eggs")), items);
         assertEquals(3, items.size());
     }
+
+    @Test
+    void removeNonExistentItemReturnsOriginalList() {
+        GroceryItem item = new GroceryItem("Milk");
+        Command cmd = new RemoveItemCommand(item);
+        List<GroceryItem> items = List.of(new GroceryItem("Bread"));
+        List<GroceryItem> result = cmd.execute(items);
+        assertEquals(1, result.size());
+        assertEquals("Bread", result.get(0).getName());
+    }
 }
 
