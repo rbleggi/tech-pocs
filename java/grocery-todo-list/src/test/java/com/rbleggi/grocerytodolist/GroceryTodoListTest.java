@@ -162,5 +162,15 @@ class GroceryTodoListTest {
         GroceryItem result = item.markAsUndone();
         assertSame(item, result);
     }
+
+    @Test
+    void addMultipleItems() {
+        CommandInvoker invoker = new CommandInvoker();
+        List<GroceryItem> items = List.of();
+        items = invoker.executeCommand(new AddItemCommand(new GroceryItem("Milk")), items);
+        items = invoker.executeCommand(new AddItemCommand(new GroceryItem("Bread")), items);
+        items = invoker.executeCommand(new AddItemCommand(new GroceryItem("Eggs")), items);
+        assertEquals(3, items.size());
+    }
 }
 
