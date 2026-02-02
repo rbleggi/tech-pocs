@@ -207,5 +207,15 @@ class GroceryTodoListTest {
         List<GroceryItem> result = invoker.redo(items);
         assertEquals(1, result.size());
     }
+
+    @Test
+    void markAsDoneOnNonExistentItemReturnsOriginalList() {
+        GroceryItem item = new GroceryItem("Milk");
+        Command cmd = new MarkAsDoneCommand(item);
+        List<GroceryItem> items = List.of(new GroceryItem("Bread"));
+        List<GroceryItem> result = cmd.execute(items);
+        assertEquals(1, result.size());
+        assertFalse(result.get(0).isDone());
+    }
 }
 
