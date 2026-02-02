@@ -142,5 +142,11 @@ class GroceryTodoListTest {
     void groceryItemEmptyNameThrows() {
         assertThrows(IllegalArgumentException.class, () -> new GroceryItem(""));
     }
+
+    @Test
+    void groceryItemTrimsName() {
+        var item = new GroceryItem("  Milk  ");
+        assertEquals("Milk", item.getName());
+    }
 }
 
