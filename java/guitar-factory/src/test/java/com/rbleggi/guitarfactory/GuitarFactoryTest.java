@@ -197,5 +197,20 @@ class GuitarFactoryTest {
         inventory.removeGuitar(guitar, 1);
         assertEquals(0, inventory.getQuantity(guitar));
     }
+
+    @Test
+    void guitarInventoryAddMultipleQuantities() {
+        Guitar guitar = Guitar.builder()
+                .guitarType("Acoustic")
+                .model("Martin D-28")
+                .specs("Sitka Spruce Top")
+                .os("Custom OS 10.0")
+                .build();
+
+        GuitarInventory inventory = GuitarInventory.getInstance();
+        inventory.addGuitar(guitar, 3);
+        inventory.addGuitar(guitar, 2);
+        assertEquals(5, inventory.getQuantity(guitar));
+    }
 }
 
