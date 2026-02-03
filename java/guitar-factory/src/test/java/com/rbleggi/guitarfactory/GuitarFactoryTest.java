@@ -145,5 +145,24 @@ class GuitarFactoryTest {
         inventory.clearInventory();
         assertEquals(0, inventory.getQuantity(guitar));
     }
+
+    @Test
+    void guitarInequality() {
+        Guitar guitar1 = Guitar.builder()
+                .guitarType("Electric")
+                .model("Fender Telecaster")
+                .specs("Ash Body")
+                .os("Custom OS 7.0")
+                .build();
+
+        Guitar guitar2 = Guitar.builder()
+                .guitarType("Electric")
+                .model("Fender Stratocaster")
+                .specs("Ash Body")
+                .os("Custom OS 7.0")
+                .build();
+
+        assertNotEquals(guitar1, guitar2);
+    }
 }
 
