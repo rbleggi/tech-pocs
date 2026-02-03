@@ -183,5 +183,19 @@ class GuitarFactoryTest {
 
         assertEquals(guitar1.hashCode(), guitar2.hashCode());
     }
+
+    @Test
+    void guitarInventoryRemoveNonExistent() {
+        Guitar guitar = Guitar.builder()
+                .guitarType("Electric")
+                .model("ESP LTD")
+                .specs("Mahogany Body")
+                .os("Custom OS 9.0")
+                .build();
+
+        GuitarInventory inventory = GuitarInventory.getInstance();
+        inventory.removeGuitar(guitar, 1);
+        assertEquals(0, inventory.getQuantity(guitar));
+    }
 }
 
