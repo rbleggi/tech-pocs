@@ -164,5 +164,24 @@ class GuitarFactoryTest {
 
         assertNotEquals(guitar1, guitar2);
     }
+
+    @Test
+    void guitarHashCode() {
+        Guitar guitar1 = Guitar.builder()
+                .guitarType("Electric")
+                .model("Fender Telecaster")
+                .specs("Ash Body")
+                .os("Custom OS 7.0")
+                .build();
+
+        Guitar guitar2 = Guitar.builder()
+                .guitarType("Electric")
+                .model("Fender Telecaster")
+                .specs("Ash Body")
+                .os("Custom OS 7.0")
+                .build();
+
+        assertEquals(guitar1.hashCode(), guitar2.hashCode());
+    }
 }
 
