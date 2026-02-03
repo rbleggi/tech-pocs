@@ -5,7 +5,7 @@ plugins {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.guitarfactory.Main")
+    mainClass.set("com.rbleggi.guitarfactory.GuitarFactoryDemo")
 }
 
 dependencies {
