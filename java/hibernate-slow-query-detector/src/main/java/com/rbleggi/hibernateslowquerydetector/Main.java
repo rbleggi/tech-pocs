@@ -57,6 +57,19 @@ class FileLogger implements QueryObserver {
     }
 }
 
+class EmailNotifier implements QueryObserver {
+    private final String emailAddress;
+
+    public EmailNotifier(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    @Override
+    public void notify(String query, long durationMs) {
+        System.out.println("Sending email to " + emailAddress + ": Slow query [" + query + "] took " + durationMs + " ms");
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         var detector = new SlowQueryDetector(100);
