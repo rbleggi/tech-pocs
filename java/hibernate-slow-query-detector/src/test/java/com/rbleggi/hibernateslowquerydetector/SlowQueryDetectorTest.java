@@ -15,4 +15,15 @@ class SlowQueryDetectorTest {
 
         assertTrue(notified[0]);
     }
+
+    @Test
+    void shouldNotNotifyForFastQuery() {
+        var notified = new boolean[]{false};
+        var detector = new SlowQueryDetector(100);
+
+        detector.addObserver((query, durationMs) -> notified[0] = true);
+        detector.executeQuery("SELECT * FROM users", 50);
+
+        assertFalse(notified[0]);
+    }
 }
