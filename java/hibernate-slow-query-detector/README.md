@@ -29,9 +29,19 @@ classDiagram
     class ConsoleLogger {
         +notify(query: String, durationMs: long): void
     }
+    class FileLogger {
+        -filename: String
+        +notify(query: String, durationMs: long): void
+    }
+    class EmailNotifier {
+        -emailAddress: String
+        +notify(query: String, durationMs: long): void
+    }
 
     SlowQueryDetector --> QueryObserver
     ConsoleLogger ..|> QueryObserver
+    FileLogger ..|> QueryObserver
+    EmailNotifier ..|> QueryObserver
 ```
 
 ## **Implementation Details**
