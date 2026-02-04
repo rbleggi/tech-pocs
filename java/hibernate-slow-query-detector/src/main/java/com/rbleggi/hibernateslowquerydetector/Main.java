@@ -74,6 +74,8 @@ public class Main {
     public static void main(String[] args) {
         var detector = new SlowQueryDetector(100);
         detector.addObserver(new ConsoleLogger());
+        detector.addObserver(new FileLogger("slow-queries.log"));
+        detector.addObserver(new EmailNotifier("admin@example.com"));
 
         detector.executeQuery("SELECT * FROM users", 50);
         detector.executeQuery("SELECT * FROM orders", 200);
