@@ -1,5 +1,8 @@
 package com.rbleggi.hibernateslowquerydetector;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,23 @@ class ConsoleLogger implements QueryObserver {
     @Override
     public void notify(String query, long durationMs) {
         System.out.println("SLOW QUERY DETECTED: [" + query + "] took " + durationMs + " ms");
+    }
+}
+
+class FileLogger implements QueryObserver {
+    private final String filename;
+
+    public FileLogger(String filename) {
+        this.filename = filename;
+    }
+
+    @Override
+    public void notify(String query, long durationMs) {
+        try (var writer = new PrintWriter(new FileWriter(filename, true))) {
+            writer.println("SLOW QUERY: [" + query + "] - " + durationMs + " ms");
+        } catch (IOException e) {
+            System.err.println("Failed to write to log file: " + e.getMessage());
+        }
     }
 }
 
