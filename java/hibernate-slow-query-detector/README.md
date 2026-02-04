@@ -49,7 +49,10 @@ classDiagram
 - The solution uses the Observer Pattern: observers are notified when a query is slow.
 - The `QueryObserver` interface defines the contract for notification handlers.
 - The `SlowQueryDetector` class manages observers and detects slow queries based on a threshold.
-- The `ConsoleLogger` class is a concrete implementation that logs to console.
+- Three observer implementations are provided:
+  - `ConsoleLogger`: logs to console
+  - `FileLogger`: writes to log file
+  - `EmailNotifier`: simulates email notifications
 - The main entry point demonstrates slow query detection with multiple queries.
 - All logic is in a single Java file.
 
