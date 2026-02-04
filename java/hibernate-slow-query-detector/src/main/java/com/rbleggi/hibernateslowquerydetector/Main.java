@@ -13,6 +13,7 @@ interface QueryObserver {
 class SlowQueryDetector {
     private final long thresholdMs;
     private final List<QueryObserver> observers = new ArrayList<>();
+    private int slowQueryCount = 0;
 
     public SlowQueryDetector(long thresholdMs) {
         this.thresholdMs = thresholdMs;
@@ -28,8 +29,13 @@ class SlowQueryDetector {
 
     public void executeQuery(String query, long simulatedDurationMs) {
         if (simulatedDurationMs > thresholdMs) {
+            slowQueryCount++;
             observers.forEach(observer -> observer.notify(query, simulatedDurationMs));
         }
+    }
+
+    public int getSlowQueryCount() {
+        return slowQueryCount;
     }
 }
 
