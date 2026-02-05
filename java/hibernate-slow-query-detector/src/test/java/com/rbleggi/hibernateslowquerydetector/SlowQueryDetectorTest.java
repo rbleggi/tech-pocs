@@ -138,4 +138,14 @@ class SlowQueryDetectorTest {
 
         assertEquals(2, detector.getSlowQueryCount());
     }
+
+    @Test
+    void shouldNotIncrementCounterForFastQueries() {
+        var detector = new SlowQueryDetector(100);
+
+        detector.executeQuery("SELECT * FROM table1", 50);
+        detector.executeQuery("SELECT * FROM table2", 80);
+
+        assertEquals(0, detector.getSlowQueryCount());
+    }
 }
