@@ -100,6 +100,10 @@ public class Main {
         detector.executeQuery("SELECT * FROM orders", 200);
         detector.executeQuery("UPDATE products SET price = 10", 300);
 
-        System.out.println("\nTotal slow queries detected: " + detector.getSlowQueryCount());
+        var metrics = detector.getMetrics();
+        System.out.println("\n=== Query Statistics ===");
+        System.out.println("Total queries: " + metrics.totalCount());
+        System.out.println("Slow queries: " + metrics.slowCount());
+        System.out.println("Fast queries: " + (metrics.totalCount() - metrics.slowCount()));
     }
 }
