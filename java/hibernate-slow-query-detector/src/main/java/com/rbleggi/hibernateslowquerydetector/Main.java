@@ -86,5 +86,7 @@ public class Main {
         detector.executeQuery("SELECT * FROM users", 50);
         detector.executeQuery("SELECT * FROM orders", 200);
         detector.executeQuery("UPDATE products SET price = 10", 300);
+
+        System.out.println("\nTotal slow queries detected: " + detector.getSlowQueryCount());
     }
 }
