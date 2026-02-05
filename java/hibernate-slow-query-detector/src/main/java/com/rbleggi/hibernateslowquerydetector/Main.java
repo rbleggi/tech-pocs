@@ -37,6 +37,10 @@ class SlowQueryDetector {
     public int getSlowQueryCount() {
         return slowQueryCount;
     }
+
+    public void resetCounter() {
+        slowQueryCount = 0;
+    }
 }
 
 class ConsoleLogger implements QueryObserver {
