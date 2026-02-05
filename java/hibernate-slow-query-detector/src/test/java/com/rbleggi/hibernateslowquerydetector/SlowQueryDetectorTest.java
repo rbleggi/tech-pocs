@@ -159,4 +159,17 @@ class SlowQueryDetectorTest {
 
         assertEquals(0, detector.getSlowQueryCount());
     }
+
+    @Test
+    void shouldTrackQueryMetrics() {
+        var detector = new SlowQueryDetector(100);
+
+        detector.executeQuery("SELECT * FROM table1", 50);
+        detector.executeQuery("SELECT * FROM table2", 150);
+        detector.executeQuery("SELECT * FROM table3", 80);
+
+        var metrics = detector.getMetrics();
+        assertEquals(1, metrics.slowCount());
+        assertEquals(3, metrics.totalCount());
+    }
 }
