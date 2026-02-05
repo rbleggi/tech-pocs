@@ -128,4 +128,14 @@ class SlowQueryDetectorTest {
 
         assertEquals("", receivedQuery[0]);
     }
+
+    @Test
+    void shouldIncrementSlowQueryCounter() {
+        var detector = new SlowQueryDetector(100);
+
+        detector.executeQuery("SELECT * FROM table1", 150);
+        detector.executeQuery("SELECT * FROM table2", 200);
+
+        assertEquals(2, detector.getSlowQueryCount());
+    }
 }
