@@ -17,4 +17,16 @@ class HttpServerTest {
         var handler = new HelloHandler();
         assertNull(handler.handle("/other"));
     }
+
+    @Test
+    void pingHandler_validPath_returnsPong() {
+        var handler = new PingHandler();
+        assertEquals("pong", handler.handle("/ping"));
+    }
+
+    @Test
+    void pingHandler_invalidPath_returnsNull() {
+        var handler = new PingHandler();
+        assertNull(handler.handle("/other"));
+    }
 }
