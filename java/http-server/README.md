@@ -46,14 +46,14 @@ git clone https://github.com/rbleggi/tech-pocs.git
 cd java/http-server
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build & Run the Application
 
-```shell
+```bash
 ./gradlew build run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```
