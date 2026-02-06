@@ -53,4 +53,13 @@ class HttpServerTest {
         var router = new HttpRouter();
         assertEquals("404", router.route("/any"));
     }
+
+    @Test
+    void httpRouter_firstMatchingHandlerWins() {
+        var router = new HttpRouter();
+        router.registerHandler(path -> "/test".equals(path) ? "first" : null);
+        router.registerHandler(path -> "/test".equals(path) ? "second" : null);
+
+        assertEquals("first", router.route("/test"));
+    }
 }
