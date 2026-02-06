@@ -39,4 +39,18 @@ class HttpServerTest {
         assertEquals("Hello, World!", router.route("/hello"));
         assertEquals("pong", router.route("/ping"));
     }
+
+    @Test
+    void httpRouter_unknownPath_returns404() {
+        var router = new HttpRouter();
+        router.registerHandler(new HelloHandler());
+
+        assertEquals("404", router.route("/unknown"));
+    }
+
+    @Test
+    void httpRouter_noHandlers_returns404() {
+        var router = new HttpRouter();
+        assertEquals("404", router.route("/any"));
+    }
 }
