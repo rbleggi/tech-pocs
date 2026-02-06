@@ -37,9 +37,9 @@ classDiagram
     Main --> GetRouteHandler
 ```
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1️ - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
