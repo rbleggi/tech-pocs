@@ -29,4 +29,14 @@ class HttpServerTest {
         var handler = new PingHandler();
         assertNull(handler.handle("/other"));
     }
+
+    @Test
+    void httpRouter_registeredHandler_routesCorrectly() {
+        var router = new HttpRouter();
+        router.registerHandler(new HelloHandler());
+        router.registerHandler(new PingHandler());
+
+        assertEquals("Hello, World!", router.route("/hello"));
+        assertEquals("pong", router.route("/ping"));
+    }
 }
