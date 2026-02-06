@@ -6,7 +6,7 @@ This project implements a simple and extensible HTTP server in Java using the St
 
 ## Tech Stack
 
-- **Java 21** → Modern Java with functional programming features
+- **Java 25** → Modern Java with functional programming features
 - **Gradle** → Build tool
 
 ## Architecture Diagram
