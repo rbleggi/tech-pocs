@@ -4,7 +4,7 @@
 
 This project implements a simple and extensible HTTP server in Java using the Strategy Pattern. It supports custom GET endpoints and demonstrates how to compose route handlers in a clean, extensible way.
 
-## **Tech Stack**
+## Tech Stack
 
 - **Java 21** → Modern Java with functional programming features
 - **Gradle** → Build tool
