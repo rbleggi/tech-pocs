@@ -4,7 +4,7 @@
 
 This project implements a simple Core Bank Ledger using the Command Pattern in Java. It demonstrates basic banking operations (deposit, withdraw, transfer) with an extensible and testable design, all in a single file for proof-of-concept purposes.
 
-## **Tech Stack**
+## Tech Stack
 
 - **Java 21** → Modern Java with records and pattern matching.
 - **Gradle** → Build automation tool.
@@ -49,22 +49,22 @@ classDiagram
     Main --> LedgerCommand
 ```
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1️ - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/core-bank-ledger
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
 ```bash
 ./gradlew run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
 ```bash
 ./gradlew test
