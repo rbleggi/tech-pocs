@@ -1,19 +1,19 @@
 # **OAuth 2.0 Server (Java)**
 
-## **Overview**
+## Overview
 
 This project demonstrates a minimal **OAuth 2.0 Server** in **Java** using the **Factory Pattern** to handle extensible grant types. The solution allows easy addition of new OAuth 2.0 flows and contains all logic in a single file.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Java 21** → Modern Java with switch expressions and pattern matching.
 - **Gradle** → Build tool for Java projects.
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -48,24 +48,24 @@ classDiagram
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1 - Clone the Repository**
+### 1 - Clone the Repository
 
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/oauth2
 ```
 
-### **2 - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
-```shell
+```bash
 ./gradlew build
 ./gradlew run
 ```
 
-### **3 - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```

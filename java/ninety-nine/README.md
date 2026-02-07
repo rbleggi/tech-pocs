@@ -1,12 +1,12 @@
 # **Ninety-Nine Problems**
 
-## **Overview**
+## Overview
 
 This project implements solutions to the classic "Ninety-Nine Problems" in Java. These problems are a collection of algorithmic challenges designed to improve functional programming skills. Each problem is implemented as a separate class with a main method for demonstration.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Java 21** → Modern Java with functional programming features.
 - **Gradle** → Official build tool for Java projects.
@@ -14,7 +14,7 @@ This project implements solutions to the classic "Ninety-Nine Problems" in Java.
 
 ---
 
-## **Features**
+## Features
 
 - **Multiple Problems** → Each problem has its own class (P01, P02, P03, etc.).
 - **Recursive Solutions** → Problems are solved using recursion.
@@ -22,7 +22,7 @@ This project implements solutions to the classic "Ninety-Nine Problems" in Java.
 
 ---
 
-## **Implemented Problems**
+## Implemented Problems
 
 - **P01** → Find the last element of a list
 - **P02** → Find the penultimate (last but one) element of a list
@@ -30,16 +30,16 @@ This project implements solutions to the classic "Ninety-Nine Problems" in Java.
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1 - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/ninety-nine
 ```
 
-### **2 - Run a Specific Problem**
+### 2 - Run a Specific Problem
 
 ```bash
 ./gradlew run
@@ -53,7 +53,7 @@ java -cp build/classes/java/main com.rbleggi.ninetynine.P02
 java -cp build/classes/java/main com.rbleggi.ninetynine.P03
 ```
 
-### **3 - Run the Tests**
+### 3 - Run the Tests
 
 ```bash
 ./gradlew test
