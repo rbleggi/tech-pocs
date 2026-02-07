@@ -1,19 +1,19 @@
 # **Murder Mystery Game**
 
-## **Overview**
+## Overview
 
 This project implements a simple terminal-based Murder Mystery game in Java. The player interacts via commands to find clues and accuse suspects. The solution uses the Command pattern to handle user actions and game logic.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Java 21** → Modern Java with records and pattern matching features.
 - **Gradle** → Official build tool for Java projects.
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -42,22 +42,22 @@ classDiagram
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1 - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/murder-mistery-game
 ```
 
-### **2 - Compile and Run the Application**
+### 2 - Compile and Run the Application
 
 ```bash
 ./gradlew run
 ```
 
-### **3 - (Optional) Run the Tests**
+### 3 - (Optional) Run the Tests
 
 ```bash
 ./gradlew test

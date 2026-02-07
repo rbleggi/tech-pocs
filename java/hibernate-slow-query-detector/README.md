@@ -1,15 +1,15 @@
 # **Hibernate Slow Query Detector (Java)**
 
-## **Overview**
+## Overview
 
 This project demonstrates a Hibernate Slow Query Detector in Java. The solution uses the Observer Pattern to monitor query execution times and notify observers when a query exceeds a configurable threshold. All logic is contained in a single file.
 
-## **Tech Stack**
+## Tech Stack
 
 - **Java 21** → Modern Java with functional programming features
 - **Gradle** → Build tool
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -44,7 +44,7 @@ classDiagram
     EmailNotifier ..|> QueryObserver
 ```
 
-## **Implementation Details**
+## Implementation Details
 
 - The solution uses the Observer Pattern: observers are notified when a query is slow.
 - The `QueryObserver` interface defines the contract for notification handlers.
@@ -56,22 +56,22 @@ classDiagram
 - The main entry point demonstrates slow query detection with multiple queries.
 - All logic is in a single Java file.
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1️ - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/hibernate-slow-query-detector
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
 ```bash
 ./gradlew run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
 ```bash
 ./gradlew test
