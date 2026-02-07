@@ -13,25 +13,25 @@ Each solution aims for clarity, efficiency, and correctness. Feel free to explor
 
 ### 1. Clone the Repository
 
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/euler
 ```
 
 ### 2. Compile
 
-```shell
+```bash
 ./gradlew build
 ```
 
 ### 3. Run All Problems
 
-```shell
+```bash
 ./gradlew run
 ```
 
 ### 4. Run Individual Problems
 
-```shell
+```bash
 ./gradlew run --args="P01"
 ```

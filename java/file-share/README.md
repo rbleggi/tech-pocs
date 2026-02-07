@@ -1,15 +1,15 @@
 # **FileShare System**
 
-## **Overview**
+## Overview
 
 This project implements a **flexible and maintainable file-sharing system** using the **Command Pattern**. Users can save files, restore files, delete files, list all files, and search for specific files. The system also supports undo and redo functionality for all actions.
 
-## **Tech Stack**
+## Tech Stack
 
 - **Java 25** → Modern JVM-based language with records and enhanced features.
 - **Gradle** → Build automation tool.
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -86,23 +86,23 @@ classDiagram
     CommandInvoker --> Command: invokes
 ```
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1 - Clone the Repository**
+### 1 - Clone the Repository
 
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/file-share
 ```
 
-### **2 - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
-```shell
+```bash
 ./gradlew run
 ```
 
-### **3 - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```
