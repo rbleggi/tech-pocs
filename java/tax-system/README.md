@@ -1,23 +1,20 @@
-# TAX System
+# **TAX System**
 
 ## Overview
 
-This project demonstrates a **dynamic tax calculation system** where different products are subject to **varying tax rates** based on **state and year**. The system follows the **Specification Pattern**, ensuring that tax rules are **modular, extensible, and easily adaptable** to changes.
+This project demonstrates a dynamic tax calculation system where different products are subject to varying tax rates based on state and year. The system follows the Specification Pattern, ensuring that tax rules are modular, extensible, and easily adaptable to changes.
+
+---
 
 ## Tech Stack
 
-- **Java 21** → Modern Java with records and pattern matching
-- **Gradle** → Build tool
-- **JUnit 5** → Testing framework
+- **Java 25** → Modern Java with records and pattern matching.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
 
-## Features
-- **Product-based Taxation** → Different products have distinct tax rates
-- **State-Specific Taxes** → Each state defines its own tax rules
-- **Yearly Tax Updates** → Tax rates change depending on the year
-- **Specification Pattern** → Decouples tax rules from business logic
-- **Encapsulation** → Each tax rule is **self-contained**, making the system easy to extend
+---
 
-## Architecture
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -56,11 +53,7 @@ classDiagram
    DefaultTaxSpecification --> TaxConfiguration : contains
 ```
 
-## Specification Pattern
-The **Specification Pattern** is used to **encapsulate business rules** for tax calculations. Instead of hardcoding tax logic in a central place, the system:
--  **Uses `TaxSpecification` as an interface** defining the tax contract
--  **Implements `DefaultTaxSpecification`** for dynamically applying the correct tax rule
--  **Delegates tax calculation responsibility to each specification**, ensuring that **business rules remain encapsulated**
+---
 
 ## Setup Instructions
 
@@ -70,10 +63,9 @@ git clone https://github.com/rbleggi/tech-pocs.git
 cd java/tax-system
 ```
 
-### 2 - Build & Run the Application
+### 2 - Compile & Run the Application
 ```bash
-./gradlew build
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
