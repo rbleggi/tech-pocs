@@ -2,15 +2,17 @@
 
 ## Overview
 
-This project implements a **custom guitar builder system** that allows users to flexibly create personalized guitars by specifying attributes such as **type, model, specifications, and operating system (OS)**. It also includes an **inventory management system**, tracking available guitars and their quantities.
+This project implements a custom guitar builder system that allows users to flexibly create personalized guitars by specifying attributes such as type, model, specifications, and operating system. It also includes an inventory management system, tracking available guitars and their quantities.
 
-The project utilizes the **Builder Pattern** to streamline guitar creation with flexibility and readability and uses a **Singleton Pattern** for centralized, consistent inventory management.
+---
 
 ## Tech Stack
 
 - **Java 25** → Modern JVM-based language with enhanced features.
 - **Gradle** → Build automation tool.
-- **JUnit 5** → Testing framework.
+- **JDK 25** → Required to run the application.
+
+---
 
 ## Architecture Diagram
 
@@ -57,6 +59,8 @@ classDiagram
     Guitar -- Builder: inner class
 ```
 
+---
+
 ## Setup Instructions
 
 ### 1 - Clone the Repository
@@ -69,7 +73,7 @@ cd java/guitar-factory
 ### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
