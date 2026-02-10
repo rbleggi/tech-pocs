@@ -1,24 +1,20 @@
-# Calendar System
+# **Calendar System**
 
 ## Overview
 
-This project implements a **meeting scheduling system** using the **Command Pattern**. It supports booking meetings, detecting conflicts, managing attendees, and ensuring no double-booking occurs.
+This project implements a meeting scheduling system using the Command Pattern. It supports booking meetings, detecting conflicts, managing attendees, and ensuring no double-booking occurs.
+
+---
 
 ## Tech Stack
 
-- **Java 21** → Modern Java with records and enhanced features
-- **Gradle** → Build tool
-- **JUnit 5** → Testing framework
+- **Java 25** → Modern Java with records and enhanced features.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
 
-## Features
+---
 
-- **Command Pattern** → All calendar operations as commands
-- **Conflict Detection** → Prevents double-booking of attendees
-- **Multi-User Support** → Manage meetings for multiple users
-- **Meeting Management** → Book, remove, and list meetings
-- **Time Slot Validation** → Automatic overlap checking
-
-## Architecture
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -72,14 +68,7 @@ classDiagram
     Meeting --> User
 ```
 
-## Command Pattern
-
-The **Command Pattern** provides flexible calendar operations:
-
-- Each calendar action is a command
-- Commands are executed through an invoker
-- Easy to add new operations (suggest time, reschedule, etc.)
-- Clean separation between request and execution
+---
 
 ## Setup Instructions
 
@@ -89,10 +78,9 @@ git clone https://github.com/rbleggi/tech-pocs.git
 cd java/calendar
 ```
 
-### 2 - Build & Run the Application
+### 2 - Compile & Run the Application
 ```bash
-./gradlew build
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
