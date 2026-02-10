@@ -1,13 +1,18 @@
-# Java HTTP Server
+# **Java HTTP Server**
 
 ## Overview
 
 This project implements a simple and extensible HTTP server in Java using the Strategy Pattern. It supports custom GET endpoints and demonstrates how to compose route handlers in a clean, extensible way.
 
+---
+
 ## Tech Stack
 
-- **Java 25** → Modern Java with functional programming features
-- **Gradle** → Build tool
+- **Java 25** → Modern Java with functional programming features.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
+
+---
 
 ## Architecture Diagram
 
@@ -37,6 +42,8 @@ classDiagram
     Main --> GetRouteHandler
 ```
 
+---
+
 ## Setup Instructions
 
 ### 1 - Clone the Repository
@@ -46,7 +53,7 @@ git clone https://github.com/rbleggi/tech-pocs.git
 cd java/http-server
 ```
 
-### 2 - Build & Run the Application
+### 2 - Compile & Run the Application
 
 ```bash
 ./gradlew build run
