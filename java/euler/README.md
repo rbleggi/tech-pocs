@@ -1,37 +1,66 @@
-# Project Euler Problems in Java
+# **Project Euler Problems**
 
-This repository contains solutions to mathematical and computational problems from [Project Euler](https://projecteuler.net/), implemented in Java.
+## Overview
 
-Each solution aims for clarity, efficiency, and correctness. Feel free to explore, run, and contribute!
+This repository contains solutions to mathematical and computational problems from Project Euler, implemented in Java.
+
+---
 
 ## Tech Stack
 
-- **Java 21** – Modern Java with streams and functional programming features
-- **Gradle** – Build automation tool
+- **Java 25** → Modern Java with streams and functional programming features.
+- **Gradle** → Build automation tool.
+- **JDK 25** → Required to run the application.
 
-## How to Run
+---
 
-### 1. Clone the Repository
+## Architecture Diagram
+
+```mermaid
+classDiagram
+    direction TB
+
+    class Problem {
+        <<interface>>
+        +solve(): long
+    }
+
+    class P01 {
+        +solve(): long
+    }
+
+    class P02 {
+        +solve(): long
+    }
+
+    class Main {
+        +main(): void
+    }
+
+    Problem <|.. P01
+    Problem <|.. P02
+    Main --> Problem
+```
+
+---
+
+## Setup Instructions
+
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/euler
 ```
 
-### 2. Compile
+### 2 - Compile & Run the Application
 
 ```bash
-./gradlew build
+./gradlew build run
 ```
 
-### 3. Run All Problems
+### 3 - Run Tests
 
 ```bash
-./gradlew run
-```
-
-### 4. Run Individual Problems
-
-```bash
-./gradlew run --args="P01"
+./gradlew test
 ```
