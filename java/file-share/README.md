@@ -4,10 +4,15 @@
 
 This project implements a **flexible and maintainable file-sharing system** using the **Command Pattern**. Users can save files, restore files, delete files, list all files, and search for specific files. The system also supports undo and redo functionality for all actions.
 
+---
+
 ## Tech Stack
 
 - **Java 25** → Modern JVM-based language with records and enhanced features.
 - **Gradle** → Build automation tool.
+- **JDK 25** → Required to run the application.
+
+---
 
 ## Architecture Diagram
 
@@ -86,6 +91,8 @@ classDiagram
     CommandInvoker --> Command: invokes
 ```
 
+---
+
 ## Setup Instructions
 
 ### 1 - Clone the Repository
@@ -98,7 +105,7 @@ cd java/file-share
 ### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
