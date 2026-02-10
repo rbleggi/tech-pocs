@@ -4,10 +4,15 @@
 
 This project implements a **flexible and maintainable grocery TODO list system** using the **Command Pattern**. Users can add items, remove items, mark items as done, undo actions, redo actions, and list all items - all through a simple, unified interface.
 
+---
+
 ## Tech Stack
 
 - **Java 25** → Modern JVM-based language with enhanced features.
 - **Gradle** → Build automation tool.
+- **JDK 25** → Required to run the application.
+
+---
 
 ## Architecture Diagram
 
@@ -72,6 +77,8 @@ classDiagram
     CommandInvoker --> GroceryManager: modifies
 ```
 
+---
+
 ## Setup Instructions
 
 ### 1 - Clone the Repository
@@ -84,7 +91,7 @@ cd java/grocery-todo-list
 ### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
