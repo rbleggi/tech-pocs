@@ -4,10 +4,15 @@
 
 A minimal local clone of dontpad.com. Each URL (e.g., `/mypage`) represents a separate document. When you open a document, all its text is loaded and shown for copying/editing. Any new text you enter is appended after the existing content.
 
+---
+
 ## Tech Stack
 
 - **Java 25** → Modern Java with records and pattern matching.
 - **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
+
+---
 
 ## Architecture Diagram
 
@@ -55,6 +60,8 @@ classDiagram
     main ..> Command
 ```
 
+---
+
 ## Setup Instructions
 
 ### 1 - Clone the Repository
@@ -67,7 +74,7 @@ cd java/dont-pad
 ### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
