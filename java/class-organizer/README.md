@@ -4,10 +4,15 @@
 
 This project implements a **flexible and maintainable class organizer/optimizer** for teachers using the **Observer Pattern** in **Java**. Teachers and admins are notified of schedule changes, and the system helps optimize class allocations.
 
+---
+
 ## Tech Stack
 
-- **Java 21** → Modern Java with records and pattern matching.
+- **Java 25** → Modern Java with records and pattern matching.
 - **Gradle** → Build tool for JVM projects.
+- **JDK 25** → Required to run the application.
+
+---
 
 ## Architecture Diagram
 
@@ -57,6 +62,8 @@ classDiagram
     Teacher --> Schedule: observes
 ```
 
+---
+
 ## Setup Instructions
 
 ### 1 - Clone the Repository
@@ -69,8 +76,7 @@ cd java/class-organizer
 ### 2 - Compile & Run the Application
 
 ```bash
-./gradlew build
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
