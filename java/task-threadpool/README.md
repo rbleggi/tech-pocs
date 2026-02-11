@@ -1,4 +1,4 @@
-# Task ThreadPool (Java)
+# **Task ThreadPool**
 
 ## Overview
 
@@ -8,8 +8,9 @@ A modular Java PoC for concurrent task execution using a custom thread pool. Dem
 
 ## Tech Stack
 
-- **Java 21** → Modern Java with enhanced concurrency features.
+- **Java 25** → Modern Java with enhanced concurrency features.
 - **Gradle** → Build tool for Java projects.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -43,19 +44,19 @@ classDiagram
 
 ### 1 - Clone the Repository
 
-```cmd
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd java\task-threadpool
+cd java/task-threadpool
 ```
 
 ### 2 - Compile & Run the Application
 
-```cmd
-gradlew.bat run
+```bash
+./gradlew build run
 ```
 
 ### 3 - Run Tests
 
-```cmd
-gradlew.bat test
+```bash
+./gradlew test
 ```
