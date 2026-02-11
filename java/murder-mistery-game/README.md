@@ -8,8 +8,9 @@ This project implements a simple terminal-based Murder Mystery game in Java. The
 
 ## Tech Stack
 
-- **Java 21** → Modern Java with records and pattern matching features.
+- **Java 25** → Modern Java with records and pattern matching features.
 - **Gradle** → Official build tool for Java projects.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -51,13 +52,13 @@ git clone https://github.com/rbleggi/tech-pocs.git
 cd java/murder-mistery-game
 ```
 
-### 2 - Compile and Run the Application
+### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
-### 3 - (Optional) Run the Tests
+### 3 - Run Tests
 
 ```bash
 ./gradlew test
