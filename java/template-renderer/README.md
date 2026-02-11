@@ -1,11 +1,16 @@
-# Template Renderer Project
+# **Template Renderer**
 
 ## Overview
 
-This project follows an **Object-Oriented Design (OOP)** approach to generate templates in **HTML, CSV, and PDF** formats. It uses:
+This project follows an Object-Oriented Design approach to generate templates in HTML, CSV, and PDF formats.
 
-- **Java 21** → Modern Java with enhanced language features.
-- **iText** → A library for PDF generation.
+---
+
+## Tech Stack
+
+- **Java 25** → Modern Java with enhanced language features.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -52,18 +57,21 @@ classDiagram
 
 ## Setup Instructions
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/rbleggi/tech-pocs.git
-   cd java/template-renderer
-   ```
+### 1 - Clone the Repository
 
-2. **Compiling & Running**:
-   ```bash
-   ./gradlew build run
-   ```
+```bash
+git clone https://github.com/rbleggi/tech-pocs.git
+cd java/template-renderer
+```
 
-3. **Tests**:
-   ```sh
-   ./gradlew test
-   ```
+### 2 - Compile & Run the Application
+
+```bash
+./gradlew build run
+```
+
+### 3 - Run Tests
+
+```bash
+./gradlew test
+```
