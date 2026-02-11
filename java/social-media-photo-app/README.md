@@ -1,20 +1,20 @@
 # **Social Media Sharing Photo App**
 
-## **Overview**
+## Overview
 
 A modular social media photo sharing PoC in Java, demonstrating core features (publish, tag, timeline, comments) and event-driven notifications using the **Observer Pattern**. Followers are notified when users publish, tag, or comment on photos.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Java 21** → Modern Java with sealed interfaces and pattern matching.
+- **Java 25** → Modern Java with sealed interfaces and pattern matching.
 - **Gradle** → Build automation tool for Java projects.
-- **JDK 21** → Required to run the application.
+- **JDK 25** → Required to run the application.
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -90,23 +90,22 @@ classDiagram
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1 - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd java/social-media-photo-app
 ```
 
-### **2 - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
 ```bash
-./gradlew build
-./gradlew run
+./gradlew build run
 ```
 
-### **3 - Run Tests**
+### 3 - Run Tests
 
 ```bash
 ./gradlew test
