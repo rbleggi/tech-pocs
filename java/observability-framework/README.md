@@ -1,8 +1,16 @@
-# Observability Framework
+# **Observability Framework**
 
 ## Overview
 
-This project implements a simple and extensible framework for latency observability using the **Strategy Pattern** in Java. It allows you to define different latency calculation strategies and manage multiple metric trackers flexibly.
+This project implements a simple and extensible framework for latency observability using the Strategy Pattern in Java. It allows you to define different latency calculation strategies and manage multiple metric trackers flexibly.
+
+---
+
+## Tech Stack
+
+- **Java 25** → Modern Java with enhanced features.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -47,18 +55,21 @@ classDiagram
 
 ## Setup Instructions
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/rbleggi/tech-pocs.git
-   cd java/observability-framework
-   ```
+### 1 - Clone the Repository
 
-2. **Compiling & Running**:
-   ```bash
-   ./gradlew build run
-   ```
+```bash
+git clone https://github.com/rbleggi/tech-pocs.git
+cd java/observability-framework
+```
 
-3. **Tests**:
-   ```bash
-   ./gradlew test
-   ```
+### 2 - Compile & Run the Application
+
+```bash
+./gradlew build run
+```
+
+### 3 - Run Tests
+
+```bash
+./gradlew test
+```
