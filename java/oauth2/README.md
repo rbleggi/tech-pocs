@@ -1,15 +1,16 @@
-# **OAuth 2.0 Server (Java)**
+# **OAuth 2.0 Server**
 
 ## Overview
 
-This project demonstrates a minimal **OAuth 2.0 Server** in **Java** using the **Factory Pattern** to handle extensible grant types. The solution allows easy addition of new OAuth 2.0 flows and contains all logic in a single file.
+This project demonstrates a minimal OAuth 2.0 Server in Java using the Factory Pattern to handle extensible grant types. The solution allows easy addition of new OAuth 2.0 flows and contains all logic in a single file.
 
 ---
 
 ## Tech Stack
 
-- **Java 21** → Modern Java with switch expressions and pattern matching.
+- **Java 25** → Modern Java with switch expressions and pattern matching.
 - **Gradle** → Build tool for Java projects.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -60,8 +61,7 @@ cd java/oauth2
 ### 2 - Compile & Run the Application
 
 ```bash
-./gradlew build
-./gradlew run
+./gradlew build run
 ```
 
 ### 3 - Run Tests
