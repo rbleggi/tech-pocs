@@ -1,150 +1,63 @@
-# Streams Comprehensive Guide
+# **Streams Comprehensive Guide**
 
-POC demonstrating Java Stream API with comprehensive examples.
+## Overview
 
-## What are Streams?
+A comprehensive guide demonstrating Java Stream API with examples including stream creation, filter/map/reduce, flatMap, collectors, grouping/partitioning, sorting, matching, numeric streams, parallel streams, and advanced operations.
 
-Streams provide a functional approach to processing collections. They support operations like filter, map, reduce in a declarative way.
+---
 
-## Examples Included
+## Tech Stack
 
-### 1. Stream Creation
-- From collections (List, Set)
-- From arrays
-- From values (Stream.of)
-- Generated streams
-- Iterate streams
+- **Java 25** → Modern Java with Stream API and functional programming features.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
 
-### 2. Filter, Map, Reduce
-- `filter()` - Select elements
-- `map()` - Transform elements
-- `reduce()` - Combine elements
-- Terminal operations
+---
 
-### 3. FlatMap
-- Flatten nested structures
-- Stream of streams to single stream
-- Split strings into words
+## Architecture Diagram
 
-### 4. Collectors
-- `toList()`, `toSet()`
-- `joining()` - String concatenation
-- `toMap()` - Collection to map
-- Custom collectors
+```mermaid
+classDiagram
+    direction TB
 
-### 5. Grouping and Partitioning
-- `groupingBy()` - Group by key
-- `partitioningBy()` - Split by condition
-- Downstream collectors
-- Counting within groups
+    class Stream~T~ {
+        <<interface>>
+        +filter(Predicate): Stream~T~
+        +map(Function): Stream~R~
+        +flatMap(Function): Stream~R~
+        +collect(Collector): R
+        +reduce(BinaryOperator): Optional~T~
+    }
 
-### 6. Sorting and Distinct
-- `sorted()` - Natural order
-- `sorted(Comparator)` - Custom order
-- `distinct()` - Remove duplicates
-- Case-insensitive sorting
+    class Collectors {
+        <<utility>>
+        +toList(): Collector
+        +groupingBy(Function): Collector
+        +partitioningBy(Predicate): Collector
+    }
 
-### 7. Matching and Finding
-- `anyMatch()` - At least one
-- `allMatch()` - All elements
-- `noneMatch()` - No elements
-- `findFirst()`, `findAny()`
+    Stream --> Collectors
+```
 
-### 8. Numeric Streams
-- `IntStream`, `LongStream`, `DoubleStream`
-- `range()`, `rangeClosed()`
-- `sum()`, `average()`, `max()`, `min()`
-- `summaryStatistics()`
+---
 
-### 9. Parallel Streams
-- `parallelStream()` - Concurrent processing
-- Performance considerations
-- Thread safety
-- When to use parallel
+## Setup Instructions
 
-### 10. Advanced Operations
-- `peek()` - Debugging
-- `limit()`, `skip()` - Pagination
-- `takeWhile()`, `dropWhile()` - Conditional limits
-- Stream pipeline optimization
-
-## Build and Run
+### 1 - Clone the Repository
 
 ```bash
-./gradlew run
+git clone https://github.com/rbleggi/tech-pocs.git
+cd java/streams-comprehensive
 ```
 
-## Key Concepts
+### 2 - Compile & Run the Application
 
-### Stream Operations
-
-**Intermediate** (return Stream):
-- `filter()`, `map()`, `flatMap()`
-- `distinct()`, `sorted()`, `limit()`, `skip()`
-- `peek()`, `takeWhile()`, `dropWhile()`
-
-**Terminal** (produce result):
-- `collect()`, `reduce()`, `forEach()`
-- `count()`, `min()`, `max()`
-- `anyMatch()`, `allMatch()`, `noneMatch()`
-- `findFirst()`, `findAny()`
-
-### Lazy Evaluation
-
-Streams are lazy - intermediate operations are not executed until a terminal operation is called.
-
-### Short-Circuiting
-
-Operations like `anyMatch()`, `findFirst()` can terminate early.
-
-## Common Patterns
-
-### Transformation Pipeline
-```java
-list.stream()
-    .filter(x -> x > 0)
-    .map(x -> x * 2)
-    .sorted()
-    .collect(Collectors.toList());
+```bash
+./gradlew build run
 ```
 
-### Grouping
-```java
-map = list.stream()
-    .collect(Collectors.groupingBy(
-        Item::getCategory,
-        Collectors.counting()
-    ));
+### 3 - Run Tests
+
+```bash
+./gradlew test
 ```
-
-### Reduction
-```java
-sum = numbers.stream()
-    .reduce(0, (a, b) -> a + b);
-```
-
-## Benefits
-
-1. **Declarative** - What, not how
-2. **Composable** - Chain operations
-3. **Parallel** - Easy parallelization
-4. **Lazy** - Efficient evaluation
-5. **Functional** - Immutable data
-
-## Performance Tips
-
-- Avoid boxing/unboxing (use IntStream)
-- Parallel for large datasets
-- Short-circuit when possible
-- Reusable streams are not allowed
-- Consider collectors overhead
-
-## Use Cases
-
-- Data transformation
-- Filtering collections
-- Aggregation
-- Grouping/partitioning
-- Bulk operations
-- Report generation
-
