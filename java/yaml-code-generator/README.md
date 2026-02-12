@@ -1,15 +1,16 @@
-# YAML Code Generator
+# **YAML Code Generator**
 
 ## Overview
 
-A **code generation framework** that converts YAML definitions into data class code. It uses the **Strategy Pattern** to enable flexible code generation strategies, making it easy to extend for different target languages or code styles.
+A code generation framework that converts YAML definitions into data class code. It uses the Strategy Pattern to enable flexible code generation strategies, making it easy to extend for different target languages or code styles.
 
 ---
 
 ## Tech Stack
 
-- **Java 21** → Modern Java with enhanced language features.
+- **Java 25** → Modern Java with enhanced language features.
 - **Gradle** → Build tool with support for Java projects.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -48,18 +49,12 @@ cd java/yaml-code-generator
 
 ### 2 - Compile & Run the Application
 
-```shell
-./gradlew run
+```bash
+./gradlew build run
 ```
 
-### 3 - Build JAR
+### 3 - Run Tests
 
-```shell
-./gradlew jar
-```
-
-### 4 - Run Tests
-
-```shell
+```bash
 ./gradlew test
 ```
