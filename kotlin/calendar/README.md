@@ -1,30 +1,20 @@
 # **Calendar System (Kotlin)**
 
-## **Overview**
+## Overview
 
-This project implements a **flexible and maintainable calendar system** using the **Command Pattern** in **Kotlin**. Users can book meetings, remove meetings, list meetings, and suggest the best time for two people to meet. The system also supports undo and redo functionality for all actions.
+This project implements a flexible and maintainable calendar system in Kotlin. Users can book meetings, remove meetings, list meetings, and suggest the best time for two people to meet. The system also supports undo and redo functionality for all actions.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
 - **Gradle** → Kotlin's build tool for JVM projects.
-- **JDK 21** → Required to run the application.
+- **JDK 25** → Required to run the application.
 
 ---
 
-## **Features**
-
-- **Meeting Management** → Book, remove, list, and suggest meeting times.
-- **Command Pattern** → Actions are encapsulated as commands for easy extension.
-- **Conflict Detection** → Prevents booking conflicting meetings.
-- **Suggestion Engine** → Suggests optimal meeting times based on availability.
-- **Undo/Redo** → All actions support undo and redo.
-
----
-
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -97,36 +87,23 @@ classDiagram
 
 ---
 
-## **Command Pattern**
+## Setup Instructions
 
-The **Command Pattern** encapsulates requests as objects, allowing:
+### 1 - Clone the Repository
 
-- Each calendar action is implemented as a separate `Command`
-- `CalendarInvoker` executes commands and manages undo/redo
-- Commands know how to execute and undo themselves
-- Easy extension with new commands without modifying existing code
-- Clean separation between the invoker and the receiver
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/calendar
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
-```shell
-./gradlew build
-./gradlew run
+```bash
+./gradlew build run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```
