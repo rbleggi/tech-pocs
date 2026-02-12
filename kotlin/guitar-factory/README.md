@@ -1,32 +1,20 @@
-# **Guitar Factory**
+# **Guitar Factory (Kotlin)**
 
-## **Overview**
+## Overview
 
-This project implements a **custom guitar factory system** that allows users to flexibly create personalized guitars by specifying attributes such as **type, model, specifications, and operating system (OS)**. It also includes an **inventory management system**, tracking available guitars and their quantities.
-
-The project utilizes the **Builder Pattern** to streamline guitar creation with flexibility and readability and uses a **Singleton Pattern** for centralized, consistent inventory management.
+This project implements a custom guitar factory system that allows users to flexibly create personalized guitars by specifying attributes such as type, model, specifications, and operating system. It also includes an inventory management system, tracking available guitars and their quantities.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
 - **Gradle** → Build automation tool for Kotlin projects.
-- **JDK 21** → Required to run the application.
+- **JDK 25** → Required to run the application.
 
 ---
 
-## **Features**
-
-- **Flexible Guitar Creation** → Users specify guitar attributes dynamically.
-- **Inventory Management** → Tracks available guitars and stock levels.
-- **Builder Pattern** → Simplifies the creation of guitars through a fluent interface.
-- **Singleton Inventory** → Ensures centralized and consistent stock control.
-- **Scalability** → Easily extendable to accommodate additional guitar attributes.
-
----
-
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -65,40 +53,23 @@ classDiagram
 
 ---
 
-## **Builder Pattern**
+## Setup Instructions
 
-The **Builder Pattern** simplifies creating guitars with various attributes without needing separate subclasses for each guitar type. It provides a fluent API that:
+### 1 - Clone the Repository
 
-- **Allows chaining methods** to set guitar attributes (`type`, `model`, `specs`, `os`).
-- **Encapsulates construction logic** within the `GuitarBuilder`, separating it from the `Guitar` class itself.
-- **Produces immutable `Guitar` instances** after calling the `build()` method.
-
----
-
-## **Singleton Pattern**
-
-The **Singleton Pattern** ensures a single, consistent inventory system (`GuitarInventory`) is available throughout the application's lifecycle. This prevents inconsistencies and duplicate inventories, ensuring that all operations (add, remove, list) interact with the same shared data source.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/guitar-factory
 ```
 
-### **2️ - Build & Run the Application**
+### 2 - Compile & Run the Application
 
-```shell
-./gradlew build
-./gradlew run
+```bash
+./gradlew build run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```
