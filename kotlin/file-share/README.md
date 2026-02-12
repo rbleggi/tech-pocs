@@ -1,26 +1,16 @@
-# File Share (Kotlin)
+# **File Share (Kotlin)**
 
 ## Overview
 
-A secure file sharing system using the Factory and Observer patterns. Supports file upload, download, delete, list, and search, with encrypted storage and event notifications.
+A secure file sharing system in Kotlin. Supports file upload, download, delete, list, and search, with encrypted storage and event notifications.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin**
-- **Gradle**
-- **JDK 21+**
-
----
-
-## Features
-
-- Upload, download, delete, list, and search files
-- Encrypted file storage
-- Factory pattern for file storage backends
-- Observer pattern for event notifications
-- Extensible for new storage types and observers
+- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
+- **Gradle** → Build automation tool.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -68,20 +58,20 @@ classDiagram
 
 ## Setup Instructions
 
-### 1️ - Clone the Repository
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/file-share
 ```
 
-### 2️ - Compile and Run the Application
+### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
-### 3️ - (Optional) Run the Tests
+### 3 - Run Tests
 
 ```bash
 ./gradlew test
