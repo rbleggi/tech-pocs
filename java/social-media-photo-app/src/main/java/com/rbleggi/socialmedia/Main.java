@@ -5,17 +5,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        var alice = new User("Alice");
-        var bob = new Follower("Bob");
-        var charlie = new Follower("Charlie");
-
-        alice.registerObserver(bob);
-        alice.registerObserver(charlie);
-
-        var photo1 = new Photo("1", "http://photos.com/1", List.of());
-        alice.publishPhoto(photo1);
-        alice.tagUser(photo1, "Charlie");
-        alice.commentPhoto(photo1, new Comment("Bob", "Nice photo!"));
+        public static void main(String[] args) {
+            System.out.println("Social Media Demo");
+        }
     }
 }
 
