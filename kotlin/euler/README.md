@@ -1,58 +1,54 @@
-# Project Euler Problems in Kotlin
+# **Project Euler Problems (Kotlin)**
 
-This repository contains solutions to mathematical and computational problems from [Project Euler](https://projecteuler.net/), implemented in Kotlin.
+## Overview
 
-Each solution aims for clarity, efficiency, and correctness. Feel free to explore, run, and contribute!
+This repository contains solutions to mathematical and computational problems from Project Euler, implemented in Kotlin. Each solution aims for clarity, efficiency, and correctness.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin** – Modern JVM-based language with functional programming features and null safety
-- **Gradle** – Build automation tool
-- **JDK 21** – Required to run the application
+- **Kotlin** → Modern JVM-based language with functional programming features and null safety.
+- **Gradle** → Build automation tool.
+- **JDK 25** → Required to run the application.
 
 ---
 
-## Structure
+## Architecture Diagram
 
-- Each Project Euler problem is implemented in a separate file under `src/main/kotlin/com/rbleggi/euler/`
-- Each file contains:
-  - A function solving the problem
-  - A main method demonstrating usage
-  - Comments explaining the solution where needed
-
----
-
-## Project Euler Problems
-
-This repository is dedicated to solving problems from [Project Euler](https://projecteuler.net/), a collection of challenging mathematical and computational problems. Each solution is written in Kotlin and aims to be clear and efficient.
-
-Example problems solved:
-- Problem 1: Multiples of 3 and 5
-- Problem 2: Even Fibonacci numbers
-- More problems will be added over time.
+```mermaid
+classDiagram
+    direction TB
+    class P1 {
+        +solve(): Long
+    }
+    class P2 {
+        +solve(): Long
+    }
+    class P3 {
+        +solve(): Long
+    }
+```
 
 ---
 
-## How to Run
+## Setup Instructions
 
-### 1. Clone the Repository
+### 1 - Clone the Repository
 
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/euler
 ```
 
-### 2. Compile
+### 2 - Compile & Run the Application
 
-```shell
-./gradlew build
+```bash
+./gradlew build run
 ```
 
----
+### 3 - Run Tests
 
-## References
-
-- [Project Euler](https://projecteuler.net/)
-- [Kotlin Documentation](https://kotlinlang.org/docs/home.html)
+```bash
+./gradlew test
+```
