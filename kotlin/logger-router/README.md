@@ -1,29 +1,16 @@
-# Logger Router (Kotlin)
+# **Logger Router (Kotlin)**
 
 ## Overview
 
-A flexible logging system using the **Strategy Pattern**. Supports multiple logging backends (File System, ELK, Console, Memory) with unified API and automatic fallback.
+A flexible logging system in Kotlin. Supports multiple logging backends (File System, ELK, Console, Memory) with unified API and automatic fallback.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language
-- **Gradle** → Build tool
-- **JDK 21+** → Required to run
-
----
-
-## Features
-
-- Multiple strategies: Console, File, ELK, Memory
-- Unified logging API
-- Colored output for console
-- Thread-safe file logging
-- ELK integration with health checks
-- In-memory logging for testing
-- Log level filtering (DEBUG, INFO, WARN, ERROR, FATAL)
-- Automatic fallback on strategy failure
+- **Kotlin** → Modern JVM-based language.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -52,22 +39,22 @@ classDiagram
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### **1️ - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd kotlin/murder-mistery-game
+cd kotlin/logger-router
 ```
 
-### **2️ - Compile and Run the Application**
+### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
-### **3️ - (Optional) Run the Tests**
+### 3 - Run Tests
 
 ```bash
 ./gradlew test
