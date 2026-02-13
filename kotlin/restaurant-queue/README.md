@@ -1,28 +1,20 @@
-# **Restaurant Queue**
+# **Restaurant Queue (Kotlin)**
 
-## **Overview**
+## Overview
 
-This project implements a **modular restaurant queue system** using the **Command Pattern**. Each **dish preparation** is encapsulated in a separate command that knows how long it takes to prepare. The system queues these commands and reports the total and per-dish prep time.
-
----
-
-## **Tech Stack**
-
-- **Kotlin** → Modern JVM-based language
-- **Gradle** → Build tool
-- **JDK 21** → Required to run the application.
+This project implements a modular restaurant queue system in Kotlin. Each dish preparation is encapsulated in a separate command that knows how long it takes to prepare. The system queues these commands and reports the total and per-dish prep time.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **Command Pattern** → Every dish is a self-contained command
-- **Per-Dish Time Calculation** → Each dish has its own logic
-- **Queue Execution** → Prepare dishes in order and track timing
-- **Easily Extensible** → Add more dishes without touching core logic
+- **Kotlin** → Modern JVM-based language.
+- **Gradle** → Build tool.
+- **JDK 25** → Required to run the application.
+
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -67,33 +59,22 @@ classDiagram
 
 ---
 
-## **Command Pattern**
+## Setup Instructions
 
-The **Command Pattern** lets us model each dish as a command that knows:
-
-- How to describe itself (name)
-- How long it takes to prepare (prep time)
-
-This separates dish logic from execution flow.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone the Repository
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/restaurant-queue
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
 ```bash
-./gradlew run
+./gradlew build run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
 ```bash
 ./gradlew test
