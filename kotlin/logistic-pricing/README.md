@@ -1,30 +1,20 @@
-# **Logistic Pricing**
+# **Logistic Pricing (Kotlin)**
 
-## **Overview**
+## Overview
 
-This project implements a **modular and extensible freight pricing system** using the **Strategy Pattern**. Freight costs are dynamically calculated based on factors like **volume, size, and transport type** — such as **Truck**, **Rail**, or **Boat** — with prices subject to **real-time variability**.
+This project implements a modular and extensible freight pricing system in Kotlin. Freight costs are dynamically calculated based on factors like volume, size, and transport type such as Truck, Rail, or Boat with prices subject to real-time variability.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
 - **Gradle** → Build automation tool for Kotlin projects.
-- **JDK 21** → Required to run the application.
+- **JDK 25** → Required to run the application.
 
 ---
 
-## **Features**
-
-- **Strategy-Based Price Calculation** → Easily plug in new pricing models
-- **Supports Multiple Transport Types** → Truck, Rail, Boat
-- **Dynamic Pricing** → Pricing logic is fully decoupled and runtime-driven
-- **Extensible Design** → Add more transport strategies without touching core logic
-- **Minimal Boilerplate** → No builder classes or verbose configuration
-
----
-
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -82,35 +72,23 @@ classDiagram
 
 ---
 
-## **Strategy Pattern**
+## Setup Instructions
 
-Using the **Strategy Pattern**, the pricing logic is abstracted away from the core calculator:
+### 1 - Clone the Repository
 
-1. Each transport mode implements its own `PricingStrategy`.
-2. `FreightCalculator` delegates calculation to the selected strategy.
-3. Easily swap or update strategies at runtime.
-4. No need to modify core logic when adding a new transport type or changing pricing logic.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/logistic-pricing
 ```
 
-### **2️ - Build & Run the Application**
+### 2 - Compile & Run the Application
 
-```shell
-./gradlew build
-./gradlew run
+```bash
+./gradlew build run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```
