@@ -1,29 +1,20 @@
-# **Redis Clone System**
+# **Redis Clone System (Kotlin)**
 
-## **Overview**
+## Overview
 
-This project implements a **simple in-memory Redis-like key-value store** using the **Command Pattern**. It supports basic string and map operations, similar to a minimal Redis server.
+This project implements a simple in-memory Redis-like key-value store in Kotlin. It supports basic string and map operations, similar to a minimal Redis server.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Kotlin** → Modern JVM-based language with advanced type safety and functional programming features.
 - **Gradle** → Kotlin's official build tool.
-- **JDK 21** → Required to run the application.
+- **JDK 25** → Required to run the application.
 
 ---
 
-## **Features**
-
-- **String Operations** → set, get, remove, append
-- **Map Operations** → mapset, mapget, mapkeys, mapvalues
-- **Command Pattern** → Each operation is encapsulated as a command for easy extension
-- **In-Memory Store** → All data is stored in memory (no persistence)
-
----
-
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -49,35 +40,23 @@ classDiagram
 
 ---
 
-## **Command Pattern**
+## Setup Instructions
 
-The **Command Pattern** encapsulates each operation (set, get, remove, append, mapset, mapget, mapkeys, mapvalues) as a command object. This allows:
+### 1 - Clone the Repository
 
-- Each action is implemented as a separate `Command`.
-- Easy extension with new commands without modifying existing code.
-- Clean separation between the invoker (main loop) and the receiver (`RedisStore`).
-- Simple and maintainable code structure.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/redis-clone
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Compile & Run the Application
 
-```shell
-./gradlew build
-java -jar build/libs/redis-clone.jar
+```bash
+./gradlew build run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```
