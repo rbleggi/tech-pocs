@@ -56,3 +56,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Windows reserved names ###
+NUL
+nul
+
+### Temp scripts ###
+/*.ps1
