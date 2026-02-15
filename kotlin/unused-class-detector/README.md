@@ -1,16 +1,16 @@
-# Unused Class Detector
+# **Unused Class Detector (Kotlin)**
 
 ## Overview
 
-This project detects unused Kotlin classes in source files. The program reads the file, analyzes class declarations and usages, and prints unused classes to the console using the **Visitor Pattern** for AST traversal.
+This project detects unused Kotlin classes in source files. The program reads the file, analyzes class declarations and usages, and prints unused classes to the console.
 
-## Features
+---
 
-- **Visitor Pattern** → Analysis is performed by a visitor (UnusedClassVisitor) traversing a simplified AST
-- **Class Declaration Detection** → Identifies all class declarations in source files
-- **Usage Tracking** → Tracks instantiations using regex-based pattern matching
-- **Simple Reporting** → Console output listing unused classes
-- **Minimal Interface** → Just run the program to get results
+## Tech Stack
+
+- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
+- **Gradle** → Build tool for Kotlin projects.
+- **JDK 25** → Required to run the application.
 
 ---
 
@@ -60,30 +60,23 @@ classDiagram
 
 ---
 
-## Visitor Pattern
-
-The **Visitor Pattern** allows defining operations to be performed on elements of an object structure without changing the classes of the elements. In this project:
-
-- The `UnusedClassVisitor` implements the analysis logic by traversing the simplified AST
-- The visitor analyzes class declarations and usages using regex patterns
-- New visitors can be added to perform different types of analysis without modifying existing code
-
----
-
 ## Setup Instructions
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/rbleggi/tech-pocs.git
-   cd kotlin/unused-class-detector
-   ```
+### 1 - Clone the Repository
 
-2. **Compiling & Running**:
-   ```bash
-   ./gradlew build run
-   ```
+```bash
+git clone https://github.com/rbleggi/tech-pocs.git
+cd kotlin/unused-class-detector
+```
 
-3. **Tests**:
-   ```bash
-   ./gradlew test
-   ```
+### 2 - Compile & Run the Application
+
+```bash
+./gradlew build run
+```
+
+### 3 - Run Tests
+
+```bash
+./gradlew test
+```

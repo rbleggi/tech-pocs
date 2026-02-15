@@ -1,25 +1,21 @@
-# Template Renderer Project
+# **Template Renderer (Kotlin)**
 
 ## Overview
 
-This project follows an **Object-Oriented Design (OOP)** approach to generate templates in **HTML, CSV, and PDF** formats. It uses:
+This project implements a template renderer that generates output in HTML, CSV, and PDF formats using Kotlin.
 
-- **Kotlin** → A concise, modern JVM-based language.
-- **iText** → A library for PDF generation.
+---
 
-## Features
+## Tech Stack
 
-- **HTML Rendering** → Generates HTML files.  
-- **CSV Rendering** → Generates CSV files.  
-- **PDF Rendering** → Uses iText for generating PDF files.  
-- **Factory Pattern** → Dynamically selects the correct renderer.  
-- **Encapsulation & Polymorphism** → Each renderer extends the base `TemplateRenderer` class.  
+- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
+- **Gradle** → Build tool for Kotlin projects.
+- **iText** → Library for PDF generation.
+- **JDK 25** → Required to run the application.
 
 ---
 
 ## Architecture Diagram
-
-The following **Mermaid UML Diagram** illustrates the **Object-Oriented structure** of this project:
 
 ```mermaid
 classDiagram
@@ -60,27 +56,25 @@ classDiagram
    Main --> FileUtil
 ```
 
-### **Explanation**
-- **TemplateRenderer** (Abstract Class) → Base class for all renderers.
-- **HTMLRenderer, CSVRenderer, PDFRenderer** → Implement `render()` differently based on the file format.
-- **RendererFactory** → Implements the **Factory Pattern** to return the correct renderer.
-
 ---
 
 ## Setup Instructions
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/rbleggi/tech-pocs.git
-   cd kotlin/template-renderer
-   ```
+### 1 - Clone the Repository
 
-2. **Compiling & Running**:
-   ```bash
-   ./gradlew build run
-   ```
+```bash
+git clone https://github.com/rbleggi/tech-pocs.git
+cd kotlin/template-renderer
+```
 
-3. **Tests**:
-   ```sh
-   ./gradlew test
-   ```
+### 2 - Compile & Run the Application
+
+```bash
+./gradlew build run
+```
+
+### 3 - Run Tests
+
+```bash
+./gradlew test
+```

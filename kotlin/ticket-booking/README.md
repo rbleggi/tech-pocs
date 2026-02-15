@@ -1,30 +1,20 @@
-# **Ticket Booking**
+# **Ticket Booking (Kotlin)**
 
-## **Overview**
+## Overview
 
-This project implements a **flexible and safe ticket booking system** using the **Builder Pattern**. Users can choose **zones**, **dates**, **seats**, and **shows**, while the system enforces **maximum place capacity** and prevents overbooking.
+This project implements a flexible and safe ticket booking system in Kotlin. Users can choose zones, dates, seats, and shows, while the system enforces maximum place capacity and prevents overbooking.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
 - **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
 - **Gradle** → Build automation tool for Kotlin projects.
-- **JDK 21** → Required to run the application.
+- **JDK 25** → Required to run the application.
 
 ---
 
-## **Features**
-
-- **Builder Pattern** → Flexible ticket construction via fluent API
-- **Zone & Seat Selection** → Pick specific seats from configured areas
-- **Capacity Enforcement** → No overbooking allowed per show/zone
-- **Multiple Shows Support** → Maintain date- and show-specific logic
-- **Easy to Extend** → Add pricing, QR codes, or validation later
-
----
-
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -68,35 +58,23 @@ classDiagram
 
 ---
 
-## **Builder Pattern**
+## Setup Instructions
 
-The **Builder Pattern** provides a fluent interface for building a ticket with many required parameters:
+### 1 - Clone the Repository
 
-1. Choose the show, zone, seat, and date
-2. The builder validates it through a **PlaceCapacity** registry
-3. If valid, it returns a `Ticket` object — if not, it throws an error
-4. All logic is **encapsulated**, so clients don't deal with constraints directly
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/ticket-booking
 ```
 
-### **2️ - Build & Run the Application**
+### 2 - Compile & Run the Application
 
-```shell
-./gradlew build
-./gradlew run
+```bash
+./gradlew build run
 ```
 
-### **3️ - Run Tests**
+### 3 - Run Tests
 
-```shell
+```bash
 ./gradlew test
 ```
