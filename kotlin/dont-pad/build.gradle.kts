@@ -14,9 +14,13 @@ application {
     mainClass = "com.rbleggi.dontpad.Main"
 }
 
+dependencies {
+    testImplementation(kotlin("test"))
+}
+
 tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(24)
+    jvmToolchain(23)
 }
