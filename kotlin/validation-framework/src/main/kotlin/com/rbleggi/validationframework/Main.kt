@@ -33,8 +33,5 @@ class UserValidator : Validator<User> {
 }
 
 fun main() {
-    val user = User(null, "a@b.com")
-    val validator = UserValidator()
-    val errors = validator.validate(user)
-    println(errors)
+    println("Validation Framework POC")
 }

@@ -27,7 +27,7 @@ class Guitar private constructor(
     }
 }
 
-object GuitarInventory {
+class GuitarInventory {
     private val inventory = mutableMapOf<Guitar, Int>()
 
     fun addGuitar(guitar: Guitar, quantity: Int = 1) {
@@ -43,38 +43,15 @@ object GuitarInventory {
         }
     }
 
-    fun listInventory() {
-        if (inventory.isEmpty()) {
-            println("Inventory is empty.")
-        } else {
-            println("Current Inventory:")
-            inventory.forEach { (guitar, qty) ->
-                println("$guitar | Quantity: $qty")
-            }
-        }
-    }
+    fun getQuantity(guitar: Guitar): Int = inventory.getOrDefault(guitar, 0)
+
+    fun contains(guitar: Guitar): Boolean = inventory.containsKey(guitar)
+
+    fun isEmpty(): Boolean = inventory.isEmpty()
+
+    fun listInventory(): List<Pair<Guitar, Int>> = inventory.toList()
 }
 
 fun main() {
-    val strat = Guitar.Builder()
-        .type("Electric")
-        .model("Stratocaster")
-        .specs("Alder body, Maple neck, 3 single-coil pickups")
-        .os("CustomOS v1.0")
-        .build()
-
-    val lesPaul = Guitar.Builder()
-        .type("Electric")
-        .model("Les Paul")
-        .specs("Mahogany body, Maple top, 2 humbuckers")
-        .os("CustomOS v2.0")
-        .build()
-
-    GuitarInventory.addGuitar(strat, 5)
-    GuitarInventory.addGuitar(lesPaul, 3)
-    GuitarInventory.listInventory()
-
-    GuitarInventory.removeGuitar(strat, 2)
-    println("\nAfter removing 2 Stratocasters:")
-    GuitarInventory.listInventory()
+    println("Guitar Factory POC")
 }

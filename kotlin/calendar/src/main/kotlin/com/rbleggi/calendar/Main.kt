@@ -134,33 +134,5 @@ class CalendarInvoker {
 }
 
 fun main() {
-    val calendar = Calendar()
-    val invoker = CalendarInvoker()
-    val user1 = User("1", "Alice")
-    val user2 = User("2", "Bob")
-    val meeting = Meeting(
-        title = "Discuss Project",
-        start = LocalDateTime.now().plusHours(1),
-        end = LocalDateTime.now().plusHours(2),
-        attendees = setOf(user1, user2)
-    )
-    println("Book meeting: " + invoker.execute(BookMeetingCommand(calendar, meeting)))
-    println("List meetings for Alice: " + invoker.execute(ListMeetingsCommand(calendar, user1)))
-    println(
-        "Suggest best time for Alice and Bob: " + invoker.execute(
-            SuggestBestTimeCommand(
-                calendar,
-                user1,
-                user2,
-                60
-            )
-        )
-    )
-
-    println("Remove meeting: " + invoker.execute(RemoveMeetingCommand(calendar, meeting.id)))
-    println("List meetings for Alice after removal: " + invoker.execute(ListMeetingsCommand(calendar, user1)))
-    println("Undo remove meeting: " + invoker.undo())
-    println("List meetings for Alice after undo: " + invoker.execute(ListMeetingsCommand(calendar, user1)))
-    println("Redo remove meeting: " + invoker.redo())
-    println("List meetings for Alice after redo: " + invoker.execute(ListMeetingsCommand(calendar, user1)))
+    println("Calendar POC")
 }
