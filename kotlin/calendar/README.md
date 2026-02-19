@@ -2,15 +2,16 @@
 
 ## Overview
 
-This project implements a flexible and maintainable calendar system in Kotlin. Users can book meetings, remove meetings, list meetings, and suggest the best time for two people to meet. The system also supports undo and redo functionality for all actions.
+Calendar system demonstrating the **Command Pattern** with meeting booking, conflict detection, and undo/redo functionality for all operations.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Kotlin's build tool for JVM projects.
-- **JDK 25** → Required to run the application.
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety
+- **Gradle** → Build automation tool
+- **JDK 25** → Required to run the application
+- **kotlin.test** → Testing framework
 
 ---
 
@@ -22,7 +23,7 @@ classDiagram
 
     class Command {
         <<interface>>
-        +execute(): Any
+        +execute(): Any?
         +undo(): Any
     }
 
@@ -40,14 +41,14 @@ classDiagram
 
     class ListMeetingsCommand {
         -user: User
-        +execute(): List<Meeting>
+        +execute(): List~Meeting~
     }
 
     class SuggestBestTimeCommand {
         -user1: User
         -user2: User
         -durationMinutes: Long
-        +execute(): Pair<LocalDateTime, LocalDateTime>?
+        +execute(): Pair~LocalDateTime, LocalDateTime~?
     }
 
     class Meeting {
@@ -55,22 +56,22 @@ classDiagram
         +title: String
         +start: LocalDateTime
         +end: LocalDateTime
-        +attendees: Set<User>
+        +attendees: Set~User~
     }
 
     class Calendar {
-        -meetings: MutableMap<String, Meeting>
+        -meetings: MutableMap~String, Meeting~
         +bookMeeting(meeting: Meeting): Boolean
         +removeMeeting(meetingId: String): Boolean
-        +listMeetings(user: User): List<Meeting>
-        +getMeetingsForUsers(users: Set<User>): List<Meeting>
-        +getAllMeetings(): List<Meeting>
+        +listMeetings(user: User): List~Meeting~
+        +getMeetingsForUsers(users: Set~User~): List~Meeting~
+        +getAllMeetings(): List~Meeting~
     }
 
     class CalendarInvoker {
-        +execute(command: Command): Any
-        +undo()
-        +redo()
+        +execute(command: Command): Any?
+        +undo(): Any?
+        +redo(): Any?
     }
 
     Command <|-- BookMeetingCommand
@@ -90,20 +91,22 @@ classDiagram
 ## Setup Instructions
 
 ### 1 - Clone the Repository
-
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/calendar
 ```
 
-### 2 - Compile & Run the Application
-
+### 2 - Build the Project
 ```bash
-./gradlew build run
+./gradlew build
 ```
 
-### 3 - Run Tests
+### 3 - Run the Application
+```bash
+./gradlew run
+```
 
+### 4 - Run Tests
 ```bash
 ./gradlew test
 ```

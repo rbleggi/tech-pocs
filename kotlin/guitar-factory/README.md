@@ -2,15 +2,16 @@
 
 ## Overview
 
-This project implements a custom guitar factory system that allows users to flexibly create personalized guitars by specifying attributes such as type, model, specifications, and operating system. It also includes an inventory management system, tracking available guitars and their quantities.
+Guitar factory system demonstrating the **Builder Pattern** for creating customized guitars with configurable attributes and an inventory management system for tracking quantities.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Build automation tool for Kotlin projects.
-- **JDK 25** → Required to run the application.
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety
+- **Gradle** → Build automation tool
+- **JDK 25** → Required to run the application
+- **kotlin.test** → Testing framework
 
 ---
 
@@ -21,30 +22,33 @@ classDiagram
     direction TB
 
     class Guitar {
-        - Guitar(type, model, specs, os)
-        + String guitarType
-        + String model
-        + String specs
-        + String os
-        + toString(): String
+        -type: String
+        -model: String
+        -specs: String
+        -os: String
+        +toString(): String
     }
 
     class GuitarBuilder {
-        - String guitarType
-        - String model
-        - String specs
-        - String os
-        + guitarType(type: String): GuitarBuilder
-        + model(model: String): GuitarBuilder
-        + specs(specs: String): GuitarBuilder
-        + os(os: String): GuitarBuilder
-        + build(): Guitar
+        -type: String
+        -model: String
+        -specs: String
+        -os: String
+        +type(type: String): Builder
+        +model(model: String): Builder
+        +specs(specs: String): Builder
+        +os(os: String): Builder
+        +build(): Guitar
     }
 
     class GuitarInventory {
-        + addGuitar(guitar: Guitar, quantity: Int)
-        + removeGuitar(guitar: Guitar, quantity: Int)
-        + listInventory()
+        -inventory: MutableMap~Guitar, Int~
+        +addGuitar(guitar: Guitar, quantity: Int)
+        +removeGuitar(guitar: Guitar, quantity: Int)
+        +getQuantity(guitar: Guitar): Int
+        +contains(guitar: Guitar): Boolean
+        +isEmpty(): Boolean
+        +listInventory(): List~Pair~Guitar, Int~~
     }
 
     GuitarBuilder --> Guitar: builds
@@ -56,20 +60,22 @@ classDiagram
 ## Setup Instructions
 
 ### 1 - Clone the Repository
-
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/guitar-factory
 ```
 
-### 2 - Compile & Run the Application
-
+### 2 - Build the Project
 ```bash
-./gradlew build run
+./gradlew build
 ```
 
-### 3 - Run Tests
+### 3 - Run the Application
+```bash
+./gradlew run
+```
 
+### 4 - Run Tests
 ```bash
 ./gradlew test
 ```
