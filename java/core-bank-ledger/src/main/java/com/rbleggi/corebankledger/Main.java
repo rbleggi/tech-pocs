@@ -95,8 +95,8 @@ record Transfer(Account from, Account to, BigDecimal amount, Ledger ledger) impl
     }
 }
 
-public class CoreBankLedgerDemo {
+public class Main {
     public static void main(String[] args) {
-        System.out.println("Core Bank Ledger Demo");
+        System.out.println("Core Bank Ledger");
     }
 }
