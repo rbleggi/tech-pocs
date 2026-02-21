@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.classorganizer.ClassOrganizerDemo")
+    mainClass.set("com.rbleggi.classorganizer.Main")
 }
 
 dependencies {
