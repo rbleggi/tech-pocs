@@ -104,8 +104,8 @@ class Schedule implements Subject {
     }
 }
 
-public class ClassOrganizerDemo {
+public class Main {
     public static void main(String[] args) {
-        System.out.println("Class Organizer Demo");
+        System.out.println("Class Organizer");
     }
 }
