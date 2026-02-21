@@ -26,5 +26,5 @@ tasks.test {
 }
 
 application {
-    mainClass.set("com.rbleggi.grocerytodolist.GroceryTodoListDemo")
+    mainClass.set("com.rbleggi.grocerytodolist.Main")
 }
