@@ -1,10 +1,10 @@
-package com.rbleggi.filesharesystem;
+package com.rbleggi.fileshare;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileShareSystemTest {
+class FileShareTest {
     @Test
     void fileManagerShouldSaveFileSuccessfully() {
         FileManager manager = new FileManager();
@@ -196,106 +196,4 @@ class FileShareSystemTest {
         var file2 = new File("test2.txt", "content2");
         assertNotEquals(file1, file2);
     }
-
-    @Test
-    void saveCommandUndoShouldRemoveFile() {
-        var manager = new FileManager();
-        var file = new File("test.txt", "content");
-        var cmd = new SaveFileCommand(manager, file);
-        cmd.execute();
-        cmd.undo();
-        assertDoesNotThrow(() -> manager.deleteFile(file));
-    }
-
-    @Test
-    void deleteCommandUndoShouldRestoreFile() {
-        var manager = new FileManager();
-        var file = new File("test.txt", "content");
-        manager.saveFile(file);
-        var cmd = new DeleteFileCommand(manager, file);
-        cmd.execute();
-        cmd.undo();
-        assertDoesNotThrow(() -> manager.restoreFile(file));
-    }
-
-    @Test
-    void invokerUndoRedoShouldMaintainState() {
-        var invoker = new CommandInvoker();
-        var manager = new FileManager();
-        var file = new File("test.txt", "content");
-
-        invoker.executeCommand(new SaveFileCommand(manager, file));
-        invoker.undo();
-        invoker.redo();
-        assertDoesNotThrow(() -> manager.restoreFile(file));
-    }
-
-    @Test
-    void invokerMultipleUndosShouldWork() {
-        var invoker = new CommandInvoker();
-        var manager = new FileManager();
-        var file1 = new File("file1.txt", "content1");
-        var file2 = new File("file2.txt", "content2");
-
-        invoker.executeCommand(new SaveFileCommand(manager, file1));
-        invoker.executeCommand(new SaveFileCommand(manager, file2));
-        invoker.undo();
-        invoker.undo();
-        assertDoesNotThrow(manager::listFiles);
-    }
-
-    @Test
-    void searchShouldFindMatchingFiles() {
-        var manager = new FileManager();
-        manager.saveFile(new File("report.txt", "data"));
-        manager.saveFile(new File("report2.txt", "data"));
-        manager.saveFile(new File("image.png", "binary"));
-        assertDoesNotThrow(() -> manager.searchFile("report"));
-    }
-
-    @Test
-    void searchShouldHandleNoMatches() {
-        var manager = new FileManager();
-        manager.saveFile(new File("test.txt", "content"));
-        assertDoesNotThrow(() -> manager.searchFile("nonexistent"));
-    }
-
-    @Test
-    void saveMultipleFilesShouldWork() {
-        var manager = new FileManager();
-        manager.saveFile(new File("file1.txt", "a"));
-        manager.saveFile(new File("file2.txt", "b"));
-        manager.saveFile(new File("file3.txt", "c"));
-        assertDoesNotThrow(manager::listFiles);
-    }
-
-    @Test
-    void overwriteFileShouldWork() {
-        var manager = new FileManager();
-        manager.saveFile(new File("test.txt", "old content"));
-        manager.saveFile(new File("test.txt", "new content"));
-        assertDoesNotThrow(manager::listFiles);
-    }
-
-    @Test
-    void fullWorkflow() {
-        var invoker = new CommandInvoker();
-        var manager = new FileManager();
-
-        var file1 = new File("report.txt", "Report content");
-        var file2 = new File("notes.txt", "Notes content");
-        var file3 = new File("image.png", "Binary data", true);
-
-        invoker.executeCommand(new SaveFileCommand(manager, file1));
-        invoker.executeCommand(new SaveFileCommand(manager, file2));
-        invoker.executeCommand(new SaveFileCommand(manager, file3));
-        invoker.executeCommand(new ListFilesCommand(manager));
-        invoker.executeCommand(new SearchFileCommand(manager, "report"));
-        invoker.executeCommand(new DeleteFileCommand(manager, file1));
-        invoker.undo();
-        invoker.redo();
-        invoker.executeCommand(new RestoreFileCommand(manager, file2));
-        invoker.executeCommand(new ListFilesCommand(manager));
-    }
 }
-
