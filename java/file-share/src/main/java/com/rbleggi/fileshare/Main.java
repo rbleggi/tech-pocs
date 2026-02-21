@@ -1,4 +1,4 @@
-package com.rbleggi.filesharesystem;
+package com.rbleggi.fileshare;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -190,8 +190,8 @@ class CommandInvoker {
     }
 }
 
-public class FileShareDemo {
+public class Main {
     public static void main(String[] args) {
-        System.out.println("File Share Demo");
+        System.out.println("File Share");
     }
 }
