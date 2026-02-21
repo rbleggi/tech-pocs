@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.corebankledger.CoreBankLedgerDemo")
+    mainClass.set("com.rbleggi.corebankledger.Main")
 }
 
 dependencies {
