@@ -95,8 +95,8 @@ class NoOpCommand implements Command {
     }
 }
 
-public class DontPadDemo {
+public class Main {
     public static void main(String[] args) {
-        System.out.println("DontPad Demo");
+        System.out.println("Dont Pad");
     }
 }
