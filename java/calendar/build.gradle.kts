@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.calendar.CalendarDemo")
+    mainClass.set("com.rbleggi.calendar.Main")
 }
 
 dependencies {
