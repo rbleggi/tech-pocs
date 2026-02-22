@@ -240,8 +240,8 @@ class CommandInvoker {
     }
 }
 
-public class GroceryTodoListDemo {
+public class Main {
     public static void main(String[] args) {
-        System.out.println("Grocery TODO List Demo");
+        System.out.println("Grocery Todo List");
     }
 }
