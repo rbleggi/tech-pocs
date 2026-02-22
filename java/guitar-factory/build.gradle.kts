@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.guitarfactory.GuitarFactoryDemo")
+    mainClass.set("com.rbleggi.guitarfactory.Main")
 }
 
 dependencies {
