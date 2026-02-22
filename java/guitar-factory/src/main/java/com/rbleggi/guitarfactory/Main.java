@@ -106,8 +106,8 @@ class GuitarInventory {
     }
 }
 
-public class GuitarFactoryDemo {
+public class Main {
     public static void main(String[] args) {
-        System.out.println("Guitar Factory Demo");
+        System.out.println("Guitar Factory");
     }
 }
