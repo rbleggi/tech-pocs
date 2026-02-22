@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.rbleggi.socialmedia.Main")
+    mainClass.set("com.rbleggi.socialmediaphotoapp.Main")
 }
 
 dependencies {
