@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import com.rbleggi.ticketbooking.TicketBookingSystem.*;
+import com.rbleggi.ticketbooking.Main.*;
 
 class TicketBookingSystemTest {
 
