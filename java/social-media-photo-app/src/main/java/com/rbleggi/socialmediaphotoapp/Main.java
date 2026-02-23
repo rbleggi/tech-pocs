@@ -1,13 +1,11 @@
-package com.rbleggi.socialmedia;
+package com.rbleggi.socialmediaphotoapp;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        public static void main(String[] args) {
-            System.out.println("Social Media Demo");
-        }
+        System.out.println("Social Media Photo App");
     }
 }
 
