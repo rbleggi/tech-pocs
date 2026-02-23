@@ -1,7 +1,5 @@
 package com.rbleggi.taxsystem;
 
-import com.rbleggi.taxsystem.model.Product;
-import com.rbleggi.taxsystem.service.TaxCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
