@@ -1,4 +1,4 @@
-package com.rbleggi.socialmedia;
+package com.rbleggi.socialmediaphotoapp;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
