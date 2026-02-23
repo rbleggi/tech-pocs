@@ -1,27 +1,54 @@
 package com.rbleggi.taxsystem;
 
-import com.rbleggi.taxsystem.model.Product;
-import com.rbleggi.taxsystem.service.TaxCalculator;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        var product1 = new Product("Smartphone", "electronics");
-        var product2 = new Product("Rice", "food");
-        var product3 = new Product("History Book", "book");
+        System.out.println("Tax System");
+    }
+}
 
-        var calculator = new TaxCalculator();
+record Product(String name, String category) {}
 
-        double priceProduct1 = 2500.0;
-        double priceProduct2 = 20.0;
-        double priceProduct3 = 50.0;
+record TaxConfiguration(String state, int year, Map<String, Double> rates) {}
 
-        System.out.printf("Tax for %s in SP (2024): R$ %.2f%n",
-            product1.name(), calculator.calculateTax("SP", 2024, product1, priceProduct1));
-        System.out.printf("Tax for %s in MG (2024): R$ %.2f%n",
-            product2.name(), calculator.calculateTax("MG", 2024, product2, priceProduct2));
-        System.out.printf("Tax for %s in RJ (2024): R$ %.2f%n",
-            product3.name(), calculator.calculateTax("RJ", 2024, product3, priceProduct3));
-        System.out.printf("Tax for %s in SP (2025): R$ %.2f%n",
-            product1.name(), calculator.calculateTax("SP", 2025, product1, priceProduct1));
+interface TaxSpecification {
+    boolean isSatisfiedBy(String state, int year);
+    double calculateTax(Product product, double price);
+}
+
+class DefaultTaxSpecification implements TaxSpecification {
+    private final TaxConfiguration config;
+
+    DefaultTaxSpecification(TaxConfiguration config) {
+        this.config = config;
+    }
+
+    @Override
+    public boolean isSatisfiedBy(String state, int year) {
+        return config.state().equals(state) && config.year() == year;
+    }
+
+    @Override
+    public double calculateTax(Product product, double price) {
+        return price * config.rates().getOrDefault(product.category(), 0.0);
+    }
+}
+
+class TaxCalculator {
+    public double calculateTax(String state, int year, Product product, double price) {
+        List<TaxSpecification> specifications = List.of(
+            new DefaultTaxSpecification(new TaxConfiguration("SP", 2024, Map.of("electronics", 0.18, "food", 0.07, "book", 0.00))),
+            new DefaultTaxSpecification(new TaxConfiguration("RJ", 2024, Map.of("electronics", 0.20, "food", 0.08, "book", 0.02))),
+            new DefaultTaxSpecification(new TaxConfiguration("MG", 2024, Map.of("electronics", 0.15, "food", 0.05, "book", 0.01))),
+            new DefaultTaxSpecification(new TaxConfiguration("SP", 2025, Map.of("electronics", 0.19, "food", 0.06, "book", 0.00)))
+        );
+
+        return specifications.stream()
+            .filter(spec -> spec.isSatisfiedBy(state, year))
+            .findFirst()
+            .map(spec -> spec.calculateTax(product, price))
+            .orElseThrow(() -> new RuntimeException("No tax rule found for " + state + " in the year " + year));
     }
 }
