@@ -1,9 +1,5 @@
 package com.rbleggi.templaterenderer;
 
-import com.rbleggi.templaterenderer.core.RendererFactory;
-import com.rbleggi.templaterenderer.renderers.CSVRenderer;
-import com.rbleggi.templaterenderer.renderers.HTMLRenderer;
-import com.rbleggi.templaterenderer.renderers.PDFRenderer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
