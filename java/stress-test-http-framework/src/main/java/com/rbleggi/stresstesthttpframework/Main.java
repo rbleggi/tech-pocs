@@ -13,11 +13,7 @@ import java.util.concurrent.Future;
 
 public class Main {
     public static void main(String[] args) {
-        var url = "https://httpbin.org/get";
-        var requests = 50;
-        var concurrency = 10;
-        var test = new HttpStressTest(url, requests, concurrency);
-        test.runTest();
+        System.out.println("Stress Test HTTP Framework");
     }
 }
 
