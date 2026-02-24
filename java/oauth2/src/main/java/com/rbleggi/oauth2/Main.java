@@ -4,13 +4,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        var authCodeRequest = Map.of("grant_type", "authorization_code", "client_id", "abc", "redirect_uri", "http://localhost/cb");
-        var clientCredsRequest = Map.of("grant_type", "client_credentials", "client_id", "abc", "client_secret", "xyz");
-        var invalidRequest = Map.of("grant_type", "password");
-
-        System.out.println("Authorization Code Grant Response: " + OAuth2Server.processRequest(authCodeRequest));
-        System.out.println("Client Credentials Grant Response: " + OAuth2Server.processRequest(clientCredsRequest));
-        System.out.println("Invalid Grant Response: " + OAuth2Server.processRequest(invalidRequest));
+        System.out.println("OAuth2");
     }
 }
 
