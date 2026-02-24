@@ -91,19 +91,6 @@ class EmailNotifier implements QueryObserver {
 
 public class Main {
     public static void main(String[] args) {
-        var detector = new SlowQueryDetector(100);
-        detector.addObserver(new ConsoleLogger());
-        detector.addObserver(new FileLogger("slow-queries.log"));
-        detector.addObserver(new EmailNotifier("admin@example.com"));
-
-        detector.executeQuery("SELECT * FROM users", 50);
-        detector.executeQuery("SELECT * FROM orders", 200);
-        detector.executeQuery("UPDATE products SET price = 10", 300);
-
-        var metrics = detector.getMetrics();
-        System.out.println("\n=== Query Statistics ===");
-        System.out.println("Total queries: " + metrics.totalCount());
-        System.out.println("Slow queries: " + metrics.slowCount());
-        System.out.println("Fast queries: " + (metrics.totalCount() - metrics.slowCount()));
+        System.out.println("Hibernate Slow Query Detector");
     }
 }
