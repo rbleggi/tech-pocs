@@ -6,17 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        var game = new Game();
-        System.out.println("Welcome to the Murder Mystery Game!");
-        System.out.println("Type 'help' to see the available commands.");
-        var scanner = new Scanner(System.in);
-        while (!game.finished()) {
-            System.out.print("> ");
-            var input = scanner.nextLine();
-            var command = Parser.parse(input);
-            game = command.execute(game);
-        }
-        scanner.close();
+        System.out.println("Murder Mistery Game");
     }
 }
 
