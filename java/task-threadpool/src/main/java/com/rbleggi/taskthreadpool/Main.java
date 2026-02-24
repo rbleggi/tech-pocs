@@ -6,13 +6,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        var pool = new TaskThreadPool(4);
-        IntStream.rangeClosed(1, 10).forEach(i -> pool.submit(() -> {
-            System.out.println("Task " + i + " running on thread " + Thread.currentThread().getName());
-        }));
-        Thread.sleep(1000);
-        pool.shutdown();
+    public static void main(String[] args) {
+        System.out.println("Task Threadpool");
     }
 }
 
