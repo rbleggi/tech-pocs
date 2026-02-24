@@ -10,19 +10,7 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        var path = "java/unused-class-detector/src/main/java/com/rbleggi/unusedclassdetector/Main.java";
-        String content;
-        try {
-            content = Files.readString(Path.of(path));
-        } catch (IOException e) {
-            System.out.println("Could not read file: " + e.getMessage());
-            return;
-        }
-        var sourceFile = new SourceFile(content);
-        var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(sourceFile);
-        System.out.println("Unused classes:");
-        result.unusedClasses().forEach(System.out::println);
+        System.out.println("Unused Class Detector");
     }
 }
 
