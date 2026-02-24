@@ -43,17 +43,8 @@ class HttpRouter {
 }
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        int port = 8080;
-        var server = new ServerSocket(port);
-        System.out.println("HTTP server running on http://localhost:" + port + " ...");
-
-        var handlers = List.of(new HelloHandler(), new PingHandler());
-
-        while (true) {
-            var client = server.accept();
-            new Thread(() -> handleClient(client, handlers)).start();
-        }
+    public static void main(String[] args) {
+        System.out.println("HTTP Server");
     }
 
     private static void handleClient(Socket client, List<GetRouteHandler> handlers) {
