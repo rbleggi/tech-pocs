@@ -6,21 +6,7 @@ import java.util.function.Consumer;
 
 public class Main {
     public static void main(String[] args) {
-        var s = new MyString("  Hello, Java!  ");
-        System.out.println("toArray: " + String.join(",", toStringArray(s.toArray())));
-        System.out.print("forEach: "); s.forEach(System.out::print); System.out.println();
-        System.out.println("reverse: " + s.reverse());
-        System.out.println("iterator: " + iteratorToString(s.iterator()));
-        System.out.println("length: " + s.length());
-        System.out.println("charAt(1): " + s.charAt(1));
-        System.out.println("equals: " + s.equals(new MyString("  Hello, Java!  ")));
-        System.out.println("isEmpty: " + s.isEmpty());
-        System.out.println("replace: " + s.replace('l', 'x'));
-        System.out.println("substring(2,7): " + s.substring(2, 7));
-        System.out.println("trim: " + s.trim());
-        System.out.println("toJson: " + s.toJson());
-        System.out.println("indexOf('J'): " + s.indexOf('J'));
-        System.out.println("hashCode: " + s.hashCode());
+        System.out.println("Own String Impl");
     }
 
     private static String[] toStringArray(char[] chars) {
