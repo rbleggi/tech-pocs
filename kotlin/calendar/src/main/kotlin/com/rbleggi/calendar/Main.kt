@@ -134,5 +134,5 @@ class CalendarInvoker {
 }
 
 fun main() {
-    println("Calendar POC")
+    println("Calendar")
 }

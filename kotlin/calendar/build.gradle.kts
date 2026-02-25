@@ -3,7 +3,7 @@ plugins {
     application
 }
 
-group = "org.rbleggi"
+group = "com.rbleggi"
 version = "1.0"
 
 repositories {
