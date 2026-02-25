@@ -77,21 +77,5 @@ data class Transfer(
 }
 
 fun main() {
-    val ledger = Ledger()
-    val alice = ledger.createAccount("Alice", BigDecimal(100))
-    val bob = ledger.createAccount("Bob", BigDecimal(50))
-
-    val ops: List<LedgerCommand> = listOf(
-        Deposit(alice, BigDecimal(50), ledger),
-        Withdraw(bob, BigDecimal(20), ledger),
-        Transfer(alice, bob, BigDecimal(70), ledger),
-        Withdraw(bob, BigDecimal(200), ledger)
-    )
-
-    ops.forEach { it.execute() }
-
-    println("--- Accounts ---")
-    ledger.printAccounts()
-    println("\n--- Transactions ---")
-    ledger.printTransactions()
+    println("Core Bank Ledger")
 }

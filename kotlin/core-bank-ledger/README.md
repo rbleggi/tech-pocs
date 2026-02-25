@@ -8,7 +8,7 @@ This project implements a simple Core Bank Ledger in Kotlin. It demonstrates bas
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with concise syntax and null safety.
+- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and null safety.
 - **Gradle** → Build automation tool.
 - **JDK 25** → Required to run the application.
 

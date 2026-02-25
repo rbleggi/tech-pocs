@@ -3,7 +3,7 @@ plugins {
     application
 }
 
-group = "org.rbleggi"
+group = "com.rbleggi"
 version = "1.0"
 
 repositories {
@@ -24,12 +24,4 @@ tasks.test {
 
 kotlin {
     jvmToolchain(25)
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
-    }
-}
-
-tasks.withType<JavaCompile> {
-    sourceCompatibility = "24"
-    targetCompatibility = "24"
 }
