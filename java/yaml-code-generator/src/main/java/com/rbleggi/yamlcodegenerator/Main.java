@@ -5,29 +5,7 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        var yamlContent = """
-Person:
-  name: String
-  age: Int
-  address: Address
-  phones: List<String>
-
-Address:
-  street: String
-  number: Int
-  city: String
-  state: String
-
-Company:
-  name: String
-  cnpj: String
-  employees: List<Person>
-""";
-
-        GeneratorStrategy generator = new DataClassGenerator();
-        var generatedCode = generator.generate(yamlContent);
-
-        System.out.println("Generated code:\n" + generatedCode);
+        System.out.println("YAML Code Generator");
     }
 }
 
