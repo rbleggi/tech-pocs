@@ -77,33 +77,5 @@ class CodeGenerationAssistant(private val strategy: CodeGenerationStrategy) {
 }
 
 fun main() {
-    println("=== Geracao de Classe ===")
-    val classAssistant = CodeGenerationAssistant(ClassGenerationStrategy())
-    val classRequest = CodeRequest(
-        "class",
-        "Usuario",
-        mapOf("properties" to "nome:String, cpf:String, idade:Int")
-    )
-    val generatedClass = classAssistant.generate(classRequest)
-    println(generatedClass.code)
-
-    println("\n=== Geracao de Funcao ===")
-    val functionAssistant = CodeGenerationAssistant(FunctionGenerationStrategy())
-    val functionRequest = CodeRequest(
-        "function",
-        "calcularImpostoRenda",
-        mapOf("params" to "salario:Double, dependentes:Int", "returnType" to "Double")
-    )
-    val generatedFunction = functionAssistant.generate(functionRequest)
-    println(generatedFunction.code)
-
-    println("\n=== Geracao de Teste ===")
-    val testAssistant = CodeGenerationAssistant(TestGenerationStrategy())
-    val testRequest = CodeRequest(
-        "test",
-        "deve retornar imposto correto para salario de 5000 reais",
-        mapOf("target" to "calcularImpostoRenda(5000.0, 2)")
-    )
-    val generatedTest = testAssistant.generate(testRequest)
-    println(generatedTest.code)
+    println("Code Generation Assistant")
 }
