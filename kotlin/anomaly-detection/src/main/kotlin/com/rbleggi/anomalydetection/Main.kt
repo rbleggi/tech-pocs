@@ -128,57 +128,5 @@ class AnomalyDetector(private val strategy: AnomalyDetectionStrategy) {
 }
 
 fun main() {
-    val normalHistory = listOf(
-        Transaction("t1", 250.0, "João Silva", 1000),
-        Transaction("t2", 320.0, "João Silva", 2000),
-        Transaction("t3", 280.0, "João Silva", 3000),
-        Transaction("t4", 310.0, "João Silva", 4000),
-        Transaction("t5", 290.0, "João Silva", 5000),
-        Transaction("t6", 305.0, "João Silva", 6000),
-        Transaction("t7", 275.0, "João Silva", 7000),
-        Transaction("t8", 295.0, "João Silva", 8000)
-    )
-
-    val testTransactions = listOf(
-        Transaction("test1", 300.0, "João Silva", 9000),
-        Transaction("test2", 5000.0, "João Silva", 10000),
-        Transaction("test3", 280.0, "João Silva", 11000)
-    )
-
-    println("=== Sistema de Deteccao de Anomalias ===\n")
-
-    println("--- Estrategia: Z-Score ---")
-    val zScoreDetector = AnomalyDetector(ZScoreStrategy(threshold = 2.5))
-    testTransactions.forEach { transaction ->
-        val result = zScoreDetector.detect(transaction, normalHistory)
-        println("  Transacao: ${transaction.id} - R$ %.2f".format(transaction.amount))
-        println("  Anomalia: ${result.isAnomaly}")
-        println("  Score: %.2f".format(result.score))
-        println("  ${result.details}\n")
-    }
-
-    println("--- Estrategia: IQR ---")
-    val iqrDetector = AnomalyDetector(IQRStrategy(multiplier = 1.5))
-    testTransactions.forEach { transaction ->
-        val result = iqrDetector.detect(transaction, normalHistory)
-        println("  Transacao: ${transaction.id} - R$ %.2f".format(transaction.amount))
-        println("  Anomalia: ${result.isAnomaly}")
-        println("  Score: %.2f".format(result.score))
-        println("  ${result.details}\n")
-    }
-
-    println("--- Estrategia: Moving Average ---")
-    val maDetector = AnomalyDetector(MovingAverageStrategy(windowSize = 5, threshold = 2.0))
-    testTransactions.forEach { transaction ->
-        val result = maDetector.detect(transaction, normalHistory)
-        println("  Transacao: ${transaction.id} - R$ %.2f".format(transaction.amount))
-        println("  Anomalia: ${result.isAnomaly}")
-        println("  Score: %.2f".format(result.score))
-        println("  ${result.details}\n")
-    }
-
-    println("--- Contagem de Anomalias ---")
-    println("  Z-Score: ${zScoreDetector.anomalyCount(testTransactions, normalHistory)} anomalias")
-    println("  IQR: ${iqrDetector.anomalyCount(testTransactions, normalHistory)} anomalias")
-    println("  Moving Average: ${maDetector.anomalyCount(testTransactions, normalHistory)} anomalias")
+    println("Anomaly Detection")
 }

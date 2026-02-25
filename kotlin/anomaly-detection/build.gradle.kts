@@ -22,12 +22,6 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<JavaCompile> {
-    options.release.set(23)
-}
-
 kotlin {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_23)
-    }
+    jvmToolchain(25)
 }
