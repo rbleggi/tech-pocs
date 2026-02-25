@@ -8,7 +8,7 @@ A type-safe, composable framework for converting between complex types in Kotlin
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with advanced type safety and functional programming features.
+- **Kotlin 2.2.20** → Modern JVM-based language with advanced type safety and functional programming features.
 - **Gradle** → Build tool with Kotlin DSL support.
 - **JDK 25** → Required to run the application.
 

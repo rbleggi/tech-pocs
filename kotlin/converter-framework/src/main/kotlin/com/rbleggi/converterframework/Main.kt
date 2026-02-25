@@ -25,20 +25,5 @@ val personToString: Converter<Person, String> = Converter { person ->
 }
 
 fun main() {
-    val address = Address("123 Main St", "Springfield", "12345")
-    val person = Person("John Doe", 30, address)
-
-    println("=== Converter Framework Examples ===\n")
-
-    println("Address as String: ${addressToString.convert(address)}")
-    println("Person as DTO: ${personToDTO.convert(person)}")
-    println("Person as String: ${personToString.convert(person)}")
-
-    println("\n=== Converter Composition ===\n")
-
-    val personToDTOThenToString: Converter<Person, String> = personToDTO then Converter { dto ->
-        "DTO[fullName=${dto.fullName}, age=${dto.age}, city=${dto.city}]"
-    }
-
-    println("Person to DTO to String: ${personToDTOThenToString.convert(person)}")
+    println("Converter Framework")
 }
