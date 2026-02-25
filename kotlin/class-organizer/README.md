@@ -8,7 +8,7 @@ This project implements a flexible and maintainable class organizer/optimizer fo
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
+- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and strong type safety.
 - **Gradle** → Kotlin's build tool for JVM projects.
 - **JDK 25** → Required to run the application.
 

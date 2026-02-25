@@ -1,4 +1,4 @@
-package com.rbleggi.calssorganizer
+package com.rbleggi.classorganizer
 
 import java.time.LocalDateTime
 import kotlin.test.Test
@@ -8,7 +8,7 @@ import kotlin.test.assertFalse
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
-class ClassOrganizerDemoTest {
+class ClassOrganizerTest {
     @Test
     fun `teacher has correct name`() {
         val teacher = Teacher("Alice")

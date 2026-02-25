@@ -3,7 +3,7 @@ plugins {
     application
 }
 
-group = "org.rbleggi"
+group = "com.rbleggi"
 version = "1.0"
 
 repositories {
@@ -15,7 +15,7 @@ dependencies {
 }
 
 application {
-    mainClass = "com.rbleggi.calssorganizer.ClassOrganizerDemoKt"
+    mainClass = "com.rbleggi.classorganizer.MainKt"
 }
 
 tasks.test {

@@ -1,4 +1,4 @@
-package com.rbleggi.calssorganizer
+package com.rbleggi.classorganizer
 
 import java.time.LocalDateTime
 
@@ -69,29 +69,5 @@ class Schedule : Subject {
 }
 
 fun main() {
-    val teacherA = Teacher("Alice")
-    val teacherB = Teacher("Bob")
-    val schedule = Schedule()
-    schedule.registerObserver(teacherA)
-    schedule.registerObserver(teacherB)
-
-    val session1 = ClassSession("1", "Math", LocalDateTime.of(2025, 10, 4, 9, 0), LocalDateTime.of(2025, 10, 4, 10, 0), teacherA)
-    val session2 = ClassSession("2", "Physics", LocalDateTime.of(2025, 10, 4, 10, 0), LocalDateTime.of(2025, 10, 4, 11, 0), teacherA)
-    val session3 = ClassSession("3", "Chemistry", LocalDateTime.of(2025, 10, 4, 9, 0), LocalDateTime.of(2025, 10, 4, 10, 0), teacherB)
-
-    println("Adding sessions...")
-    schedule.addClassSession(session1)
-    schedule.addClassSession(session2)
-    schedule.addClassSession(session3)
-
-    println("Trying to add overlapping session for Alice...")
-    val overlapSession = ClassSession("4", "Biology", LocalDateTime.of(2025, 10, 4, 9, 30), LocalDateTime.of(2025, 10, 4, 10, 30), teacherA)
-    val added = schedule.addClassSession(overlapSession)
-    println("Overlapping session added: $added")
-
-    println("Optimizing schedule...")
-    schedule.optimizeSchedule()
-
-    println("Removing a session...")
-    schedule.removeClassSession(session1)
+    println("Class Organizer")
 }
