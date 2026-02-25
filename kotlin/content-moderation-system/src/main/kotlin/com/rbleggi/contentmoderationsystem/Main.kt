@@ -85,26 +85,5 @@ class ContentModerationSystem(private val filters: List<ModerationFilter>) {
 }
 
 fun main() {
-    val filters = listOf(
-        KeywordFilter(setOf("spam", "fraude", "golpe")),
-        RegexFilter(listOf(Regex("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}"))),
-        LengthFilter(10, 500)
-    )
-
-    val system = ContentModerationSystem(filters)
-
-    val content1 = Content("1", "Joao oferece um produto legitimo em Sao Paulo", "Joao")
-    val content2 = Content("2", "SPAM! Clique aqui para ganhar dinheiro facil!", "Desconhecido")
-    val content3 = Content("3", "Oi", "Maria")
-    val content4 = Content("4", "Entre em contato pelo CPF 123.456.789-00", "Carlos")
-
-    println("=== Moderacao de Conteudo ===")
-    listOf(content1, content2, content3, content4).forEach { content ->
-        println("\n--- Conteudo ${content.id} ---")
-        val results = system.moderate(content)
-        results.forEach { result ->
-            println("[${result.filterType}] ${if (result.isAllowed) "✓" else "✗"} ${result.reason}")
-        }
-        println("Resultado final: ${if (system.isContentAllowed(content)) "APROVADO" else "BLOQUEADO"}")
-    }
+    println("Content Moderation System")
 }
