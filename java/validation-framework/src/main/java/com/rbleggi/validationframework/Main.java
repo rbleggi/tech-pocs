@@ -44,16 +44,6 @@ class UserValidator implements Validator<User> {
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Validation Framework Examples ===\n");
-
-        User validUser = new User("John Doe", "john@example.com");
-        User invalidUser = new User(null, "a@b.com");
-        User shortNameUser = new User("Jo", "jo@example.com");
-
-        UserValidator validator = new UserValidator();
-
-        System.out.println("Valid user errors: " + validator.validate(validUser));
-        System.out.println("Invalid user errors: " + validator.validate(invalidUser));
-        System.out.println("Short name user errors: " + validator.validate(shortNameUser));
+        System.out.println("Validation Framework");
     }
 }
