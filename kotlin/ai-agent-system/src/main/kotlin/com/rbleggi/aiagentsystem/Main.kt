@@ -132,30 +132,5 @@ class AIAgentSystem(private val agents: Map<String, Agent>) {
 }
 
 fun main() {
-    val system = AIAgentSystem(
-        mapOf(
-            "pesquisador" to ResearcherAgent(),
-            "escritor" to WriterAgent(),
-            "revisor" to ReviewerAgent()
-        )
-    )
-
-    println("=== Sistema Multi-Agente de IA ===")
-    println("Topico: Kotlin no Brasil")
-    println()
-
-    val results = system.runWorkflow("kotlin")
-
-    results.forEach { (agentName, result) ->
-        println("--- Agente: $agentName ---")
-        println(result.output)
-        println("Mensagens recebidas: ${result.messagesReceived}")
-        println()
-    }
-
-    val writerMessages = system.getAgentMessages("escritor")
-    println("=== Mensagens recebidas pelo escritor ===")
-    writerMessages.forEach { msg ->
-        println("De: ${msg.from} | Conteudo: ${msg.content.take(50)}...")
-    }
+    println("AI Agent System")
 }
