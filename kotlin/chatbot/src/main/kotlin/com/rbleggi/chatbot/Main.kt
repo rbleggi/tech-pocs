@@ -172,45 +172,5 @@ class Chatbot(private val strategy: ChatStrategy) {
 }
 
 fun main() {
-    val user = "Joao"
-
-    val messages = listOf(
-        Message(user, "Ola, bom dia!"),
-        Message(user, "Quanto custa o notebook?"),
-        Message(user, "Qual o prazo de entrega para Sao Paulo?"),
-        Message(user, "Posso pagar com Pix?"),
-        Message(user, "Obrigado pela ajuda!")
-    )
-
-    println("=== Sistema de Chatbot ===\n")
-
-    println("--- Estrategia: Keyword Matching ---")
-    val keywordBot = Chatbot(KeywordMatchingStrategy())
-    messages.take(3).forEach { msg ->
-        val response = keywordBot.chat(msg)
-        println("Usuario: ${msg.text}")
-        println("Bot: ${response.response}")
-        println("Confianca: %.2f\n".format(response.confidence))
-    }
-
-    println("--- Estrategia: Pattern Matching ---")
-    val patternBot = Chatbot(PatternMatchingStrategy())
-    messages.take(3).forEach { msg ->
-        val response = patternBot.chat(msg)
-        println("Usuario: ${msg.text}")
-        println("Bot: ${response.response}")
-        println("Confianca: %.2f\n".format(response.confidence))
-    }
-
-    println("--- Estrategia: Intent-Based ---")
-    val intentBot = Chatbot(IntentBasedStrategy())
-    messages.forEach { msg ->
-        val response = intentBot.chat(msg)
-        println("Usuario: ${msg.text}")
-        println("Bot: ${response.response}")
-        println("Confianca: %.2f | Estrategia: ${response.strategy}\n".format(response.confidence))
-    }
-
-    println("--- Historico de Conversa ---")
-    println("Total de mensagens: ${intentBot.getHistory().size}")
+    println("Chatbot")
 }
