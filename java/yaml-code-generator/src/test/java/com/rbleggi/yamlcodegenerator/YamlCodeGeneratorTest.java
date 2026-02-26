@@ -109,4 +109,48 @@ Person:
         var code = generator.generate(yaml);
         assertTrue(code.contains(","));
     }
+
+    @Test
+    @DisplayName("RecordGenerator should generate record from YAML")
+    void recordGenerator_validYaml_generatesRecord() {
+        var yaml = """
+Person:
+  name: String
+  age: int
+""";
+        var generator = new RecordGenerator();
+        var code = generator.generate(yaml);
+        assertTrue(code.contains("record Person("));
+        assertTrue(code.contains("String name"));
+        assertTrue(code.contains("int age"));
+    }
+
+    @Test
+    @DisplayName("RecordGenerator should handle single field")
+    void recordGenerator_singleField_generatesCorrectly() {
+        var yaml = """
+UserId:
+  value: long
+""";
+        var generator = new RecordGenerator();
+        var code = generator.generate(yaml);
+        assertEquals("record UserId(long value) {}", code);
+    }
+
+    @Test
+    @DisplayName("RecordGenerator should handle multiple fields")
+    void recordGenerator_multipleFields_generatesCorrectly() {
+        var yaml = """
+Address:
+  street: String
+  number: int
+  city: String
+""";
+        var generator = new RecordGenerator();
+        var code = generator.generate(yaml);
+        assertTrue(code.contains("record Address("));
+        assertTrue(code.contains("String street"));
+        assertTrue(code.contains("int number"));
+        assertTrue(code.contains("String city"));
+    }
 }
