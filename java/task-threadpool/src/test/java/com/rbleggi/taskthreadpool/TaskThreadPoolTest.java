@@ -117,4 +117,14 @@ class TaskThreadPoolTest {
         pool.shutdown();
         assertEquals(3, results.size());
     }
+
+    @Test
+    @DisplayName("PriorityTaskThreadPool should throw on submit after shutdown")
+    void priorityPool_submitAfterShutdown_throws() throws InterruptedException {
+        var pool = new PriorityTaskThreadPool(1);
+        pool.shutdown();
+
+        assertThrows(IllegalStateException.class, () ->
+            pool.submit(1, () -> System.out.println("Task")));
+    }
 }
