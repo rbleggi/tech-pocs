@@ -153,4 +153,34 @@ Address:
         assertTrue(code.contains("int number"));
         assertTrue(code.contains("String city"));
     }
+
+    @Test
+    @DisplayName("RecordGenerator should handle empty YAML")
+    void recordGenerator_emptyYaml_returnsComment() {
+        var generator = new RecordGenerator();
+        var code = generator.generate("");
+        assertTrue(code.contains("empty YAML"));
+    }
+
+    @Test
+    @DisplayName("RecordGenerator should handle complex types")
+    void recordGenerator_complexTypes_generatesCorrectly() {
+        var yaml = """
+Order:
+  id: long
+  items: List<String>
+  total: double
+""";
+        var generator = new RecordGenerator();
+        var code = generator.generate(yaml);
+        assertTrue(code.contains("record Order("));
+        assertTrue(code.contains("List<String> items"));
+    }
+
+    @Test
+    @DisplayName("RecordGenerator should implement GeneratorStrategy")
+    void recordGenerator_implementsStrategy() {
+        GeneratorStrategy generator = new RecordGenerator();
+        assertNotNull(generator);
+    }
 }
