@@ -101,4 +101,20 @@ class TaskThreadPoolTest {
         Task task = () -> System.out.println("Task executed");
         assertDoesNotThrow(task::run);
     }
+
+    @Test
+    @DisplayName("PriorityTaskThreadPool should execute tasks by priority")
+    void priorityPool_multiplePriorities_executesAll() throws InterruptedException {
+        var pool = new PriorityTaskThreadPool(1);
+        var results = Collections.synchronizedList(new ArrayList<Integer>());
+        var latch = new CountDownLatch(3);
+
+        pool.submit(3, () -> { results.add(3); latch.countDown(); });
+        pool.submit(1, () -> { results.add(1); latch.countDown(); });
+        pool.submit(2, () -> { results.add(2); latch.countDown(); });
+
+        assertTrue(latch.await(2, TimeUnit.SECONDS));
+        pool.shutdown();
+        assertEquals(3, results.size());
+    }
 }
