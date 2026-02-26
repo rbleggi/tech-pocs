@@ -90,4 +90,26 @@ class UnusedClassDetectorTest {
         assertEquals(2, result.unusedClasses().size());
         assertTrue(result.unusedClasses().contains("Class1"));
     }
+
+    @Test
+    @DisplayName("UnusedClassVisitor should detect unused interface")
+    void unusedClassVisitor_unusedInterface_detectsUnused() {
+        var content = "interface Printable {} interface Unused {} class Printer implements Printable {}";
+        var source = new SourceFile(content);
+        var visitor = new UnusedClassVisitor();
+        var result = visitor.visit(source);
+        assertTrue(result.unusedClasses().contains("Unused"));
+        assertFalse(result.unusedClasses().contains("Printable"));
+    }
+
+    @Test
+    @DisplayName("UnusedClassVisitor should not report implemented interfaces")
+    void unusedClassVisitor_implementedInterface_notReported() {
+        var content = "interface Serializable {} class Data implements Serializable {} new Data();";
+        var source = new SourceFile(content);
+        var visitor = new UnusedClassVisitor();
+        var result = visitor.visit(source);
+        assertFalse(result.unusedClasses().contains("Serializable"));
+        assertFalse(result.unusedClasses().contains("Data"));
+    }
 }
