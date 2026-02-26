@@ -22,6 +22,10 @@ record ClassUsage(String name) implements ASTNode {}
 
 record SourceFile(String content) implements ASTNode {}
 
+record InterfaceDecl(String name) implements ASTNode {}
+
+record InterfaceUsage(String name) implements ASTNode {}
+
 interface ASTVisitor {
     AnalysisResult visit(SourceFile source);
 }
