@@ -37,3 +37,28 @@ class DataClassGenerator implements GeneratorStrategy {
         return "data class " + className + "(\n" + fields + "\n)";
     }
 }
+
+class RecordGenerator implements GeneratorStrategy {
+    @Override
+    public String generate(String yaml) {
+        var lines = Arrays.stream(yaml.split("\n"))
+            .map(String::trim)
+            .filter(line -> !line.isEmpty())
+            .toList();
+
+        if (lines.isEmpty()) return "// empty YAML";
+
+        var className = lines.get(0).replace(":", "");
+        var fields = lines.stream()
+            .skip(1)
+            .map(line -> {
+                var parts = Arrays.stream(line.split(":"))
+                    .map(String::trim)
+                    .toArray(String[]::new);
+                return parts[1] + " " + parts[0];
+            })
+            .collect(Collectors.joining(", "));
+
+        return "record " + className + "(" + fields + ") {}";
+    }
+}
