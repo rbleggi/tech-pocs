@@ -10,30 +10,24 @@ class UnusedClassDetectorTest {
     @Test
     @DisplayName("UnusedClassVisitor should detect unused class")
     void unusedClassVisitor_unusedClass_detectsUnused() {
-        var content = "class UsedClass {} class UnusedClass {} new UsedClass();";
-        var source = new SourceFile(content);
         var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(source);
+        var result = visitor.visit("class UsedClass {} class UnusedClass {} new UsedClass();");
         assertTrue(result.unusedClasses().contains("UnusedClass"));
     }
 
     @Test
     @DisplayName("UnusedClassVisitor should not report used classes")
     void unusedClassVisitor_usedClass_notReported() {
-        var content = "class MyClass {} new MyClass();";
-        var source = new SourceFile(content);
         var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(source);
+        var result = visitor.visit("class MyClass {} new MyClass();");
         assertFalse(result.unusedClasses().contains("MyClass"));
     }
 
     @Test
     @DisplayName("UnusedClassVisitor should handle multiple classes")
     void unusedClassVisitor_multipleClasses_detectsCorrectly() {
-        var content = "class Used1 {} class Used2 {} class Unused {} new Used1(); new Used2();";
-        var source = new SourceFile(content);
         var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(source);
+        var result = visitor.visit("class Used1 {} class Used2 {} class Unused {} new Used1(); new Used2();");
         assertTrue(result.unusedClasses().contains("Unused"));
         assertFalse(result.unusedClasses().contains("Used1"));
         assertFalse(result.unusedClasses().contains("Used2"));
@@ -42,44 +36,18 @@ class UnusedClassDetectorTest {
     @Test
     @DisplayName("UnusedClassVisitor should exclude framework classes")
     void unusedClassVisitor_frameworkClasses_excluded() {
-        var content = "class ClassDecl {} class ClassUsage {} class SourceFile {}";
-        var source = new SourceFile(content);
         var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(source);
-        assertFalse(result.unusedClasses().contains("ClassDecl"));
-        assertFalse(result.unusedClasses().contains("ClassUsage"));
-        assertFalse(result.unusedClasses().contains("SourceFile"));
+        var result = visitor.visit("class AnalysisResult {} class Main {}");
+        assertFalse(result.unusedClasses().contains("AnalysisResult"));
+        assertFalse(result.unusedClasses().contains("Main"));
     }
 
     @Test
     @DisplayName("UnusedClassVisitor should handle empty source")
     void unusedClassVisitor_emptySource_returnsEmpty() {
-        var source = new SourceFile("");
         var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(source);
+        var result = visitor.visit("");
         assertTrue(result.unusedClasses().isEmpty());
-    }
-
-    @Test
-    @DisplayName("SourceFile should store content")
-    void sourceFile_storesContent() {
-        var content = "class Test {}";
-        var source = new SourceFile(content);
-        assertEquals(content, source.content());
-    }
-
-    @Test
-    @DisplayName("ClassDecl should store class name")
-    void classDecl_storesName() {
-        var decl = new ClassDecl("TestClass");
-        assertEquals("TestClass", decl.name());
-    }
-
-    @Test
-    @DisplayName("ClassUsage should store class name")
-    void classUsage_storesName() {
-        var usage = new ClassUsage("TestClass");
-        assertEquals("TestClass", usage.name());
     }
 
     @Test
@@ -94,10 +62,8 @@ class UnusedClassDetectorTest {
     @Test
     @DisplayName("UnusedClassVisitor should detect unused interface")
     void unusedClassVisitor_unusedInterface_detectsUnused() {
-        var content = "interface Printable {} interface Unused {} class Printer implements Printable {}";
-        var source = new SourceFile(content);
         var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(source);
+        var result = visitor.visit("interface Printable {} interface Unused {} class Printer implements Printable {}");
         assertTrue(result.unusedClasses().contains("Unused"));
         assertFalse(result.unusedClasses().contains("Printable"));
     }
@@ -105,25 +71,9 @@ class UnusedClassDetectorTest {
     @Test
     @DisplayName("UnusedClassVisitor should not report implemented interfaces")
     void unusedClassVisitor_implementedInterface_notReported() {
-        var content = "interface Serializable {} class Data implements Serializable {} new Data();";
-        var source = new SourceFile(content);
         var visitor = new UnusedClassVisitor();
-        var result = visitor.visit(source);
+        var result = visitor.visit("interface Serializable {} class Data implements Serializable {} new Data();");
         assertFalse(result.unusedClasses().contains("Serializable"));
         assertFalse(result.unusedClasses().contains("Data"));
-    }
-
-    @Test
-    @DisplayName("InterfaceDecl should store interface name")
-    void interfaceDecl_storesName() {
-        var decl = new InterfaceDecl("Printable");
-        assertEquals("Printable", decl.name());
-    }
-
-    @Test
-    @DisplayName("InterfaceUsage should store interface name")
-    void interfaceUsage_storesName() {
-        var usage = new InterfaceUsage("Printable");
-        assertEquals("Printable", usage.name());
     }
 }
