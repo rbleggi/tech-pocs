@@ -35,6 +35,8 @@ record AnalysisResult(List<String> unusedClasses) {}
 class UnusedClassVisitor implements ASTVisitor {
     private final Pattern classDeclPattern = Pattern.compile("class\\s+(\\w+)");
     private final Pattern classUsagePattern = Pattern.compile("new\\s+(\\w+)");
+    private final Pattern interfaceDeclPattern = Pattern.compile("interface\\s+(\\w+)");
+    private final Pattern implementsPattern = Pattern.compile("implements\\s+(\\w+)");
 
     @Override
     public AnalysisResult visit(SourceFile source) {
