@@ -40,17 +40,31 @@ class UnusedClassVisitor implements ASTVisitor {
 
     @Override
     public AnalysisResult visit(SourceFile source) {
-        var decls = classDeclPattern.matcher(source.content())
+        var decls = new java.util.HashSet<>(classDeclPattern.matcher(source.content())
+            .results()
+            .map(m -> m.group(1))
+            .collect(Collectors.toSet()));
+
+        var usages = new java.util.HashSet<>(classUsagePattern.matcher(source.content())
+            .results()
+            .map(m -> m.group(1))
+            .collect(Collectors.toSet()));
+
+        var interfaceDecls = interfaceDeclPattern.matcher(source.content())
             .results()
             .map(m -> m.group(1))
             .collect(Collectors.toSet());
 
-        var usages = classUsagePattern.matcher(source.content())
+        var interfaceUsages = implementsPattern.matcher(source.content())
             .results()
             .map(m -> m.group(1))
             .collect(Collectors.toSet());
 
-        var excluded = Set.of("ClassDecl", "ClassUsage", "SourceFile", "AnalysisResult");
+        decls.addAll(interfaceDecls);
+        usages.addAll(interfaceUsages);
+
+        var excluded = Set.of("ClassDecl", "ClassUsage", "SourceFile", "AnalysisResult",
+                              "InterfaceDecl", "InterfaceUsage");
 
         var unused = decls.stream()
             .filter(name -> !usages.contains(name))
