@@ -2,6 +2,7 @@ package com.rbleggi.taskthreadpool;
 
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
@@ -57,5 +58,12 @@ class TaskThreadPool {
                 }
             }
         }
+    }
+}
+
+record PriorityTask(int priority, Task task) implements Comparable<PriorityTask> {
+    @Override
+    public int compareTo(PriorityTask other) {
+        return Integer.compare(this.priority, other.priority);
     }
 }
