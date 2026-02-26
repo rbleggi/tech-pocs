@@ -112,4 +112,18 @@ class UnusedClassDetectorTest {
         assertFalse(result.unusedClasses().contains("Serializable"));
         assertFalse(result.unusedClasses().contains("Data"));
     }
+
+    @Test
+    @DisplayName("InterfaceDecl should store interface name")
+    void interfaceDecl_storesName() {
+        var decl = new InterfaceDecl("Printable");
+        assertEquals("Printable", decl.name());
+    }
+
+    @Test
+    @DisplayName("InterfaceUsage should store interface name")
+    void interfaceUsage_storesName() {
+        var usage = new InterfaceUsage("Printable");
+        assertEquals("Printable", usage.name());
+    }
 }
