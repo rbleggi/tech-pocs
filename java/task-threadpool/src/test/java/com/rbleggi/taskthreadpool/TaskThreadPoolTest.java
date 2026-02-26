@@ -127,4 +127,21 @@ class TaskThreadPoolTest {
         assertThrows(IllegalStateException.class, () ->
             pool.submit(1, () -> System.out.println("Task")));
     }
+
+    @Test
+    @DisplayName("PriorityTask should compare by priority")
+    void priorityTask_compareTo_ordersCorrectly() {
+        var high = new PriorityTask(1, () -> {});
+        var low = new PriorityTask(10, () -> {});
+        assertTrue(high.compareTo(low) < 0);
+    }
+
+    @Test
+    @DisplayName("PriorityTask should store priority and task")
+    void priorityTask_storesFields() {
+        Task task = () -> {};
+        var pt = new PriorityTask(5, task);
+        assertEquals(5, pt.priority());
+        assertEquals(task, pt.task());
+    }
 }
