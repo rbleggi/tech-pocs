@@ -67,3 +67,45 @@ record PriorityTask(int priority, Task task) implements Comparable<PriorityTask>
         return Integer.compare(this.priority, other.priority);
     }
 }
+
+class PriorityTaskThreadPool {
+    private final PriorityBlockingQueue<PriorityTask> taskQueue = new PriorityBlockingQueue<>();
+    private volatile boolean isRunning = true;
+    private final List<Thread> workers;
+
+    PriorityTaskThreadPool(int workerCount) {
+        workers = IntStream.range(0, workerCount)
+            .mapToObj(i -> new Thread(this::workerLoop))
+            .toList();
+        workers.forEach(Thread::start);
+    }
+
+    void submit(int priority, Task task) {
+        synchronized (this) {
+            if (!isRunning) throw new IllegalStateException("ThreadPool is shutting down");
+            taskQueue.offer(new PriorityTask(priority, task));
+        }
+    }
+
+    void shutdown() throws InterruptedException {
+        synchronized (this) {
+            isRunning = false;
+        }
+        for (var worker : workers) {
+            worker.join();
+        }
+    }
+
+    private void workerLoop() {
+        while (isRunning || !taskQueue.isEmpty()) {
+            try {
+                var pt = taskQueue.poll(100, TimeUnit.MILLISECONDS);
+                if (pt != null) {
+                    pt.task().run();
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+}
