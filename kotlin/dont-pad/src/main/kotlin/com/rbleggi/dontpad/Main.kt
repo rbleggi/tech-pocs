@@ -34,20 +34,5 @@ class NoOpCommand : Command {
 }
 
 fun main() {
-    val key = "/mypage"
-    val notePad = NotePad(key)
-
-    println("[LOG] Creating NotePad for page: $key")
-
-    val appendCommand = AppendNoteCommand(notePad, "Hello, world!")
-    println("[LOG] Executing AppendNoteCommand: adding 'Hello, world!'")
-    appendCommand.execute()
-
-    val loadCommand = LoadNoteCommand(notePad)
-    println("[LOG] Executing LoadNoteCommand: displaying current content")
-    loadCommand.execute()
-
-    val noOpCommand = NoOpCommand()
-    println("[LOG] Executing NoOpCommand: no operation will be performed")
-    noOpCommand.execute()
+    println("Dont Pad")
 }

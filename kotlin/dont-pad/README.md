@@ -8,7 +8,7 @@ A minimal local clone of dontpad.com. Each URL (e.g., `/mypage`) represents a se
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language.
+- **Kotlin 2.2.20** → Modern JVM-based language.
 - **Gradle** → Build tool.
 - **JDK 25** → Required to run the application.
 
