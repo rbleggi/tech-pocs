@@ -91,32 +91,5 @@ class DomainFineTunedLLM(private val domainStrategies: Map<String, DomainKnowled
 }
 
 fun main() {
-    val llm = DomainFineTunedLLM(
-        mapOf(
-            "medical" to MedicalKnowledgeBase(),
-            "legal" to LegalKnowledgeBase(),
-            "tech" to TechKnowledgeBase()
-        )
-    )
-
-    println("=== Domain Fine-Tuned LLM ===")
-
-    val queries = listOf(
-        DomainQuery("O que e diabetes?", "medical"),
-        DomainQuery("Como funciona a CLT?", "legal"),
-        DomainQuery("O que e Kotlin?", "tech"),
-        DomainQuery("Explique sobre ferias", "legal")
-    )
-
-    queries.forEach { query ->
-        println("\n[${query.domain.uppercase()}] Pergunta: ${query.question}")
-        val response = llm.ask(query)
-        println("Resposta (confianca: ${(response.confidence * 100).toInt()}%): ${response.answer}")
-    }
-
-    println("\n=== Busca Multi-Dominio ===")
-    val multiDomainResults = llm.askMultipleDomains("docker")
-    multiDomainResults.forEach { (domain, response) ->
-        println("[$domain] ${response?.answer ?: "Sem resposta"}")
-    }
+    println("Domain Fine-Tuned LLM")
 }
