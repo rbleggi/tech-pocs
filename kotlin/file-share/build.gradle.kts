@@ -3,6 +3,9 @@ plugins {
     application
 }
 
+group = "com.rbleggi"
+version = "1.0"
+
 repositories {
     mavenCentral()
 }
@@ -12,7 +15,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("FileShareMainKt")
+    mainClass = "com.rbleggi.fileshare.MainKt"
 }
 
 tasks.test {

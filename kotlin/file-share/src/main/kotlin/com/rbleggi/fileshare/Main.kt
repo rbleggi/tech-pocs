@@ -61,11 +61,6 @@ class FileShareSystem(private val storage: FileStorage) {
 }
 
 fun main() {
-    val system = FileShareSystem(FileStorageFactory.create("encrypted"))
-    system.addObserver(LoggingObserver())
-    system.upload(File("report.pdf", "content"))
-    println(system.list())
-    println(system.search("report"))
-    system.delete("report.pdf")
+    println("File Share")
 }
 
