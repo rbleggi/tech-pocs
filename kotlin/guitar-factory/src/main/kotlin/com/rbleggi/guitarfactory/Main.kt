@@ -53,5 +53,5 @@ class GuitarInventory {
 }
 
 fun main() {
-    println("Guitar Factory POC")
+    println("Guitar Factory")
 }
