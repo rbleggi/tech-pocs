@@ -121,30 +121,5 @@ class GroceryInvoker {
 }
 
 fun main() {
-    val groceryList = GroceryList()
-    val invoker = GroceryInvoker()
-
-    val item1 = GroceryItem(name = "Milk")
-    val item2 = GroceryItem(name = "Bread")
-    val item3 = GroceryItem(name = "Eggs")
-
-    invoker.execute(AddItemCommand(groceryList, item1))
-    invoker.execute(AddItemCommand(groceryList, item2))
-    invoker.execute(AddItemCommand(groceryList, item3))
-    invoker.execute(ListAllItemsCommand(groceryList))
-
-    invoker.execute(MarkAsDoneCommand(groceryList, item2.id))
-    invoker.execute(ListAllItemsCommand(groceryList))
-
-    invoker.undo() // Undo mark as done
-    invoker.execute(ListAllItemsCommand(groceryList))
-
-    invoker.redo() // Redo mark as done
-    invoker.execute(ListAllItemsCommand(groceryList))
-
-    invoker.execute(RemoveItemCommand(groceryList, item1.id))
-    invoker.execute(ListAllItemsCommand(groceryList))
-
-    invoker.undo() // Undo remove
-    invoker.execute(ListAllItemsCommand(groceryList))
+    println("Grocery Todo List")
 }
