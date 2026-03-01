@@ -67,16 +67,5 @@ class CommandInvoker(private val store: RedisStore) {
 }
 
 fun main() {
-    val store = RedisStore()
-    val invoker = CommandInvoker(store)
-    println(invoker.execute(SetCommand("foo", "bar")))
-    println(invoker.execute(GetCommand("foo")))
-    println(invoker.execute(AppendCommand("foo", "baz")))
-    println(invoker.execute(RemoveCommand("foo")))
-    println(invoker.execute(GetCommand("foo")))
-    println(invoker.execute(MapSetCommand("myMap", "a", "1")))
-    println(invoker.execute(MapSetCommand("myMap", "b", "2")))
-    println(invoker.execute(MapGetCommand("myMap", "a")))
-    println(invoker.execute(MapKeysCommand("myMap")))
-    println(invoker.execute(MapValuesCommand("myMap")))
+    println("Redis Clone")
 }
