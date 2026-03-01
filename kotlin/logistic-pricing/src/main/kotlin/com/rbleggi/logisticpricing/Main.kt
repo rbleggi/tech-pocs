@@ -62,16 +62,5 @@ object PricingStrategySelector {
 }
 
 fun main() {
-    val shipments = listOf(
-        FreightInfo(10.0, 5.0, 100.0, TransportType.TRUCK),
-        FreightInfo(20.0, 8.0, 300.0, TransportType.RAIL),
-        FreightInfo(15.0, 6.0, 500.0, TransportType.BOAT)
-    )
-
-    shipments.forEach { info ->
-        val strategy = PricingStrategySelector.forTransportType(info.transportType)
-        val calculator = FreightCalculator(strategy)
-        val price = calculator.calculate(info)
-        println("Freight using ${info.transportType} costs \$${price}")
-    }
+    println("Logistic Pricing")
 }
