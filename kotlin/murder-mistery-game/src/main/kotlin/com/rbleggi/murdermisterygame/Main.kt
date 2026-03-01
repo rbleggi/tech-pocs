@@ -1,16 +1,7 @@
 package com.rbleggi.murdermisterygame
 
 fun main() {
-    val initialGame = Game()
-    println("Welcome to the Murder Mystery Game!")
-    println("Type 'help' to see the available commands.")
-    var game = initialGame
-    while (!game.finished) {
-        print("> ")
-        val input = readLine() ?: ""
-        val command = Parser.parse(input)
-        game = command.execute(game)
-    }
+    println("Murder Mystery Game")
 }
 
 interface Command {

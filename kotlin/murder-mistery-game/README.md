@@ -8,7 +8,7 @@ This project implements a simple terminal-based Murder Mystery game in Kotlin. T
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM language with functional and object-oriented features.
+- **Kotlin 2.2.20** → Modern JVM language with functional and object-oriented features.
 - **Gradle** → Official build tool for Kotlin/JVM projects.
 - **JDK 25** → Required to run the application.
 
