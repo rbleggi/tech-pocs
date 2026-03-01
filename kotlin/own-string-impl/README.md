@@ -8,7 +8,7 @@ This project demonstrates a custom String implementation in Kotlin. The solution
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with advanced type safety and functional programming features.
+- **Kotlin 2.2.20** → Modern JVM-based language with advanced type safety and functional programming features.
 - **Gradle** → Kotlin's official build tool.
 - **JDK 25** → Required to run the application.
 

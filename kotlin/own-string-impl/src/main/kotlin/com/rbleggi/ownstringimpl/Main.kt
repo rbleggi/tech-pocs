@@ -114,19 +114,5 @@ class MyString(val value: String) {
 }
 
 fun main() {
-    val s = MyString("  Hello, Kotlin!  ")
-    println("toArray: ${s.toArray().joinToString(",")}")
-    print("forEach: "); s.forEach { print(it) }; println()
-    println("reverse: ${s.reverse()}")
-    println("iterator: ${s.iterator().asSequence().joinToString("")}")
-    println("length: ${s.length()}")
-    println("charAt(1): ${s.charAt(1)}")
-    println("equals: ${s.equals(MyString("  Hello, Kotlin!  "))}")
-    println("isEmpty: ${s.isEmpty()}")
-    println("replace: ${s.replace('l', 'x')}")
-    println("substring(2,7): ${s.substring(2, 7)}")
-    println("trim: ${s.trim()}")
-    println("toJson: ${s.toJson()}")
-    println("indexOf('K'): ${s.indexOf('K')}")
-    println("hashCode: ${s.hashCode()}")
+    println("Own String Impl")
 }
