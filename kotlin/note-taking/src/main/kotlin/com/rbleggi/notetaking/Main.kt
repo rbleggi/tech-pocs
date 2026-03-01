@@ -115,15 +115,5 @@ class CommandManager {
 }
 
 fun main() {
-    val manager = NoteManager()
-    val commandManager = CommandManager()
-
-    commandManager.executeCommand(AddNoteCommand(manager, "First Note", "This is the content of the first note."))
-    commandManager.executeCommand(AddNoteCommand(manager, "Second Note", "This is the content of the second note."))
-    commandManager.executeCommand(SaveNotesCommand(manager, "notes.txt"))
-    println("Notes saved to file.")
-
-    commandManager.executeCommand(LoadNotesCommand(manager, "notes.txt"))
-    println("Notes loaded from file:")
-    manager.listNotes().forEach(::println)
+    println("Note Taking")
 }
