@@ -32,16 +32,7 @@ class HttpRouter {
 }
 
 fun main() {
-    val port = 8080
-    val server = ServerSocket(port)
-    println("HTTP server running on http://localhost:$port ...")
-
-    val handlers = listOf(HelloHandler(), PingHandler())
-
-    while (true) {
-        val client = server.accept()
-        Thread { handleClient(client, handlers) }.start()
-    }
+    println("HTTP Server")
 }
 
 fun handleClient(client: Socket, handlers: List<GetRouteHandler>) {
