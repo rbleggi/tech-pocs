@@ -279,54 +279,5 @@ class LoggerRouter(
 }
 
 fun main() {
-    val logger = LoggerRouter(defaultLevel = LogLevel.INFO)
-    logger.addStrategy("elk", ElkLoggingStrategy())
-    
-    println("Logger Router Demo")
-    println("==================")
-    
-    println("\nAvailable strategies:")
-    logger.getAvailableStrategies().forEach { strategy ->
-        val status = if (logger.getWorkingStrategies().contains(strategy)) "OK" else "FAIL"
-        println("  $status $strategy")
-    }
-    
-    println("\nLogging examples:")
-    
-    logger.info("Application started successfully")
-    logger.debug("This debug message won't be shown (level is INFO)")
-    logger.warn("This is a warning message")
-    logger.error("This is an error message")
-    
-    logger.info("This message goes only to console", strategy = "console")
-    logger.info("This message goes only to file", strategy = "file")
-    logger.info("This message goes only to memory", strategy = "memory")
-    
-    logger.info(
-        "User login successful",
-        logger = "AuthService",
-        metadata = mapOf(
-            "userId" to "12345",
-            "ip" to "192.168.1.100",
-            "userAgent" to "Mozilla/5.0..."
-        )
-    )
-    
-    try {
-        throw RuntimeException("Something went wrong!")
-    } catch (e: Exception) {
-        logger.error("An exception occurred", throwable = e)
-    }
-    
-    val memoryStrategy = logger.getStrategy("memory") as? MemoryLoggingStrategy
-    if (memoryStrategy != null) {
-        println("\nMemory strategy logs:")
-        memoryStrategy.getLogs().forEach { entry ->
-            println("  $entry")
-        }
-        println("  Total logs in memory: ${memoryStrategy.getLogCount()}")
-    }
-    
-    println("\nDemo completed!")
-    logger.shutdown()
+    println("Logger Router")
 }

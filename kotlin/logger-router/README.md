@@ -8,7 +8,7 @@ A flexible logging system in Kotlin. Supports multiple logging backends (File Sy
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language.
+- **Kotlin 2.2.20** → Modern JVM-based language.
 - **Gradle** → Build tool.
 - **JDK 25** → Required to run the application.
 
