@@ -1,30 +1,21 @@
 # **Ticket Booking**
 
-## **Overview**
+## Overview
 
-This project implements a **flexible and safe ticket booking system** using the **Builder Pattern**. Users can choose **zones**, **dates**, **seats**, and **shows**, while the system enforces **maximum place capacity** and prevents overbooking.
-
----
-
-## **Tech Stack**
-
-- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Build automation tool for Kotlin projects.
-- **JDK 21** → Required to run the application.
+Ticket booking system demonstrating the **Builder Pattern** for constructing tickets with configurable zones, seats, dates, and shows, while enforcing maximum place capacity and preventing overbooking.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **Builder Pattern** → Flexible ticket construction via fluent API
-- **Zone & Seat Selection** → Pick specific seats from configured areas
-- **Capacity Enforcement** → No overbooking allowed per show/zone
-- **Multiple Shows Support** → Maintain date- and show-specific logic
-- **Easy to Extend** → Add pricing, QR codes, or validation later
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
+- **JDK 25** → Required to run the application.
+- **kotlin.test** → Testing framework.
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -63,40 +54,24 @@ classDiagram
     TicketBuilder --> Ticket: builds
     TicketBookingService --> Ticket: receives
     TicketBookingService --> PlaceCapacity: validates & registers
-
 ```
 
 ---
 
-## **Builder Pattern**
+## Setup Instructions
 
-The **Builder Pattern** provides a fluent interface for building a ticket with many required parameters:
-
-1. Choose the show, zone, seat, and date
-2. The builder validates it through a **PlaceCapacity** registry
-3. If valid, it returns a `Ticket` object — if not, it throws an error
-4. All logic is **encapsulated**, so clients don't deal with constraints directly
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+### 1 - Clone the Repository
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/ticket-booking
 ```
 
-### **2️ - Build & Run the Application**
-
-```shell
+### 2 - Build the Project
+```bash
 ./gradlew build
-./gradlew run
 ```
 
-### **3️ - Run Tests**
-
-```shell
+### 3 - Run Tests
+```bash
 ./gradlew test
 ```

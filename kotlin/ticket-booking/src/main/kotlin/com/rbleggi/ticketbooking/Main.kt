@@ -61,29 +61,5 @@ class TicketBuilder {
 }
 
 fun main() {
-    val bookingService = TicketBookingService()
-
-    try {
-        val ticket1 = TicketBuilder()
-            .setShow("Iron Maiden")
-            .setZone("1")
-            .setSeat(12)
-            .setDate("2025-05-01")
-            .buildTicket()
-
-        val bookedTicket1 = bookingService.bookTicket(ticket1)
-        println("Ticket booked: $bookedTicket1")
-
-        val ticket2 = TicketBuilder()
-            .setShow("Iron Maiden")
-            .setZone("1")
-            .setSeat(12)
-            .setDate("2025-05-01")
-            .buildTicket()
-
-        val bookedTicket2 = bookingService.bookTicket(ticket2)
-        println("Ticket booked: $bookedTicket2")
-    } catch (e: Exception) {
-        println("Booking failed: ${e.message}")
-    }
+    println("Ticket Booking")
 }
