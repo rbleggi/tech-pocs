@@ -19,27 +19,5 @@ class DataClassGenerator : GeneratorStrategy {
 }
 
 fun main() {
-    val yamlContent = """
-Person:
-  name: String
-  age: Int
-  address: Address
-  phones: List<String>
-
-Address:
-  street: String
-  number: Int
-  city: String
-  state: String
-
-Company:
-  name: String
-  cnpj: String
-  employees: List<Person>
-""".trimIndent()
-
-    val generator: GeneratorStrategy = DataClassGenerator()
-    val generatedCode = generator.generate(yamlContent)
-
-    println("Generated code:\n$generatedCode")
+    println("YAML Code Generator")
 }
