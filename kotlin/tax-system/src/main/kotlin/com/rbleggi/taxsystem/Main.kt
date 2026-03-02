@@ -1,4 +1,4 @@
-package com.rbleggi.taxsystem.impl1
+package com.rbleggi.taxsystem
 
 data class TaxRule(val state: String, val product: String, val year: Int, val taxRate: Double) {
     fun calculateTax(price: Double): Double = price * (taxRate / 100)
@@ -39,7 +39,6 @@ class Year2024Specification(private val stateSpecs: List<StateSpecification>) : 
 }
 
 class TaxCalculator(private val rules: List<TaxRule>) {
-
     fun calculateTotalPrice(product: String, price: Double, state: String, year: Int): Double {
         val yearSpec: YearSpecification? = when (year) {
             2023 -> Year2023Specification(listOf(CASpecification2023(), TXSpecification2023()))
@@ -55,19 +54,48 @@ class TaxCalculator(private val rules: List<TaxRule>) {
     }
 }
 
+class SimpleStateSpecification(private val state: String) {
+    fun isSatisfiedBy(candidate: TaxRule) = candidate.state == state
+}
+
+class SimpleYearSpecification(private val year: Int) {
+    fun isSatisfiedBy(candidate: TaxRule) = candidate.year == year
+}
+
+class CompoundSpecification(
+    private val yearSpecs: List<SimpleYearSpecification>,
+    private val stateSpec: SimpleStateSpecification
+) {
+    fun isSatisfiedBy(candidate: TaxRule): Boolean =
+        yearSpecs.any { it.isSatisfiedBy(candidate) } && stateSpec.isSatisfiedBy(candidate)
+}
+
+class ProductSpecification(
+    private val product: String,
+    private val compoundSpec: CompoundSpecification
+) {
+    fun isSatisfiedBy(candidate: TaxRule): Boolean =
+        candidate.product == product && compoundSpec.isSatisfiedBy(candidate)
+}
+
+class TaxCalculatorCompound(private val rules: List<TaxRule>) {
+    fun calculateTotalPriceCompound(product: String, price: Double, state: String, year: Int): Double {
+        val spec = ProductSpecification(
+            product,
+            CompoundSpecification(
+                yearSpecs = listOf(SimpleYearSpecification(2023), SimpleYearSpecification(2024)),
+                stateSpec = SimpleStateSpecification(state)
+            )
+        )
+
+        val tax = rules.firstOrNull { rule ->
+            rule.year == year && spec.isSatisfiedBy(rule)
+        }?.calculateTax(price) ?: 0.0
+
+        return price + tax
+    }
+}
+
 fun main() {
-    val taxRules = listOf(
-        TaxRule("CA", "Laptop", 2023, 8.5),
-        TaxRule("TX", "Laptop", 2023, 6.25),
-        TaxRule("CA", "Book", 2024, 0.0),
-        TaxRule("TX", "Pizza", 2024, 4.0)
-    )
-
-    val calculator = TaxCalculator(taxRules)
-
-    println("Year/State Specific Implementation:")
-    println("Laptop in CA (2023): \$${calculator.calculateTotalPrice("Laptop", 1500.0, "CA", 2023)}")
-    println("Laptop in TX (2023): \$${calculator.calculateTotalPrice("Laptop", 1500.0, "TX", 2023)}")
-    println("Book in CA (2024): \$${calculator.calculateTotalPrice("Book", 30.0, "CA", 2024)}")
-    println("Pizza in TX (2024): \$${calculator.calculateTotalPrice("Pizza", 20.0, "TX", 2024)}")
+    println("Tax System")
 }
