@@ -6,5 +6,6 @@ lazy val root = project
     name := "advanced-monads",
     version := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
+    javacOptions ++= Seq("--release", "25"),
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % Test
   )

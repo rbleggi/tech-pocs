@@ -107,38 +107,4 @@ object BankMonads:
     }
 
 @main def run(): Unit =
-  println("=== State Monad - Banking Operations ===")
-  val account = BankAccount("Joao Silva", 1000.0, "123.456.789-01")
-
-  val operations = for
-    balance1 <- BankMonads.deposit(500.0)
-    withdrawal <- BankMonads.withdraw(200.0)
-    balance2 <- State.get[BankAccount].map(_.balance)
-  yield (balance1, withdrawal, balance2)
-
-  val (result, finalAccount) = operations.run(account)
-  println(s"Holder: ${finalAccount.holder}")
-  println(f"Balance after deposit: R$$ ${result._1}%.2f")
-  println(s"Withdrawal: ${result._2}")
-  println(f"Final balance: R$$ ${result._3}%.2f")
-  println()
-
-  println("=== IO Monad - Transfer ===")
-  val origin = BankAccount("Maria Santos", 2000.0, "987.654.321-00")
-  val destination = BankAccount("Carlos Oliveira", 500.0, "111.222.333-44")
-  val transferOperation = BankMonads.transfer(origin, destination, 300.0)
-  println(transferOperation.run())
-  println()
-
-  println("=== Writer Monad - Operation Logs ===")
-  val operationWithLog = for
-    _ <- Writer.tell(List("Starting operation"))
-    _ <- Writer.tell(List("Validating data"))
-    result <- Writer.pure[List[String], String]("Operation completed")
-    _ <- Writer.tell(List("Finalizing"))
-  yield result
-
-  val (finalValue, logs) = operationWithLog.run
-  println(s"Result: $finalValue")
-  println("Logs:")
-  logs.foreach(log => println(s"  - $log"))
+  println("Advanced Monads")
