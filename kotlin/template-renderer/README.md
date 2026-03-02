@@ -1,86 +1,78 @@
-# Template Renderer Project
+# **Template Renderer**
 
 ## Overview
 
-This project follows an **Object-Oriented Design (OOP)** approach to generate templates in **HTML, CSV, and PDF** formats. It uses:
+Template rendering system demonstrating the **Factory Pattern** for generating output in HTML, CSV, and PDF formats from a common data model, with each renderer encapsulated behind a shared interface.
 
-- **Kotlin** → A concise, modern JVM-based language.
-- **iText** → A library for PDF generation.
+---
 
-## Features
+## Tech Stack
 
-- **HTML Rendering** → Generates HTML files.  
-- **CSV Rendering** → Generates CSV files.  
-- **PDF Rendering** → Uses iText for generating PDF files.  
-- **Factory Pattern** → Dynamically selects the correct renderer.  
-- **Encapsulation & Polymorphism** → Each renderer extends the base `TemplateRenderer` class.  
+- **Kotlin 2.1.10** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
+- **JDK 25** → Required to run the application.
+- **iText 9** → PDF generation library.
+- **JUnit 5 + MockK** → Testing framework and mocking library.
 
 ---
 
 ## Architecture Diagram
 
-The following **Mermaid UML Diagram** illustrates the **Object-Oriented structure** of this project:
-
 ```mermaid
 classDiagram
-   class TemplateRenderer {
-      <<abstract>>
-      +render(data: Map<String, String>): ByteArray
-   }
+    class TemplateRenderer {
+        <<abstract>>
+        +render(data: Map~String, String~): ByteArray
+    }
 
-   class HTMLRenderer {
-      +render(data: Map<String, String>): ByteArray
-   }
+    class HTMLRenderer {
+        +render(data: Map~String, String~): ByteArray
+    }
 
-   class CSVRenderer {
-      +render(data: Map<String, String>): ByteArray
-   }
+    class CSVRenderer {
+        +render(data: Map~String, String~): ByteArray
+    }
 
-   class PDFRenderer {
-      +render(data: Map<String, String>): ByteArray
-   }
+    class PDFRenderer {
+        +render(data: Map~String, String~): ByteArray
+    }
 
-   class RendererFactory {
-      +getRenderer(type: String): TemplateRenderer
-   }
+    class RendererFactory {
+        +getRenderer(type: String): TemplateRenderer
+    }
 
-   class FileUtil {
-      +saveToFile(filename: String, content: ByteArray)
-   }
+    class FileUtil {
+        +saveToFile(filename: String, content: ByteArray)
+    }
 
-   class Main {
-      +main(args: Array<String>)
-   }
+    class Main {
+        +main(args: Array~String~)
+    }
 
-   TemplateRenderer <|-- HTMLRenderer
-   TemplateRenderer <|-- CSVRenderer
-   TemplateRenderer <|-- PDFRenderer
-   RendererFactory --> TemplateRenderer
-   Main --> RendererFactory
-   Main --> FileUtil
+    TemplateRenderer <|-- HTMLRenderer
+    TemplateRenderer <|-- CSVRenderer
+    TemplateRenderer <|-- PDFRenderer
+    RendererFactory --> TemplateRenderer
+    Main --> RendererFactory
+    Main --> FileUtil
 ```
-
-### **Explanation**
-- **TemplateRenderer** (Abstract Class) → Base class for all renderers.
-- **HTMLRenderer, CSVRenderer, PDFRenderer** → Implement `render()` differently based on the file format.
-- **RendererFactory** → Implements the **Factory Pattern** to return the correct renderer.
 
 ---
 
 ## Setup Instructions
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/rbleggi/tech-pocs.git
-   cd kotlin/template-renderer
-   ```
+### 1 - Clone the Repository
+```bash
+git clone https://github.com/rbleggi/tech-pocs.git
+cd kotlin/template-renderer
+```
 
-2. **Compiling & Running**:
-   ```bash
-   ./gradlew build run
-   ```
+### 2 - Build the Project
+```bash
+./gradlew build
+```
 
-3. **Tests**:
-   ```sh
-   ./gradlew test
-   ```
+### 3 - Run Tests
+```bash
+./gradlew test
+```

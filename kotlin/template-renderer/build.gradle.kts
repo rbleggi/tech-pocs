@@ -3,7 +3,7 @@ plugins {
     application
 }
 
-group = "org.rbleggi"
+group = "com.rbleggi"
 version = "1.0"
 
 repositories {
@@ -22,12 +22,12 @@ dependencies {
 }
 
 application {
-    mainClass = "com/rbleggi/templaterenderer/MainKt"
+    mainClass = "com.rbleggi.templaterenderer.MainKt"
 }
 
 tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
