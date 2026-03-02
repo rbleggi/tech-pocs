@@ -8,6 +8,6 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.apache.pekko" %% "pekko-actor-typed" % "1.0.2",
       "org.apache.pekko" %% "pekko-actor-testkit-typed" % "1.0.2" % Test,
-      "org.scalatest" %% "scalatest" % "3.2.19" % Test
+      "org.scalatest" %% "scalatest" % "3.2.16" % Test
     )
   )

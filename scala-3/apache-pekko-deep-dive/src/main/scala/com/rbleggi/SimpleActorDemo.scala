@@ -21,12 +21,7 @@ object GreeterDemo {
       Behaviors.same
   }
 
-  def main(args: Array[String]): Unit = {
-    val system = ActorSystem(Behaviors.setup[Any] { ctx =>
-      val replierActor = ctx.spawn(replier, "replier")
-      val greeterActor = ctx.spawn(greeter, "greeter")
-      greeterActor ! Greet("Roger", replierActor)
-      Behaviors.empty
-    }, "HelloSystem")
-  }
 }
+
+@main def run(): Unit =
+  println("Apache Pekko Deep Dive")
