@@ -1,29 +1,21 @@
 # **Calendar System**
 
-## **Overview**
+## Overview
 
-This project implements a **flexible and maintainable calendar system** using the **Command Pattern**. Users can book meetings, remove meetings, list meetings, and suggest the best time for two people to meet. The system also supports undo and redo functionality for all actions.
-
----
-
-## **Tech Stack**
-
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
+This project implements a flexible and maintainable calendar system using the Command Pattern. Users can book meetings, remove meetings, list meetings, and suggest the best time for two people to meet. The system also supports undo and redo functionality for all actions.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **Meeting Management** → Book, remove, list, and suggest meeting times.
-- **Command Pattern** → Actions are encapsulated as commands for easy extension.
-- **Conflict Detection** → Prevents booking conflicting meetings.
-- **Suggestion Engine** → Suggests optimal meeting times based on availability.
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -91,35 +83,23 @@ classDiagram
 
 ---
 
-## **Command Pattern**
+## Setup Instructions
 
-The **Command Pattern** encapsulates requests as objects, allowing:
+### 1 - Clone
 
-- Each calendar action is implemented as a separate `Command`
-- `CalendarInvoker` executes commands
-- Commands know how to execute themselves
-- Easy extension with new commands without modifying existing code
-- Clean separation between the invoker and the receiver
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/calendar
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
-```shell
-./sbtw compile run
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
-```shell
-./sbtw compile test
+```bash
+sbt test
 ```

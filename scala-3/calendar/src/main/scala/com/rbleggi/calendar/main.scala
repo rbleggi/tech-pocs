@@ -68,47 +68,4 @@ object SuggestionEngine:
     None
 
 @main def runCalendarDemo(): Unit =
-  val calendar = new Calendar
-  val invoker = new CalendarInvoker
-  val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-
-  println("===== Calendar System Demo =====")
-  
-  val user1 = User("1", "Alice")
-  val user2 = User("2", "Bob")
-  val user3 = User("3", "Charlie")
-  
-  println(s"Created users: ${user1.name}, ${user2.name}, ${user3.name}\n")
-
-  val meeting1 = Meeting("m1", "Sync", LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(2), Set(user1, user2))
-  val result1 = invoker.execute(BookMeetingCommand(calendar, meeting1)).asInstanceOf[Boolean]
-  println(s"Book meeting '${meeting1.title}' (${meeting1.start.format(formatter)} - ${meeting1.end.format(formatter)}): ${if (result1) "SUCCESS" else "FAILED"}")
-
-  val conflictingMeeting = Meeting("m2", "Conflict", LocalDateTime.now().plusHours(1).plusMinutes(30),
-    LocalDateTime.now().plusHours(2).plusMinutes(30), Set(user1, user3))
-  val result2 = invoker.execute(BookMeetingCommand(calendar, conflictingMeeting)).asInstanceOf[Boolean]
-  println(s"Book meeting '${conflictingMeeting.title}' (${conflictingMeeting.start.format(formatter)} - ${conflictingMeeting.end.format(formatter)}): ${if (result2) "SUCCESS" else "FAILED (Conflict detected)"}")
-
-  val meeting3 = Meeting("m3", "Planning", LocalDateTime.now().plusHours(3),
-    LocalDateTime.now().plusHours(4), Set(user1, user2, user3))
-  val result3 = invoker.execute(BookMeetingCommand(calendar, meeting3)).asInstanceOf[Boolean]
-  println(s"Book meeting '${meeting3.title}' (${meeting3.start.format(formatter)} - ${meeting3.end.format(formatter)}): ${if (result3) "SUCCESS" else "FAILED"}\n")
-
-  val aliceMeetings = invoker.execute(ListMeetingsCommand(calendar, user1)).asInstanceOf[List[Meeting]]
-  println(s"${user1.name}'s meetings (${aliceMeetings.size}):")
-  aliceMeetings.foreach(m => println(s"  • ${m.title} at ${m.start.format(formatter)} with ${m.attendees.size} attendees"))
-  println()
-
-  val suggestedTime = invoker.execute(SuggestBestTimeCommand(calendar, user1, user2, 30)).asInstanceOf[Option[(LocalDateTime, LocalDateTime)]]
-  println("Suggest best time for Alice and Bob (30min):")
-  suggestedTime match
-    case Some((start, end)) => println(s"  Available slot found: ${start.format(formatter)} - ${end.format(formatter)}")
-    case None => println("  No available time slots found today")
-  println()
-
-  val removeResult = invoker.execute(RemoveMeetingCommand(calendar, "m1")).asInstanceOf[Boolean]
-  println(s"Remove meeting 'Sync': ${if (removeResult) "SUCCESS" else "FAILED"}\n")
-
-  val aliceMeetingsAfter = invoker.execute(ListMeetingsCommand(calendar, user1)).asInstanceOf[List[Meeting]]
-  println(s"${user1.name}'s meetings after removal (${aliceMeetingsAfter.size}):")
-  aliceMeetingsAfter.foreach(m => println(s"  • ${m.title} at ${m.start.format(formatter)} with ${m.attendees.size} attendees"))
+  println("Calendar")
