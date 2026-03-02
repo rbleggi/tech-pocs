@@ -8,7 +8,7 @@ This project implements a stress test framework for HTTP endpoints using Kotlin.
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
+- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and strong type safety.
 - **Gradle** → Build tool for JVM projects.
 - **Kotlin Coroutines** → For concurrent HTTP request execution.
 - **JDK 25** → Required to run the application.

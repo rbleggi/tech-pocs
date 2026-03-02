@@ -65,9 +65,5 @@ class HttpStressTest(
 }
 
 fun main() {
-    val url = "https://httpbin.org/get"
-    val requests = 50
-    val concurrency = 10
-    val test = HttpStressTest(url, requests, concurrency)
-    test.runTest()
+    println("Stress Test HTTP Framework")
 }
