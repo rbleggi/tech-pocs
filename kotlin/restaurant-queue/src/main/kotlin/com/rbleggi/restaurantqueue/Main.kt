@@ -48,9 +48,5 @@ class KitchenQueue {
 }
 
 fun main() {
-    val kitchenQueue = KitchenQueue()
-    kitchenQueue.addCommand(BurgerCommand())
-    kitchenQueue.addCommand(PastaCommand())
-    kitchenQueue.addCommand(SaladCommand())
-    kitchenQueue.runQueue()
+    println("Restaurant Queue")
 }

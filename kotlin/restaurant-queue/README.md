@@ -8,7 +8,7 @@ This project implements a modular restaurant queue system in Kotlin. Each dish p
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language.
+- **Kotlin 2.2.20** → Modern JVM-based language.
 - **Gradle** → Build tool.
 - **JDK 25** → Required to run the application.
 
