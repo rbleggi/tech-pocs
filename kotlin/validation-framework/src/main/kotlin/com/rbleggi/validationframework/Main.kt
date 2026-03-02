@@ -33,5 +33,5 @@ class UserValidator : Validator<User> {
 }
 
 fun main() {
-    println("Validation Framework POC")
+    println("Validation Framework")
 }
