@@ -40,14 +40,5 @@ class TaskThreadPool(workerCount: Int) {
 }
 
 fun main() {
-    val pool = TaskThreadPool(4)
-    (1..10).forEach { i ->
-        pool.submit(object : Task {
-            override fun run() {
-                println("Task $i running on thread ${Thread.currentThread().name}")
-            }
-        })
-    }
-    Thread.sleep(1000)
-    pool.shutdown()
+    println("Task Threadpool")
 }
