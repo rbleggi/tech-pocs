@@ -1,4 +1,4 @@
-package com.rbleggi.socialmedia
+package com.rbleggi.socialmediaphotoapp
 
 interface Observer {
     fun update(event: Event)
@@ -59,15 +59,5 @@ class Follower(private val followerName: String) : Observer {
 }
 
 fun main() {
-    val alice = User("Alice")
-    val bob = Follower("Bob")
-    val charlie = Follower("Charlie")
-
-    alice.registerObserver(bob)
-    alice.registerObserver(charlie)
-
-    val photo1 = Photo("1", "http://photos.com/1")
-    alice.publishPhoto(photo1)
-    alice.tagUser(photo1, "Charlie")
-    alice.commentPhoto(photo1, Comment("Bob", "Nice photo!"))
+    println("Social Media Photo App")
 }

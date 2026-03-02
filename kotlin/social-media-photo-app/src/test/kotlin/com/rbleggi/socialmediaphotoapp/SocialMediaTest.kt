@@ -1,6 +1,6 @@
-package com.rbleggi.socialmedia
+package com.rbleggi.socialmediaphotoapp
 
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 

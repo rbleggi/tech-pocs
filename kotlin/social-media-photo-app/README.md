@@ -8,7 +8,7 @@ A modular social media photo sharing PoC in Kotlin, demonstrating core features 
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
+- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and strong type safety.
 - **Gradle** → Build automation tool for Kotlin projects.
 - **JDK 25** → Required to run the application.
 
