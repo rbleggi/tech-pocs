@@ -1,7 +1,5 @@
 package com.rbleggi.unusedclassdetector
 
-import java.io.File
-
 interface ASTNode
 data class ClassDecl(val name: String) : ASTNode
 data class ClassUsage(val name: String) : ASTNode
@@ -29,18 +27,7 @@ class UnusedClassVisitor : ASTVisitor {
 }
 
 fun main() {
-    val path = "kotlin/unused-class-detector/src/main/kotlin/com/rbleggi/unusedclassdetector/Main.kt"
-    val content = try {
-        File(path).readText()
-    } catch (e: Exception) {
-        println("Could not read file: ${e.message}")
-        return
-    }
-    val sourceFile = SourceFile(content)
-    val visitor = UnusedClassVisitor()
-    val result = visitor.visit(sourceFile)
-    println("Unused classes:")
-    result.unusedClasses.forEach(::println)
+    println("Unused Class Detector")
 }
 
 class UnusedExampleClass {
