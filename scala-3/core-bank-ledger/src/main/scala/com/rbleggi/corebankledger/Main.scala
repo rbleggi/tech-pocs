@@ -53,22 +53,5 @@ case class Transfer(from: Account, to: Account, amount: BigDecimal, ledger: Ledg
   }
 }
 
-@main def run(): Unit = {
-  val ledger = new Ledger
-  val alice = ledger.createAccount("Alice", 100)
-  val bob = ledger.createAccount("Bob", 50)
-
-  val ops: List[LedgerCommand] = List(
-    Deposit(alice, 50, ledger),
-    Withdraw(bob, 20, ledger),
-    Transfer(alice, bob, 70, ledger),
-    Withdraw(bob, 200, ledger)
-  )
-
-  ops.foreach(_.execute())
-
-  println("--- Accounts ---")
-  ledger.printAccounts()
-  println("\n--- Transactions ---")
-  ledger.printTransactions()
-}
+@main def run(): Unit =
+  println("Core Bank Ledger")
