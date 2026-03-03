@@ -28,11 +28,5 @@ class ConsoleLogger extends QueryObserver {
   }
 }
 
-@main def run(): Unit = {
-  val detector = new SlowQueryDetector(thresholdMs = 100)
-  detector.addObserver(new ConsoleLogger)
-
-  detector.executeQuery("SELECT * FROM users", 50)
-  detector.executeQuery("SELECT * FROM orders", 200)
-  detector.executeQuery("UPDATE products SET price = 10", 300)
-}
+@main def run(): Unit =
+  println("Hibernate Slow Query Detector")
