@@ -1,35 +1,21 @@
 # **Guitar Builder**
 
-## **Overview**
+## Overview
 
-This project implements a **custom guitar builder system** that allows users to flexibly create personalized guitars by
-specifying attributes such as **type, model, specifications, and operating system (OS)**. It also includes an *
-*inventory management system**, tracking available guitars and their quantities.
-
-The project utilizes the **Builder Pattern** to streamline guitar creation with flexibility and readability and uses a *
-*Singleton Pattern** for centralized, consistent inventory management.
+This project implements a custom guitar builder system that allows users to flexibly create personalized guitars by specifying attributes such as type, model, specifications, and operating system. It also includes an inventory management system tracking available guitars and their quantities. The project utilizes the Builder Pattern for guitar creation and the Singleton Pattern for centralized inventory management.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
-
----
-
-## **Features**
-
-- **Flexible Guitar Creation** → Users specify guitar attributes dynamically.
-- **Inventory Management** → Tracks available guitars and stock levels.
-- **Builder Pattern** → Simplifies the creation of guitars through a fluent interface.
-- **Singleton Inventory** → Ensures centralized and consistent stock control.
-- **Scalability** → Easily extendable to accommodate additional guitar attributes.
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -68,42 +54,23 @@ classDiagram
 
 ---
 
-## **Builder Pattern**
+## Setup Instructions
 
-The **Builder Pattern** simplifies creating guitars with various attributes without needing separate subclasses for each
-guitar type. It provides a fluent API that:
+### 1 - Clone
 
-- **Allows chaining methods** to set guitar attributes (`type`, `model`, `specs`, `os`).
-- **Encapsulates construction logic** within the `GuitarBuilder`, separating it from the `Guitar` class itself.
-- **Produces immutable `Guitar` instances** after calling the `build()` method.
-
----
-
-## **Singleton Pattern**
-
-The **Singleton Pattern** ensures a single, consistent inventory system (`GuitarInventory`) is available throughout the
-application's lifecycle. This prevents inconsistencies and duplicate inventories, ensuring that all operations (add,
-remove, list) interact with the same shared data source.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd scala-3/guitar-builder
+cd scala-3/guitar-factory
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
-```shell
-./sbtw compile run
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
-```shell
-./sbtw compile test
+```bash
+sbt test
 ```

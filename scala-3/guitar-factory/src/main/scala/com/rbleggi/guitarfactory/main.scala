@@ -78,36 +78,5 @@ object GuitarInventory {
   }
 }
 
-@main def run(): Unit = {
-  val guitar1 = Guitar.builder()
-    .guitarType("Acoustic")
-    .model("Yamaha FG800")
-    .specs("Spruce Top, Mahogany Back")
-    .os("Custom OS 1.0")
-    .build()
-
-  val guitar2 = Guitar.builder()
-    .guitarType("Electric")
-    .model("Fender Stratocaster")
-    .specs("Alder Body, Maple Neck")
-    .os("Custom OS 2.0")
-    .build()
-
-  val guitar3 = Guitar.builder()
-    .guitarType("Bass")
-    .model("Ibanez GSRM20")
-    .specs("Poplar Body, Maple Neck")
-    .os("Custom OS 3.0")
-    .build()
-
-  GuitarInventory.addGuitar(guitar1, 5)
-  GuitarInventory.addGuitar(guitar2, 3)
-  GuitarInventory.addGuitar(guitar3, 2)
-
-  GuitarInventory.listInventory()
-
-  GuitarInventory.removeGuitar(guitar2, 1)
-  GuitarInventory.removeGuitar(guitar3, 3)
-
-  GuitarInventory.listInventory()
-}
+@main def run(): Unit =
+  println("Guitar Factory")
