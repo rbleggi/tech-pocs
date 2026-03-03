@@ -1,32 +1,21 @@
 # **Logger Router**
 
-## **Overview**
+## Overview
 
-This project implements a **lightweight and flexible log routing system** using the **Strategy Pattern**. Logs can be
-sent to multiple destinations like **FileSystem**, **ELK**, or **Console**, with support for **synchronous or
-asynchronous delivery** — all through a simple, unified interface.
+This project implements a lightweight and flexible log routing system using the Strategy Pattern. Logs can be sent to multiple destinations like FileSystem, ELK, or Console, with support for synchronous or asynchronous delivery through a simple, unified interface.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
-
----
-
-## **Features**
-
-- **Multi-Destination Logging** → File, ELK, and Console supported
-- **Sync or Async per Strategy** → Configure independently for each target
-- **Strategy Pattern** → Logging logic is cleanly separated and reusable
-- **No Boilerplate** → No builder or wrapper classes required
-- **Minimal API** → Log directly via `.log(LogLevel, message)`
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -75,35 +64,23 @@ classDiagram
 
 ---
 
-## **Strategy Pattern**
+## Setup Instructions
 
-The **Strategy Pattern** allows each logging destination to encapsulate its own behavior. Instead of hardcoding log
-handling:
+### 1 - Clone
 
-- Each destination implements `LogStrategy`.
-- The router (`LoggerRouter`) delegates the log call to all configured strategies.
-- `AsyncStrategy` wraps any existing strategy to make it non-blocking.
-- No wrapper classes or builders are needed — just build a list of strategies.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd scala-3/logger-builder-router-system
+cd scala-3/logger-router
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
-```shell
-./sbtw compile run
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
-```shell
-./sbtw compile test
+```bash
+sbt test
 ```

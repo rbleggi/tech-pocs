@@ -34,15 +34,4 @@ class LoggerRouter(strategies: List[LogStrategy]):
     strategies.foreach(_.log(level, msg))
 
 @main def runLoggerExample(): Unit =
-  val ec: ExecutionContext = scala.concurrent.ExecutionContext.global
-
-  val strategies: List[LogStrategy] = List(
-    FileSystemStrategy("app.log"),
-    AsyncStrategy(ELKStrategy("http://localhost:9200"), ec),
-    ConsoleStrategy()
-  )
-
-  val logger = LoggerRouter(strategies)
-
-  logger.log(LogLevel.INFO, "User login successful")
-  logger.log(LogLevel.ERROR, "Database connection failed")
+  println("Logger Router")
