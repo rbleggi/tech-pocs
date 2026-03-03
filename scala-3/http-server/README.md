@@ -1,4 +1,4 @@
-# Scala HTTP Server
+# **Scala HTTP Server**
 
 ## Overview
 
@@ -6,19 +6,12 @@ This project implements a simple and extensible HTTP server in Scala 3 using the
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
-
----
-
-## Features
-- **GET endpoints**: Easily add new GET routes
-- **Strategy Pattern**: Add new route handlers by implementing the `GetRouteHandler` trait
-- **Simple CLI**: Run the server from the command line
-- **Extensible**: Add new endpoints without changing the server core
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
@@ -52,32 +45,23 @@ classDiagram
 
 ---
 
-## Implementation Details
+## Setup Instructions
 
-- The server uses the `GetRouteHandler` trait, which defines the method `handle(path: String): Option[String]`.
-- Concrete implementations (e.g., `HelloHandler`, `PingHandler`) handle specific GET endpoints.
-- The `run` method starts the server, composes handlers, and dispatches requests to the appropriate handler.
-- To add new endpoints, implement the `GetRouteHandler` trait and add your handler to the list in `run`.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/http-server
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
-```shell
-./sbtw compile run
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
-```shell
-./sbtw compile test
+```bash
+sbt test
 ```

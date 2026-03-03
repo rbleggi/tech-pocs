@@ -29,18 +29,8 @@ class HttpRouter {
   }
 }
 
-@main def run(): Unit = {
-  val port = 8080
-  val server = new ServerSocket(port)
-  println(s"HTTP server running on http://localhost:$port ...")
-
-  val handlers: List[GetRouteHandler] = List(new HelloHandler, new PingHandler)
-
-  while (true) {
-    val client = server.accept()
-    new Thread(() => handleClient(client, handlers)).start()
-  }
-}
+@main def run(): Unit =
+  println("HTTP Server")
 
 def handleClient(client: Socket, handlers: List[GetRouteHandler]): Unit = {
   val in = new BufferedReader(new InputStreamReader(client.getInputStream))
