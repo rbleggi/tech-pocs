@@ -1,30 +1,21 @@
 # **FileShare System**
 
-## **Overview**
+## Overview
 
-This project implements a **flexible and maintainable file-sharing system** using the **Command Pattern**. Users can save files, restore files, delete files, list all files, and search for specific files. The system also supports undo and redo functionality for all actions.
-
----
-
-## **Tech Stack**
-
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
+This project implements a flexible and maintainable file-sharing system using the Command Pattern. Users can save files, restore files, delete files, list all files, and search for specific files. The system also supports undo and redo functionality for all actions.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **File Management** → Save, restore, delete, list, and search files
-- **Action History** → Undo and redo functionality
-- **Command Pattern** → Actions are encapsulated as commands for easy extension
-- **Encryption** → Files are encrypted for secure storage
-- **Immutable Data** → Leverages Scala's immutability for safer code
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -104,35 +95,23 @@ classDiagram
 
 ---
 
-## **Command Pattern**
+## Setup Instructions
 
-The **Command Pattern** encapsulates requests as objects, allowing:
+### 1 - Clone
 
-- Each file management action is implemented as a separate `Command`
-- `CommandInvoker` maintains history for undo/redo functionality
-- Commands know how to execute and undo themselves
-- Easy extension with new commands without modifying existing code
-- Clean separation between the invoker and the receiver
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd scala-3/file-share-system
+cd scala-3/file-share
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
-```shell
-./sbtw compile run
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
-```shell
-./sbtw compile test
+```bash
+sbt test
 ```
