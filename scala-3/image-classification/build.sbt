@@ -9,6 +9,7 @@ lazy val root = (project in file("."))
       "ai.djl" % "api" % "0.30.0",
       "ai.djl.pytorch" % "pytorch-engine" % "0.30.0",
       "ai.djl.pytorch" % "pytorch-model-zoo" % "0.30.0",
-      "org.slf4j" % "slf4j-simple" % "2.0.9"
+      "org.slf4j" % "slf4j-simple" % "2.0.9",
+      "org.scalatest" %% "scalatest" % "3.2.16" % Test
     )
   )
