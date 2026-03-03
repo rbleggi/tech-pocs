@@ -1,31 +1,21 @@
-# **Teacher's Class Organizer/Optimizer**
+# **Teacher's Class Organizer**
 
-## **Overview**
+## Overview
 
-This project implements a **flexible and efficient classroom organization system** using the **Observer Pattern**. Teachers can manage class schedules, optimize resource allocation, track student assignments, and receive notifications about changes affecting their classes.
-
----
-
-## **Tech Stack**
-
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
+This project implements a flexible and efficient classroom organization system using the Observer Pattern. Teachers can manage class schedules, optimize resource allocation, track student assignments, and receive notifications about changes affecting their classes.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **Class Schedule Management** → Create, update, and optimize class schedules.
-- **Resource Allocation** → Assign and track classroom resources efficiently.
-- **Student Assignment Tracking** → Monitor student assignments and progress.
-- **Notification System** → Receive alerts about schedule conflicts or changes.
-- **Optimization Algorithms** → Automatically suggest optimal class arrangements.
-- **Observer Pattern Implementation** → Components receive automatic updates when changes occur.
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -87,33 +77,23 @@ classDiagram
 
 ---
 
-## **Implementation Details**
+## Setup Instructions
 
-The Teacher's Class Organizer uses the Observer Pattern to maintain a loosely coupled design where different components can react to changes in the class schedule or resource allocation without tight dependencies.
-
-- **Subject (ClassManager)**: The central component that maintains the state of classes, schedules, and resources.
-- **Observers**: Components like ResourceMonitor, ScheduleDisplay, and NotificationService that respond to changes.
-- **Optimization Algorithm**: Analyzes current schedule and resource allocation to suggest improvements.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/class-organizer
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
 ```bash
-./sbtw compile run
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
 ```bash
-./sbtw test
+sbt test
 ```
