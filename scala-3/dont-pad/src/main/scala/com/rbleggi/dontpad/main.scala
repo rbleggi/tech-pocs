@@ -51,20 +51,5 @@ class NoOpCommand extends Command {
   def execute(): Unit = println("Note unchanged.")
 }
 
-@main def run(): Unit = {
-  println("Welcome to Local DontPad!")
-  print("Enter the dontpad URL (e.g. /mypage): ")
-  val url = scala.io.StdIn.readLine().trim
-  val key = if (url.startsWith("/")) url.drop(1) else url
-  val pad = new NotePad(key)
-
-  new LoadNoteCommand(pad).execute()
-
-  println("\nType your new note below. The current note will be loaded above. Your input will be appended after the existing text. For multi-line input, finish with Ctrl+D then Enter.")
-  val newText = scala.io.Source.stdin.getLines().mkString("\n")
-  if (newText.nonEmpty) {
-    new AppendNoteCommand(pad, newText).execute()
-  } else {
-    new NoOpCommand().execute()
-  }
-}
+@main def run(): Unit =
+  println("Dont Pad")
