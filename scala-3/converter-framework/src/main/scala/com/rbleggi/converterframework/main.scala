@@ -19,9 +19,4 @@ val personToDTO: Converter[Person, PersonDTO] = Converter(p => PersonDTO(p.name,
 val personToString: Converter[Person, String] = Converter(p => s"${p.name} (${p.age}), ${addressToString.convert(p.address)}")
 
 @main def runConverterExamples(): Unit =
-  val address = Address("123 Main St", "Springfield", "12345")
-  val person = Person("John Doe", 30, address)
-
-  println("Address as String: " + addressToString.convert(address))
-  println("Person as DTO: " + personToDTO.convert(person))
-  println("Person as String: " + personToString.convert(person))
+  println("Converter Framework")
