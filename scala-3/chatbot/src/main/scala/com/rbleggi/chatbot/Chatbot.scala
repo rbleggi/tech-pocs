@@ -145,45 +145,4 @@ class Chatbot(commands: List[Command]):
   def resetContext(): Unit = context = ConversationContext()
 
 @main def runChatbot(): Unit =
-  val commands = List(
-    GreetingCommand(),
-    WeatherCommand(),
-    TimeCommand(),
-    ReminderCommand(),
-    HelpCommand(),
-    ContextCommand(),
-    UnknownCommand()
-  )
-
-  val bot = Chatbot(commands)
-
-  println("=== AI Chatbot ===")
-  println("Type 'quit' to exit\n")
-
-  val testMessages = List(
-    "Hello! My name is Alice",
-    "What's the weather in New York?",
-    "What time is it?",
-    "Remind me to buy groceries",
-    "What do you know about me?",
-    "Help"
-  )
-
-  println("=== Demo Mode ===\n")
-  testMessages.foreach { msg =>
-    println(s"You: $msg")
-    println(s"Bot: ${bot.processMessage(msg)}\n")
-  }
-
-  println("\n=== Interactive Mode ===")
-  println("Start chatting (type 'quit' to exit):")
-
-  var continue = true
-  while continue do
-    print("You: ")
-    val input = scala.io.StdIn.readLine()
-    if input.toLowerCase == "quit" then
-      continue = false
-      println("Bot: Goodbye!")
-    else
-      println(s"Bot: ${bot.processMessage(input)}\n")
+  println("Chatbot")

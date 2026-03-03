@@ -1,3 +1,5 @@
+package com.rbleggi.chatbot
+
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import com.rbleggi.chatbot.*
