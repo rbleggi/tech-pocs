@@ -1,7 +1,6 @@
 package com.rbleggi.euler
 
 @main def mainP04(): Unit = {
-  // Checks if a number is a palindrome
   def isPalindrome(n: Int): Boolean = {
     val s = n.toString
     s == s.reverse
@@ -24,4 +23,3 @@ package com.rbleggi.euler
 
   println(s"Largest palindrome made from the product of two 3-digit numbers: $maxPalindrome = $factor1 x $factor2")
 }
-

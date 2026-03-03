@@ -1,58 +1,71 @@
-# Project Euler Problems in Scala
+# **Project Euler**
 
-This repository contains solutions to mathematical and computational problems from [Project Euler](https://projecteuler.net/), implemented in Scala.
+## Overview
 
-Each solution aims for clarity, efficiency, and correctness. Feel free to explore, run, and contribute!
+Solutions to mathematical and computational problems from Project Euler, implemented in Scala 3. Each solution aims for clarity, efficiency, and correctness using functional programming idioms.
 
 ---
 
 ## Tech Stack
 
-- **Scala 3** – Modern JVM-based language with advanced type safety and functional programming features
-- **SBT** – Scala's official build tool
-- **JDK 21** – Required to run the application
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## Structure
+## Architecture Diagram
 
-- Each Project Euler problem is implemented in a separate file under `src/main/scala/com/rbleggi/euler/`
-- Each file contains:
-  - A function solving the problem
-  - A main method demonstrating usage
-  - Comments explaining the solution
+```mermaid
+classDiagram
+    direction TB
+
+    class P01 {
+        +solve(): Long
+    }
+
+    class P02 {
+        +solve(): Long
+    }
+
+    class P03 {
+        +solve(): Long
+    }
+
+    class P04 {
+        +solve(): Long
+    }
+
+    class P05 {
+        +solve(): Long
+    }
+
+    P01 ..> P02
+    P02 ..> P03
+    P03 ..> P04
+    P04 ..> P05
+```
 
 ---
 
-## Project Euler Problems
+## Setup Instructions
 
-This repository is dedicated to solving problems from [Project Euler](https://projecteuler.net/), a collection of challenging mathematical and computational problems. Each solution is written in Scala and aims to be clear and efficient.
+### 1 - Clone
 
-Example problems solved:
-- Problem 1: Multiples of 3 and 5
-- Problem 2: Even Fibonacci numbers
-- More problems will be added over time.
-
----
-
-## How to Run
-
-### 1. Clone the Repository
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/euler
 ```
 
-### 2. Compile & Run
+### 2 - Build
 
-```shell
-./sbtw.sh compile run
+```bash
+sbt compile
 ```
 
----
+### 3 - Test
 
-## References
-
-- [Project Euler](https://projecteuler.net/)
-- [Scala Documentation](https://docs.scala-lang.org/)
+```bash
+sbt test
+```

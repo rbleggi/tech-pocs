@@ -1,7 +1,5 @@
 package com.rbleggi.euler
 
-// Project Euler Problem 10
-// Find the sum of all the primes below two million
 @main def mainP10(): Unit = {
   val limit = 2000000
 

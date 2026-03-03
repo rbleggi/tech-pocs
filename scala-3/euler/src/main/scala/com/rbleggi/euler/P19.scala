@@ -1,6 +1,5 @@
 package com.rbleggi.euler
 
-// https://projecteuler.net/problem=19
 @main def mainP19(): Unit = {
 
   def isLeap(year: Int): Boolean = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)

@@ -1,5 +1,4 @@
-// Project Euler Problem 13: Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
-// This program calculates the sum of the provided 100 50-digit numbers and prints the first 10 digits of the result.
+package com.rbleggi.euler
 
 @main def runP13(): Unit =
   val numbers = List(

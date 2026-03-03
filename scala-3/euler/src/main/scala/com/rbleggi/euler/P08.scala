@@ -1,7 +1,5 @@
 package com.rbleggi.euler
 
-// Project Euler Problem 8
-// Find the thirteen adjacent digits in the 1000-digit number that have the greatest product.
 @main def mainP08(): Unit = {
   val number = """
 73167176531330624919225119674426574742355349194934
@@ -24,7 +22,7 @@ package com.rbleggi.euler
 84580156166097919133875499200524063689912560717606
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450
-""".replace("\n", "") // Remove line breaks
+""".replace("\n", "")
 
   val windowSize = 13
   var maxProduct = 0L
@@ -37,4 +35,3 @@ package com.rbleggi.euler
 
   println(s"The greatest product of thirteen adjacent digits is: $maxProduct")
 }
-

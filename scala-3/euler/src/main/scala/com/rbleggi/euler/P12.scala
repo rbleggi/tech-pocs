@@ -1,7 +1,5 @@
 package com.rbleggi.euler
 
-// Project Euler Problem 12: What is the value of the first triangle number to have over five hundred divisors?
-// This program finds the first triangle number with more than 500 divisors.
 def countDivisors(n: Long): Int =
   var num = n
   var count = 1

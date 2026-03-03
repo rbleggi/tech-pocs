@@ -1,7 +1,6 @@
 package com.rbleggi.euler
 
 @main def mainP03(): Unit = {
-  // Finds the largest prime factor of a given number
   def largestPrimeFactor(n: Long): Long = {
     var num = n
     var factor = 2L
@@ -27,4 +26,3 @@ package com.rbleggi.euler
   val result = largestPrimeFactor(targetNumber)
   println(s"Largest prime factor of $targetNumber: $result")
 }
-

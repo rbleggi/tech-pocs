@@ -1,8 +1,5 @@
 package com.rbleggi.euler
 
-// Project Euler Problem 14
-// Which starting number, under one million, produces the longest Collatz chain?
-
 @main def runP14(): Unit = {
   val cache = scala.collection.mutable.Map[Long, Int](1L -> 1)
 

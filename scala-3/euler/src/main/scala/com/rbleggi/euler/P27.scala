@@ -1,9 +1,5 @@
 package com.rbleggi.euler
 
-// Project Euler Problem 27
-// Find the product of coefficients a and b for the quadratic n^2 + a*n + b that produces the maximum number of consecutive primes for n = 0, 1, 2, ...
-// where |a| < 1000 and |b| <= 1000
-
 @main def mainP27(): Unit = {
   def isPrime(n: Int): Boolean = {
     if (n < 2) false
@@ -28,4 +24,3 @@ package com.rbleggi.euler
 
   println(s"Max consecutive primes: $maxCount for a = $bestA, b = $bestB. Product: ${bestA * bestB}")
 }
-

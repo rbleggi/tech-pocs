@@ -1,8 +1,5 @@
 package com.rbleggi.euler
 
-// Project Euler Problem 26: Reciprocal cycles
-// Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
-
 @main def runP26(): Unit = {
   def recurringCycleLength(denominator: Int): Int = {
     var remainder = 1
@@ -28,4 +25,3 @@ package com.rbleggi.euler
   }
   println(s"The value of d < 1000 with the longest recurring cycle is $resultD (cycle length: $maxLength)")
 }
-
