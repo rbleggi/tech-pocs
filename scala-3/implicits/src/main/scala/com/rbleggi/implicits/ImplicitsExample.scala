@@ -104,58 +104,5 @@ def runAsync(task: => Unit)(using ec: ExecutionContext): Unit =
   task
 
 @main def implicitsExample(): Unit =
-  println("=== Implicits/Givens Example (Scala 3) ===\n")
-
-  println("1. Given/Using - Context Parameters")
-  println(sort(List(3, 1, 4, 1, 5, 9, 2, 6)))
-  println(sort(List("banana", "apple", "cherry", "date")))
-  println(sort(List(3.14, 2.71, 1.41, 1.73)))
-
-  println("\n2. Implicit Config Pattern")
-  println(makeRequest("https://api.example.com/users"))
-
-  given customConfig: Config = Config(10000, 5, true)
-  println(makeRequest("https://api.example.com/data"))
-
-  println("\n3. Type Conversions")
-  println(s"'42' to Int: ${"42".convertTo[Int]}")
-  println(s"42 to String: ${42.convertTo[String]}")
-  println(s"'true' to Boolean: ${"true".convertTo[Boolean]}")
-  println(s"3.14 to Int: ${3.14.convertTo[Int]}")
-
-  println("\n4. Extension Methods - String")
-  println(s"'HelloWorld' to snake_case: ${"HelloWorld".toSnakeCase}")
-  println(s"'hello_world' to CamelCase: ${"hello_world".toCamelCase}")
-  println(s"'12345' is numeric: ${"12345".isNumeric}")
-  println(s"'abc' repeated 3 times: ${"abc".repeat(3)}")
-
-  println("\n5. Extension Methods - Int")
-  print("Executing 3 times: ")
-  3.times { print("* ") }
-  println()
-  println(s"5 seconds: ${5.seconds}")
-  println(s"2 minutes: ${2.minutes}")
-
-  println("\n6. Extension Methods - List")
-  val numbers = List(1, 2, 3, 4, 5)
-  println(s"Second element: ${numbers.secondOption}")
-  val (evens, odds) = numbers.splitAt(_ % 2 == 0)
-  println(s"Evens: $evens, Odds: $odds")
-
-  println("\n7. Printable Type Class")
-  printValue(42)
-  printValue("Hello")
-  printValue(List(1, 2, 3))
-
-  println("\n8. Execution Context")
-  runAsync {
-    println("  Task executed!")
-  }
-
-  println("\n=== Implicits Benefits ===")
-  println("1. Dependency injection without frameworks")
-  println("2. Extension methods for any type")
-  println("3. Type class pattern implementation")
-  println("4. Automatic conversions")
-  println("5. Reduce boilerplate code")
+  println("Implicits")
 
