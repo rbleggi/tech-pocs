@@ -1,7 +1,5 @@
 package com.rbleggi.ninetynine
 
-// P62 (*) Collect the leaves of a binary tree in a list.
-// A leaf is a node with no successors. Write a method leafList to collect them in a list.
 
 sealed trait Tree61A[+A] {
   def leafList: List[A]
@@ -18,6 +16,6 @@ case class Node62[+A](value: A, left: Tree61A[A] = End62, right: Tree61A[A] = En
 
 @main def mainP62(): Unit = {
   val tree = Node62('a', Node62('b'), Node62('c', Node62('d'), Node62('e')))
-  println(s"Leaf list: ${tree.leafList}") // Should print List(b, d, e)
+  println(s"Leaf list: ${tree.leafList}")
 }
 

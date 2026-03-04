@@ -1,12 +1,9 @@
 package com.rbleggi.ninetynine
 
-// Sorting a list of lists according to length of sublists.
 object P28 {
-  // a) Sort by length (shortest first)
   def lsort[A](lists: List[List[A]]): List[List[A]] =
     lists.sortBy(_.length)
 
-  // b) Sort by length frequency (rarest length first)
   def lsortFreq[A](lists: List[List[A]]): List[List[A]] = {
     val lengthFreq = lists.groupBy(_.length).view.mapValues(_.size).toMap
     lists.sortBy(l => lengthFreq(l.length))

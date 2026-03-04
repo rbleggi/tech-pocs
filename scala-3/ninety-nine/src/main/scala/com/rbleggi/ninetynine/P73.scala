@@ -1,16 +1,8 @@
-// P73 (**) Lisp-like tree representation.
-// This exercise demonstrates how to represent multiway trees in Lisp-like notation and parse them back.
-// Key Scala features used: case classes, companion objects, pattern matching, recursion, and @main for demo.
-
 package com.rbleggi.ninetynine
 
-// Multiway tree definition
 case class MTreeP73[+T](value: T, children: List[MTreeP73[T]]) {
-  // Secondary constructor for leaf nodes
   def this(value: T) = this(value, List())
 
-  // lispyTree: Converts the tree to Lisp-like string representation
-  // Example: (a (f g) c (b d e))
   def lispyTree: String = {
     if (children.isEmpty) value.toString
     else s"(${value.toString} ${children.map(_.lispyTree).mkString(" ")})"
@@ -18,14 +10,10 @@ case class MTreeP73[+T](value: T, children: List[MTreeP73[T]]) {
 }
 
 object MTreeP73 {
-  // Factory methods for convenience
   def apply[T](value: T): MTreeP73[T] = new MTreeP73(value, List())
   def apply[T](value: T, children: List[MTreeP73[T]]): MTreeP73[T] = new MTreeP73(value, children)
 
-  // Parses a Lisp-like string into an MTreeP73
-  // Example input: (a (f g) c (b d e))
   def fromLispyString(s: String): MTreeP73[String] = {
-    // Tokenize the string into atoms and parentheses
     val tokens = s.replace("(", " ( ").replace(")", " ) ").split(" ").filter(_.nonEmpty).toList
     def parse(tokens: List[String]): (MTreeP73[String], List[String]) = tokens match {
       case Nil => throw new IllegalArgumentException("Empty input")
@@ -47,7 +35,6 @@ object MTreeP73 {
     tree
   }
 
-  // Demo using @main
   @main def demoLispyTree(): Unit = {
     println("P73: Lisp-like tree representation.")
     val tree = MTreeP73("a", List(

@@ -10,7 +10,6 @@ case object End69 extends Tree69[Nothing]
 case class Node69[+A](value: A, left: Tree69[A] = End69, right: Tree69[A] = End69) extends Tree69[A]
 
 object Tree69 {
-  // Parse a dotstring into a Tree69[Char]
   def fromDotstring(s: String): Tree69[Char] = {
     def parse(idx: Int): (Tree69[Char], Int) = {
       if (idx >= s.length) return (End69, idx)
@@ -23,7 +22,6 @@ object Tree69 {
     parse(0)._1
   }
 
-  // For demo: convert string2Tree from P68
   def string2Tree(s: String): Tree69[Char] = {
     def parse(idx: Int): (Tree69[Char], Int) = {
       if (idx >= s.length || s(idx) == ',' || s(idx) == ')') return (End69, idx)

@@ -1,12 +1,7 @@
 package com.rbleggi.ninetynine
 
-// P37 (**) Calculate Euler’s totient function ϕ(m) (improved).
-// If the list of the prime factors of a number m is known in the form of problem P36 then the function ϕ(m) can be efficiently calculated as follows:
-// Let [[p1,m1],[p2,m2],[p3,m3],…] be the list of prime factors (and their multiplicities) of a given number m.
-// Then ϕ(m) = (p1−1) * p1^(m1−1) * (p2−1) * p2^(m2−1) * ...
 
 class P37(val n: Int) {
-  // Efficient Euler's totient function using prime factor multiplicities
   def totientImproved: Int = {
     def primeFactorMultiplicity: List[(Int, Int)] = {
       def factors(x: Int, divisor: Int = 2, acc: List[Int] = Nil): List[Int] = {

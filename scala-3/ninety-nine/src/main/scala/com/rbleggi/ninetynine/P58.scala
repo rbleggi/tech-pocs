@@ -1,7 +1,5 @@
 package com.rbleggi.ninetynine
 
-// P58 (**) Generate-and-test paradigm.
-// Construct all symmetric, completely balanced binary trees with a given number of nodes.
 
 sealed trait Tree[+A]
 case object End extends Tree[Nothing]
@@ -18,7 +16,6 @@ case class PositionedNode[+A](
 }
 
 object Tree {
-  // Generate all completely balanced binary trees with n nodes
   def cBalanced[A](n: Int, x: A): List[Tree[A]] = {
     if (n == 0) List(End)
     else if (n % 2 == 1) {
@@ -32,7 +29,6 @@ object Tree {
     }
   }
 
-  // Check if a tree is symmetric
   def isMirrorOf[A](t1: Tree[A], t2: Tree[A]): Boolean = (t1, t2) match {
     case (End, End) => true
     case (Node(_, l1, r1), Node(_, l2, r2)) => isMirrorOf(l1, r2) && isMirrorOf(r1, l2)
@@ -44,11 +40,9 @@ object Tree {
     case Node(_, l, r) => isMirrorOf(l, r)
   }
 
-  // Generate all symmetric, completely balanced binary trees with n nodes
   def symmetricBalancedTrees[A](n: Int, x: A): List[Tree[A]] =
     cBalanced(n, x).filter(isSymmetric)
 
-  // P63: Construct a complete binary tree
   def completeBinaryTree[A](n: Int, x: A): Tree[A] = {
     def build(addr: Int): Tree[A] = {
       if (addr > n) End
@@ -58,10 +52,8 @@ object Tree {
   }
 }
 
-// Extension methods for Tree/Node
 object TreeExtensions {
   implicit class RichTree[T](tree: Tree[T]) {
-    // P62: Collect internal nodes
     def internalList: List[T] = tree match {
       case Node(value, left, right) =>
         (left, right) match {
@@ -72,7 +64,6 @@ object TreeExtensions {
       case End => Nil
     }
 
-    // P62B: Collect nodes at a given level
     def atLevel(level: Int): List[T] = tree match {
       case Node(value, left, right) =>
         if (level < 1) Nil

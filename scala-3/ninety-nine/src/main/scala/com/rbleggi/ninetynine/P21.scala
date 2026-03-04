@@ -1,7 +1,5 @@
 package com.rbleggi.ninetynine
 
-// Insert an element at a given position into a list.
-// Example: insertAt('new, 1, List('a, 'b, 'c, 'd)) == List('a, 'new, 'b, 'c, 'd)
 object P21 {
   def insertAt[A](elem: A, k: Int, items: List[A]): List[A] = {
     val (before, after) = items.splitAt(k)

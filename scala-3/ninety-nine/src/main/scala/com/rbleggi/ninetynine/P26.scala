@@ -1,6 +1,5 @@
 package com.rbleggi.ninetynine
 
-// Generate the combinations of K distinct objects chosen from the N elements of a list.
 object P26 {
   def combinations[A](k: Int, items: List[A]): List[List[A]] =
     if (k == 0) List(Nil)
@@ -8,9 +7,7 @@ object P26 {
       items match {
         case Nil => Nil
         case head :: tail =>
-          // For each combination that includes head, prepend head
           val withHead = combinations(k - 1, tail).map(head :: _)
-          // For each combination that does not include head
           val withoutHead = combinations(k, tail)
           withHead ++ withoutHead
       }

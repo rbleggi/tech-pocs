@@ -1,65 +1,71 @@
-# Ninety-Nine Scala Problems
+# **Ninety-Nine Scala Problems**
 
 ## Overview
 
-This project contains solutions to the classic **99 Scala Problems**, a set of exercises designed to improve proficiency with Scala and functional programming. Each problem is implemented in its own file, with clear comments and explanations.
+Solutions to the classic 99 Scala Problems, a set of exercises designed to improve proficiency with Scala and functional programming. Each problem is implemented in its own file using idiomatic Scala 3 style.
 
 ---
 
 ## Tech Stack
 
-- **Scala 3** – Modern JVM-based language with advanced type safety and functional programming features
-- **SBT** – Scala's official build tool
-- **JDK 21** – Required to run the application
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## Structure
+## Architecture Diagram
 
-- Each problem is implemented in a separate file under `src/main/scala/com/rbleggi/ninetynine/`
-- Each file contains:
-  - A function solving the problem
-  - A main method demonstrating usage
-  - Detailed comments explaining the solution
+```mermaid
+classDiagram
+    direction TB
+
+    class P01 {
+        +last[A](list: List[A]): A
+    }
+
+    class P02 {
+        +penultimate[A](list: List[A]): A
+    }
+
+    class P03 {
+        +nth[A](n: Int, list: List[A]): A
+    }
+
+    class P04 {
+        +length[A](list: List[A]): Int
+    }
+
+    class P05 {
+        +reverse[A](list: List[A]): List[A]
+    }
+
+    P01 ..> P02
+    P02 ..> P03
+    P03 ..> P04
+    P04 ..> P05
+```
 
 ---
 
-## Problem Table
+## Setup Instructions
 
-| Problem | Description | File |
-|---------|-------------|------|
-| P01     | Find the last element of a list | P01.scala |
-| P02     | Find the last but one element of a list | P02.scala |
-| P03     | Find the Kth element of a list | P03.scala |
-| P04     | Find the number of elements of a list | P04.scala |
-| P05     | Reverse a list | P05.scala |
-| P06     | Find out whether a list is a palindrome | P06.scala |
-| P07     | Flatten a nested list structure | P07.scala |
-| P08     | Eliminate consecutive duplicates of list elements | P08.scala |
-| P09     | Pack consecutive duplicates of list elements into sublists | P09.scala |
-| P10     | Run-length encoding of a list | P10.scala |
-| ...     | ... | ... |
+### 1 - Clone
 
----
-
-## How to Run
-
-### 1. Clone the Repository
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/ninety-nine
 ```
 
-### 2. Compile & Run
+### 2 - Build
 
-```shell
-./sbtw.sh compile run
+```bash
+sbt compile
 ```
 
----
+### 3 - Test
 
-## References
-
-- [99 Scala Problems](https://aperiodic.net/pip/scala/s-99/)
-- [Scala Documentation](https://docs.scala-lang.org/)
+```bash
+sbt test
+```

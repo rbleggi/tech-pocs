@@ -1,8 +1,5 @@
 package com.rbleggi.ninetynine
 
-// P35 (**) Determine the prime factors of a given positive integer.
-// Construct a flat list containing the prime factors in ascending order.
-// Example: 315.primeFactors == List(3, 3, 5, 7)
 
 object P35 {
   def primeFactors(n: Int): List[Int] = {

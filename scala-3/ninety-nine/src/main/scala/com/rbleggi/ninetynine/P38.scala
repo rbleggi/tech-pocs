@@ -1,18 +1,13 @@
 package com.rbleggi.ninetynine
 
-// P38 (*) Compare the two methods of calculating Euler’s totient function.
-// Use the solutions of problems P34 and P37 to compare the algorithms.
-// Try to calculate ϕ(10090) as an example.
 
 object P38 {
-  // Method 1: Brute force (from P34)
   def totientBrute(m: Int): Int = {
     def gcd(a: Int, b: Int): Int =
       if (b == 0) a else gcd(b, a % b)
     (1 to m).count(r => gcd(r, m) == 1)
   }
 
-  // Method 2: Improved (from P37)
   def totientImproved(n: Int): Int = {
     def primeFactorMultiplicity: List[(Int, Int)] = {
       def factors(x: Int, divisor: Int = 2, acc: List[Int] = Nil): List[Int] = {

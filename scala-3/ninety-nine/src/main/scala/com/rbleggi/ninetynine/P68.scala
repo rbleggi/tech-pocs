@@ -14,7 +14,6 @@ case object End68 extends Tree68[Nothing]
 case class Node68[+A](value: A, left: Tree68[A] = End68, right: Tree68[A] = End68) extends Tree68[A]
 
 object Tree68 {
-  // Parse a string into a Tree68[Char] (same as P67)
   def string2Tree(s: String): Tree68[Char] = {
     def parse(idx: Int): (Tree68[Char], Int) = {
       if (idx >= s.length || s(idx) == ',' || s(idx) == ')') return (End68, idx)
@@ -36,13 +35,12 @@ object Tree68 {
     parse(0)._1
   }
 
-  // Build tree from preorder and inorder sequences
   def preInTree[A](pre: List[A], in: List[A]): Tree68[A] = {
     if (pre.isEmpty || in.isEmpty) End68
     else {
       val root = pre.head
       val idx = in.indexOf(root)
-      if (idx == -1) End68 // root not found in inorder
+      if (idx == -1) End68
       else {
         val leftIn = in.take(idx)
         val rightIn = in.drop(idx + 1)
@@ -55,8 +53,8 @@ object Tree68 {
 
   @main def runP68Demo(): Unit = {
     val tree = string2Tree("a(b(d,e),c(,f(g,)))")
-    println(tree.preorder) // List(a, b, d, e, c, f, g)
-    println(tree.inorder)  // List(d, b, e, a, c, g, f)
+    println(tree.preorder)
+    println(tree.inorder)
     val rebuilt = preInTree(List('a', 'b', 'd', 'e', 'c', 'f', 'g'), List('d', 'b', 'e', 'a', 'c', 'g', 'f'))
     println(rebuilt)
     val ambiguous = preInTree(List('a', 'b', 'a'), List('b', 'a', 'a'))

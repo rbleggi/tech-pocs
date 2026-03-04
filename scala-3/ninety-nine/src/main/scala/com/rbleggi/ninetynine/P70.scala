@@ -1,6 +1,5 @@
 package com.rbleggi.ninetynine
 
-// P70: Multiway trees
 case class MTree[+T](value: T, children: List[MTree[T]]) {
   def this(value: T) = this(value, List())
   override def toString: String =

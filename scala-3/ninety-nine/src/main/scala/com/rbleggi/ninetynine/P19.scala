@@ -1,13 +1,10 @@
 package com.rbleggi.ninetynine
 
-// Rotate a list N places to the left.
-// If N is negative, rotate to the right.
 object P19 {
   def rotate[A](n: Int, items: List[A]): List[A] = {
     if (items.isEmpty) items
     else {
       val len = items.length
-      // Normalize n to be within the bounds of the list length
       val n1 = if (len == 0) 0 else ((n % len) + len) % len
       val (first, second) = items.splitAt(n1)
       second ++ first

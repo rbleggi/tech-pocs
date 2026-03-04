@@ -3,7 +3,6 @@ package com.rbleggi.ninetynine
 import com.rbleggi.ninetynine.{Tree, Node, End, PositionedNode}
 
 object P66 {
-  // Helper: Get left and right contour (x positions at each depth)
   private def leftContour[A](tree: Tree[A], x: Int, y: Int, acc: Map[Int, Int]): Map[Int, Int] = tree match {
     case End => acc
     case Node(_, l, r) =>
@@ -23,13 +22,11 @@ object P66 {
       rightContour(r, px + 1, py + 1, accL + (py -> math.max(accL.getOrElse(py, px), px)))
   }
 
-  // Main layout function
   private def layout[A](tree: Tree[A], depth: Int, x: Int): (Tree[A], Int, Int) = tree match {
     case End => (End, x, x)
     case Node(v, l, r) =>
       val (lTree, lMin, lMax) = layout(l, depth + 1, x)
       val (rTree, rMin, rMax) = layout(r, depth + 1, x)
-      // Compute separation
       val lContour = rightContour(lTree, x - 1, depth + 1, Map())
       val rContour = leftContour(rTree, x + 1, depth + 1, Map())
       val overlap = (lContour.keySet intersect rContour.keySet).map { d =>
@@ -45,7 +42,6 @@ object P66 {
     case PositionedNode(v, l, r, px, py) => (PositionedNode(v, l, r, px, py), px, px)
   }
 
-  // Shift all x positions in a tree
   private def shiftTree[A](tree: Tree[A], dx: Int): Tree[A] = tree match {
     case End => End
     case PositionedNode(v, l, r, x, y) => PositionedNode(v, shiftTree(l, dx), shiftTree(r, dx), x + dx, y)
@@ -62,11 +58,9 @@ object P66 {
     case Node(_, l, r) => math.max(getMaxX(l), getMaxX(r))
   }
 
-  // Extension method for layoutBinaryTree3
   implicit class LayoutOps3[A](tree: Tree[A]) {
     def layoutBinaryTree3: Tree[A] = {
       val (t, minX, _) = layout(tree, 1, 1)
-      // Shift so leftmost node is at x=1
       shiftTree(t, 1 - minX)
     }
   }
@@ -75,7 +69,6 @@ object P66 {
     val tree = Node('a', Node('b', End, Node('c')), Node('d'))
     val positioned = tree.layoutBinaryTree3
     println(positioned)
-    // Should print: T[2,1]('a T[1,2]('b . T[2,3]('c . .)) T[3,2]('d . .))
   }
 }
 

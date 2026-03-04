@@ -14,7 +14,6 @@ case object End67 extends Tree67[Nothing]
 case class Node67[+A](value: A, left: Tree67[A] = End67, right: Tree67[A] = End67) extends Tree67[A]
 
 object Tree67 {
-  // Parse a string into a Tree67[Char]
   def fromString(s: String): Tree67[Char] = {
     def parse(idx: Int): (Tree67[Char], Int) = {
       if (idx >= s.length || s(idx) == ',' || s(idx) == ')') return (End67, idx)
@@ -39,9 +38,9 @@ object Tree67 {
   @main def runP67Demo(): Unit = {
     val tree = Node67('a', Node67('b', Node67('d'), Node67('e')), Node67('c', End67, Node67('f', Node67('g'), End67)))
     val str = tree.toString
-    println(str) // Should print: a(b(d,e),c(,f(g,)))
+    println(str)
     val parsed = fromString(str)
-    println(parsed) // Should print the same structure
+    println(parsed)
   }
 }
 

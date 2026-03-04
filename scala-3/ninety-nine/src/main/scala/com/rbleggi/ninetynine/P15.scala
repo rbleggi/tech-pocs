@@ -1,10 +1,7 @@
 package com.rbleggi.ninetynine
 
-// Duplicate the elements of a list a given number of times.
-// For each element in the input list, produce n copies in the output list.
 object P15 {
   def duplicateN[A](n: Int, items: List[A]): List[A] =
-    // Use flatMap to map each element to a list of n elements, then flatten the result
     items.flatMap(e => List.fill(n)(e))
 }
 

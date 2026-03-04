@@ -2,8 +2,6 @@ package com.rbleggi.ninetynine
 
 import scala.util.Random
 
-// Extract a given number of randomly selected elements from a list.
-// The same element will not be selected twice (sampling without replacement).
 object P23 {
   def randomSelect[A](n: Int, items: List[A]): List[A] = {
     def selectRec(count: Int, source: List[A], rand: Random): List[A] =

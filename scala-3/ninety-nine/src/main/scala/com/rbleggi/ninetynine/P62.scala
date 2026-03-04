@@ -5,6 +5,6 @@ import com.rbleggi.ninetynine.TreeExtensions._
 object P62 {
   @main def runP62Demo(): Unit = {
     val tree = Node('a', Node('b'), Node('c', Node('d'), Node('e')))
-    println(tree.internalList) // Should print List(a, c)
+    println(tree.internalList)
   }
 }

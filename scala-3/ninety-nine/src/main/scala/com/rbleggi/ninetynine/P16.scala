@@ -1,13 +1,10 @@
 package com.rbleggi.ninetynine
 
-// Drop every Nth element from a list.
-// For example, drop(3, List('a, 'b, 'c, 'd, ...)) removes every 3rd element.
 object P16 {
   def drop[A](n: Int, items: List[A]): List[A] =
-    // Helper function with index tracking
     def loop(lst: List[A], idx: Int): List[A] = lst match {
       case Nil => Nil
-      case _ :: tail if idx == n => loop(tail, 1) // Drop the Nth element
+      case _ :: tail if idx == n => loop(tail, 1)
       case head :: tail => head :: loop(tail, idx + 1)
     }
     loop(items, 1)

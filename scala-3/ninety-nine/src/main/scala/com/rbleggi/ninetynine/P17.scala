@@ -1,10 +1,7 @@
 package com.rbleggi.ninetynine
 
-// Split a list into two parts.
-// The length of the first part is given. Use a Tuple for your result.
 object P17 {
   def split[A](n: Int, items: List[A]): (List[A], List[A]) =
-    // Use the built-in splitAt method, which splits a list at the given index
     items.splitAt(n)
 }
 

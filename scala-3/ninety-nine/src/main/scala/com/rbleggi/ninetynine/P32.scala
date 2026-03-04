@@ -1,6 +1,5 @@
 package com.rbleggi.ninetynine
 
-// P32: Determine the greatest common divisor of two positive integer numbers using Euclid's algorithm.
 class P32(val value: Int) {
   def gcd(other: Int): Int = {
     @annotation.tailrec
@@ -11,7 +10,6 @@ class P32(val value: Int) {
 }
 
 object P32 {
-  // Helper for easier usage, similar to implicit conversion
   def gcd(a: Int, b: Int): Int = new P32(a).gcd(b)
 }
 

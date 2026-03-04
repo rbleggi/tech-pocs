@@ -1,11 +1,5 @@
 package com.rbleggi.ninetynine
 
-// P55 (**) Construct completely balanced binary trees.
-// In a completely balanced binary tree, for every node, the number of nodes in its left and right subtree differ by at most one.
-// Tree.cBalanced(n, x) generates all completely balanced binary trees with n nodes, each node containing value x.
-// Example:
-// Tree.cBalanced(4, "x")
-// res0: List[Node[String]] = List(Node(x, Node(x, Empty, Empty), Node(x, Empty, Node(x, Empty, Empty))), ...)
 
 sealed trait TreeBalanced[+A]
 case object EmptyBalanced extends TreeBalanced[Nothing]
@@ -21,7 +15,6 @@ object TreeBalanced {
         rightSize = n - 1 - leftSize
         leftTrees = cBalanced(leftSize, x)
         rightTrees = cBalanced(rightSize, x)
-        // To avoid duplicates when leftSize != rightSize
         treeCombos = if (leftSize == rightSize) {
           for {
             l <- leftTrees

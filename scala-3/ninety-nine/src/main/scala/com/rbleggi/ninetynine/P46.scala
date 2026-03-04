@@ -1,8 +1,6 @@
 package com.rbleggi.ninetynine
 
-// P46 (**) Truth tables for logical expressions.
 object P46 {
-  // Logical operations
   def and(a: Boolean, b: Boolean): Boolean = a && b
   def or(a: Boolean, b: Boolean): Boolean = a || b
   def nand(a: Boolean, b: Boolean): Boolean = !(a && b)
@@ -11,7 +9,6 @@ object P46 {
   def impl(a: Boolean, b: Boolean): Boolean = !a || b
   def equ(a: Boolean, b: Boolean): Boolean = a == b
 
-  // Prints the truth table for a logical expression of two variables
   def table2(f: (Boolean, Boolean) => Boolean): Unit = {
     println("A     B     result")
     for {

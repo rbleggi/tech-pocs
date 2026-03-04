@@ -1,10 +1,7 @@
 package com.rbleggi.ninetynine
 
-// Duplicate the elements of a list.
-// For each element in the input list, produce two copies in the output list.
 object P14 {
   def duplicate[A](items: List[A]): List[A] =
-    // Use flatMap to map each element to a list of two elements, then flatten the result
     items.flatMap(e => List(e, e))
 }
 

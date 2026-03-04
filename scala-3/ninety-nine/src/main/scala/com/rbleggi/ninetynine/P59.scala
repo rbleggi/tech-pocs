@@ -1,12 +1,9 @@
 package com.rbleggi.ninetynine
 
-// P59 (**) Construct height-balanced binary trees.
-// TreeHbalOpsP59.hbalTrees(h, x): all height-balanced trees of height h with value x in all nodes.
 
 import com.rbleggi.ninetynine.{TreeHBal, EndHBal, NodeHBal}
 
 object TreeHbalOpsP59 {
-  // Height-balanced binary trees of height h
   def hbalTrees[A](h: Int, x: A): List[TreeHBal[A]] = {
     if (h == 0) List(EndHBal)
     else if (h == 1) List(NodeHBal(x))

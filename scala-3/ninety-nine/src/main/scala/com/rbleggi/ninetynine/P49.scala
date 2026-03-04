@@ -1,8 +1,6 @@
 package com.rbleggi.ninetynine
 
-// P49 (**) Gray code.
 object P49 {
-  // Generates n-bit Gray code as a list of strings
   def gray(n: Int): List[String] = {
     if (n <= 0) Nil
     else if (n == 1) List("0", "1")
