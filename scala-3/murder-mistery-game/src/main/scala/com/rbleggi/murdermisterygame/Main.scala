@@ -75,16 +75,6 @@ object Parser {
   }
 }
 
-@main def run(): Unit = {
-  val suspects = List("Ms. Scarlet", "Col. Mustard", "Prof. Plum", "Mrs. Peacock")
-  val clues = List("red scarf", "mustard stain", "plum pie", "peacock feather")
-  var game = Game(suspects, clues, Nil, None, false)
-  println("Welcome to the Murder Mystery Game!")
-  Commands.Help.execute(game)
-  while (!game.finished) {
-    val input = readLine("> ")
-    val cmd = Parser.parse(input)
-    game = cmd.execute(game)
-  }
-}
+@main def run(): Unit =
+  println("Murder Mistery Game")
 

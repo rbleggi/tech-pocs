@@ -1,6 +1,5 @@
-package com.rbleggi.murdermistery
+package com.rbleggi.murdermisterygame
 
-import com.rbleggi.murdermisterygame._
 import org.scalatest.funsuite.AnyFunSuite
 
 class MurderMisteryGameSpec extends AnyFunSuite {

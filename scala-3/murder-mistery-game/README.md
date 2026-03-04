@@ -1,29 +1,21 @@
 # **Murder Mystery Game**
 
-## **Overview**
+## Overview
 
 This project implements a simple terminal-based Murder Mystery Game in Scala. The player interacts via commands to find clues and accuse suspects. The solution uses the Command Pattern to handle user actions and game logic.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
-
----
-
-## **Features**
-
-- **Terminal Interaction** → Play the game entirely in the terminal.
-- **Command Pattern** → Each user action is encapsulated as a command.
-- **Simple Game Logic** → Find clues and accuse suspects to solve the mystery.
-- **Single File Implementation** → All logic is contained in one file for simplicity.
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -52,32 +44,23 @@ classDiagram
 
 ---
 
-## **Implementation Details**
+## Setup Instructions
 
-- The game uses the Command Pattern: each action (show suspects, find clue, accuse, etc.) is a Command object.
-- The main entry point is `@main def run(): Unit =`, which starts the game loop and processes user input.
-- All logic is in a single Scala file, with no comments.
-- To play, run the application and use commands like `suspects`, `clues`, `find <clue>`, `accuse <suspect>`, `help`, and `exit`.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/murder-mistery-game
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
 ```bash
-./sbtw compile run
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
 ```bash
-./sbtw test
+sbt test
 ```
