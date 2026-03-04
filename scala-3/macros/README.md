@@ -1,21 +1,21 @@
 # **Scala 3 Macros**
 
-## **Overview**
+## Overview
 
 This project demonstrates Scala 3's new macro system using inline definitions and quoted expressions. Macros enable compile-time metaprogramming for debugging, validation, and code generation. The example includes a debug macro for logging expressions and an assertion macro for validating positive values.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3.6.3** → Modern JVM language with advanced type safety and functional programming.
-- **SBT 1.10.11** → Scala build tool.
-- **JDK 25** → Java runtime environment.
-- **ScalaTest 3.2.16** → Testing framework.
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -57,22 +57,22 @@ classDiagram
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### 1 - Clone the Repository
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/macros
 ```
 
-### 2 - Compile & Run the Application
+### 2 - Build
 
 ```bash
-sbt compile run
+sbt compile
 ```
 
-### 3 - Run Tests
+### 3 - Test
 
 ```bash
 sbt test

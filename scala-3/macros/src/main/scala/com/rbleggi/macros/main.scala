@@ -46,3 +46,6 @@ case class Client(name: String, cpf: String, balance: Double)
 case class Product(name: String, price: Double, stock: Int)
 
 case class Address(street: String, city: String, state: String, zipCode: String)
+
+@main def run(): Unit =
+  println("Macros")
