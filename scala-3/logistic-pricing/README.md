@@ -1,32 +1,21 @@
 # **Logistic Pricing**
 
-## **Overview**
+## Overview
 
-This project implements a **modular and extensible freight pricing system** using the **Strategy Pattern**. Freight
-costs are dynamically calculated based on factors like **volume, size, and transport type** — such as **Truck**, **Rail
-**, or **Boat** — with prices subject to **real-time variability**.
+This project implements a modular and extensible freight pricing system using the Strategy Pattern. Freight costs are dynamically calculated based on factors like volume, size, and transport type such as Truck, Rail, or Boat, with prices subject to real-time variability.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
-
----
-
-## **Features**
-
-- **Strategy-Based Price Calculation** → Easily plug in new pricing models
-- **Supports Multiple Transport Types** → Truck, Rail, Boat
-- **Dynamic Pricing** → Pricing logic is fully decoupled and runtime-driven
-- **Extensible Design** → Add more transport strategies without touching core logic
-- **Minimal Boilerplate** → No builder classes or verbose configuration
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -76,34 +65,23 @@ classDiagram
 
 ---
 
-## **Strategy Pattern**
+## Setup Instructions
 
-Using the **Strategy Pattern**, the pricing logic is abstracted away from the core calculator:
-
-1. Each transport mode implements its own `PricingStrategy`.
-2. `FreightCalculator` delegates calculation to the selected strategy.
-3. Easily swap or update strategies at runtime.
-4. No need to modify core logic when adding a new transport type or changing pricing logic.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/logistic-pricing
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
 ```bash
-./sbtw compile run
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
 ```bash
-./sbtw test
+sbt test
 ```

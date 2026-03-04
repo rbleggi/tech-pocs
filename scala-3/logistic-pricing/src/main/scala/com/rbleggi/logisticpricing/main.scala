@@ -53,15 +53,4 @@ object PricingStrategySelector:
     case Boat => BoatPricingStrategy()
 
 @main def runLogisticPricingApp(): Unit =
-  val shipments = List(
-    FreightInfo(10, 5, 100, Truck),
-    FreightInfo(20, 8, 300, Rail),
-    FreightInfo(15, 6, 500, Boat)
-  )
-
-  shipments.foreach { info =>
-    val strategy = PricingStrategySelector.forTransportType(info.transportType)
-    val calculator = FreightCalculator(strategy)
-    val price = calculator.calculate(info)
-    println(s"Freight using ${info.transportType} costs $$${price}")
-  }
+  println("Logistic Pricing")

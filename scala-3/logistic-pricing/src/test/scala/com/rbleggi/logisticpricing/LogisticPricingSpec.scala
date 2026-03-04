@@ -6,7 +6,7 @@ class LogisticPricingSpec extends AnyFunSuite {
   test("TruckPricingStrategy calculates price in expected range") {
     val info = FreightInfo(10, 5, 100, TransportType.Truck)
     val price = new TruckPricingStrategy().calculate(info)
-    assert(price > 135 && price < 190) // Further widened for dynamic factor
+    assert(price > 135 && price < 190)
   }
 
   test("RailPricingStrategy calculates price in expected range") {
