@@ -157,20 +157,5 @@ object MyString {
   def apply(s: String): MyString = new MyString(s)
 }
 
-@main def run(): Unit = {
-  val s = MyString("  Hello, Scala!  ")
-  println(s"toArray: ${s.toArray.mkString(",")}")
-  print("foreach: "); s.foreach(c => print(c)); println()
-  println(s"reverse: ${s.reverse}")
-  println(s"iterator: ${s.iterator.mkString}")
-  println(s"length: ${s.length}")
-  println(s"charAt(1): ${s.charAt(1)}")
-  println(s"equals: ${s.equals(MyString("  Hello, Scala!  "))}")
-  println(s"isEmpty: ${s.isEmpty}")
-  println(s"replace: ${s.replace('l', 'x')}")
-  println(s"substring(2,7): ${s.substring(2,7)}")
-  println(s"trim: ${s.trim}")
-  println(s"toJson: ${s.toJson}")
-  println(s"indexOf('S'): ${s.indexOf('S')}")
-  println(s"hashCode: ${s.hashCode}")
-}
+@main def run(): Unit =
+  println("Own String Impl")
