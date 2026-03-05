@@ -41,31 +41,4 @@ class RecommendationSystem(strategy: RecommendationStrategy):
     strategy.recommend(userId, ratings, items, topN)
 
 @main def runRecommendationSystem(): Unit =
-  val items = List(
-    Item("movie1", "action"),
-    Item("movie2", "drama"),
-    Item("movie3", "comedy"),
-    Item("movie4", "action"),
-    Item("movie5", "drama"),
-    Item("movie6", "action")
-  )
-
-  val ratings = List(
-    Rating("user1", "movie1", 5.0),
-    Rating("user1", "movie2", 3.0),
-    Rating("user2", "movie1", 4.0),
-    Rating("user2", "movie3", 5.0),
-    Rating("user3", "movie2", 5.0),
-    Rating("user4", "movie1", 5.0),
-    Rating("user4", "movie4", 4.0)
-  )
-
-  println("=== Recommendation System ===\n")
-
-  val popularitySystem = RecommendationSystem(PopularityBased())
-  println("Popularity-Based:")
-  println(popularitySystem.recommend("user1", ratings, items, 3).mkString(", "))
-
-  val categorySystem = RecommendationSystem(CategoryBased())
-  println("\nCategory-Based:")
-  println(categorySystem.recommend("user1", ratings, items, 3).mkString(", "))
+  println("Recommendation System")

@@ -1,6 +1,7 @@
+package com.rbleggi.recommendationsystem
+
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import com.rbleggi.recommendationsystem.*
 
 class RecommendationSystemSpec extends AnyFlatSpec with Matchers:
 

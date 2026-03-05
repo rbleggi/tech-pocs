@@ -1,41 +1,82 @@
-# Recommendation System
+# **Recommendation System**
 
 ## Overview
 
-Simple recommendation system demonstrating the Strategy Pattern with two different recommendation algorithms.
+Simple recommendation system demonstrating the Strategy Pattern with two different recommendation algorithms. Supports popularity-based and category-based strategies, enabling flexible item recommendations based on user ratings and preferences.
+
+---
 
 ## Tech Stack
 
-- **Scala 3** → Modern JVM-based language
-- **SBT** → Scala's build tool
-- **JDK 25** → Required to run
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
-## Features
+---
 
-- **Popularity-Based** → Recommends items with highest average ratings
-- **Category-Based** → Recommends items from user's favorite category
-- **Strategy Pattern** → Easy to switch between algorithms
+## Architecture Diagram
 
-## Strategy Pattern
+```mermaid
+classDiagram
+    direction TB
 
-The **Strategy Pattern** allows different recommendation algorithms to be selected at runtime:
+    class RecommendationStrategy {
+        <<trait>>
+        +recommend(user: User, items: List[Item]): List[Item]
+    }
 
-- `RecommendationStrategy` trait defines the recommendation contract
-- `PopularityBased` and `CategoryBased` implement different strategies
-- `RecommendationSystem` switches between strategies without changing code
+    class PopularityBased {
+        +recommend(user: User, items: List[Item]): List[Item]
+    }
 
-## Algorithms
+    class CategoryBased {
+        +recommend(user: User, items: List[Item]): List[Item]
+    }
 
-### Popularity-Based
-Recommends items with highest average ratings from other users.
+    class RecommendationSystem {
+        -strategy: RecommendationStrategy
+        +setStrategy(strategy: RecommendationStrategy): Unit
+        +getRecommendations(user: User, items: List[Item]): List[Item]
+    }
 
-### Category-Based
-Finds user's favorite category and recommends other items from that category.
+    class User {
+        +id: String
+        +ratings: Map[String, Double]
+    }
 
-## Setup
+    class Item {
+        +id: String
+        +category: String
+        +avgRating: Double
+    }
 
-```shell
+    RecommendationStrategy <|-- PopularityBased
+    RecommendationStrategy <|-- CategoryBased
+    RecommendationSystem --> RecommendationStrategy
+    RecommendationSystem --> User
+    RecommendationSystem --> Item
+```
+
+---
+
+## Setup Instructions
+
+### 1 - Clone
+
+```bash
+git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/recommendation-system
-sbt compile run
+```
+
+### 2 - Build
+
+```bash
+sbt compile
+```
+
+### 3 - Test
+
+```bash
 sbt test
 ```
