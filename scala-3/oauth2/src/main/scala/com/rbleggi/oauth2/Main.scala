@@ -35,12 +35,5 @@ object OAuth2Server {
   }
 }
 
-@main def run(): Unit = {
-  val authCodeRequest = Map("grant_type" -> "authorization_code", "client_id" -> "abc", "redirect_uri" -> "http://localhost/cb")
-  val clientCredsRequest = Map("grant_type" -> "client_credentials", "client_id" -> "abc", "client_secret" -> "xyz")
-  val invalidRequest = Map("grant_type" -> "password")
-
-  println("Authorization Code Grant Response: " + OAuth2Server.processRequest(authCodeRequest))
-  println("Client Credentials Grant Response: " + OAuth2Server.processRequest(clientCredsRequest))
-  println("Invalid Grant Response: " + OAuth2Server.processRequest(invalidRequest))
-}
+@main def run(): Unit =
+  println("OAuth2")
