@@ -92,19 +92,4 @@ object AddressParser:
     yield Address(str, num, cit, st, zip)
 
 @main def run(): Unit =
-  val addresses = List(
-    "Rua das Flores, 123, Sao Paulo, SP, 01234-567",
-    "Avenida Brasil, 456, Curitiba, PR, 80000-123",
-    "Rua dos Pinheiros, 789, Belo Horizonte, MG, 30100-000"
-  )
-
-  addresses.foreach { input =>
-    AddressParser.address.parse(input) match
-      case Some(ParseResult(address, remaining)) =>
-        println(s"Parsed: $address")
-        if remaining.nonEmpty then
-          println(s"Remaining: '$remaining'")
-      case None =>
-        println(s"Failed to parse: $input")
-    println()
-  }
+  println("Parser Combinators")

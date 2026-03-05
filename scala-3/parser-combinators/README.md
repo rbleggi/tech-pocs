@@ -1,21 +1,21 @@
 # **Parser Combinators**
 
-## **Overview**
+## Overview
 
 This project demonstrates a simple parser combinator library in Scala 3. Parser combinators allow building complex parsers from small, reusable components using functional composition. The example parses Brazilian addresses with street, number, city, state, and postal code.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3.6.3** → Modern JVM language with advanced type safety and functional programming.
-- **SBT 1.10.11** → Scala build tool.
-- **JDK 25** → Java runtime environment.
-- **ScalaTest 3.2.16** → Testing framework.
+- **Language** -> Scala 3.6.3
+- **Build Tool** -> sbt 1.10.11
+- **Runtime** -> JDK 25
+- **Testing** -> ScalaTest 3.2.16
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -68,22 +68,22 @@ classDiagram
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### 1 - Clone the Repository
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/parser-combinators
 ```
 
-### 2 - Compile & Run the Application
+### 2 - Build
 
 ```bash
-sbt compile run
+sbt compile
 ```
 
-### 3 - Run Tests
+### 3 - Test
 
 ```bash
 sbt test
