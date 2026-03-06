@@ -36,19 +36,4 @@ object PaymentProcessor:
       case _: DebitCard => amount * 0.015
 
 @main def run(): Unit =
-  val payments = List(
-    Pix("joao@example.com"),
-    BankSlip("23793381286000000012345678901234567890123456"),
-    CreditCard("1234567890123456", 3),
-    DebitCard("9876543210987654")
-  )
-
-  val amounts = List(100.0, 250.50, 450.0, 80.0)
-
-  payments.zip(amounts).foreach { (payment, amount) =>
-    val processing = PaymentProcessor.process(payment, amount)
-    val fee = PaymentProcessor.calculateFee(payment, amount)
-    println(processing)
-    println(f"Fee: R$$ $fee%.2f")
-    println()
-  }
+  println("Sealed Traits")

@@ -1,21 +1,21 @@
 # **Type Classes Pattern**
 
-## **Overview**
+## Overview
 
 This project demonstrates Scala 3's type classes using the given/using mechanism. Type classes enable ad-hoc polymorphism by defining behavior for types without modifying their definitions. The example shows formatters for Brazilian data types including currency, dates, CPF, and products.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3.6.3** → Modern JVM language with advanced type safety and functional programming.
-- **SBT 1.10.11** → Scala build tool.
-- **JDK 25** → Java runtime environment.
-- **ScalaTest 3.2.16** → Testing framework.
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -57,22 +57,22 @@ classDiagram
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
-### 1 - Clone the Repository
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/type-classes
 ```
 
-### 2 - Compile & Run the Application
+### 2 - Build
 
 ```bash
-sbt compile run
+sbt compile
 ```
 
-### 3 - Run Tests
+### 3 - Test
 
 ```bash
 sbt test

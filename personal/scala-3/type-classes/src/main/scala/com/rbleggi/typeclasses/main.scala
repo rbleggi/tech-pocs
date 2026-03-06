@@ -47,26 +47,4 @@ extension [T](value: T)
     f.format(value)
 
 @main def run(): Unit =
-  val price = 1250.50
-  println(s"Price: ${price.display}")
-
-  val date = LocalDate.of(2024, 2, 14)
-  println(s"Date: ${date.display}")
-
-  val cpf = Cpf("12345678901")
-  println(s"CPF: ${cpf.display}")
-
-  val product = Product("Notebook Dell", 3500.00, "Electronics")
-  println(s"Product: ${product.display}")
-
-  val name = "joao silva"
-  println(s"Name: ${name.display}")
-
-  println()
-
-  def display[T: Formatter](label: String, value: T): Unit =
-    println(s"$label: ${Formatter.format(value)}")
-
-  display("Value", 999.99)
-  display("Due Date", LocalDate.of(2024, 12, 31))
-  display("Document", Cpf("98765432100"))
+  println("Type Classes")
