@@ -60,36 +60,8 @@ case class MapValuesCommand(mapKey: String) extends Command {
     store.maps.get(mapKey).map(_.values.mkString(",")).getOrElse("(nil)")
 }
 
-@main def redisCloneServer(): Unit = {
-  val store = new RedisStore
-  println("Scala Redis Clone PoC. Type commands, Ctrl+C to exit.")
-  Iterator.continually(scala.io.StdIn.readLine("> ")).takeWhile(_ != null).foreach { line =>
-    val cmd = parseCommand(line)
-    val result = cmd.map(_.execute(store)).getOrElse("ERR unknown command")
-    println(result)
-  }
-}
-
-@main def redisCloneServerExample(): Unit = {
-  val store = new RedisStore
-  val commands = List(
-    "set foo bar",
-    "get foo",
-    "append foo baz",
-    "remove foo",
-    "get foo",
-    "mapset mymap field1 value1",
-    "mapget mymap field1",
-    "mapkeys mymap",
-    "mapvalues mymap"
-  )
-  commands.foreach { line =>
-    println(line)
-    val cmd = parseCommand(line)
-    val result = cmd.map(_.execute(store)).getOrElse("ERR unknown command")
-    println(result)
-  }
-}
+@main def redisCloneServer(): Unit =
+  println("Redis Clone")
 
 def parseCommand(input: String): Option[Command] = {
   val parts = input.trim.split(" ").toList

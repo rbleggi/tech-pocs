@@ -1,29 +1,21 @@
 # **Redis Clone System**
 
-## **Overview**
+## Overview
 
-This project implements a **simple in-memory Redis-like key-value store** using the **Command Pattern**. It supports basic string and map operations, similar to a minimal Redis server.
-
----
-
-## **Tech Stack**
-
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
+This project implements a simple in-memory Redis-like key-value store using the Command Pattern. It supports basic string and map operations, similar to a minimal Redis server.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **String Operations** → set, get, remove, append
-- **Map Operations** → mapset, mapget, mapkeys, mapvalues
-- **Command Pattern** → Each operation is encapsulated as a command for easy extension
-- **In-Memory Store** → All data is stored in memory (no persistence)
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -49,34 +41,23 @@ classDiagram
 
 ---
 
-## **Command Pattern**
+## Setup Instructions
 
-The **Command Pattern** encapsulates each operation (set, get, remove, append, mapset, mapget, mapkeys, mapvalues) as a command object. This allows:
+### 1 - Clone
 
-- Each action is implemented as a separate `Command`.
-- Easy extension with new commands without modifying existing code.
-- Clean separation between the invoker (main loop) and the receiver (`RedisStore`).
-- Simple and maintainable code structure.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
-
-```shell
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd scala-3/note-taking
+cd scala-3/redis-clone
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
-```shell
-./sbtw compile run
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
-```shell
-./sbtw compile test
+```bash
+sbt test
 ```
