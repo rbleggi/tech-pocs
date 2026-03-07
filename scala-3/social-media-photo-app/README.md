@@ -1,32 +1,21 @@
 # **Social Media Sharing Photo App**
 
-## **Overview**
+## Overview
 
-A modular social media photo sharing PoC in Scala 3, demonstrating core features (publish, tag, timeline, comments) and event-driven notifications using the **Observer Pattern**. Followers are notified when users publish, tag, or comment on photos.
-
----
-
-## **Tech Stack**
-
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
+A modular social media photo sharing PoC in Scala 3, demonstrating core features (publish, tag, timeline, comments) and event-driven notifications using the Observer Pattern. Followers are notified when users publish, tag, or comment on photos.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **Observer Pattern** → Decouples user actions from notification logic
-- **Photo Publishing** → Users can publish photos to their timeline
-- **Tagging** → Tag users in photos
-- **Timeline** → View a timeline of published photos and activities
-- **Comments** → Add and view comments on photos
-- **Notification System** → Followers receive notifications for new photos, tags, and comments
-- **Easily Extensible** → Add new event types or observers without changing core logic
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -81,35 +70,23 @@ classDiagram
 
 ---
 
-## **Observer Pattern**
+## Setup Instructions
 
-The **Observer Pattern** allows the app to notify followers automatically when a user publishes, tags, or comments on a photo. This decouples the notification logic from user actions, making the system modular and extensible.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/social-media-photo-app
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
 ```bash
-./sbtw compile run
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
 ```bash
-./sbtw test
+sbt test
 ```
-
----
-
-## **License**
-
-MIT
