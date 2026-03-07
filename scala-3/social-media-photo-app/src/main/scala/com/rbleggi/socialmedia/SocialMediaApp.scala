@@ -55,16 +55,5 @@ class Follower(val followerName: String) extends Observer {
   }
 }
 
-object SocialMediaApp extends App {
-  val alice = new User("Alice")
-  val bob = new Follower("Bob")
-  val charlie = new Follower("Charlie")
-
-  alice.registerObserver(bob)
-  alice.registerObserver(charlie)
-
-  val photo1 = Photo("1", "http://photos.com/1")
-  alice.publishPhoto(photo1)
-  alice.tagUser(photo1, "Charlie")
-  alice.commentPhoto(photo1, Comment("Bob", "Nice photo!"))
-}
+@main def run(): Unit =
+  println("Social Media Photo App")
