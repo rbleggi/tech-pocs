@@ -42,11 +42,4 @@ class KitchenQueue:
     println(s"\nAll dishes prepared in $totalTime minutes!")
 
 @main def runRestaurantQueue(): Unit =
-  val queue = KitchenQueue()
-
-  queue.addCommand(BurgerCommand())
-  queue.addCommand(PastaCommand())
-  queue.addCommand(SaladCommand())
-  queue.addCommand(SushiCommand())
-
-  queue.runQueue()
+  println("Restaurant Queue")
