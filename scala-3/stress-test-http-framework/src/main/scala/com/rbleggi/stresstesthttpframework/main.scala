@@ -54,10 +54,5 @@ class HttpStressTest(url: String, requests: Int, concurrency: Int) extends Stres
   }
 }
 
-@main def run(): Unit = {
-  val url = "https://httpbin.org/get"
-  val requests = 50
-  val concurrency = 10
-  val test = new HttpStressTest(url, requests, concurrency)
-  test.runTest()
-}
+@main def run(): Unit =
+  println("Stress Test HTTP Framework")
