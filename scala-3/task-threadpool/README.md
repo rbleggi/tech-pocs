@@ -1,30 +1,21 @@
 # **Task ThreadPool Framework**
 
-## **Overview**
+## Overview
 
-A modular Scala 3 PoC for concurrent task execution using a custom thread pool, inspired by the class-organizer and social-media-photo-app project standards. Demonstrates core features (task submission, thread pool management, graceful shutdown) and extensibility for real-world concurrent workloads.
-
----
-
-## **Tech Stack**
-
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
+A modular Scala 3 PoC for concurrent task execution using a custom thread pool. Demonstrates core features (task submission, thread pool management, graceful shutdown) and extensibility for real-world concurrent workloads.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- **Task Submission** → Submit tasks for concurrent execution
-- **Thread Pool Management** → Custom thread pool with configurable workers
-- **Graceful Shutdown** → Safe pool shutdown and task completion
-- **Simple API** → Minimal, extensible interface for real-world use
-- **Easily Extensible** → Add new task types or pool strategies without changing core logic
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -54,29 +45,23 @@ classDiagram
 
 ---
 
-## **Thread Pool Pattern**
+## Setup Instructions
 
-The **Thread Pool Pattern** enables efficient, reusable management of concurrent tasks. Tasks are submitted to a queue and executed by a fixed set of worker threads, improving resource usage and throughput for parallel workloads.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/task-threadpool
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
 ```bash
-./sbtw compile run
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
 ```bash
-./sbtw test
+sbt test
 ```
