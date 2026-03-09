@@ -50,27 +50,4 @@ class TicketBuilder:
     Ticket(show, zone, seat, date)
 
 @main def runTicketSystem(): Unit =
-  val bookingService = new TicketBookingService
-
-  try
-    val ticket1 = new TicketBuilder()
-      .setShow("Iron Maiden")
-      .setZone("1")
-      .setSeat(12)
-      .setDate("2025-05-01")
-      .buildTicket()
-
-    val bookedTicket1 = bookingService.bookTicket(ticket1)
-    println(s"Ticket booked: $bookedTicket1")
-
-    val ticket2 = new TicketBuilder()
-      .setShow("Iron Maiden")
-      .setZone("1")
-      .setSeat(12)
-      .setDate("2025-05-01")
-      .buildTicket()
-
-    val bookedTicket2 = bookingService.bookTicket(ticket2)
-    println(s"Ticket booked: $bookedTicket2")
-  catch
-    case e: Exception => println(s"Booking failed: ${e.getMessage}")
+  println("Ticket Booking")
