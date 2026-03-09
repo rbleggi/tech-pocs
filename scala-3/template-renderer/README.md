@@ -2,26 +2,17 @@
 
 ## Overview
 
-This project follows an **Object-Oriented Design (OOP)** approach to generate templates in **HTML, CSV, and PDF** formats. It uses:
+This project follows an Object-Oriented Design approach to generate templates in HTML, CSV, and PDF formats using the Factory Pattern. Each renderer extends the base TemplateRenderer class, and RendererFactory dynamically selects the correct renderer.
 
 ---
 
-## **Tech Stack**
+## Tech Stack
 
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 21** → Required to run the application.
-- **iText** → A library for PDF generation.
-
----
-
-## Features
-
-- **HTML Rendering** → Generates HTML files.  
-- **CSV Rendering** → Generates CSV files.  
-- **PDF Rendering** → Uses iText for generating PDF files.  
-- **Factory Pattern** → Dynamically selects the correct renderer.  
-- **Encapsulation & Polymorphism** → Each renderer extends the base `TemplateRenderer` class.  
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
+- **iText** -> PDF generation library
 
 ---
 
@@ -66,27 +57,25 @@ classDiagram
    Main --> FileUtil
 ```
 
-### **Explanation**
-- **TemplateRenderer** (Abstract Class) → Base class for all renderers.
-- **HTMLRenderer, CSVRenderer, PDFRenderer** → Implement `render()` differently based on the file format.
-- **RendererFactory** → Implements the **Factory Pattern** to return the correct renderer.
-
 ---
 
 ## Setup Instructions
 
-### **1️ - Clone the Repository**
-```shell
+### 1 - Clone
+
+```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/template-renderer
 ```
 
-### **2️ - Compile & Run the Application**
-```shell
-./sbtw compile run
+### 2 - Build
+
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
-```shell
-./sbtw compile test
+### 3 - Test
+
+```bash
+sbt test
 ```
