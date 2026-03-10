@@ -80,27 +80,4 @@ class TaxCalculator:
             baseTax + luxuryTax
 
 @main def run(): Unit =
-  val smartphone = Product("Smartphone", "electronics")
-  val rice = Product("Rice", "food")
-  val book = Product("History Book", "book")
-  val laptop = Product("Laptop", "electronics")
-
-  val calculator = TaxCalculator()
-
-  println("=== DefaultTaxSpecification ===")
-  println(f"Smartphone in MG (2024) - RS 1000: RS ${calculator.calculateTax("MG", 2024, smartphone, 1000.0)}%.2f")
-  println(f"Rice in MG (2024) - RS 20: RS ${calculator.calculateTax("MG", 2024, rice, 20.0)}%.2f")
-
-  println("\n=== LuxuryTaxSpecification (base + luxury) ===")
-  println(f"Smartphone in SP (2024) - RS 2500: RS ${calculator.calculateTax("SP", 2024, smartphone, 2500.0)}%.2f")
-  println(f"Laptop in RJ (2024) - RS 3000: RS ${calculator.calculateTax("RJ", 2024, laptop, 3000.0)}%.2f")
-
-  println("\n=== ExemptTaxSpecification ===")
-  println(f"Rice in PR (2024) - RS 50: RS ${calculator.calculateTax("PR", 2024, rice, 50.0)}%.2f")
-  println(f"Book in RS (2024) - RS 100: RS ${calculator.calculateTax("RS", 2024, book, 100.0)}%.2f")
-
-  println("\n=== ProgressiveTaxSpecification ===")
-  println(f"Smartphone in BA (2024) - RS 80: RS ${calculator.calculateTax("BA", 2024, smartphone, 80.0)}%.2f")
-  println(f"Smartphone in BA (2024) - RS 300: RS ${calculator.calculateTax("BA", 2024, smartphone, 300.0)}%.2f")
-  println(f"Smartphone in BA (2024) - RS 800: RS ${calculator.calculateTax("BA", 2024, smartphone, 800.0)}%.2f")
-  println(f"Laptop in BA (2024) - RS 2000: RS ${calculator.calculateTax("BA", 2024, laptop, 2000.0)}%.2f")
+  println("Tax System")
