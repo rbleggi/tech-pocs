@@ -38,13 +38,5 @@ class TaskThreadPool(workerCount: Int) {
   }
 }
 
-@main def run(): Unit = {
-  val pool = new TaskThreadPool(4)
-  (1 to 10).foreach { i =>
-    pool.submit(new Task {
-      def run(): Unit = println(s"Task $i running on thread ${Thread.currentThread().getName}")
-    })
-  }
-  Thread.sleep(1000)
-  pool.shutdown()
-}
+@main def run(): Unit =
+  println("Task Thread Pool")
