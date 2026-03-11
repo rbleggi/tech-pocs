@@ -26,15 +26,8 @@ class UnusedClassVisitor extends ASTVisitor {
   }
 }
 
-@main def run(): Unit = {
-  val path = "src/main/scala/com/rbleggi/unusedclassdetector/main.scala"
-  val content = Source.fromFile(path).mkString
-  val sourceFile = SourceFile(content)
-  val visitor = new UnusedClassVisitor
-  val result = visitor.visit(sourceFile)
-  println("Unused classes:")
-  result.unusedClasses.foreach(println)
-}
+@main def run(): Unit =
+  println("Unused Class Detector")
 
 class UnusedExampleClass {
   def hello(): String = "Hello, I am not used!"
