@@ -1,30 +1,21 @@
 # **Unused Class Detector**
 
-## **Overview**
+## Overview
 
-Detects unused Scala classes in source files. The program reads the file, analyzes class declarations and usages, and prints unused classes to the console.
-
----
-
-## **Tech Stack**
-
-- **Scala 3** → Modern JVM-based language with advanced typing and functional programming features.
-- **SBT** → Official build tool for Scala.
-- **JDK 21** → Required to run the application.
+Detects unused Scala classes in source files using the Visitor Pattern. The program reads the file, analyzes class declarations and usages via a simplified AST traversal, and prints unused classes to the console.
 
 ---
 
-## **Features**
+## Tech Stack
 
-- Detects unused Scala classes in source files.
-- Reads the source file and analyzes it using regular expressions.
-- Simple console report listing unused classes.
-- Minimal interface: just run the program to get results.
-- **Visitor Pattern**: Analysis is performed by a visitor (UnusedClassVisitor) traversing a simplified AST.
+- **Language** -> Scala 3
+- **Build Tool** -> sbt
+- **Testing** -> ScalaTest 3.2.16
+- **JDK** -> 25
 
 ---
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ```mermaid
 classDiagram
@@ -46,29 +37,23 @@ classDiagram
 
 ---
 
-## **Design Pattern Used**
+## Setup Instructions
 
-- Visitor Pattern: The UnusedClassVisitor implements the analysis logic by traversing the simplified AST.
-
----
-
-## **Setup Instructions**
-
-### **1️ - Clone the Repository**
+### 1 - Clone
 
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd scala-3/unused-class-detector
 ```
 
-### **2️ - Compile & Run the Application**
+### 2 - Build
 
-```shell
-./sbtw compile run
+```bash
+sbt compile
 ```
 
-### **3️ - Run Tests**
+### 3 - Test
 
-```shell
-./sbtw compile test
+```bash
+sbt test
 ```
