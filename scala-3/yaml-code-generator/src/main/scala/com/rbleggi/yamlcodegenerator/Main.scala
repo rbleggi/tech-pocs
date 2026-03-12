@@ -1,31 +1,7 @@
 package com.rbleggi.yamlcodegenerator
 
-@main def runYamlCodeGenerator(): Unit = {
-  val yamlContent =
-    """
-Person:
-  name: String
-  age: Int
-  address: Address
-  phones: List[String]
-
-Address:
-  street: String
-  number: Int
-  city: String
-  state: String
-
-Company:
-  name: String
-  cnpj: String
-  employees: List[Person]
-""".stripMargin
-
-  val generator: GeneratorStrategy = new CaseClassGenerator()
-  val generatedCode = generator.generate(yamlContent)
-
-  println("Generated code:\n" + generatedCode)
-}
+@main def runYamlCodeGenerator(): Unit =
+  println("YAML Code Generator")
 
 trait GeneratorStrategy {
   def generate(yaml: String): String
