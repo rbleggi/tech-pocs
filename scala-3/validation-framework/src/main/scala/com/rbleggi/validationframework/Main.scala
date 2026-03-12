@@ -33,6 +33,4 @@ given userValidator: Validator[User] = new Validator[User] {
 }
 
 @main def runValidation(): Unit =
-  val user = User(null, "a@b.com")
-  val errors = Validator[User].validate(user)
-  println(errors)
+  println("Validation Framework")
