@@ -1,16 +1,17 @@
-# **Core Bank Ledger (Kotlin)**
+# **Core Bank Ledger**
 
 ## Overview
 
-This project implements a simple Core Bank Ledger in Kotlin. It demonstrates basic banking operations (deposit, withdraw, transfer) with an extensible and testable design, all in a single file for proof-of-concept purposes.
+Banking ledger demonstrating the **Command Pattern** for executing deposit, withdrawal, and transfer operations with transaction recording and extensible command-based design.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and null safety.
-- **Gradle** → Build automation tool.
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
 - **JDK 25** → Required to run the application.
+- **kotlin.test** → Testing framework.
 
 ---
 
@@ -28,9 +29,11 @@ classDiagram
     class Deposit {
         +execute(): Unit
     }
+
     class Withdraw {
         +execute(): Unit
     }
+
     class Transfer {
         +execute(): Unit
     }
@@ -43,15 +46,12 @@ classDiagram
         +printTransactions()
     }
 
-    class Main {
-        +main(): Unit
-    }
-
     LedgerCommand <|.. Deposit
     LedgerCommand <|.. Withdraw
     LedgerCommand <|.. Transfer
-    Main --> Ledger
-    Main --> LedgerCommand
+    Deposit --> Ledger: records
+    Withdraw --> Ledger: records
+    Transfer --> Ledger: records
 ```
 
 ---
@@ -59,20 +59,17 @@ classDiagram
 ## Setup Instructions
 
 ### 1 - Clone the Repository
-
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/core-bank-ledger
 ```
 
-### 2 - Compile & Run the Application
-
+### 2 - Build the Project
 ```bash
-./gradlew build run
+./gradlew build
 ```
 
 ### 3 - Run Tests
-
 ```bash
 ./gradlew test
 ```
