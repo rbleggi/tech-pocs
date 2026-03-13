@@ -1,16 +1,17 @@
-# **Teacher's Class Organizer/Optimizer (Kotlin)**
+# **Class Organizer**
 
 ## Overview
 
-This project implements a flexible and maintainable class organizer/optimizer for teachers in Kotlin. Teachers and admins are notified of schedule changes, and the system helps optimize class allocations.
+Class organizer demonstrating the **Observer Pattern** for managing teacher schedules with conflict detection, automatic notifications on schedule changes, and schedule optimization.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Kotlin's build tool for JVM projects.
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
 - **JDK 25** → Required to run the application.
+- **kotlin.test** → Testing framework.
 
 ---
 
@@ -37,8 +38,8 @@ classDiagram
     }
 
     class Schedule {
-        -observers: MutableList<Observer>
-        -classSessions: MutableList<ClassSession>
+        -observers: MutableList~Observer~
+        -classSessions: MutableList~ClassSession~
         +addClassSession(session: ClassSession)
         +removeClassSession(session: ClassSession)
         +optimizeSchedule()
@@ -67,20 +68,17 @@ classDiagram
 ## Setup Instructions
 
 ### 1 - Clone the Repository
-
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/class-organizer
 ```
 
-### 2 - Compile & Run the Application
-
+### 2 - Build the Project
 ```bash
-./gradlew build run
+./gradlew build
 ```
 
 ### 3 - Run Tests
-
 ```bash
 ./gradlew test
 ```
