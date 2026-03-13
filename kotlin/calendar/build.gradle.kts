@@ -15,7 +15,7 @@ dependencies {
 }
 
 application {
-    mainClass = "com.rbleggi.calendar.Main"
+    mainClass = "com.rbleggi.calendar.MainKt"
 }
 
 tasks.test {

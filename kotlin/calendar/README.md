@@ -1,4 +1,4 @@
-# **Calendar System (Kotlin)**
+# **Calendar**
 
 ## Overview
 
@@ -8,10 +8,10 @@ Calendar system demonstrating the **Command Pattern** with meeting booking, conf
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety
-- **Gradle** → Build automation tool
-- **JDK 25** → Required to run the application
-- **kotlin.test** → Testing framework
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
+- **JDK 25** → Required to run the application.
+- **kotlin.test** → Testing framework.
 
 ---
 
@@ -101,12 +101,7 @@ cd kotlin/calendar
 ./gradlew build
 ```
 
-### 3 - Run the Application
-```bash
-./gradlew run
-```
-
-### 4 - Run Tests
+### 3 - Run Tests
 ```bash
 ./gradlew test
 ```
