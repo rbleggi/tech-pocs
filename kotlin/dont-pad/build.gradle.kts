@@ -10,12 +10,12 @@ repositories {
     mavenCentral()
 }
 
-application {
-    mainClass = "com.rbleggi.dontpad.Main"
-}
-
 dependencies {
     testImplementation(kotlin("test"))
+}
+
+application {
+    mainClass = "com.rbleggi.dontpad.MainKt"
 }
 
 tasks.test {

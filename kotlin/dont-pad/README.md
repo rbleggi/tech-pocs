@@ -1,16 +1,17 @@
-# **DontPad Command App (Kotlin)**
+# **Dont Pad**
 
 ## Overview
 
-A minimal local clone of dontpad.com. Each URL (e.g., `/mypage`) represents a separate document. When you open a document, all its text is loaded and shown for copying/editing. Any new text you enter is appended after the existing content.
+Notepad application demonstrating the **Command Pattern** for managing text notes with load, append, and no-op commands, inspired by dontpad.com's simple document model.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM-based language.
-- **Gradle** → Build tool.
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
 - **JDK 25** → Required to run the application.
+- **kotlin.test** → Testing framework.
 
 ---
 
@@ -19,35 +20,37 @@ A minimal local clone of dontpad.com. Each URL (e.g., `/mypage`) represents a se
 ```mermaid
 classDiagram
     direction TB
+
     class NotePad {
-        - key: String
-        - notes: List[String]
-        + getAllText(): String
-        + setAllText(text: String): Unit
-        + appendText(text: String): Unit
+        -key: String
+        -notes: List~String~
+        +getAllText(): String
+        +setAllText(text: String): Unit
+        +appendText(text: String): Unit
     }
+
     class Command {
         <<interface>>
-        + execute()
+        +execute()
     }
+
     class LoadNoteCommand {
-        + execute()
+        +execute()
     }
+
     class AppendNoteCommand {
-        + execute()
+        +execute()
     }
+
     class NoOpCommand {
-        + execute()
+        +execute()
     }
-    NotePad <.. LoadNoteCommand
-    NotePad <.. AppendNoteCommand
+
     Command <|.. LoadNoteCommand
     Command <|.. AppendNoteCommand
     Command <|.. NoOpCommand
-    class main {
-        + run(): Unit
-    }
-    main ..> Command
+    LoadNoteCommand --> NotePad: reads
+    AppendNoteCommand --> NotePad: writes
 ```
 
 ---
@@ -55,20 +58,17 @@ classDiagram
 ## Setup Instructions
 
 ### 1 - Clone the Repository
-
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/dont-pad
 ```
 
-### 2 - Compile & Run the Application
-
+### 2 - Build the Project
 ```bash
-./gradlew build run
+./gradlew build
 ```
 
 ### 3 - Run Tests
-
 ```bash
 ./gradlew test
 ```
