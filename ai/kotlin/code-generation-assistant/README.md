@@ -8,10 +8,10 @@ Code generation assistant demonstrating the **Strategy Pattern** with three gene
 
 ## Tech Stack
 
-- **Kotlin 2.1.10** → Modern JVM language with concise syntax and null safety
-- **Gradle 9.3.0** → Build automation tool
-- **JDK 25** → Required to run the application
-- **kotlin.test** → Testing framework
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
+- **JDK 25** → Required to run the application.
+- **kotlin.test** → Testing framework.
 
 ---
 
@@ -71,7 +71,7 @@ classDiagram
 ### 1 - Clone the Repository
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd kotlin/code-generation-assistant
+cd ai/kotlin/code-generation-assistant
 ```
 
 ### 2 - Build the Project
@@ -79,12 +79,7 @@ cd kotlin/code-generation-assistant
 ./gradlew build
 ```
 
-### 3 - Run the Application
-```bash
-./gradlew run
-```
-
-### 4 - Run Tests
+### 3 - Run Tests
 ```bash
 ./gradlew test
 ```
