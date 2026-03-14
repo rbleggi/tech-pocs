@@ -1,4 +1,4 @@
-# **Content Moderation System**
+# **Content Moderation**
 
 ## Overview
 
@@ -8,10 +8,10 @@ Content moderation system demonstrating the **Strategy Pattern** with three filt
 
 ## Tech Stack
 
-- **Kotlin 2.1.10** → Modern JVM language with concise syntax and null safety
-- **Gradle 9.3.0** → Build automation tool
-- **JDK 25** → Required to run the application
-- **kotlin.test** → Testing framework
+- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
+- **Gradle** → Build automation tool with Kotlin DSL support.
+- **JDK 25** → Required to run the application.
+- **kotlin.test** → Testing framework.
 
 ---
 
@@ -77,7 +77,7 @@ classDiagram
 ### 1 - Clone the Repository
 ```bash
 git clone https://github.com/rbleggi/tech-pocs.git
-cd kotlin/content-moderation-system
+cd ai/kotlin/content-moderation-system
 ```
 
 ### 2 - Build the Project
@@ -85,12 +85,7 @@ cd kotlin/content-moderation-system
 ./gradlew build
 ```
 
-### 3 - Run the Application
-```bash
-./gradlew run
-```
-
-### 4 - Run Tests
+### 3 - Run Tests
 ```bash
 ./gradlew test
 ```
