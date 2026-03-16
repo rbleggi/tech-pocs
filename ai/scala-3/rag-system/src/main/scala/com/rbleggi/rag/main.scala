@@ -12,7 +12,7 @@ trait RetrievalStrategy:
 class KeywordStrategy extends RetrievalStrategy:
   private def extractKeywords(text: String): Set[String] =
     text.toLowerCase
-      .replaceAll("[^a-záàâãéèêíïóôõúüç\\s]", "")
+      .replaceAll("[^a-z\\s]", "")
       .split("\\s+")
       .filter(_.length > 3)
       .toSet
@@ -39,7 +39,7 @@ class SemanticStrategy extends RetrievalStrategy:
   )
 
   private def expandQuery(text: String): Set[String] =
-    val words = text.toLowerCase.replaceAll("[^a-záàâãéèêíïóôõúüç\\s]", "").split("\\s+").toSet
+    val words = text.toLowerCase.replaceAll("[^a-z\\s]", "").split("\\s+").toSet
     words.flatMap { word =>
       synonyms.values.find(_.contains(word)).getOrElse(Set(word))
     }
@@ -76,7 +76,7 @@ class TemplateGeneration extends GenerationStrategy:
       "Sorry, no relevant information found for your query."
     else
       val info = documents.map(doc =>
-        s"• ${doc.title}: ${doc.content.take(100)}..."
+        s"- ${doc.title}: ${doc.content.take(100)}..."
       ).mkString("\n")
       s"Based on the query '${query.text}', found the following information:\n\n$info"
 
