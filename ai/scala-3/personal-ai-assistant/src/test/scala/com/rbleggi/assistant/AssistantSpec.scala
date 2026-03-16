@@ -3,85 +3,85 @@ package com.rbleggi.assistant
 import org.scalatest.funsuite.AnyFunSuite
 
 class AssistantSpec extends AnyFunSuite:
-  test("ManipuladorMatematica deve somar numeros"):
-    val manipulador = ManipuladorMatematica()
-    val consulta = Consulta("matematica", "Qual a soma de 10 e 20?")
-    val resposta = manipulador.processar(consulta)
+  test("MathHandler should sum numbers"):
+    val handler = MathHandler()
+    val q = Query("math", "What is the sum of 10 and 20?")
+    val response = handler.process(q)
 
-    assert(resposta.tipo == "matematica")
-    assert(resposta.resposta.contains("30"))
-    assert(resposta.confianca == 1.0)
+    assert(response.queryType == "math")
+    assert(response.answer.contains("30"))
+    assert(response.confidence == 1.0)
 
-  test("ManipuladorMatematica deve multiplicar numeros"):
-    val manipulador = ManipuladorMatematica()
-    val consulta = Consulta("matematica", "Multiplica 5 e 4")
-    val resposta = manipulador.processar(consulta)
+  test("MathHandler should multiply numbers"):
+    val handler = MathHandler()
+    val q = Query("math", "Multiply 5 and 4")
+    val response = handler.process(q)
 
-    assert(resposta.resposta.contains("20"))
+    assert(response.answer.contains("20"))
 
-  test("ManipuladorMatematica deve lidar com erro"):
-    val manipulador = ManipuladorMatematica()
-    val consulta = Consulta("matematica", "soma sem numeros")
-    val resposta = manipulador.processar(consulta)
+  test("MathHandler should handle error"):
+    val handler = MathHandler()
+    val q = Query("math", "sum without numbers")
+    val response = handler.process(q)
 
-    assert(resposta.confianca < 1.0)
+    assert(response.confidence < 1.0)
 
-  test("ManipuladorTexto deve contar palavras"):
-    val manipulador = ManipuladorTexto()
-    val consulta = Consulta("texto", "Quantas palavras tem nesta frase?")
-    val resposta = manipulador.processar(consulta)
+  test("TextHandler should count words"):
+    val handler = TextHandler()
+    val q = Query("text", "How many words in this sentence?")
+    val response = handler.process(q)
 
-    assert(resposta.tipo == "texto")
-    assert(resposta.resposta.contains("5 palavras"))
+    assert(response.queryType == "text")
+    assert(response.answer.contains("words"))
 
-  test("ManipuladorTexto deve converter para maiuscula"):
-    val manipulador = ManipuladorTexto()
-    val consulta = Consulta("texto", "Converta para maiuscula: joao")
-    val resposta = manipulador.processar(consulta)
+  test("TextHandler should convert to uppercase"):
+    val handler = TextHandler()
+    val q = Query("text", "Convert to uppercase: joao")
+    val response = handler.process(q)
 
-    assert(resposta.resposta.contains("JOAO"))
-    assert(resposta.confianca == 1.0)
+    assert(response.answer.contains("JOAO"))
+    assert(response.confidence == 1.0)
 
-  test("ManipuladorTexto deve converter para minuscula"):
-    val manipulador = ManipuladorTexto()
-    val consulta = Consulta("texto", "Converta para minuscula: MARIA")
-    val resposta = manipulador.processar(consulta)
+  test("TextHandler should convert to lowercase"):
+    val handler = TextHandler()
+    val q = Query("text", "Convert to lowercase: MARIA")
+    val response = handler.process(q)
 
-    assert(resposta.resposta.toLowerCase.contains("maria"))
+    assert(response.answer.toLowerCase.contains("maria"))
 
-  test("ManipuladorDados deve encontrar Sao Paulo"):
-    val manipulador = ManipuladorDados()
-    val consulta = Consulta("dados", "Informacoes sobre sao paulo")
-    val resposta = manipulador.processar(consulta)
+  test("DataHandler should find Sao Paulo"):
+    val handler = DataHandler()
+    val q = Query("data", "Information about sao paulo")
+    val response = handler.process(q)
 
-    assert(resposta.tipo == "dados")
-    assert(resposta.resposta.contains("12 milhoes"))
-    assert(resposta.confianca > 0.9)
+    assert(response.queryType == "data")
+    assert(response.answer.contains("12 million"))
+    assert(response.confidence > 0.9)
 
-  test("ManipuladorDados deve encontrar Curitiba"):
-    val manipulador = ManipuladorDados()
-    val consulta = Consulta("dados", "O que voce sabe sobre curitiba?")
-    val resposta = manipulador.processar(consulta)
+  test("DataHandler should find Curitiba"):
+    val handler = DataHandler()
+    val q = Query("data", "What do you know about curitiba?")
+    val response = handler.process(q)
 
-    assert(resposta.resposta.contains("1.9 milhoes"))
+    assert(response.answer.contains("1.9 million"))
 
-  test("ManipuladorDados deve retornar nao encontrado"):
-    val manipulador = ManipuladorDados()
-    val consulta = Consulta("dados", "Informacoes sobre xyz")
-    val resposta = manipulador.processar(consulta)
+  test("DataHandler should return not found"):
+    val handler = DataHandler()
+    val q = Query("data", "Information about xyz")
+    val response = handler.process(q)
 
-    assert(resposta.resposta.contains("nao encontrada"))
+    assert(response.answer.contains("not found"))
 
-  test("AssistentePessoal deve processar consulta matematica"):
-    val assistente = AssistentePessoal()
-    val consulta = Consulta("matematica", "soma 15 e 25")
-    val resposta = assistente.consultar(consulta)
+  test("PersonalAssistant should process math query"):
+    val assistant = PersonalAssistant()
+    val q = Query("math", "sum 15 and 25")
+    val response = assistant.query(q)
 
-    assert(resposta.tipo == "matematica")
+    assert(response.queryType == "math")
 
-  test("AssistentePessoal deve processar consulta de texto"):
-    val assistente = AssistentePessoal()
-    val consulta = Consulta("texto", "quantas palavras tem aqui")
-    val resposta = assistente.consultar(consulta)
+  test("PersonalAssistant should process text query"):
+    val assistant = PersonalAssistant()
+    val q = Query("text", "How many words are here")
+    val response = assistant.query(q)
 
-    assert(resposta.tipo == "texto")
+    assert(response.queryType == "text")
