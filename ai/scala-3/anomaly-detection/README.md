@@ -8,10 +8,10 @@ This project implements an anomaly detection system for Brazilian financial tran
 
 ## Tech Stack
 
-- **Language** -> Scala 3.6.3
-- **Build Tool** -> sbt 1.10.11
-- **Runtime** -> JDK 25
-- **Testing** -> ScalaTest 3.2.16
+- **Language** → Scala 3.6.3
+- **Build Tool** → sbt 1.10.11
+- **Runtime** → JDK 25
+- **Testing** → ScalaTest 3.2.16
 
 ---
 
