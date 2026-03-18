@@ -48,7 +48,7 @@ class WeatherCommand extends Command:
     val city = extractCity(input)
     val response = city match
       case Some(c) =>
-        s"The weather in $c is currently sunny with a temperature of 25°C. (This is simulated data)"
+        s"The weather in $c is currently sunny with a temperature of 25 degrees C. (This is simulated data)"
       case None =>
         "I can check the weather for you! Which city are you interested in?"
 
