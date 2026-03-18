@@ -26,7 +26,7 @@ class MathQueryHandler : QueryHandler {
                 val numbers = extractNumbers(text)
                 if (numbers.size >= 2) {
                     val product = numbers.reduce { acc, n -> acc * n }
-                    "O produto de ${numbers.joinToString(" × ")} e $product"
+                    "O produto de ${numbers.joinToString(" x ")} e $product"
                 } else {
                     "Nao consegui identificar os numeros para multiplicar"
                 }
