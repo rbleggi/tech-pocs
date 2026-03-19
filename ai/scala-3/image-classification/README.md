@@ -8,12 +8,12 @@ Image classification system using CNNs to classify different categories of image
 
 ## Tech Stack
 
-- **Language** -> Scala 3.6.3
-- **Build Tool** -> sbt 1.10.11
-- **Runtime** -> JDK 25
-- **Testing** -> ScalaTest 3.2.16
-- **DJL** -> 0.30.0 (Deep Java Library)
-- **PyTorch Engine** -> 0.30.0
+- **Language** → Scala 3.6.3
+- **Build Tool** → sbt 1.10.11
+- **Runtime** → JDK 25
+- **Testing** → ScalaTest 3.2.16
+- **DJL** → 0.30.0 (Deep Java Library)
+- **PyTorch Engine** → 0.30.0
 
 ---
 
