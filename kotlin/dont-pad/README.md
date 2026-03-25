@@ -63,9 +63,9 @@ git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/dont-pad
 ```
 
-### 2 - Build the Project
+### 2 - Compile & Run the Application
 ```bash
-./gradlew build
+./gradlew run
 ```
 
 ### 3 - Run Tests
