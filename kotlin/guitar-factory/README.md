@@ -65,17 +65,12 @@ git clone https://github.com/rbleggi/tech-pocs.git
 cd kotlin/guitar-factory
 ```
 
-### 2 - Build the Project
-```bash
-./gradlew build
-```
-
-### 3 - Run the Application
+### 2 - Compile & Run the Application
 ```bash
 ./gradlew run
 ```
 
-### 4 - Run Tests
+### 3 - Run Tests
 ```bash
 ./gradlew test
 ```
