@@ -8,10 +8,10 @@ This project implements a real estate price prediction system for Brazilian prop
 
 ## Tech Stack
 
-- **Language** -> Scala 3
-- **Build Tool** -> sbt
-- **Testing** -> ScalaTest 3.2.16
-- **JDK** -> 25
+- **Language** → Scala 3
+- **Build Tool** → sbt
+- **Testing** → ScalaTest 3.2.16
+- **JDK** → 25
 
 ---
 
