@@ -8,9 +8,9 @@ This project implements a flexible and maintainable Grocery TODO List system in 
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Kotlin's build tool for JVM projects.
-- **JDK 25** → Required to run the application.
+- **Kotlin 2.2.20** -> Modern JVM-based language with concise syntax and strong type safety.
+- **Gradle** -> Kotlin's build tool for JVM projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

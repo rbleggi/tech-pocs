@@ -8,9 +8,9 @@ This project demonstrates a minimal OAuth 2.0 Server in Kotlin to handle extensi
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Build tool for JVM projects.
-- **JDK 25** → Required to run the application.
+- **Kotlin 2.2.20** -> Modern JVM-based language with concise syntax and strong type safety.
+- **Gradle** -> Build tool for JVM projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

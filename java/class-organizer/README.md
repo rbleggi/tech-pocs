@@ -8,9 +8,9 @@ This project implements a **flexible and maintainable class organizer/optimizer*
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and pattern matching.
-- **Gradle** → Build tool for JVM projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and pattern matching.
+- **Gradle** -> Build tool for JVM projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

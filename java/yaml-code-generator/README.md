@@ -8,9 +8,9 @@ A code generation framework that converts YAML definitions into data class code.
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with enhanced language features.
-- **Gradle** → Build tool with support for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with enhanced language features.
+- **Gradle** -> Build tool with support for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

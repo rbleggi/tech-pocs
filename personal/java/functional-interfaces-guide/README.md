@@ -8,9 +8,9 @@ A comprehensive guide demonstrating Java functional interfaces, lambdas, and met
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with functional programming features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with functional programming features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

@@ -8,9 +8,9 @@ A secure file sharing system in Kotlin. Supports file upload, download, delete, 
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Build automation tool.
-- **JDK 25** → Required to run the application.
+- **Kotlin 2.2.20** -> Modern JVM-based language with concise syntax and strong type safety.
+- **Gradle** -> Build automation tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

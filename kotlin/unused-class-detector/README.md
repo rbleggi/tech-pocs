@@ -8,10 +8,10 @@ Unused class detection tool demonstrating the **Visitor Pattern** for AST traver
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety.
-- **Gradle** → Build automation tool with Kotlin DSL support.
-- **JDK 25** → Required to run the application.
-- **kotlin.test** → Testing framework.
+- **Kotlin 2.2.20** -> Modern JVM language with concise syntax and null safety.
+- **Gradle** -> Build automation tool with Kotlin DSL support.
+- **JDK 25** -> Required to run the application.
+- **kotlin.test** -> Testing framework.
 
 ---
 

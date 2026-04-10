@@ -8,10 +8,10 @@ Guitar factory system demonstrating the **Builder Pattern** for creating customi
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM language with concise syntax and null safety
-- **Gradle** → Build automation tool
-- **JDK 25** → Required to run the application
-- **kotlin.test** → Testing framework
+- **Kotlin 2.2.20** -> Modern JVM language with concise syntax and null safety
+- **Gradle** -> Build automation tool
+- **JDK 25** -> Required to run the application
+- **kotlin.test** -> Testing framework
 
 ---
 

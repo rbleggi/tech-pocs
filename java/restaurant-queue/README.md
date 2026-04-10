@@ -8,9 +8,9 @@ This project implements a modular restaurant queue system using the Command Patt
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with enhanced features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with enhanced features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

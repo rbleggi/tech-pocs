@@ -8,9 +8,9 @@ This project implements a composable validation framework using functional inter
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and functional interfaces.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and functional interfaces.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

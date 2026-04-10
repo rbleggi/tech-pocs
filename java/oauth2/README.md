@@ -8,9 +8,9 @@ This project demonstrates a minimal OAuth 2.0 Server in Java using the Factory P
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with switch expressions and pattern matching.
-- **Gradle** → Build tool for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with switch expressions and pattern matching.
+- **Gradle** -> Build tool for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

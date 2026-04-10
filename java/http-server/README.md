@@ -8,9 +8,9 @@ This project implements a simple and extensible HTTP server in Java using the St
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with functional programming features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with functional programming features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

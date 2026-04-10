@@ -8,9 +8,9 @@ This project demonstrates a dynamic tax calculation system where different produ
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and pattern matching.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and pattern matching.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

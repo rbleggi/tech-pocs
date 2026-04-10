@@ -8,9 +8,9 @@ This repository contains solutions to mathematical and computational problems fr
 
 ## Tech Stack
 
-- **Kotlin 2.2.20** → Modern JVM-based language with functional programming features and null safety.
-- **Gradle** → Build automation tool.
-- **JDK 25** → Required to run the application.
+- **Kotlin 2.2.20** -> Modern JVM-based language with functional programming features and null safety.
+- **Gradle** -> Build automation tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

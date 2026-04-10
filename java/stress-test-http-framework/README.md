@@ -8,9 +8,9 @@ This project implements a stress test framework for HTTP endpoints using Java. I
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with virtual threads for efficient concurrency.
-- **Gradle** → Build tool for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with virtual threads for efficient concurrency.
+- **Gradle** -> Build tool for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

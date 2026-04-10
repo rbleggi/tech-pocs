@@ -8,9 +8,9 @@ This project solves the Dungeon Game problem using Dynamic Programming. Given a 
 
 ## Tech Stack
 
-- **Kotlin** → Modern JVM-based language with concise syntax and strong type safety.
-- **Gradle** → Kotlin's build tool for JVM projects.
-- **JDK 25** → Required to run the application.
+- **Kotlin** -> Modern JVM-based language with concise syntax and strong type safety.
+- **Gradle** -> Kotlin's build tool for JVM projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

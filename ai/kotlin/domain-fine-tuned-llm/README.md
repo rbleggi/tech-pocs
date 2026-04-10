@@ -8,10 +8,10 @@ Simulated domain-specific language model demonstrating the **Strategy Pattern** 
 
 ## Tech Stack
 
-- **Kotlin 2.1.10** → Modern JVM language with concise syntax and null safety
-- **Gradle 9.3.0** → Build automation tool
-- **JDK 25** → Required to run the application
-- **kotlin.test** → Testing framework
+- **Kotlin 2.1.10** -> Modern JVM language with concise syntax and null safety
+- **Gradle 9.3.0** -> Build automation tool
+- **JDK 25** -> Required to run the application
+- **kotlin.test** -> Testing framework
 
 ---
 

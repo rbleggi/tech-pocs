@@ -8,9 +8,9 @@ This repository contains solutions to mathematical and computational problems fr
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with streams and functional programming features.
-- **Gradle** → Build automation tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with streams and functional programming features.
+- **Gradle** -> Build automation tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

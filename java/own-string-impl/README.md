@@ -8,9 +8,9 @@ This project demonstrates a custom String implementation in Java. The solution u
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with pattern matching and enhanced features.
-- **Gradle** → Build tool for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with pattern matching and enhanced features.
+- **Gradle** -> Build tool for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

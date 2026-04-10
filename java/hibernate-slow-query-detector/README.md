@@ -8,9 +8,9 @@ This project demonstrates a Hibernate Slow Query Detector in Java. The solution 
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with functional programming features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with functional programming features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

@@ -8,9 +8,9 @@ Multi-modal input processing system demonstrating the **Strategy Pattern** with 
 
 ## Tech Stack
 
-- **Java 25** → Latest JDK with modern language features including records and sealed interfaces.
-- **Gradle** → Build automation and dependency management.
-- **JUnit 5** → Testing framework for unit tests.
+- **Java 25** -> Latest JDK with modern language features including records and sealed interfaces.
+- **Gradle** -> Build automation and dependency management.
+- **JUnit 5** -> Testing framework for unit tests.
 
 ---
 

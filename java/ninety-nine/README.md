@@ -8,9 +8,9 @@ This project implements solutions to the classic "Ninety-Nine Problems" in Java.
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with functional programming features.
-- **Gradle** → Official build tool for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with functional programming features.
+- **Gradle** -> Official build tool for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

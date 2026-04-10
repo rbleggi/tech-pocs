@@ -8,9 +8,9 @@ A comprehensive guide demonstrating Java Stream API with examples including stre
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with Stream API and functional programming features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with Stream API and functional programming features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

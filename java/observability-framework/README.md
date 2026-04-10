@@ -8,9 +8,9 @@ This project implements a simple and extensible framework for latency observabil
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with enhanced features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with enhanced features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

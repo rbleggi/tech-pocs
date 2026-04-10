@@ -8,9 +8,9 @@ A minimal local clone of dontpad.com. Each URL (e.g., `/mypage`) represents a se
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and pattern matching.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and pattern matching.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

@@ -8,10 +8,10 @@ Real estate price prediction system demonstrating the **Strategy Pattern** with 
 
 ## Tech Stack
 
-- **Kotlin 2.1.10** → Modern JVM language with concise syntax and null safety
-- **Gradle** → Build automation tool
-- **JDK 25** → Required to run the application
-- **kotlin.test** → Testing framework
+- **Kotlin 2.1.10** -> Modern JVM language with concise syntax and null safety
+- **Gradle** -> Build automation tool
+- **JDK 25** -> Required to run the application
+- **kotlin.test** -> Testing framework
 
 ---
 

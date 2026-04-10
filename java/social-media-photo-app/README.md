@@ -8,9 +8,9 @@ A modular social media photo sharing PoC in Java, demonstrating core features (p
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with sealed interfaces and pattern matching.
-- **Gradle** → Build automation tool for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with sealed interfaces and pattern matching.
+- **Gradle** -> Build automation tool for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

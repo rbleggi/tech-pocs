@@ -8,9 +8,9 @@ This project implements an in-memory key-value store inspired by Redis, supporti
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and enhanced features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and enhanced features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

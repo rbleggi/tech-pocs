@@ -8,9 +8,9 @@ This project calculates the minimum initial health required for a knight to resc
 
 ## Tech Stack
 
-- **Scala 3** → Modern JVM-based language with advanced type safety and functional programming features.
-- **SBT** → Scala's official build tool.
-- **JDK 25** → Required to run the application.
+- **Scala 3** -> Modern JVM-based language with advanced type safety and functional programming features.
+- **SBT** -> Scala's official build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

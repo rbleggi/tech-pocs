@@ -8,9 +8,9 @@ This project implements a simple Core Bank Ledger using the Command Pattern in J
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and pattern matching.
-- **Gradle** → Build automation tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and pattern matching.
+- **Gradle** -> Build automation tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

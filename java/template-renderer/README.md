@@ -8,9 +8,9 @@ This project follows an Object-Oriented Design approach to generate templates in
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with enhanced language features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with enhanced language features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

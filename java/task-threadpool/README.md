@@ -8,9 +8,9 @@ A modular Java PoC for concurrent task execution using a custom thread pool. Dem
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with enhanced concurrency features.
-- **Gradle** → Build tool for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with enhanced concurrency features.
+- **Gradle** -> Build tool for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 

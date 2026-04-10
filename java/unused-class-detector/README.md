@@ -8,9 +8,9 @@ This project detects unused Java classes in source files. The program reads the 
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with pattern matching features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with pattern matching features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

@@ -8,9 +8,9 @@ This project implements a **flexible and maintainable file-sharing system** usin
 
 ## Tech Stack
 
-- **Java 25** → Modern JVM-based language with records and enhanced features.
-- **Gradle** → Build automation tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern JVM-based language with records and enhanced features.
+- **Gradle** -> Build automation tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

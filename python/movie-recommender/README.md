@@ -87,9 +87,9 @@ The final TF-IDF value is calculated by multiplying **TF** and **IDF**:
 ```
 
 ### **Why is TF-IDF Useful in Movie Recommendations?**
-- **Movie Descriptions** → Helps find movies with similar **plot summaries**.
-- **Directors & Actors** → Recommends movies with similar **people involved**.
-- **Better than Simple Word Counts** → Reduces noise from **frequent but unimportant words**.
+- **Movie Descriptions** -> Helps find movies with similar **plot summaries**.
+- **Directors & Actors** -> Recommends movies with similar **people involved**.
+- **Better than Simple Word Counts** -> Reduces noise from **frequent but unimportant words**.
 
 ---
 

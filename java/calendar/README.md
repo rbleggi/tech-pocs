@@ -8,9 +8,9 @@ This project implements a meeting scheduling system using the Command Pattern. I
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and enhanced features.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and enhanced features.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

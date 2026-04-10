@@ -8,12 +8,12 @@ A Spring Boot 3.5.4 REST API that solves the Dungeon Game problem, supports A/B 
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with enhanced features.
-- **Spring Boot** → REST API framework.
-- **PostgreSQL** → Database for persistent storage.
-- **Docker** → Containerization platform.
-- **Gradle** → Build tool.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with enhanced features.
+- **Spring Boot** -> REST API framework.
+- **PostgreSQL** -> Database for persistent storage.
+- **Docker** -> Containerization platform.
+- **Gradle** -> Build tool.
+- **JDK 25** -> Required to run the application.
 
 ---
 

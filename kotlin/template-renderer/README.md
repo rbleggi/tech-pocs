@@ -8,11 +8,11 @@ Template rendering system demonstrating the **Factory Pattern** for generating o
 
 ## Tech Stack
 
-- **Kotlin 2.1.10** → Modern JVM language with concise syntax and null safety.
-- **Gradle** → Build automation tool with Kotlin DSL support.
-- **JDK 25** → Required to run the application.
-- **iText 9** → PDF generation library.
-- **JUnit 5 + MockK** → Testing framework and mocking library.
+- **Kotlin 2.1.10** -> Modern JVM language with concise syntax and null safety.
+- **Gradle** -> Build automation tool with Kotlin DSL support.
+- **JDK 25** -> Required to run the application.
+- **iText 9** -> PDF generation library.
+- **JUnit 5 + MockK** -> Testing framework and mocking library.
 
 ---
 

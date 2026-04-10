@@ -8,9 +8,9 @@ This project implements a simple terminal-based Murder Mystery game in Java. The
 
 ## Tech Stack
 
-- **Java 25** → Modern Java with records and pattern matching features.
-- **Gradle** → Official build tool for Java projects.
-- **JDK 25** → Required to run the application.
+- **Java 25** -> Modern Java with records and pattern matching features.
+- **Gradle** -> Official build tool for Java projects.
+- **JDK 25** -> Required to run the application.
 
 ---
 
