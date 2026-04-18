@@ -29,6 +29,8 @@ out/
 !**/src/test/**/out/
 CLAUDE.md
 AGENTS.md
+/oneAone
+python3.14/
 
 ### Kotlin ###
 .kotlin
