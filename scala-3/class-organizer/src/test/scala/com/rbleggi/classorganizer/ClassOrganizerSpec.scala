@@ -1,9 +1,6 @@
 package com.rbleggi.classorganizer
 
 import java.time.LocalDateTime
-import com.rbleggi.classorganizer.core.ClassManager
-import com.rbleggi.classorganizer.model.{ClassSession, Student}
-import com.rbleggi.classorganizer.observer.{Observer, Subject}
 import org.scalatest.funsuite.AnyFunSuite
 
 class ClassOrganizerSpec extends AnyFunSuite {
