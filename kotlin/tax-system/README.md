@@ -88,7 +88,7 @@ cd kotlin/tax-system
 ### 2 - Compile & Run the Application
 
 ```bash
-./gradlew build run
+./gradlew run
 ```
 
 ### 3 - Run Tests
