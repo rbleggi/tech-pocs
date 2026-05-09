@@ -24,12 +24,12 @@ classDiagram
       +isSatisfiedBy(candidate: TaxRule): Boolean
    }
 
-   class 2023YearSpecification {
+   class Year2023Specification {
       -stateSpecifications: List~StateSpecification~
       +isSatisfiedBy(candidate: TaxRule): Boolean
    }
 
-   class 2024YearSpecification {
+   class Year2024Specification {
       -stateSpecifications: List~StateSpecification~
       +isSatisfiedBy(candidate: TaxRule): Boolean
    }
@@ -62,13 +62,13 @@ classDiagram
       +calculateTotalPrice(product: String, price: Double, state: State, year: Int): Double
    }
 
-   YearSpecification <|-- 2023YearSpecification
-   YearSpecification <|-- 2024YearSpecification
+   YearSpecification <|-- Year2023Specification
+   YearSpecification <|-- Year2024Specification
 
-   2023YearSpecification --> CASpecification2023 : uses
-   2023YearSpecification --> TXSpecification2023 : uses
-   2024YearSpecification --> CASpecification2024 : uses
-   2024YearSpecification --> TXSpecification2024 : uses
+   Year2023Specification --> CASpecification2023 : uses
+   Year2023Specification --> TXSpecification2023 : uses
+   Year2024Specification --> CASpecification2024 : uses
+   Year2024Specification --> TXSpecification2024 : uses
 
    TaxCalculator --> YearSpecification : uses
    YearSpecification ..> TaxRule : evaluates
