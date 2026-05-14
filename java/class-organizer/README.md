@@ -1,4 +1,4 @@
-# **Teacher's Class Organizer/Optimizer (Java)**
+# **Teacher's Class Organizer/Optimizer**
 
 ## Overview
 
