@@ -1,4 +1,4 @@
-# **DontPad Command App (Java)**
+# **DontPad Command App**
 
 ## Overview
 
