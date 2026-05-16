@@ -1,4 +1,4 @@
-# **Project Euler Problems (Kotlin)**
+# **Project Euler Problems**
 
 ## Overview
 
