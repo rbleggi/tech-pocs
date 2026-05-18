@@ -1,4 +1,4 @@
-# **Grocery TODO List System (Kotlin)**
+# **Grocery TODO List System**
 
 ## Overview
 
