@@ -1,4 +1,4 @@
-# **Guitar Factory (Kotlin)**
+# **Guitar Factory**
 
 ## Overview
 
