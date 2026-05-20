@@ -1,4 +1,4 @@
-# **Hibernate Slow Query Detector (Kotlin)**
+# **Hibernate Slow Query Detector**
 
 ## Overview
 
