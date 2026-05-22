@@ -1,4 +1,4 @@
-# **Logistic Pricing (Kotlin)**
+# **Logistic Pricing**
 
 ## Overview
 
