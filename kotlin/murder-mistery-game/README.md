@@ -1,4 +1,4 @@
-# **Murder Mystery Game (Kotlin)**
+# **Murder Mystery Game**
 
 ## Overview
 
