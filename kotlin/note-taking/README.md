@@ -1,4 +1,4 @@
-# **Note Taking System (Kotlin)**
+# **Note Taking System**
 
 ## Overview
 
