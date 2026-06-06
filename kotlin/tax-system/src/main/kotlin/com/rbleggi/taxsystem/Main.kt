@@ -1,48 +1,28 @@
 package com.rbleggi.taxsystem
 
-data class TaxRule(val state: String, val product: String, val year: Int, val rate: Double) {
-    fun tax(price: Double): Double = price * (rate / 100)
-}
-
-fun interface Specification<T> {
-    fun matches(candidate: T): Boolean
-
-    infix fun and(other: Specification<T>): Specification<T> =
-        Specification { matches(it) && other.matches(it) }
-
-    infix fun or(other: Specification<T>): Specification<T> =
-        Specification { matches(it) || other.matches(it) }
-
-    fun not(): Specification<T> = Specification { !matches(it) }
-}
-
-fun stateSpec(state: String): Specification<TaxRule> = Specification { it.state == state }
-fun yearSpec(year: Int): Specification<TaxRule> = Specification { it.year == year }
-fun productSpec(product: String): Specification<TaxRule> = Specification { it.product == product }
-
-fun taxSpec(product: String, state: String, year: Int): Specification<TaxRule> =
-    productSpec(product) and stateSpec(state) and yearSpec(year)
-
-class TaxCalculator(private val rules: List<TaxRule>) {
-    private val knownYears = setOf(2023, 2024)
-    private val knownStates = setOf("CA", "TX")
-
-    fun totalPrice(product: String, price: Double, state: String, year: Int): Double {
-        if (year !in knownYears || state !in knownStates) return price
-        val spec = taxSpec(product, state, year)
-        val tax = rules.firstOrNull { spec.matches(it) }?.tax(price) ?: 0.0
-        return price + tax
-    }
-}
-
-class FlexibleTaxCalculator(private val rules: List<TaxRule>) {
-    fun totalPrice(product: String, price: Double, state: String, year: Int): Double {
-        val spec = taxSpec(product, state, year)
-        val tax = rules.firstOrNull { spec.matches(it) }?.tax(price) ?: 0.0
-        return price + tax
-    }
-}
+import com.rbleggi.taxsystem.calculator.TaxCalculator
+import com.rbleggi.taxsystem.factory.TaxRuleRegistry
 
 fun main() {
+    val calculator = TaxCalculator(TaxRuleRegistry.allRules())
+
     println("Tax System")
+
+    println("\n== Calculate the price of a product ==")
+    val product = "Electronics"
+    val state = "SP"
+    val price = 1000.0
+    val tax = calculator.tax(product, price, state)
+    val total = calculator.totalPrice(product, price, state)
+    println("Product: $product")
+    println("State: $state")
+    println("Base price: R\$$price")
+    println("Tax: R\$$tax")
+    println("Total price: R\$$total")
+
+    println("\n== Total price by state (ICMS strategy per state) ==")
+    println("Electronics in SP (18% percentage): ${calculator.totalPrice("Electronics", 1000.0, "SP")}")
+    println("Refrigerator in RJ (20% capped at R\$500): ${calculator.totalPrice("Refrigerator", 5000.0, "RJ")}")
+    println("Electronics in MG (12% percentage): ${calculator.totalPrice("Electronics", 1000.0, "MG")}")
+    println("Electronics in RS (flat R\$50): ${calculator.totalPrice("Electronics", 1000.0, "RS")}")
 }
