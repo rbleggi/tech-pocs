@@ -1,9 +1,9 @@
 package com.rbleggi.taxsystem.model
 
+import com.rbleggi.taxsystem.service.strategy.TaxStrategy
+
 data class TaxRule(
     val product: String,
     val state: String,
     val strategy: TaxStrategy
-) {
-    fun tax(price: Double): Double = strategy.compute(price)
-}
+)
