@@ -1,20 +1,6 @@
-package com.rbleggi.taxsystem.model
+package com.rbleggi.taxsystem.service.strategy
 
 import kotlin.test.*
-
-class TaxRuleTest {
-    @Test
-    fun `tax delegates to its strategy`() {
-        val rule = TaxRule("Electronics", "SP", PercentageTax(18.0))
-        assertEquals(180.0, rule.tax(1000.0), 0.01)
-    }
-
-    @Test
-    fun `tax scales linearly with price`() {
-        val rule = TaxRule("Electronics", "SP", PercentageTax(9.0))
-        assertEquals(4.5, rule.tax(50.0), 0.001)
-    }
-}
 
 class TaxStrategyTest {
     @Test
