@@ -24,4 +24,10 @@ tasks.test {
 
 kotlin {
     jvmToolchain(25)
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
+    }
+}
+tasks.withType<JavaCompile> {
+    options.release.set(24)
 }
