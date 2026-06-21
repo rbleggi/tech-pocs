@@ -1,66 +1,31 @@
 package com.rbleggi.logisticpricing
 
-import java.math.BigDecimal
-import java.math.RoundingMode
-import kotlin.random.Random
-
-enum class TransportType {
-    TRUCK, RAIL, BOAT
-}
-
-data class FreightInfo(
-    val volume: Double,
-    val size: Double,
-    val distance: Double,
-    val transportType: TransportType
-)
-
-interface PricingStrategy {
-    fun calculate(info: FreightInfo): Double
-}
-
-class TruckPricingStrategy : PricingStrategy {
-    override fun calculate(info: FreightInfo): Double {
-        val base = 1.5
-        val price = (info.volume * 0.8 + info.size * 0.5 + info.distance * base) * getDynamicFactor()
-        return BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble()
-    }
-
-    private fun getDynamicFactor(): Double = 1.0 + Random.nextDouble(-0.1, 0.1)
-}
-
-class RailPricingStrategy : PricingStrategy {
-    override fun calculate(info: FreightInfo): Double {
-        val base = 1.2
-        val price = (info.volume * 0.6 + info.size * 0.4 + info.distance * base) * getDynamicFactor()
-        return BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble()
-    }
-
-    private fun getDynamicFactor(): Double = 1.0 + Random.nextDouble(-0.15, 0.15)
-}
-
-class BoatPricingStrategy : PricingStrategy {
-    override fun calculate(info: FreightInfo): Double {
-        val base = 1.0
-        val price = (info.volume * 0.4 + info.size * 0.3 + info.distance * base) * getDynamicFactor()
-        return BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble()
-    }
-
-    private fun getDynamicFactor(): Double = 1.0 + Random.nextDouble(-0.2, 0.2)
-}
-
-class FreightCalculator(private val strategy: PricingStrategy) {
-    fun calculate(info: FreightInfo): Double = strategy.calculate(info)
-}
-
-object PricingStrategySelector {
-    fun forTransportType(t: TransportType): PricingStrategy = when (t) {
-        TransportType.TRUCK -> TruckPricingStrategy()
-        TransportType.RAIL -> RailPricingStrategy()
-        TransportType.BOAT -> BoatPricingStrategy()
-    }
-}
+import com.rbleggi.logisticpricing.model.FreightInfo
+import com.rbleggi.logisticpricing.model.TransportType
+import com.rbleggi.logisticpricing.service.LogisticPricingService
+import com.rbleggi.logisticpricing.service.decorator.DistanceDiscount
+import com.rbleggi.logisticpricing.service.decorator.FuelSurcharge
+import com.rbleggi.logisticpricing.service.decorator.Insurance
 
 fun main() {
     println("Logistic Pricing")
+
+    val service = LogisticPricingService()
+    val info = FreightInfo(15.0, 6.0, 500.0, TransportType.TRUCK)
+
+    println("\n== Base price per transport ==")
+    TransportType.entries.forEach { type ->
+        println("$type: ${service.basePrice(info.copy(transportType = type))}")
+    }
+
+    println("\n== Decorator (stacked surcharges over the base price) ==")
+    val base = service.baseFor(TransportType.TRUCK)
+    val withFuel = FuelSurcharge(base, 12.0)
+    val withInsurance = Insurance(withFuel, 30.0)
+    val full = DistanceDiscount(withInsurance, threshold = 300.0, percent = 5.0)
+
+    println("base:                ${service.quote(info, base)}")
+    println("+ fuel 12%:          ${service.quote(info, withFuel)}")
+    println("+ insurance R\$30:    ${service.quote(info, withInsurance)}")
+    println("+ distance disc 5%:  ${service.quote(info, full)}")
 }
