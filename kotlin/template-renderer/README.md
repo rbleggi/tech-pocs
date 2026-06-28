@@ -1,61 +1,18 @@
-# **Template Renderer**
+# **Template Renderer (Kotlin)**
 
 ## Overview
 
-Template rendering system demonstrating the **Factory Pattern** for generating output in HTML, CSV, and PDF formats from a common data model, with each renderer encapsulated behind a shared interface.
+Template rendering system demonstrating the **Template Method Pattern**. The abstract `TemplateRenderer` defines a fixed rendering skeleton (`render` -> render title, render content, assemble), while each output format (HTML, CSV, PDF) overrides the hook steps. Adding a new format means subclassing and overriding the hooks without touching the skeleton.
 
 ---
 
 ## Tech Stack
 
-- **Kotlin 2.1.10** -> Modern JVM language with concise syntax and null safety.
+- **Kotlin 2.2.20** -> Modern JVM language with concise syntax and null safety.
 - **Gradle** -> Build automation tool with Kotlin DSL support.
 - **JDK 25** -> Required to run the application.
 - **iText 9** -> PDF generation library.
-- **JUnit 5 + MockK** -> Testing framework and mocking library.
-
----
-
-## Architecture Diagram
-
-```mermaid
-classDiagram
-    class TemplateRenderer {
-        <<abstract>>
-        +render(data: Map~String, String~): ByteArray
-    }
-
-    class HTMLRenderer {
-        +render(data: Map~String, String~): ByteArray
-    }
-
-    class CSVRenderer {
-        +render(data: Map~String, String~): ByteArray
-    }
-
-    class PDFRenderer {
-        +render(data: Map~String, String~): ByteArray
-    }
-
-    class RendererFactory {
-        +getRenderer(type: String): TemplateRenderer
-    }
-
-    class FileUtil {
-        +saveToFile(filename: String, content: ByteArray)
-    }
-
-    class Main {
-        +main(args: Array~String~)
-    }
-
-    TemplateRenderer <|-- HTMLRenderer
-    TemplateRenderer <|-- CSVRenderer
-    TemplateRenderer <|-- PDFRenderer
-    RendererFactory --> TemplateRenderer
-    Main --> RendererFactory
-    Main --> FileUtil
-```
+- **JUnit 5** -> Testing framework.
 
 ---
 
