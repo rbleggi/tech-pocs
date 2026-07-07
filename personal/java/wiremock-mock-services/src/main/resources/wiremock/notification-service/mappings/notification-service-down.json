@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/notifications/unavailable"
+  },
+  "response": {
+    "fault": "CONNECTION_RESET_BY_PEER"
+  }
+}
