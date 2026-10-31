@@ -1,8 +1,6 @@
 .gradle
-.claude
-/.claude/
-*/.claude/
-*/**/.claude/
+**/.claude/settings.local.json
+**/.claude/worktrees/
 
 */**/target
 */**/node_modules
